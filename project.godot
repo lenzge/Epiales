@@ -8,10 +8,25 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "CoralSailor",
+"language": "GDScript",
+"path": "res://Nodes/Characters/CoralSailor/CoralSailor.gd"
+} ]
+_global_script_class_icons={
+"CoralSailor": ""
+}
+
 [application]
 
 config/name="Epiales"
+run/main_scene="res://Nodes/Experimental/Maps/TestMap1.tscn"
 config/icon="res://icon.png"
+
+[layer_names]
+
+2d_physics/layer_2="player"
 
 [physics]
 

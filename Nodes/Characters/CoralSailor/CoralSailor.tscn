@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Nodes/Experimental/Sprites/images.jpg" type="Texture" id=2]
+[ext_resource path="res://Nodes/Characters/CoralSailor/CoralSailor.gd" type="Script" id=3]
+
+[sub_resource type="RayShape2D" id=1]
+
+[sub_resource type="CapsuleShape2D" id=2]
+height = 5.84122
+
+[node name="CoralSailor" type="KinematicBody2D"]
+collision_mask = 3
+script = ExtResource( 3 )
+
+[node name="images" type="Sprite" parent="."]
+scale = Vector2( 0.210486, 0.210486 )
+texture = ExtResource( 2 )
+
+[node name="CollisionRay" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 6 )
+rotation = 0.0241607
+scale = Vector2( 1, 0.574 )
+shape = SubResource( 1 )
+
+[node name="CollisionCapsule" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -6.695 )
+rotation = 0.0241607
+shape = SubResource( 2 )
+
+[node name="FloorDetectionRaycast" type="RayCast2D" parent="."]
+position = Vector2( 12, 10 )
+enabled = true
+collision_mask = 3
