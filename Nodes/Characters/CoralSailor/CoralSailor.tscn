@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Sprites/images.jpg" type="Texture" id=2]
 [ext_resource path="res://Nodes/Characters/CoralSailor/CoralSailor.gd" type="Script" id=3]
@@ -7,6 +7,32 @@
 
 [sub_resource type="CapsuleShape2D" id=2]
 height = 5.84122
+
+[sub_resource type="Animation" id=3]
+resource_name = "Attack"
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ true ],
+"method": "set_physics_process"
+}, {
+"args": [ false ],
+"method": "set_physics_process"
+} ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 9.14236, 16.5972 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 5.63467, 10.564 )
 
 [node name="CoralSailor" type="KinematicBody2D"]
 collision_mask = 3
@@ -27,7 +53,26 @@ position = Vector2( 0, -6.695 )
 rotation = 0.0241607
 shape = SubResource( 2 )
 
-[node name="FloorDetectionRaycast" type="RayCast2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="FloorDetectionRaycast" type="RayCast2D" parent="Node2D"]
 position = Vector2( 12, 10 )
 enabled = true
 collision_mask = 3
+
+[node name="AttackArea" type="Area2D" parent="Node2D"]
+
+[node name="AttackAnimation" type="AnimationPlayer" parent="Node2D/AttackArea"]
+anims/Attack = SubResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/AttackArea"]
+position = Vector2( 20.1597, -1.12246 )
+shape = SubResource( 4 )
+
+[node name="AttackDetectionArea" type="Area2D" parent="Node2D"]
+collision_layer = 4
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Node2D/AttackDetectionArea"]
+position = Vector2( 16.5563, -0.701542 )
+shape = SubResource( 5 )
