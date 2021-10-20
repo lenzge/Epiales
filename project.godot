@@ -11,8 +11,8 @@ config_version=4
 [application]
 
 config/name="Epiales"
-run/main_scene="res://MainScene.tscn"
-config/icon="res://Assets/Placeholder/icon.png"
+run/main_scene="res://game.tscn"
+config/icon="res://Assets/Placeholder/luci_sprite_own.png"
 
 [input]
 

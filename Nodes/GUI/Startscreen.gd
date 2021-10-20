@@ -11,6 +11,7 @@ onready var start_panel = $Panel
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#load and set Startscreen
 	game_state = GameState.START
 	show_message(true, "Press Space to Start")
 

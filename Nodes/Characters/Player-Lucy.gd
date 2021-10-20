@@ -4,9 +4,9 @@ enum {IDLE,RUN,JUMP}
 
 var velocity = Vector2(0,0)
 var PLAYERSTATE = IDLE
-const speed = 300
-const gravity = 1000
-const jump = 500
+export var speed = 300
+export var gravity = 1000
+export var jump = 500
 onready var sprite = $Sprite
 
 func _physics_process(delta):
