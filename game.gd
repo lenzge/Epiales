@@ -8,10 +8,8 @@ var menu
 
 func _ready():
 	# set window parameters
-	var screen_size = OS.get_screen_size(OS.get_current_screen())
-	OS.set_window_position(Vector2(0,0))
-	OS.set_window_size(screen_size)
-	OS.set_window_title("Epiales")
+	OS.set_window_maximized(true)
+	OS.set_window_title("Epiales")	
 	
 	# set window to fullscreen
 	# OS.set_window_fullscreen(true)
