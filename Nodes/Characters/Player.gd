@@ -1,41 +1,48 @@
 extends KinematicBody2D
 
-var velocity = Vector2(0,0)
+enum {IDLE,RUN,JUMP} 
+enum MovementDir {NONE, LEFT, RIGHT}
 
-const SPEED = 150
-const JUMPFORCE = -800
-const GRAVITY = 30
+var velocity = Vector2(0,0)
+var PLAYERSTATE = IDLE
+export var speed = 300
+export var gravity = 3000
+export var jump = 1000
+onready var sprite = $Sprite
+var last_movement_buttons = []
 
 func _physics_process(delta):
+	velocity.x = 0
+
+	# Fill movement Array
+	if Input.is_action_just_pressed("move_left"):
+		last_movement_buttons.push_front(MovementDir.LEFT)
+	if Input.is_action_just_pressed("move_right"):
+		last_movement_buttons.push_front(MovementDir.RIGHT)
+
+	# Clear Movement Array
+	if Input.is_action_just_released("move_left"):
+		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.LEFT))
+	if Input.is_action_just_released("move_right"):
+		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.RIGHT))
 	
-	# input
-	if Input.is_action_pressed("move_right"):
-		velocity.x = SPEED
-		#$Sprite.play("walk")
-		$AnimatedSprite.flip_h = false
-	elif Input.is_action_pressed("move_left"):
-		velocity.x = -SPEED
-		#$Sprite.play("walk")
-		$AnimatedSprite.flip_h = true
-	#else:
-		#$Sprite.play("idle")
-		
-	# jump animation
-	#if not is_on_floor():
-		#$Sprite.play("air")
-		
-	# gravity
-	velocity.y += GRAVITY
+	# Actual movement
+	if not last_movement_buttons.empty():
+		if last_movement_buttons[0] == MovementDir.LEFT:
+			velocity.x = -speed
+	#		PLAYERSTATE = RUN		
+		if last_movement_buttons[0] == MovementDir.RIGHT:
+			velocity.x = speed
+	#		PLAYERSTATE = RUN
 	
-	#jump (only if you are on a static collision body)
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMPFORCE
-	
-	# move, knows if there is a collision (y to 0), UP as direction
-	velocity = move_and_slide(velocity, Vector2.UP)
-	
-	# stop moving slowly
-	velocity.x = lerp(velocity.x, 0, 0.4)
-
-
-
+		velocity.y -= jump
+		
+#Flip Sprite
+	if velocity.x < 0:
+		sprite.flip_h = true
+	if velocity.x > 0:
+		sprite.flip_h = false
+		
+	velocity.y += gravity * delta
+	velocity = move_and_slide(velocity,Vector2.UP)
