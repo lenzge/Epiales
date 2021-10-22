@@ -14,20 +14,21 @@ var last_movement_buttons = []
 func get_direction():
 	return (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 	
+
+# Not needed any more. Simoms fixed it
+#func moove(delta):
+#	# Horizontal movement
+#	velocity.x = speed * get_direction()
+#	# Vertical movement
+#	velocity.y += gravity * delta
+#	velocity = move_and_slide(velocity, Vector2.UP)
 	
+
 func move(delta):
-	# Horizontal movement
-	velocity.x = speed * get_direction()
-	# Vertical movement
-	velocity.y += gravity * delta
-	velocity = move_and_slide(velocity, Vector2.UP)
-	
-# tut grad nich, bitte anschauen simoms
-func moove(delta):
 	# Fill movement Array
-	if Input.is_action_just_pressed("move_left"):
+	if Input.is_action_pressed("move_left") and last_movement_buttons.find(MovementDir.LEFT)==-1:
 		last_movement_buttons.push_front(MovementDir.LEFT)
-	if Input.is_action_just_pressed("move_right"):
+	if Input.is_action_pressed("move_right") and last_movement_buttons.find(MovementDir.RIGHT)==-1:
 		last_movement_buttons.push_front(MovementDir.RIGHT)
 
 	# Clear Movement Array
