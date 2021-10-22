@@ -8,6 +8,34 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Nodes/Characters/Player.gd"
+}, {
+"base": "State",
+"class": "PlayerState",
+"language": "GDScript",
+"path": "res://Nodes/Characters/StateMachine/PlayerState.gd"
+}, {
+"base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://Nodes/Characters/StateMachine/State.gd"
+}, {
+"base": "Node",
+"class": "StateMachine",
+"language": "GDScript",
+"path": "res://Nodes/Characters/StateMachine/StateMachine.gd"
+} ]
+_global_script_class_icons={
+"Player": "",
+"PlayerState": "",
+"State": "",
+"StateMachine": ""
+}
+
 [application]
 
 config/name="Epiales"

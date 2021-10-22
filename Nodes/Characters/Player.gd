@@ -1,19 +1,29 @@
+class_name Player
 extends KinematicBody2D
 
-enum {IDLE,RUN,JUMP} 
-enum MovementDir {NONE, LEFT, RIGHT}
 
 var velocity = Vector2(0,0)
-var PLAYERSTATE = IDLE
 export var speed = 300
 export var gravity = 3000
-export var jump = 1000
+export var jump_impulse = 1000
 onready var sprite = $Sprite
+
+enum MovementDir {LEFT, RIGHT}
 var last_movement_buttons = []
 
-func _physics_process(delta):
-	velocity.x = 0
-
+func get_direction():
+	return (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
+	
+	
+func move(delta):
+	# Horizontal movement
+	velocity.x = speed * get_direction()
+	# Vertical movement
+	velocity.y += gravity * delta
+	velocity = move_and_slide(velocity, Vector2.UP)
+	
+# tut grad nich, bitte anschauen simoms
+func moove(delta):
 	# Fill movement Array
 	if Input.is_action_just_pressed("move_left"):
 		last_movement_buttons.push_front(MovementDir.LEFT)
@@ -34,9 +44,6 @@ func _physics_process(delta):
 		if last_movement_buttons[0] == MovementDir.RIGHT:
 			velocity.x = speed
 	#		PLAYERSTATE = RUN
-	
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y -= jump
 		
 #Flip Sprite
 	if velocity.x < 0:
@@ -46,3 +53,4 @@ func _physics_process(delta):
 		
 	velocity.y += gravity * delta
 	velocity = move_and_slide(velocity,Vector2.UP)
+
