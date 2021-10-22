@@ -1,6 +1,50 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://game.gd" type="Script" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+const Menu = preload(\"res://Nodes/GUI/Startscreen.tscn\")
+enum GameState {START,PLAYING,PAUSE, GAMEOVER}
+var game_state
+var scene
+var menu
+
+func _ready():
+	# set window parameters
+	var screen_size = OS.get_screen_size(OS.get_current_screen())
+	OS.set_window_position(Vector2(0,0))
+	OS.set_window_size(screen_size)
+	OS.set_window_title(\"Epiales\")
+	
+	# set window to fullscreen
+	# OS.set_window_fullscreen(true)
+	
+	game_state = GameState.START
+	
+	
+func _physics_process(delta):
+	match game_state:
+		GameState.START:
+			if !scene:
+				scene = load(\"res://Nodes/GUI/Startscreen.tscn\").instance()
+				add_child(scene)
+			if Input.is_action_just_pressed(\"ui_accept\"):
+				print(\"accepted\")
+				scene.queue_free()
+				scene = null
+				game_state = GameState.PLAYING
+		GameState.PLAYING:
+			if !scene:
+				scene = load(\"res://Nodes/Maps/Level.tscn\").instance()
+				add_child(scene)
+			if Input.is_action_just_pressed(\"ui_cancel\"):
+				menu = load(\"res://Nodes/GUI/Startscreen.tscn\").instance()
+				add_child(menu)
+				set_physics_process(false)
+				game_state = GameState.PAUSE
+		#GameState.PAUSE:
+			
+"
 
 [node name="Node" type="Node"]
-script = ExtResource( 1 )
+script = SubResource( 1 )
