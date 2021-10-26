@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ui_placeholder_bar_nightmare_fill.png-98ffe534e949a5b93e6403cdb0a55cd1.stex"
+path="res://.import/ui_placeholder_bar_nightmare_fill.png-dddb3506b46b6d6d1d0fbb46c7b95b70.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/GUI/ui_placeholder_bar_nightmare_fill.png"
-dest_files=[ "res://.import/ui_placeholder_bar_nightmare_fill.png-98ffe534e949a5b93e6403cdb0a55cd1.stex" ]
+source_file="res://Nodes/Experimental/Placeholder/GUI/ui_placeholder_bar_nightmare_fill.png"
+dest_files=[ "res://.import/ui_placeholder_bar_nightmare_fill.png-dddb3506b46b6d6d1d0fbb46c7b95b70.stex" ]
 
 [params]
 
