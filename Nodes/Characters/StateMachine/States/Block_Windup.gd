@@ -4,7 +4,6 @@ var timer : SceneTreeTimer
 var timer_early_exit = false
 
 func enter():
-	print("windup")
 	player.velocity = Vector2.ZERO
 	timer_early_exit = false
 	timer = get_tree().create_timer(player.windup_time)
@@ -12,7 +11,7 @@ func enter():
 	
 	if timer_early_exit: # if the attack was canceled
 		return
-	print("timeout")
+	
 	state_machine.transition_to("Block")
 
 

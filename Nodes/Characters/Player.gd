@@ -53,6 +53,10 @@ func move(delta):
 	velocity = move_and_slide(velocity,Vector2.UP)
 	
 
+func _physics_process(delta):
+	$Label.text = $StateMachine.state.name
+	
+
 func get_damage(damage : int):
 	if $StateMachine.state == "Block":
 		return

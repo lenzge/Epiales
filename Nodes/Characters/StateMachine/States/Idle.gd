@@ -3,7 +3,6 @@ extends PlayerState
 
 func enter():
 	player.velocity = Vector2.ZERO
-	print("idle")
 
 
 func update(delta):
