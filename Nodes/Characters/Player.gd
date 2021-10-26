@@ -14,14 +14,6 @@ var last_movement_buttons = []
 func get_direction():
 	return (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 	
-
-# Not needed any more. Simoms fixed it
-#func moove(delta):
-#	# Horizontal movement
-#	velocity.x = speed * get_direction()
-#	# Vertical movement
-#	velocity.y += gravity * delta
-#	velocity = move_and_slide(velocity, Vector2.UP)
 	
 
 func move(delta):
@@ -41,12 +33,10 @@ func move(delta):
 	if not last_movement_buttons.empty():
 		if last_movement_buttons[0] == MovementDir.LEFT:
 			velocity.x = -speed
-	#		PLAYERSTATE = RUN
 		if last_movement_buttons[0] == MovementDir.RIGHT:
 			velocity.x = speed
-	#		PLAYERSTATE = RUN
 		
-#Flip Sprite
+	#Flip Sprite
 	if velocity.x < 0:
 		sprite.flip_h = true
 	if velocity.x > 0:

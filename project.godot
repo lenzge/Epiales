@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "",
+"class": "GitAPI",
+"language": "NativeScript",
+"path": "res://addons/godot-git-plugin/git_api.gdns"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://Nodes/Characters/StateMachine/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"GitAPI": "",
 "Player": "",
 "PlayerState": "",
 "State": "",
@@ -41,6 +47,10 @@ _global_script_class_icons={
 config/name="Epiales"
 run/main_scene="res://Nodes/Maps/Level.tscn"
 config/icon="res://Assets/Placeholder/luci_sprite_own.png"
+
+[gdnative]
+
+singletons=[ "res://addons/godot-git-plugin/git_api.gdnlib" ]
 
 [input]
 
@@ -71,10 +81,6 @@ jump={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"unicode":0,"echo":false,"script":null)
  ]
 }
-
-[gdnative]
-
-singletons=[ "res://addons/godot-git-plugin/git_api.gdnlib" ]
 
 [physics]
 
