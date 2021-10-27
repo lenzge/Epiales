@@ -14,7 +14,6 @@ export var jump_impulse = 1000
 export var windup_time = 0.33
 export var block_time = 0.33
 export var recovery_time = 0.33
-export var hp = 300
 
 
 onready var sprite = $Sprite
@@ -45,15 +44,13 @@ func move(delta):
 		if last_movement_buttons[0] == MovementDir.RIGHT:
 			velocity.x = speed
 		
-	#Flip Sprite
+	# Flip Sprite and Hitbox
 	if velocity.x < 0:
 		sprite.flip_h = true
 		hitbox.position.x = -20
 	if velocity.x > 0:
 		sprite.flip_h = false
 		hitbox.position.x = 20
-		
-
 		
 	velocity.y += gravity * delta
 	velocity = move_and_slide(velocity,Vector2.UP)
@@ -63,8 +60,3 @@ func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
 	
 
-func get_damage(damage : int):
-	if $StateMachine.state == "Block":
-		return
-	else:
-		 hp = hp - damage

@@ -15,14 +15,14 @@
 [ext_resource path="res://Nodes/Experimental/Luci/block.png" type="Texture" id=13]
 [ext_resource path="res://Nodes/Characters/Block_Recovery.gd" type="Script" id=14]
 
-[sub_resource type="CapsuleShape2D" id=7]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 11.6191
 height = 43.9738
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 3.43655, 30.6763 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "Block"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -73,7 +73,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 resource_name = "Block_Recovery"
 length = 0.4
 tracks/0/type = "value"
@@ -125,8 +125,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "Block_Windup"
+[sub_resource type="Animation" id=5]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -177,8 +176,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "Idle"
+[sub_resource type="Animation" id=6]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -240,14 +238,13 @@ texture = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 3.7075 )
-shape = SubResource( 7 )
+shape = SubResource( 1 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = -10.3181
-margin_top = -50.7968
-margin_right = 29.6819
-margin_bottom = -36.7968
-text = "test"
+margin_left = -18.3245
+margin_top = -65.8921
+margin_right = 21.6755
+margin_bottom = -47.8921
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -289,7 +286,7 @@ position = Vector2( 17.5469, 4.4561 )
 shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Block = SubResource( 5 )
-anims/Block_Recovery = SubResource( 6 )
-anims/Block_Windup = SubResource( 3 )
-anims/Idle = SubResource( 4 )
+anims/Block = SubResource( 3 )
+anims/Block_Recovery = SubResource( 4 )
+anims/Block_Windup = SubResource( 5 )
+anims/Idle = SubResource( 6 )
