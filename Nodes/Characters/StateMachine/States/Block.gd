@@ -8,7 +8,7 @@ func enter():
 	timer = get_tree().create_timer(player.block_time)
 	yield(timer, "timeout")
 	
-	state_machine.transition_to("Idle")
+	state_machine.transition_to("Block_Recovery")
 
 
 func update(delta):

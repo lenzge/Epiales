@@ -11,12 +11,14 @@ export var speed = 300
 export var gravity = 3000
 export var jump_impulse = 1000
 
-export var windup_time = 0.7
-export var block_time = 0.3
+export var windup_time = 0.33
+export var block_time = 0.33
+export var recovery_time = 0.33
 export var hp = 300
 
-# Sprite
+
 onready var sprite = $Sprite
+onready var hitbox = $HitboxBlock
 
 
 func get_direction():
@@ -46,8 +48,12 @@ func move(delta):
 	#Flip Sprite
 	if velocity.x < 0:
 		sprite.flip_h = true
+		hitbox.position.x = -20
 	if velocity.x > 0:
 		sprite.flip_h = false
+		hitbox.position.x = 20
+		
+
 		
 	velocity.y += gravity * delta
 	velocity = move_and_slide(velocity,Vector2.UP)
