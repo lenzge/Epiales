@@ -7,6 +7,9 @@ export var speed = 300
 export var gravity = 3000
 export var jump_impulse = 1000
 onready var sprite = $Sprite
+onready var animation_player_left = $Attack_Hitbox_Left/AnimationPlayer
+onready var animation_player_right = $Attack_Hitbox_Right/AnimationPlayer
+onready var this = $"."
 
 enum MovementDir {LEFT, RIGHT}
 var last_movement_buttons = []
@@ -49,9 +52,17 @@ func move(delta):
 #Flip Sprite
 	if velocity.x < 0:
 		sprite.flip_h = true
+
 	if velocity.x > 0:
 		sprite.flip_h = false
+
 		
 	velocity.y += gravity * delta
 	velocity = move_and_slide(velocity,Vector2.UP)
 
+
+func attack():
+	if sprite.flip_h:
+		animation_player_left.play("Placeholder_Attack")
+	else:
+		animation_player_right.play("Placeholder_Attack")

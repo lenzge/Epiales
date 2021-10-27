@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Assets/Placeholder/luci_sprite_own.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -7,8 +7,10 @@
 [ext_resource path="res://Nodes/Characters/StateMachine/States/Run.gd" type="Script" id=5]
 [ext_resource path="res://Nodes/Characters/StateMachine/States/Fall.gd" type="Script" id=6]
 [ext_resource path="res://Nodes/Characters/StateMachine/States/Jump.gd" type="Script" id=7]
-[ext_resource path="res://Nodes/Characters/StateMachine/States/Attack_End.gd" type="Script" id=8]
-[ext_resource path="res://Nodes/Characters/StateMachine/States/Attack_Begin.gd" type="Script" id=9]
+[ext_resource path="res://Nodes/Characters/StateMachine/States/Attack_Basic_1.gd" type="Script" id=8]
+[ext_resource path="res://Nodes/Characters/StateMachine/States/Attack_Basic_Windup.gd" type="Script" id=9]
+[ext_resource path="res://Nodes/Characters/Placeholder_Attack_Lucy.tres" type="Animation" id=10]
+[ext_resource path="res://Assets/Placeholder/explosion.png" type="Texture" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 23.9306, 36.499 )
@@ -16,15 +18,93 @@ extents = Vector2( 23.9306, 36.499 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 22.9833, 30.6763 )
 
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 160, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 9.0
+} ]
+
+[sub_resource type="Animation" id=10]
+resource_name = "Placeholder_Attack"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Placeholder_Weapon:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Placeholder_Weapon:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -4.65893, -1.90592 )
 scale = Vector2( 0.239182, 0.239182 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 10.612, 1.81114 )
 shape = SubResource( 1 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -43,14 +123,36 @@ script = ExtResource( 5 )
 [node name="Jump" type="Node" parent="StateMachine"]
 script = ExtResource( 7 )
 
-[node name="Attack_Begin" type="Node" parent="StateMachine"]
+[node name="Attack_Basic_Windup" type="Node" parent="StateMachine"]
 script = ExtResource( 9 )
 
-[node name="Attack_End" type="Node" parent="StateMachine"]
+[node name="Attack_Basic_1" type="Node" parent="StateMachine"]
 script = ExtResource( 8 )
 
-[node name="Attack_Hitbox" type="Area2D" parent="."]
-position = Vector2( 58.3758, 2.95779 )
+[node name="Attack_Hitbox_Right" type="Area2D" parent="."]
+position = Vector2( 48.423, 0 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack_Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack_Hitbox_Right"]
 shape = SubResource( 2 )
+disabled = true
+
+[node name="Placeholder_Weapon" type="AnimatedSprite" parent="Attack_Hitbox_Right"]
+frames = SubResource( 9 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Attack_Hitbox_Right"]
+anims/Placeholder_Attack = ExtResource( 10 )
+
+[node name="Attack_Hitbox_Left" type="Area2D" parent="."]
+position = Vector2( -49.4144, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack_Hitbox_Left"]
+shape = SubResource( 2 )
+
+[node name="Placeholder_Weapon" type="AnimatedSprite" parent="Attack_Hitbox_Left"]
+frames = SubResource( 9 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Attack_Hitbox_Left"]
+anims/Placeholder_Attack = SubResource( 10 )
+
+[connection signal="animation_finished" from="Attack_Hitbox_Right/AnimationPlayer" to="StateMachine/Attack_Basic_1" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="animation_finished" from="Attack_Hitbox_Left/AnimationPlayer" to="StateMachine/Attack_Basic_1" method="_on_AnimationPlayer_animation_finished"]
