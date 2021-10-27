@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/player.png-a59180dde0645a0d3985649cac2e10ca.stex"
+path="res://.import/luci_sprite_own.png-c3d805fd30b0f92a558bc7ca50ac429f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Placeholder/player.png"
-dest_files=[ "res://.import/player.png-a59180dde0645a0d3985649cac2e10ca.stex" ]
+source_file="res://Nodes/Experimental/Placeholder/luci_sprite_own.png"
+dest_files=[ "res://.import/luci_sprite_own.png-c3d805fd30b0f92a558bc7ca50ac429f.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

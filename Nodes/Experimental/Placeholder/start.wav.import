@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/impact.wav-cd49981dbcb923124fe7aada38315bd9.sample"
+path="res://.import/start.wav-f2a9ac65cb3f92f7f0587c15ad2481f8.sample"
 
 [deps]
 
-source_file="res://Assets/Placeholder/impact.wav"
-dest_files=[ "res://.import/impact.wav-cd49981dbcb923124fe7aada38315bd9.sample" ]
+source_file="res://Nodes/Experimental/Placeholder/start.wav"
+dest_files=[ "res://.import/start.wav-f2a9ac65cb3f92f7f0587c15ad2481f8.sample" ]
 
 [params]
 

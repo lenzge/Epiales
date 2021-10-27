@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/fireball.wav-47dcc4c04c9cc45bd9b56a31fca6811b.sample"
+path="res://.import/impact.wav-0995fd50c84720241203f03f6143f938.sample"
 
 [deps]
 
-source_file="res://Assets/Placeholder/fireball.wav"
-dest_files=[ "res://.import/fireball.wav-47dcc4c04c9cc45bd9b56a31fca6811b.sample" ]
+source_file="res://Nodes/Experimental/Placeholder/impact.wav"
+dest_files=[ "res://.import/impact.wav-0995fd50c84720241203f03f6143f938.sample" ]
 
 [params]
 

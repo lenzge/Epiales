@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/enemy.png-17e4dfb78ad007528157444b594acaa8.stex"
+path="res://.import/fire.png-f6a0bfe6e41ef4a2a9d120cadaae3426.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Placeholder/enemy.png"
-dest_files=[ "res://.import/enemy.png-17e4dfb78ad007528157444b594acaa8.stex" ]
+source_file="res://Nodes/Experimental/Placeholder/fire.png"
+dest_files=[ "res://.import/fire.png-f6a0bfe6e41ef4a2a9d120cadaae3426.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
