@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/idle.png-001edd91a78349dfe26979c49daf4b1b.stex"
+path="res://.import/block.png-1bca3668d44ca2052867b92f5ee6fc62.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Placeholder/Luci/idle.png"
-dest_files=[ "res://.import/idle.png-001edd91a78349dfe26979c49daf4b1b.stex" ]
+source_file="res://Nodes/Experimental/Luci/block.png"
+dest_files=[ "res://.import/block.png-1bca3668d44ca2052867b92f5ee6fc62.stex" ]
 
 [params]
 

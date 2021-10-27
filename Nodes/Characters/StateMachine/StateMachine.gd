@@ -37,7 +37,6 @@ func transition_to(target_state_name):
 	state.exit()
 	state = get_node(target_state_name)
 	state.enter()
-	### TEST
 	# AnimimationPlayer.play(state.name)
 	emit_signal("transitioned", state.name)
 
