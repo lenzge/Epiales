@@ -7,9 +7,6 @@ export var speed = 300
 export var gravity = 3000
 export var jump_impulse = 1000
 onready var sprite = $Sprite
-onready var animation_player_left = $Attack_Hitbox_Left/AnimationPlayer
-onready var animation_player_right = $Attack_Hitbox_Right/AnimationPlayer
-onready var this = $"."
 
 enum MovementDir {LEFT, RIGHT}
 var last_movement_buttons = []
@@ -61,8 +58,24 @@ func move(delta):
 	velocity = move_and_slide(velocity,Vector2.UP)
 
 
-func attack():
+# Better (?) than several Attack functions: One animation Player with several atk animations
+# --> pass attack func animation name
+func attack_basic_1():
 	if sprite.flip_h:
-		animation_player_left.play("Placeholder_Attack")
+		$Attack_Basic_Left/Anim_Attack_Basic_1.play("Placeholder_Attack")
 	else:
-		animation_player_right.play("Placeholder_Attack")
+		$Attack_Basic_Right/Anim_Attack_Basic_1.play("Placeholder_Attack")
+
+
+func attack_basic_2():
+	if sprite.flip_h:
+		$Attack_Basic_Left/Anim_Attack_Basic_2.play("Placeholder_Attack")
+	else:
+		$Attack_Basic_Right/Anim_Attack_Basic_2.play("Placeholder_Attack")
+
+
+func attack_basic_3():
+	if sprite.flip_h:
+		$Attack_Basic_Left/Anim_Attack_Basic_3.play("Placeholder_Attack")
+	else:
+		$Attack_Basic_Right/Anim_Attack_Basic_3.play("Placeholder_Attack")

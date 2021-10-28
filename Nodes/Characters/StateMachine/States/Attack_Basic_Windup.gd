@@ -2,12 +2,21 @@ extends PlayerState
 
 var timer : SceneTreeTimer
 var timer_early_exit = false
+export var windup_time = 0.3
 
 func enter():
 	timer_early_exit = false
 	player.velocity = Vector2.ZERO
-	timer = get_tree().create_timer(0.3)
+	timer = get_tree().create_timer(windup_time)
+	
+	var label := Label.new()
+	label.text = "Windup"
+	player.add_child(label)
+	
 	yield(timer, "timeout")
+	
+	player.remove_child(label)
+	label.queue_free()
 	
 	if timer_early_exit: # if the attack was canceled
 		return

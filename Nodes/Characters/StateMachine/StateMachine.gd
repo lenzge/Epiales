@@ -33,7 +33,8 @@ func transition_to(target_state_name):
 	# Safety check, if the state name is correct
 	if not has_node(target_state_name):
 		return
-
+	
+	print("StateMachine: " + target_state_name)
 	state.exit()
 	state = get_node(target_state_name)
 	state.enter()
