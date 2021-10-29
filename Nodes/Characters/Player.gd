@@ -11,6 +11,9 @@ export var jump = 1000
 onready var sprite = $Sprite
 var last_movement_buttons = []
 
+#func _ready():
+	
+
 func _physics_process(delta):
 	velocity.x = 0
 

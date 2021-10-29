@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-c06e121ed675879cf42e869d6fdaebd1.stex"
+path="res://.import/tree_256px.png-be1a380a4e092cbd8ff7085d03c627ca.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Placeholder/icon.png"
-dest_files=[ "res://.import/icon.png-c06e121ed675879cf42e869d6fdaebd1.stex" ]
+source_file="res://Assets/Placeholder_bitbrain/map/decoration/tree_256px.png"
+dest_files=[ "res://.import/tree_256px.png-be1a380a4e092cbd8ff7085d03c627ca.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=0
 flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false

@@ -1,6 +1,6 @@
 extends Node
 
-const Menu = preload("res://Nodes/GUI/Startscreen.tscn")
+#const Menu = preload("res://Nodes/GUI/Startscreen.tscn")
 enum GameState {START,PLAYING,PAUSE, GAMEOVER}
 var game_state
 var scene

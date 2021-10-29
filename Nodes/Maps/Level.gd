@@ -1,17 +1,19 @@
 extends Node
 
+export(String) var TITLE = ""
+export(bool) var MAXIMIZED = true
+var Player = preload("res://Nodes/Characters/Player.tscn").instance()
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	OS.set_window_title("Epiales")
-	OS.set_window_maximized(true)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	OS.set_window_title(TITLE)
+	OS.set_window_maximized(MAXIMIZED)
+	self.add_child(Player)
+	if $ParallaxBackground:
+		print(true)
+		var camera = Camera2D.new()
+		camera.set_anchor_mode(Camera2D.ANCHOR_MODE_DRAG_CENTER)
+		camera.set_offset(Player.position)
+		camera.make_current()
+		Player.add_child(camera)
+		print(Player.get_children()[2].current)
+	print(self.get_child(0).get_position_in_parent())
