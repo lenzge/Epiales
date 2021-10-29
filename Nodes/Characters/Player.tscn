@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Placeholder/luci_sprite_own.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -10,11 +10,9 @@
 [ext_resource path="res://Nodes/Characters/StateMachine/States/Attack_Basic_1.gd" type="Script" id=8]
 [ext_resource path="res://Nodes/Characters/StateMachine/States/Attack_Basic_Windup.gd" type="Script" id=9]
 [ext_resource path="res://Nodes/Characters/Placeholder_Attack_Lucy.tres" type="Animation" id=10]
-[ext_resource path="res://Assets/Placeholder/explosion.png" type="Texture" id=11]
 [ext_resource path="res://Nodes/Characters/StateMachine/States/Attack_Basic_Recover.gd" type="Script" id=12]
 [ext_resource path="res://Nodes/Characters/StateMachine/States/Attack_Basic_2.gd" type="Script" id=13]
 [ext_resource path="res://Nodes/Characters/StateMachine/States/Attack_Basic_3.gd" type="Script" id=14]
-
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 23.9306, 36.499 )
@@ -23,33 +21,21 @@ extents = Vector2( 23.9306, 36.499 )
 extents = Vector2( 22.9833, 30.6763 )
 
 [sub_resource type="AtlasTexture" id=3]
-flags = 4
-atlas = ExtResource( 11 )
 region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=4]
-flags = 4
-atlas = ExtResource( 11 )
 region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=5]
-flags = 4
-atlas = ExtResource( 11 )
 region = Rect2( 64, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=6]
-flags = 4
-atlas = ExtResource( 11 )
 region = Rect2( 96, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=7]
-flags = 4
-atlas = ExtResource( 11 )
 region = Rect2( 128, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=8]
-flags = 4
-atlas = ExtResource( 11 )
 region = Rect2( 160, 0, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=9]
@@ -59,6 +45,46 @@ animations = [ {
 "name": "default",
 "speed": 9.0
 } ]
+
+[sub_resource type="Animation" id=10]
+resource_name = "Placeholder_Attack"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Placeholder_Weapon:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Placeholder_Weapon:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=11]
 resource_name = "Placeholder_Attack"
@@ -101,47 +127,6 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id=12]
-resource_name = "Placeholder_Attack"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/path = NodePath("Placeholder_Weapon:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Placeholder_Weapon:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
-}
-
-[sub_resource type="Animation" id=10]
-resource_name = "Placeholder_Attack"
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Placeholder_Weapon:visible")
@@ -317,10 +302,10 @@ frames = SubResource( 9 )
 anims/Placeholder_Attack = ExtResource( 10 )
 
 [node name="Anim_Attack_Basic_2" type="AnimationPlayer" parent="Attack_Basic_Right"]
-anims/Placeholder_Attack = SubResource( 11 )
+anims/Placeholder_Attack = SubResource( 10 )
 
 [node name="Anim_Attack_Basic_3" type="AnimationPlayer" parent="Attack_Basic_Right"]
-anims/Placeholder_Attack = SubResource( 12 )
+anims/Placeholder_Attack = SubResource( 11 )
 
 [node name="Attack_Basic_Left" type="Area2D" parent="."]
 position = Vector2( -49.4144, 0 )
@@ -334,7 +319,7 @@ visible = false
 frames = SubResource( 9 )
 
 [node name="Anim_Attack_Basic_1" type="AnimationPlayer" parent="Attack_Basic_Left"]
-anims/Placeholder_Attack = SubResource( 10 )
+anims/Placeholder_Attack = SubResource( 12 )
 
 [node name="Anim_Attack_Basic_2" type="AnimationPlayer" parent="Attack_Basic_Left"]
 anims/Placeholder_Attack = SubResource( 13 )
