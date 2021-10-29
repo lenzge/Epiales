@@ -1,21 +1,29 @@
 class_name Player
 extends KinematicBody2D
 
+# Movement
+enum MovementDir {LEFT, RIGHT}
 
+var last_movement_buttons = []
 var velocity = Vector2(0,0)
+
 export var speed = 300
 export var gravity = 3000
 export var jump_impulse = 1000
-onready var sprite = $Sprite
 
-enum MovementDir {LEFT, RIGHT}
-var last_movement_buttons = []
+export var windup_time = 0.33
+export var block_time = 0.33
+export var recovery_time = 0.33
+
+
+onready var sprite = $Sprite
+onready var hitbox = $HitboxBlock
+
 
 func get_direction():
 	return (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 	
 	
-
 func move(delta):
 	# Fill movement Array
 	if Input.is_action_pressed("move_left") and last_movement_buttons.find(MovementDir.LEFT)==-1:
@@ -36,16 +44,21 @@ func move(delta):
 		if last_movement_buttons[0] == MovementDir.RIGHT:
 			velocity.x = speed
 		
-	#Flip Sprite
+	# Flip Sprite and Hitbox
 	if velocity.x < 0:
 		sprite.flip_h = true
-
+		hitbox.position.x = -20
 	if velocity.x > 0:
 		sprite.flip_h = false
-
+		hitbox.position.x = 20
 		
 	velocity.y += gravity * delta
 	velocity = move_and_slide(velocity,Vector2.UP)
+	
+
+func _physics_process(delta):
+	$Label.text = $StateMachine.state.name
+	
 
 
 # Better (?) than several Attack functions: One animation Player with several atk animations
