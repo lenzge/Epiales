@@ -2,21 +2,14 @@ extends PlayerState
 
 var timer : SceneTreeTimer
 var timer_early_exit = false
-export var windup_time = 0.3
 
 func enter():
 	timer_early_exit = false
 	player.velocity = Vector2.ZERO
-	timer = get_tree().create_timer(windup_time)
-	
-	var label := Label.new()
-	label.text = "Windup"
-	player.add_child(label)
+	timer = get_tree().create_timer(player.windup_time)
 	
 	yield(timer, "timeout")
 	
-	player.remove_child(label)
-	label.queue_free()
 	
 	if timer_early_exit: # if the attack was canceled
 		return
@@ -25,11 +18,17 @@ func enter():
 
 
 func update(delta):
-	# For Example if a plattform breaks
+	# Action can be cancelled (not by moving)
+	
 	if not player.is_on_floor():
-		timer_early_exit = true # cancel attack
+		timer_early_exit = true
 		state_machine.transition_to("Fall")
-		return
+	elif Input.is_action_just_pressed("jump"):
+		timer_early_exit = true
+		state_machine.transition_to("Jump")
+	elif Input.is_action_pressed("block"):
+		timer_early_exit = true
+		state_machine.transition_to("Block_Windup")
 
 func physics_update(delta):
 	player.move(delta)

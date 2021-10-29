@@ -18,6 +18,7 @@ export var recovery_time = 0.33
 
 onready var sprite = $Sprite
 onready var hitbox = $HitboxBlock
+onready var attack_hitbox = $Attack_Basic_Right
 
 
 func get_direction():
@@ -48,9 +49,11 @@ func move(delta):
 	if velocity.x < 0:
 		sprite.flip_h = true
 		hitbox.position.x = -20
+		attack_hitbox.position.x = -40
 	if velocity.x > 0:
 		sprite.flip_h = false
 		hitbox.position.x = 20
+		attack_hitbox.position.x = 40
 		
 	velocity.y += gravity * delta
 	velocity = move_and_slide(velocity,Vector2.UP)

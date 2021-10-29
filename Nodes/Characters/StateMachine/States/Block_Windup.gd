@@ -24,8 +24,8 @@ func update(delta):
 	elif Input.is_action_just_pressed("jump"):
 		timer_early_exit = true
 		state_machine.transition_to("Jump")
-	elif Input.is_action_pressed("basic_attack"):
+	elif Input.is_action_pressed("attack"):
 		timer_early_exit = true
-		state_machine.transition_to("Attack_Begin")
+		state_machine.transition_to("Attack_Basic_Windup")
 
 
