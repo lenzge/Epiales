@@ -8,8 +8,6 @@ var transition_area_width : float
 var tracking_direction : int # 0 = from left to right; 1 = from right to left
 var previous_active_music : AudioStreamPlayer
 
-
-# TODO: Commenting
 # TODO: Collision Layers and Masks
 # TODO: load_different soundtracks
 
@@ -20,6 +18,7 @@ func _process(delta):
 
 func track_player():
 	
+	# track the players movement and calculate the volume adjustement based on it
 	if player != null:
 		var player_distance = player.position.x - player_last_position
 		player_last_position = player.position.x
@@ -33,15 +32,18 @@ func track_player():
 
 
 func start_tracking(body: Player, music_transition_area: MusicTransitionArea) -> void:
+	# init tracking data
 	player = body
 	player_last_position = body.position.x
 	transition_area_width = music_transition_area.scale.x * 2
 	
+	# determine the tracking direction
 	if body.position.x < music_transition_area.position.x:
 		tracking_direction = 0
 	elif body.position.x > music_transition_area.position.x:
 		tracking_direction = 1
 	
+	# start the paused Soundtrack
 	if $Hectic_music.stream_paused:
 		$Hectic_music.stream_paused = false
 		previous_active_music = $Calm_music
@@ -53,23 +55,23 @@ func start_tracking(body: Player, music_transition_area: MusicTransitionArea) ->
 func stop_tracking() -> void:
 	player = null
 	
-	# reset the volumes and pause the not wanted music stream
+	# reset the volumes and pause the not wanted soundtrack
 	if $Calm_music.volume_db > $Hectic_music.volume_db:
 		$Calm_music.volume_db = 0
-		$Hectic_music.volume_db = -80
+		$Hectic_music.volume_db = -VOLUME_RANGE
 		$Hectic_music.stream_paused = true
 	elif $Hectic_music.volume_db > $Calm_music.volume_db:
 		$Hectic_music.volume_db = 0
-		$Calm_music.volume_db = -80
+		$Calm_music.volume_db = -VOLUME_RANGE
 		$Calm_music.stream_paused = true
 
 
 func tracking_adjust_volume(music_old: AudioStreamPlayer, music_new: AudioStreamPlayer, volume_adjustement: float) -> void:
 	
+	# adjust the volumes in dependency of the tracking direction (music_old should get turned down and music_new turned up)
 	if tracking_direction == 0:
 		music_old.volume_db -= volume_adjustement
 		music_new.volume_db += volume_adjustement
-		print(volume_adjustement)
 	elif tracking_direction == 1:
 		music_old.volume_db += volume_adjustement
 		music_new.volume_db -= volume_adjustement
