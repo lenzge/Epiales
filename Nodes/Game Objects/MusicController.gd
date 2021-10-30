@@ -1,6 +1,13 @@
 extends Node
 
+enum SoundtrackTypes {MUSIC_CALM, MUSIC_HECTIC}
+
 const VOLUME_RANGE : float = 80.0
+
+export var calm_music_path : String
+export var hectic_music_path : String
+export(SoundtrackTypes) var starting_track
+export var is_active : bool = false
 
 var player : Player = null
 var player_last_position : float
@@ -9,11 +16,32 @@ var tracking_direction : int # 0 = from left to right; 1 = from right to left
 var previous_active_music : AudioStreamPlayer
 
 # TODO: Collision Layers and Masks
-# TODO: load_different soundtracks
+
+func _ready():
+	if is_active:
+		
+		# load soundtracks
+		var calm_audio_stream = load(calm_music_path)
+		var hectic_audio_stream = load(hectic_music_path)
+		
+		$Calm_music.stream = calm_audio_stream
+		$Hectic_music.stream = hectic_audio_stream
+		
+		# initializing the tracks
+		$Calm_music.play()
+		$Hectic_music.play()
+		
+		if starting_track == SoundtrackTypes.MUSIC_CALM:
+			$Hectic_music.stream_paused = true
+			$Hectic_music.volume_db = -VOLUME_RANGE
+		elif starting_track == SoundtrackTypes.MUSIC_HECTIC:
+			$Calm_music.stream_paused = true
+			$Calm_music.volume_db = -VOLUME_RANGE
 
 
 func _process(delta):
-	track_player()
+	if is_active:
+		track_player()
 
 
 func track_player():
@@ -75,3 +103,16 @@ func tracking_adjust_volume(music_old: AudioStreamPlayer, music_new: AudioStream
 	elif tracking_direction == 1:
 		music_old.volume_db += volume_adjustement
 		music_new.volume_db -= volume_adjustement
+
+
+func change_soundtrack(type, track_path: String) -> void:
+	var audio_stream = load(track_path)
+	
+	if type == SoundtrackTypes.MUSIC_HECTIC:
+		$Hectic_music.stop()
+		$Hectic_music.stream = audio_stream
+		$Hectic_music.play()
+	elif type == SoundtrackTypes.MUSIC_CALM:
+		$Calm_music.stop()
+		$Calm_music.stream = audio_stream
+		$Calm_music.play()
