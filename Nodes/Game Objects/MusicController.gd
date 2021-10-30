@@ -7,16 +7,15 @@ const VOLUME_RANGE : float = 80.0
 export var calm_music_path : String
 export var hectic_music_path : String
 export(SoundtrackTypes) var starting_track
+export var interpolation_damper : float = 5.0
 export var is_active : bool = false
 
 var player : Player = null
 var player_last_position : float
 var transition_area_width : float
-var tracking_direction : int # 0 = from left to right; 1 = from right to left
 var previous_active_music : AudioStreamPlayer
+var volume_change : float = 0.0
 
-# TODO: change the volume adjustment from linear to smth else
-# TODO: Collision Layers and Masks
 
 func _ready():
 	if is_active:
@@ -53,7 +52,6 @@ func track_player():
 		player_last_position = player.position.x
 		
 		var volume_adjustement = (player_distance / transition_area_width) * VOLUME_RANGE
-		print(str(player_distance) + " ::: " + str(transition_area_width) + " ::: " + str(VOLUME_RANGE) + " ::: " + str(volume_adjustement))
 		
 		if previous_active_music == $Calm_music:
 			tracking_adjust_volume($Calm_music, $Hectic_music, volume_adjustement)
@@ -67,12 +65,6 @@ func start_tracking(body: Player, music_transition_area: MusicTransitionArea) ->
 	player_last_position = body.position.x
 	transition_area_width = (music_transition_area.scale.x * 2) + (body.get_node("CollisionShape2D").get_shape().extents.x * 2)
 	
-	# determine the tracking direction
-	if body.position.x < music_transition_area.position.x:
-		tracking_direction = 0
-	elif body.position.x > music_transition_area.position.x:
-		tracking_direction = 1
-	
 	# start the paused Soundtrack
 	if $Hectic_music.stream_paused:
 		$Hectic_music.stream_paused = false
@@ -84,6 +76,7 @@ func start_tracking(body: Player, music_transition_area: MusicTransitionArea) ->
 
 func stop_tracking() -> void:
 	player = null
+	volume_change = 0.0
 	
 	# reset the volumes and pause the not wanted soundtrack
 	if $Calm_music.volume_db > $Hectic_music.volume_db:
@@ -98,13 +91,12 @@ func stop_tracking() -> void:
 
 func tracking_adjust_volume(music_old: AudioStreamPlayer, music_new: AudioStreamPlayer, volume_adjustement: float) -> void:
 	
-	# adjust the volumes in dependency of the tracking direction (music_old should get turned down and music_new turned up)
-	if tracking_direction == 0:
-		music_old.volume_db -= volume_adjustement
-		music_new.volume_db += volume_adjustement
-	elif tracking_direction == 1:
-		music_old.volume_db += volume_adjustement
-		music_new.volume_db -= volume_adjustement
+	volume_change += volume_adjustement
+	
+	# adjust the volumes, but with nonlinearity
+	music_old.volume_db = - (pow(abs(volume_change) / VOLUME_RANGE, interpolation_damper) * VOLUME_RANGE)
+	music_new.volume_db = - ((pow((VOLUME_RANGE - abs(volume_change)) / VOLUME_RANGE, interpolation_damper) * VOLUME_RANGE))
+
 
 
 func change_soundtrack(type, track_path: String) -> void:
