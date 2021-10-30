@@ -15,6 +15,7 @@ var transition_area_width : float
 var tracking_direction : int # 0 = from left to right; 1 = from right to left
 var previous_active_music : AudioStreamPlayer
 
+# TODO: change the volume adjustment from linear to smth else
 # TODO: Collision Layers and Masks
 
 func _ready():
@@ -52,6 +53,7 @@ func track_player():
 		player_last_position = player.position.x
 		
 		var volume_adjustement = (player_distance / transition_area_width) * VOLUME_RANGE
+		print(str(player_distance) + " ::: " + str(transition_area_width) + " ::: " + str(VOLUME_RANGE) + " ::: " + str(volume_adjustement))
 		
 		if previous_active_music == $Calm_music:
 			tracking_adjust_volume($Calm_music, $Hectic_music, volume_adjustement)
@@ -63,7 +65,7 @@ func start_tracking(body: Player, music_transition_area: MusicTransitionArea) ->
 	# init tracking data
 	player = body
 	player_last_position = body.position.x
-	transition_area_width = music_transition_area.scale.x * 2
+	transition_area_width = (music_transition_area.scale.x * 2) + (body.get_node("CollisionShape2D").get_shape().extents.x * 2)
 	
 	# determine the tracking direction
 	if body.position.x < music_transition_area.position.x:
