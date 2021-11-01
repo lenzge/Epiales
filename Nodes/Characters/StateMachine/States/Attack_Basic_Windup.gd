@@ -5,21 +5,26 @@ var timer_early_exit = false
 
 func enter():
 	timer_early_exit = false
-	player.velocity = Vector2.ZERO
 	timer = get_tree().create_timer(player.windup_time)
-	
 	yield(timer, "timeout")
 	
 	
 	if timer_early_exit: # if the attack was canceled
 		return
 	
-	state_machine.transition_to("Attack_Basic_1")
+	# Move to next state
+	var input = player.pop_combat_queue()
+	if input == null:
+		state_machine.transition_to("Idle")
+	elif input == player.PossibleInput.ATTACK_BASIC:
+		state_machine.transition_to("Attack_Basic_1")
+	elif input == player.PossibleInput.BLOCK:
+		state_machine.transition_to("Block_Windup")
 
 
+# Check if attack is canceled
 func update(delta):
 	# Action can be cancelled (not by moving)
-	
 	if not player.is_on_floor():
 		timer_early_exit = true
 		state_machine.transition_to("Fall")

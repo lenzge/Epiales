@@ -12,6 +12,8 @@ func enter():
 	if timer_early_exit: # if the attack was canceled
 		return
 	
+	player.pop_combat_queue()
+	
 	state_machine.transition_to("Block")
 
 

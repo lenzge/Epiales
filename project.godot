@@ -46,7 +46,7 @@ _global_script_class_icons={
 
 config/name="Epiales"
 run/main_scene="res://Nodes/Maps/Level.tscn"
-config/icon="res://Assets/Placeholder/luci_sprite_own.png"
+config/icon="res://Nodes/Experimental/Placeholder/luci_sprite_own.png"
 
 [gdnative]
 

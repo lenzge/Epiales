@@ -1,28 +1,21 @@
 extends PlayerState
 
-var input := []
+var timer : SceneTreeTimer
 
 func enter():
-	player.velocity = Vector2.ZERO
-	player.attack_basic_1()
+	timer = get_tree().create_timer(player.attack_time)
+	yield(timer, "timeout")
 	
-
-
-func update(delta):
-	if Input.is_action_just_pressed("attack"):
-		input.push_front(1)
-#	# For Example if a plattform breaks
-#	if not player.is_on_floor():
-#		state_machine.transition_to("Fall")
-#		return
-
-
-func _on_AnimationPlayer_animation_finished(anim_name):
-	if not input.empty():
-		if input[0] == 1:
-			input.clear()
-			state_machine.transition_to("Attack_Basic_2")
-		else:
-			state_machine.transition_to("Attack_Basic_Recovery")
-	else: 
+	# Transition to next state
+	var input = player.pop_combat_queue()
+	if input == null:
 		state_machine.transition_to("Attack_Basic_Recovery")
+	elif input == player.PossibleInput.ATTACK_BASIC:
+			state_machine.transition_to("Attack_Basic_2")
+	elif input == player.PossibleInput.BLOCK:
+		state_machine.transition_to("Block_Windup")
+
+
+func physics_update(delta):
+	player.attack_move(delta)
+

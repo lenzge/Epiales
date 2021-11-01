@@ -1,18 +1,14 @@
 extends PlayerState
 
-var input := []
+var timer : SceneTreeTimer
 
 func enter():
-	player.velocity = Vector2.ZERO
-	player.attack_basic_3()
+	timer = get_tree().create_timer(player.attack_time)
+	yield(timer, "timeout")
 	
-
-
-func update(delta):
-	if Input.is_action_just_pressed("attack"):
-		input.push_front(1)
-
-
-func _on_AnimationPlayer_animation_finished(anim_name):
-	input.clear()
 	state_machine.transition_to("Attack_Basic_Recovery")
+
+
+func physics_update(delta):
+	player.attack_move(delta)
+
