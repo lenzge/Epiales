@@ -13,7 +13,6 @@ func physics_update(delta):
 	elif Input.is_action_just_pressed("jump"):
 		state_machine.transition_to("Jump")
 	elif Input.is_action_just_pressed("block"):
-		print("RUNNING AND NOW BLOCKING")
 		state_machine.transition_to("Block_Windup")
 	elif is_equal_approx(player.get_direction(), 0.0):
 		state_machine.transition_to("Idle")
