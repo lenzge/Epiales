@@ -16,6 +16,8 @@ var transition_area_width : float
 var previous_active_music : AudioStreamPlayer
 var volume_change : float = 0.0
 
+var switching : bool = false
+
 
 func _ready():
 	if is_active:
@@ -42,6 +44,7 @@ func _ready():
 func _process(delta):
 	if is_active:
 		track_player()
+		switch_soundtracks()
 
 
 func track_player():
@@ -98,7 +101,7 @@ func tracking_adjust_volume(music_old: AudioStreamPlayer, music_new: AudioStream
 	music_new.volume_db = - ((pow((VOLUME_RANGE - abs(volume_change)) / VOLUME_RANGE, interpolation_damper) * VOLUME_RANGE))
 
 
-
+# load another soundtrack
 func change_soundtrack(type, track_path: String) -> void:
 	var audio_stream = load(track_path)
 	
@@ -110,3 +113,33 @@ func change_soundtrack(type, track_path: String) -> void:
 		$Calm_music.stop()
 		$Calm_music.stream = audio_stream
 		$Calm_music.play()
+
+
+func set_switching():
+	switching = true
+	
+	if $Hectic_music.stream_paused:
+		$Hectic_music.stream_paused = false
+		previous_active_music = $Calm_music
+	elif $Calm_music.stream_paused:
+		$Calm_music.stream_paused = false
+		previous_active_music = $Hectic_music
+
+
+# Switch soundtracks with simple fade in and fade out
+func switch_soundtracks() -> void:
+	if switching:
+		
+		if previous_active_music == $Calm_music:
+			$Calm_music.volume_db -= 2
+			$Hectic_music.volume_db += 2
+			if $Hectic_music.volume_db == 0:
+				switching = false
+				$Calm_music.stream_paused = true
+				
+		elif previous_active_music == $Hectic_music:
+			$Hectic_music.volume_db -= 2
+			$Calm_music.volume_db += 2
+			if $Calm_music.volume_db == 0:
+				switching = false
+				$Hectic_music.stream_paused = true
