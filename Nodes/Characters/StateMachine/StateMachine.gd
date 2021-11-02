@@ -8,12 +8,16 @@ signal transitioned(state_name)
 # Initial state 
 export var initial_state := NodePath()
 onready var state: State = get_node(initial_state)
+onready var animationPlayer = $"../AnimationPlayer"
 
 # Assigns itself to an object
 func _ready():
+	print("STATEMACHINE: Init. StateMachine States:")
 	yield(owner, "ready")
 	for child in get_children():
 		child.state_machine = self
+		print(child.name)
+	print("STATEMACHINE: Init. complete.")
 	state.enter()
 
 
@@ -32,11 +36,14 @@ func _physics_process(delta):
 func transition_to(target_state_name):
 	# Safety check, if the state name is correct
 	if not has_node(target_state_name):
+		print("STATEMACHINE WARNING: State not found: " + target_state_name)
 		return
-
+	
+	print("StateMachine: " + target_state_name)
 	state.exit()
 	state = get_node(target_state_name)
 	state.enter()
+	animationPlayer.play(state.name)
 	emit_signal("transitioned", state.name)
 
 
