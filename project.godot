@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "State",
+"class": "GameState",
+"language": "GDScript",
+"path": "res://Nodes/Experimental/Game Controller/GameStateMachine/GameState.gd"
+}, {
 "base": "",
 "class": "GitAPI",
 "language": "NativeScript",
@@ -35,6 +40,7 @@ _global_script_classes=[ {
 "path": "res://Nodes/Characters/StateMachine/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"GameState": "",
 "GitAPI": "",
 "Player": "",
 "PlayerState": "",
