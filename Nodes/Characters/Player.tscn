@@ -71,7 +71,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0.239182, 0.239182 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxAttack:disabled")
+tracks/3/path = NodePath("Attack/HitboxAttack:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -146,7 +146,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0.228074, 0.239182 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxAttack:disabled")
+tracks/3/path = NodePath("Attack/HitboxAttack:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -209,7 +209,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, -21.703 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxAttack:disabled")
+tracks/3/path = NodePath("Attack/HitboxAttack:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -272,7 +272,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0.239182, 0.239182 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxAttack:disabled")
+tracks/3/path = NodePath("Attack/HitboxAttack:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -335,7 +335,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0.239182, 0.239182 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxBlock:disabled")
+tracks/3/path = NodePath("Block/HitboxBlock:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -347,7 +347,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("HitboxAttack:disabled")
+tracks/4/path = NodePath("Attack/HitboxAttack:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -421,7 +421,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0.239182, 0.239182 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxBlock:disabled")
+tracks/3/path = NodePath("Block/HitboxBlock:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -443,18 +443,6 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Hitbox/Hitbox:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -496,7 +484,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0.239182, 0.239182 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxBlock:disabled")
+tracks/3/path = NodePath("Block/HitboxBlock:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -518,18 +506,6 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Hitbox/Hitbox:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
 }
 
 [sub_resource type="Animation" id=11]
@@ -571,7 +547,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0.239182, 0.239182 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxBlock:disabled")
+tracks/3/path = NodePath("Block/HitboxBlock:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -583,7 +559,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("HitboxAttack:disabled")
+tracks/4/path = NodePath("Attack/HitboxAttack:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -647,7 +623,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0.239182, 0.239182 ), Vector2( 0.239182, 0.231749 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxBlock:disabled")
+tracks/3/path = NodePath("Block/HitboxBlock:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -671,7 +647,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("HitboxAttack:disabled")
+tracks/5/path = NodePath("Attack/HitboxAttack:disabled")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -724,7 +700,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0.239182, 0.239182 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxAttack:disabled")
+tracks/3/path = NodePath("Attack/HitboxAttack:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -818,12 +794,16 @@ script = ExtResource( 14 )
 [node name="Stunned" type="Node" parent="StateMachine"]
 script = ExtResource( 21 )
 
-[node name="HitboxBlock" type="CollisionShape2D" parent="."]
+[node name="Block" type="Area2D" parent="."]
+
+[node name="HitboxBlock" type="CollisionShape2D" parent="Block"]
 position = Vector2( 17.5469, 4.4561 )
 shape = SubResource( 2 )
 disabled = true
 
-[node name="HitboxAttack" type="CollisionShape2D" parent="."]
+[node name="Attack" type="Area2D" parent="."]
+
+[node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
 position = Vector2( 32, 7 )
 shape = SubResource( 3 )
 disabled = true
