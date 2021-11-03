@@ -1,9 +1,8 @@
 extends PlayerState
 
-var timer :SceneTreeTimer
-var timer_early_exit = false
 
 func enter(_msg := {}):
+	_enter()
 	timer = get_tree().create_timer(player.attack_time)
 	yield(timer, "timeout")
 	

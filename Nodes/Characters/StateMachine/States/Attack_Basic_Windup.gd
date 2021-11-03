@@ -1,10 +1,9 @@
 extends PlayerState
 
-var timer : SceneTreeTimer
-var timer_early_exit = false
+
 
 func enter(_msg := {}):
-	timer_early_exit = false
+	_enter()
 	timer = get_tree().create_timer(player.windup_time)
 	yield(timer, "timeout")
 	

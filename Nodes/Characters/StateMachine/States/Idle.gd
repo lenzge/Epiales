@@ -2,6 +2,7 @@ extends PlayerState
 
 
 func enter(_msg := {}):
+	_enter()
 	player.velocity = Vector2.ZERO
 
 

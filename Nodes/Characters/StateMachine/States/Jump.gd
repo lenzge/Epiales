@@ -1,6 +1,7 @@
 extends PlayerState
 
 func enter(_msg := {}):
+	_enter()
 	player.velocity.y = -player.jump_impulse
 	
 func physics_update(delta):
