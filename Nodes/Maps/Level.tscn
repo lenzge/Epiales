@@ -38,7 +38,7 @@ shape = SubResource( 1 )
 position = Vector2( 1, -16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy/Area2D"]
-position = Vector2( 308.8, 497.344 )
+position = Vector2( 226.776, 555.327 )
 rotation = -0.624598
 shape = SubResource( 2 )
 

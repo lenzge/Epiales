@@ -5,6 +5,8 @@ extends Node
 # Emitted when transitioning to a new state.
 signal transitioned(state_name)
 
+var last_state
+
 # Initial state 
 export var initial_state := NodePath()
 onready var state: State = get_node(initial_state)
@@ -44,6 +46,7 @@ func transition_to(target_state_name, msg: Dictionary = {}):
 	state = get_node(target_state_name)
 	state.enter(msg)
 	animationPlayer.play(state.name)
+	last_state = target_state_name
 	emit_signal("transitioned", state.name)
 
 
