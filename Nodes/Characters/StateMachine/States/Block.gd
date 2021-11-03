@@ -3,7 +3,7 @@ extends PlayerState
 
 var timer : SceneTreeTimer
 
-func enter():
+func enter(_msg := {}):
 	player.velocity = Vector2.ZERO
 	timer = get_tree().create_timer(player.block_time)
 	yield(timer, "timeout")

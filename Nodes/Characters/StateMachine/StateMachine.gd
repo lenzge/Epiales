@@ -33,7 +33,7 @@ func _physics_process(delta):
 
 
 # Calls the current state's exit() function, then changes the active state, and calls its enter function
-func transition_to(target_state_name):
+func transition_to(target_state_name, msg: Dictionary = {}):
 	# Safety check, if the state name is correct
 	if not has_node(target_state_name):
 		print("STATEMACHINE WARNING: State not found: " + target_state_name)
@@ -42,7 +42,7 @@ func transition_to(target_state_name):
 	print("StateMachine: " + target_state_name)
 	state.exit()
 	state = get_node(target_state_name)
-	state.enter()
+	state.enter(msg)
 	animationPlayer.play(state.name)
 	emit_signal("transitioned", state.name)
 

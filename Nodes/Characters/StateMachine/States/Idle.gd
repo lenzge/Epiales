@@ -1,7 +1,7 @@
 extends PlayerState
 
 
-func enter():
+func enter(_msg := {}):
 	player.velocity = Vector2.ZERO
 
 

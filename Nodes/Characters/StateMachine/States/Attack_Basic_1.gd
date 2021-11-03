@@ -2,7 +2,7 @@ extends PlayerState
 
 var timer : SceneTreeTimer
 
-func enter():
+func enter(_msg := {}):
 	timer = get_tree().create_timer(player.attack_time)
 	yield(timer, "timeout")
 	
