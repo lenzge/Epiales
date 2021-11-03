@@ -40,6 +40,8 @@ func _process(delta):
 	# Queue Attack in Array
 	if len(last_input) <= 4:
 		if Input.is_action_just_pressed("attack"):
+			if not last_input.empty() and last_input[0] == PossibleInput.BLOCK:
+				last_input.clear()
 			last_input.push_front(PossibleInput.ATTACK_BASIC)
 		
 	# Cancel attack, clear queue
