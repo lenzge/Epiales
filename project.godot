@@ -9,10 +9,15 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Game",
+"language": "GDScript",
+"path": "res://Nodes/Game Controller/Game.gd"
+}, {
 "base": "State",
 "class": "GameState",
 "language": "GDScript",
-"path": "res://Nodes/Experimental/Game Controller/GameStateMachine/GameState.gd"
+"path": "res://Nodes/StateMachines/GameState.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -27,19 +32,20 @@ _global_script_classes=[ {
 "base": "State",
 "class": "PlayerState",
 "language": "GDScript",
-"path": "res://Nodes/Characters/StateMachine/PlayerState.gd"
+"path": "res://Nodes/StateMachines/PlayerState.gd"
 }, {
 "base": "Node",
 "class": "State",
 "language": "GDScript",
-"path": "res://Nodes/Characters/StateMachine/State.gd"
+"path": "res://Nodes/StateMachines/State.gd"
 }, {
 "base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
-"path": "res://Nodes/Characters/StateMachine/StateMachine.gd"
+"path": "res://Nodes/StateMachines/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"Game": "",
 "GameState": "",
 "GitAPI": "",
 "Player": "",
@@ -51,7 +57,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Epiales"
-run/main_scene="res://Nodes/Maps/Level.tscn"
+run/main_scene="res://Nodes/Game Controller/Game.tscn"
 config/icon="res://Nodes/Experimental/Placeholder/luci_sprite_own.png"
 
 [gdnative]

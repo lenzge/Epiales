@@ -8,7 +8,7 @@ signal transitioned(state_name)
 # Initial state 
 export var initial_state := NodePath()
 onready var state: State = get_node(initial_state)
-onready var animationPlayer = $"../AnimationPlayer"
+#onready var animationPlayer = $"../AnimationPlayer"
 
 # Assigns itself to an object
 func _ready():
@@ -43,7 +43,7 @@ func transition_to(target_state_name):
 	state.exit()
 	state = get_node(target_state_name)
 	state.enter()
-	animationPlayer.play(state.name)
+#	animationPlayer.play(state.name)
 	emit_signal("transitioned", state.name)
 
 
