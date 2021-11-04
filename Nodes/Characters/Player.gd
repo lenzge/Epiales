@@ -12,6 +12,7 @@ var velocity := Vector2(0,0)
 
 export var speed = 300
 export var attack_step_speed = 150
+export var max_attack_combo = 3
 export var gravity = 3000
 export var jump_impulse = 1000
 
@@ -19,7 +20,6 @@ export var windup_time : float = 0.2
 export var block_time : float = 0.33
 export var attack_time : float = 0.2
 export var recovery_time : float = 0.2
-
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $HitboxBlock
