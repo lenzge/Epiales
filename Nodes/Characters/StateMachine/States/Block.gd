@@ -1,9 +1,10 @@
 extends PlayerState
 
-
+var timer : SceneTreeTimer
+var timer_early_exit : bool
 
 func enter(_msg := {}):
-	_enter()
+	.enter(_msg)
 	player.velocity = Vector2.ZERO
 	timer = get_tree().create_timer(player.block_time)
 	yield(timer, "timeout")
@@ -17,6 +18,3 @@ func enter(_msg := {}):
 func update(delta):
 	# Action can't be cancelled
 	pass
-
-func exit():
-	timer_early_exit = true

@@ -1,9 +1,10 @@
 extends PlayerState
 
 var force : int
+var timer : SceneTreeTimer
 
 func enter(_msg := {}):
-	_enter()
+	.enter(_msg)
 	force = _msg.force
 	player.velocity = Vector2.ZERO
 	timer = get_tree().create_timer(_msg.time)
