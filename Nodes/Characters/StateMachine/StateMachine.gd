@@ -12,12 +12,9 @@ onready var state: State = get_node(initial_state)
 
 # Assigns itself to an object
 func _ready():
-	print("STATEMACHINE: Init. StateMachine States:")
 	yield(owner, "ready")
 	for child in get_children():
 		child.state_machine = self
-		print(child.name)
-	print("STATEMACHINE: Init. complete.")
 	state.enter()
 
 
@@ -39,7 +36,6 @@ func transition_to(target_state_name, msg: Dictionary = {}):
 		print("STATEMACHINE WARNING: State not found: " + target_state_name)
 		return
 	
-	print("StateMachine: " + target_state_name)
 	state.exit()
 	state = get_node(target_state_name)
 	state.enter(msg)

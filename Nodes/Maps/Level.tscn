@@ -3,7 +3,7 @@
 [ext_resource path="res://Nodes/Experimental/Placeholder/new_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Nodes/Characters/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Nodes/Experimental/Placeholder/icon.png" type="Texture" id=3]
-[ext_resource path="res://Nodes/Characters/CoralSailor/CoralSailor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 26.124, 26.605 )
@@ -59,7 +59,7 @@ drag_margin_top = 0.6
 drag_margin_right = 0.0
 drag_margin_bottom = 0.1
 
-[node name="Node" type="Area2D" parent="."]
+[node name="Enemy2" type="Node" parent="."]
 
-[node name="CoralSailor" parent="Node" instance=ExtResource( 4 )]
-position = Vector2( -149.907, 534.573 )
+[node name="Puppet" parent="Enemy2" instance=ExtResource( 4 )]
+position = Vector2( -2.66968, 523.257 )

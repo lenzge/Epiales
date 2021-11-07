@@ -9,10 +9,10 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "KinematicBody2D",
-"class": "CoralSailor",
+"base": "State",
+"class": "EnemyState",
 "language": "GDScript",
-"path": "res://Nodes/Characters/CoralSailor/CoralSailor.gd"
+"path": "res://Nodes/Characters/StateMachine/EnemyState.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Characters/StateMachine/PlayerState.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "Puppet",
+"language": "GDScript",
+"path": "res://Nodes/Characters/Enemies/Puppet.gd"
+}, {
 "base": "Node",
 "class": "State",
 "language": "GDScript",
@@ -40,10 +45,11 @@ _global_script_classes=[ {
 "path": "res://Nodes/Characters/StateMachine/StateMachine.gd"
 } ]
 _global_script_class_icons={
-"CoralSailor": "",
+"EnemyState": "",
 "GitAPI": "",
 "Player": "",
 "PlayerState": "",
+"Puppet": "",
 "State": "",
 "StateMachine": ""
 }
