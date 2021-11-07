@@ -20,7 +20,7 @@ export var snap_to_ground_val = 20.0
 
 onready var current_ai_state = AIState.PATROL 
 onready var current_state = State.AIR 
-onready var floor_detection_raycast : RayCast2D = $FloorDetectionRaycast
+onready var floor_detection_raycast : RayCast2D = $Node2D/FloorDetectionRaycast
 onready var player_detection_area : Area2D = get_parent()
 onready var attack_detection_area : Area2D = $Node2D/AttackDetectionArea
 onready var attack_area : Area2D = $Node2D/AttackArea
