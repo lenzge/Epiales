@@ -13,7 +13,7 @@ func enter(_msg := {}):
 	state_machine.transition_to("Idle")
 
 
-func update(delta):
+func physics_update(delta):
 	player.knockback(delta, force)
 	# Action can't be cancelled
 	
