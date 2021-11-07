@@ -9,9 +9,11 @@ const last_movement_buttons = []
 const last_input = []
 
 var velocity := Vector2(0,0)
+var can_dash := true
 
 export var speed = 300
 export var attack_step_speed = 150
+export var dash_speed = 700
 export var max_attack_combo = 3
 export var gravity = 3000
 export var jump_impulse = 1000
@@ -20,6 +22,7 @@ export var windup_time : float = 0.2
 export var block_time : float = 0.33
 export var attack_time : float = 0.2
 export var recovery_time : float = 0.2
+export var dash_time : float = 0.2
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $HitboxBlock
@@ -37,6 +40,11 @@ func pop_combat_queue():
 
 
 func _process(delta):
+	# Check if player can dash
+	if is_on_floor():
+		can_dash = true
+	# todo: add other conditions (i.e. player hits dash resetter obj)
+	
 	# Queue Attack in Array
 	if len(last_input) <= 4:
 		if Input.is_action_just_pressed("attack"):
@@ -109,6 +117,22 @@ func attack_move(delta) -> void:
 	velocity.y += gravity * delta
 	
 	velocity = move_and_slide(velocity,Vector2.UP)
+
+## Moves the player at dash speed
+##
+## Call 'dash_move' in '_physics_process' while the player is dashing.
+func dash_move(delta):
+	_flip_sprite_in_movement_dir()
+	
+	if sprite.flip_h:
+		velocity.x = -dash_speed
+	else:
+		velocity.x = dash_speed
+	
+	velocity.y += gravity * delta
+	
+	velocity = move_and_slide(velocity, Vector2.UP)
+
 
 
 # Flip Sprite and Hitbox

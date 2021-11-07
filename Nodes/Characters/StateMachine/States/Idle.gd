@@ -18,4 +18,6 @@ func update(delta):
 		state_machine.transition_to("Run")
 	elif Input.is_action_just_pressed("block"):
 		state_machine.transition_to("Block_Windup")
+	elif Input.is_action_just_pressed("dash") and player.can_dash:
+		state_machine.transition_to("Dash")
 

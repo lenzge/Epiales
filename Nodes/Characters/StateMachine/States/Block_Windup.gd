@@ -32,6 +32,8 @@ func update(delta):
 		state_machine.transition_to("Jump")
 	elif Input.is_action_pressed("attack"):
 		state_machine.transition_to("Attack_Basic_Windup")
+	elif Input.is_action_just_pressed("dash") and player.can_dash:
+		state_machine.transition_to("Dash")
 
 
 

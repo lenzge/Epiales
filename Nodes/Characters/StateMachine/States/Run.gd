@@ -16,4 +16,6 @@ func physics_update(delta):
 		state_machine.transition_to("Block_Windup")
 	elif is_equal_approx(player.get_direction(), 0.0):
 		state_machine.transition_to("Idle")
+	elif Input.is_action_just_pressed("dash")  and player.can_dash:
+		state_machine.transition_to("Dash")
 
