@@ -8,8 +8,10 @@ export var attack_speed = 200
 export var max_walk_angle = 0.7
 export var gravity = 100
 export var snap_to_ground_val = 20.0
-export var direction = 1
+export var direction = -1
 export var attack_time = 0.3
+export var attack_force = 300
+export var attack_knockback = 0.5
 
 
 onready var floor_detection_raycast : RayCast2D = $FloorDetectionRaycast
@@ -18,20 +20,27 @@ onready var attack_detection_area = $AttackDetectionArea/CollisionShape2D
 onready var attack_area  = $AttackArea/CollisionShape2D
 onready var sprite : Sprite = $Sprite
 
-signal hit(force, time, direction)
+signal hit_player(force, time, direction)
 
 var velocity : Vector2
 var chased_player : Player
 
 func _ready() -> void:
-	#attack_area.set_physics_process(false)
+	# Set everything in the right direction
 	if direction == 1:
 		sprite.flip_h = true
+	attack_area.position.x = attack_area.position.x * direction
+	attack_detection_area.position.x = attack_detection_area.position.x * direction
 	pos_raycast()
+	
+	# Connect Player and signals
 	chased_player = $"../../Player"
-	if chased_player == null:
-		print("no player found")
-	self.connect("hit", chased_player, "on_hit")
+	self.connect("hit_player", chased_player, "on_hit")
+	chased_player.connect("hit_enemy", self, "on_hit")
+	
+# debugging action
+func _physics_process(delta):
+	$Label.text = $StateMachine.state.name
 	
 func pos_raycast():
 	floor_detection_raycast.position.x = $CollisionShape2D.shape.get_extents().x * direction
@@ -41,43 +50,39 @@ func patrol(delta):
 	
 func chase(delta):
 	move(running_speed)
+	
+func fall():
+	velocity.y += gravity
+	velocity = move_and_slide(velocity, Vector2.UP)
 
 func move(speed):
+	# Turn automatically on cliffs and walls
 	if is_on_wall() or not floor_detection_raycast.is_colliding() and is_on_floor():
 		flip_direction()
-	velocity.y += gravity
 	velocity.x = speed * direction
-	velocity = move_and_slide(velocity, Vector2.UP)
+	fall()
 	
 func attack_move(delta, attack_chain) -> void:
 	if not attack_chain: # If running
 		velocity.x = attack_speed * direction
 	else: # If not running: slow step foreward
 		velocity.x = walk_speed * direction
-	
-	# Depending on game design Apply gravity here !!! If no gravity make sure that player is actually on floor and not 0.000000000001 above it
-	# --> leads to issues with canceling windup states because player is falling
-	velocity.y += gravity * delta
-	
-	velocity = move_and_slide(velocity,Vector2.UP)
+	fall()
 		
 func flip_direction():
 	direction = direction * -1
 	sprite.flip_h = not sprite.flip_h
 	pos_raycast()
-	attack_area.position.x = attack_area.position.x * direction
-	attack_detection_area.position.x = attack_detection_area.position.x * direction
+	attack_area.position.x = attack_area.position.x * -1
+	attack_detection_area.position.x = attack_detection_area.position.x * -1
 	
-func _physics_process(delta):
-	$Label.text = $StateMachine.state.name
-
-
-func _on_AttackArea_area_entered(area):
-	pass # Replace with function body.
-
+func knockback(delta, force, direction):
+	velocity.x = force * direction
+	fall()
 
 func _on_AttackArea_body_entered(body):
-	var force = 300
-	var time = 0.5
-	emit_signal("hit", force, time, direction)
+	emit_signal("hit_player", attack_force, attack_knockback, direction)
+	
+func on_hit(force, time, direction):
+	$StateMachine.transition_to("Stunned", {"force" :force, "time": time, "direction": direction})
 	

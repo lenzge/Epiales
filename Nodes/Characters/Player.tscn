@@ -32,6 +32,7 @@ extents = Vector2( 16.4359, 29.0712 )
 
 [sub_resource type="Animation" id=4]
 resource_name = "Attack_Basic"
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -78,7 +79,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 0.6 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ false, true ]
+"values": [ false, false ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Sprite:scale")
@@ -241,18 +242,6 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Hitbox/Hitbox:disabled")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -618,13 +607,6 @@ __meta__ = {
 position = Vector2( 0.280609, 4.26873 )
 shape = SubResource( 1 )
 
-[node name="Hitbox" type="Area2D" parent="."]
-collision_mask = 16
-
-[node name="Hitbox" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2( -0.0343628, 4.26873 )
-shape = SubResource( 1 )
-
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 4 )
 initial_state = NodePath("Idle")
@@ -690,5 +672,4 @@ anims/Block_Windup = SubResource( 9 )
 anims/Idle = SubResource( 10 )
 anims/Stunned = SubResource( 11 )
 
-[connection signal="area_entered" from="Hitbox" to="." method="_on_Body_area_entered"]
-[connection signal="body_entered" from="Hitbox" to="." method="_on_Body_body_entered"]
+[connection signal="body_entered" from="Attack" to="StateMachine/Attack_Basic" method="_on_Attack_body_entered"]

@@ -21,13 +21,18 @@ export var block_time : float = 0.3
 export var attack_time : float = 0.2
 export var recovery_time : float = 0.2
 
+export(Array, int) var attack_force = [300, 300, 300, 300, 300]
+export(Array, int) var attack_knockback = [0.2, 0.2, 0.5]
+
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
 
+signal hit_enemy(force, time, direction)
+
+var direction : int = 1
 
 
-	
 func get_direction():
 	return velocity.length()
 	# Below returns zero even if player is moving but left and right are pressed.
@@ -118,10 +123,12 @@ func attack_move(delta) -> void:
 # Flip Sprite and Hitbox
 func _flip_sprite_in_movement_dir() -> void:
 	if velocity.x < 0:
+		direction = -1
 		sprite.flip_h = true
 		hitbox_block.position.x = -abs(hitbox_block.position.x)
 		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
 	elif velocity.x > 0:
+		direction = 1
 		sprite.flip_h = false
 		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
@@ -137,3 +144,8 @@ func _physics_process(delta):
 func on_hit(force, time, direction):
 	$StateMachine.transition_to("Stunned", {"force" :force, "time": time, "direction": direction})
 	
+	
+func on_attack_enemy(attack_count):
+	emit_signal("hit_enemy",attack_force[attack_count], attack_knockback[attack_count], direction)
+	print(attack_force[attack_count])
+
