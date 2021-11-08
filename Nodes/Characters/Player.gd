@@ -21,8 +21,8 @@ export var block_time : float = 0.3
 export var attack_time : float = 0.2
 export var recovery_time : float = 0.2
 
-export(Array, int) var attack_force = [300, 300, 300, 300, 300]
-export(Array, int) var attack_knockback = [0.2, 0.2, 0.5]
+export(Array, int) var attack_force = [300, 300, 400]
+export(Array, int) var attack_knockback = [0.2, 0.2, 0.8]
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
@@ -147,5 +147,4 @@ func on_hit(force, time, direction):
 	
 func on_attack_enemy(attack_count):
 	emit_signal("hit_enemy",attack_force[attack_count], attack_knockback[attack_count], direction)
-	print(attack_force[attack_count])
 

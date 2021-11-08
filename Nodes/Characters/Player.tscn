@@ -32,7 +32,9 @@ extents = Vector2( 16.4359, 29.0712 )
 
 [sub_resource type="Animation" id=4]
 resource_name = "Attack_Basic"
+length = 0.6
 loop = true
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -76,10 +78,10 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.21, 0.4, 0.41, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ false, false ]
+"values": [ false, true, false, true, false, true ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Sprite:scale")
@@ -590,6 +592,7 @@ collision_mask = 40
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.929412, 0.45098, 0.45098, 1 )
 position = Vector2( -1.52588e-05, -21.703 )
 scale = Vector2( 0.239182, 0.239182 )
 texture = ExtResource( 1 )
