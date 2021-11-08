@@ -17,7 +17,7 @@ export var gravity = 3000
 export var jump_impulse = 1000
 
 export var windup_time : float = 0.2
-export var block_time : float = 0.2
+export var block_time : float = 0.3
 export var attack_time : float = 0.2
 export var recovery_time : float = 0.2
 
@@ -27,6 +27,7 @@ onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
 
 
 
+	
 func get_direction():
 	return velocity.length()
 	# Below returns zero even if player is moving but left and right are pressed.
@@ -125,19 +126,14 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 
-func knockback(delta, force):
-	if sprite.flip_h == true:
-		velocity.x = force
-	else:
-		velocity.x = -force
+func knockback(delta, force, direction):
+	velocity.x = force * direction
 	fall(delta)
 
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
 
 
-func _on_Body_area_entered(area):
-	# switch damage force, depending on enemy attack
-	var force = 300
-	var time = 0.5
-	$StateMachine.transition_to("Stunned", {"force" :force, "time": time})
+func on_hit(force, time, direction):
+	$StateMachine.transition_to("Stunned", {"force" :force, "time": time, "direction": direction})
+	

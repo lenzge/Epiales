@@ -1,19 +1,21 @@
 extends PlayerState
 
-var force : int
-var timer : SceneTreeTimer
+var force
+var direction
+var Stimer : SceneTreeTimer
 
 func enter(_msg := {}):
 	.enter(_msg)
 	force = _msg.force
+	direction = _msg.direction
 	player.velocity = Vector2.ZERO
-	timer = get_tree().create_timer(_msg.time)
-	yield(timer, "timeout")
+	Stimer = get_tree().create_timer(_msg.time)
+	yield(Stimer, "timeout")
 	
 	state_machine.transition_to("Idle")
 
 
 func update(delta):
-	player.knockback(delta, force)
+	player.knockback(delta, force, direction)
 	# Action can't be cancelled
 	

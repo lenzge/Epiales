@@ -1,28 +1,14 @@
 extends PlayerState
 
-var timer : Timer
+
 var attack_count : int
-
-func _ready():
-	._ready()
-	yield(owner, "ready")
-	timer = Timer.new()
-	timer.set_autostart(false)
-	timer.set_one_shot(true)
-	timer.set_timer_process_mode(0)
-	timer.set_wait_time(player.attack_time)
-	timer.connect("timeout", self, "_stop_attack")
-	self.add_child(timer)
-
 
 func enter(_msg := {}):
 	.enter(_msg)
 	attack_count = 0
+	timer.set_wait_time(player.attack_time)
+	timer.connect("timeout", self, "_stop_attack")
 	timer.start()
-
-
-func exit():
-	timer.stop()
 
 
 func physics_update(delta):

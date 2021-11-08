@@ -3,10 +3,15 @@ extends EnemyState
 func enter(_msg := {}):
 	.enter(_msg)
 	enemy.velocity = Vector2.ZERO
-	print("lol")
 
 func physics_update(delta):
-	if not enemy.is_on_floor():
-		state_machine.transition_to("Air")
-		return
-	enemy.move(delta)
+	enemy.patrol(delta)
+
+
+func _on_PlayerDetectionArea_body_entered(body):
+	if body == enemy.chased_player:
+		state_machine.transition_to("Chase")
+
+
+func _on_AttackDetectionArea_body_entered(body):
+	state_machine.transition_to("Attack_Windup")
