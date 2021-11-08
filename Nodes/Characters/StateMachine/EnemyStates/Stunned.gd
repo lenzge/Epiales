@@ -10,7 +10,6 @@ func enter(_msg := {}):
 	enemy.velocity = Vector2.ZERO
 	timer.set_wait_time(_msg.time)
 	print(timer.wait_time)
-	timer.connect("timeout", self, "_on_timeout")
 	timer.start()
 	
 

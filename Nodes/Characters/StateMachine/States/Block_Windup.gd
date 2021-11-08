@@ -6,9 +6,7 @@ func enter(_msg := {}):
 	.enter(_msg)
 	player.velocity = Vector2.ZERO
 	timer.set_wait_time(player.attack_time)
-	timer.connect("timeout", self, "_stop_block_recovery")
 	timer.start()
-
 
 
 
@@ -24,6 +22,6 @@ func update(delta):
 
 
 
-func _stop_block_recovery():
+func _on_timeout():
 	player.pop_combat_queue()
 	state_machine.transition_to("Block")

@@ -7,7 +7,6 @@ func enter(_msg := {}):
 	.enter(_msg)
 	attack_count = 1
 	timer.set_wait_time(player.attack_time)
-	timer.connect("timeout", self, "_stop_attack")
 	timer.start()
 	self.connect("attack_enemy", player, "on_attack_enemy")
 
@@ -16,7 +15,7 @@ func physics_update(delta):
 	player.attack_move(delta)
 
 
-func _stop_attack():
+func _on_timeout():
 	# Transition to next state
 	var input = player.pop_combat_queue()
 	if input == player.PossibleInput.ATTACK_BASIC && attack_count < player.max_attack_combo:

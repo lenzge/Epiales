@@ -14,6 +14,7 @@ func _ready():
 	timer.set_autostart(false)
 	timer.set_one_shot(true)
 	timer.set_timer_process_mode(0)
+	timer.connect("timeout", self, "_on_timeout")
 	self.add_child(timer)
 
 func enter(_msg := {}):

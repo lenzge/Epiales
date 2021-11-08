@@ -12,7 +12,6 @@ func enter(_msg := {}):
 	else:
 		attack_chain = false
 	timer.set_wait_time(enemy.attack_time)
-	timer.connect("timeout", self, "_stop_attack")
 	timer.start()
 	
 
@@ -21,7 +20,7 @@ func physics_update(delta):
 	enemy.attack_move(delta,attack_chain)
 
 
-func _stop_attack():
+func _on_timeout():
 	state_machine.transition_to("Attack_Recovery")
 	
 

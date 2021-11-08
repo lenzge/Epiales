@@ -9,13 +9,15 @@ func enter(_msg := {}):
 	force = _msg.force
 	direction = _msg.direction
 	player.velocity = Vector2.ZERO
-	Stimer = get_tree().create_timer(_msg.time)
-	yield(Stimer, "timeout")
+	timer.set_wait_time(_msg.time)
+	timer.start()
 	
-	state_machine.transition_to("Idle")
 
 
 func update(delta):
 	player.knockback(delta, force, direction)
 	# Action can't be cancelled
+	
+func _on_timeout():
+	state_machine.transition_to("Idle")
 	

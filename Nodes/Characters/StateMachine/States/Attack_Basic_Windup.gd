@@ -4,7 +4,6 @@ extends PlayerState
 func enter(_msg := {}):
 	.enter(_msg)
 	timer.set_wait_time(player.windup_time)
-	timer.connect("timeout", self, "_stop_attack_windup")
 	timer.start()
 
 
@@ -23,7 +22,7 @@ func physics_update(delta):
 	player.move(delta)
 
 
-func _stop_attack_windup():
+func _on_timeout():
 	var input = player.pop_combat_queue()
 	if input == null:
 		state_machine.transition_to("Idle")
