@@ -11,4 +11,5 @@ func _on_PlayerDetectionArea_body_exited(body):
 		state_machine.transition_to("Patrol")
 
 func _on_AttackDetectionArea_body_entered(body):
-	state_machine.transition_to("Attack")
+	if state_machine.state == self:
+		state_machine.transition_to("Attack")

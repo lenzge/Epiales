@@ -22,7 +22,7 @@ export var attack_time : float = 0.2
 export var recovery_time : float = 0.2
 
 export(Array, int) var attack_force = [200, 300, 400]
-export(Array, int) var attack_knockback = [0.2, 0.2, 0.5]
+export(Array, int) var attack_knockback = [0.2, 0.2, 0.8]
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
@@ -142,7 +142,10 @@ func _physics_process(delta):
 
 
 func on_hit(force, time, direction):
-	$StateMachine.transition_to("Stunned", {"force" :force, "time": time, "direction": direction})
+	if $StateMachine.state.name == "Block" and not direction == self.direction:
+		print("block")
+	else:
+		$StateMachine.transition_to("Stunned", {"force" :force, "time": time, "direction": direction})
 	
 	
 func on_attack_enemy(attack_count):

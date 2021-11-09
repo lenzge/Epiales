@@ -9,9 +9,10 @@ func physics_update(delta):
 
 
 func _on_PlayerDetectionArea_body_entered(body):
-	if body == enemy.chased_player:
+	if state_machine.state == self and body == enemy.chased_player:
 		state_machine.transition_to("Chase")
 
 
-func _on_AttackDetectionArea_body_entered(body):
-	state_machine.transition_to("Attack_Windup")
+func _on_AttackWindupDetectionArea_body_entered(body):
+	if state_machine.state == self and body == enemy.chased_player:
+		state_machine.transition_to("Attack_Windup")
