@@ -22,7 +22,7 @@ export var windup_time : float = 0.1
 export var block_time : float = 0.3
 export var attack_time : float = 0.2
 export var recovery_time : float = 0.2
-export var dash_time : float = 0.2
+export var dash_time : float = 0.3
 
 export(Array, int) var attack_force = [200, 300, 400]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5]
