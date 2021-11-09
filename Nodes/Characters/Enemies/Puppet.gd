@@ -2,16 +2,17 @@ class_name Puppet
 extends KinematicBody2D
 
 
+export var gravity = 100
+export var direction = -1
+
 export var walk_speed = 80
 export var running_speed = 230
 export var attack_speed = 300
-export var max_walk_angle = 0.7
-export var gravity = 100
-export var snap_to_ground_val = 20.0
-export var direction = -1
+
+export var windup_time = 0.3
 export var attack_time = 0.3
 export var recovery_time = 1.5
-export var windup_time = 0.3
+
 export(Array, int) var attack_force = [400, 500, 400]
 export(Array, int) var attack_knockback = [0.4, 0.2, 0.4]
 export var max_attack_combo = 2
@@ -63,7 +64,8 @@ func fall():
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func move(speed):
-	# Turn automatically on cliffs and walls
+	# Turn automatically on cliffs 
+	# _is_on_wall() cant't be used because of weird interactions with the player. Other solution
 	if not floor_detection_raycast.is_colliding() and is_on_floor():
 		flip_direction()
 	velocity.x = speed * direction
