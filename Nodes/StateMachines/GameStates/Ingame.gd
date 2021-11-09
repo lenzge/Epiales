@@ -6,6 +6,7 @@ const LEVEL = preload("res://Nodes/Experimental/Maps/Level.tscn")
 
 var player_instance
 var level_instance
+var player_spawn
 
 # Called by the state machine upon changing the active state
 func enter():
@@ -15,6 +16,8 @@ func enter():
 
 	if !player_instance:
 		player_instance = PLAYER.instance()
+		player_spawn = level_instance.get_node("PlayerSpawn").position
+		player_instance.position = player_spawn
 		var camera = Camera2D.new()
 		camera.current = true			#placeholder, to be determined how to implement
 		player_instance.add_child(camera)
