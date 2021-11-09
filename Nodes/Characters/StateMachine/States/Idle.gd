@@ -1,7 +1,8 @@
 extends PlayerState
 
 
-func enter():
+func enter(_msg := {}):
+	.enter(_msg)
 	player.velocity = Vector2.ZERO
 
 
@@ -14,7 +15,7 @@ func update(delta):
 		state_machine.transition_to("Attack_Basic_Windup")
 	elif Input.is_action_just_pressed("jump"):
 		state_machine.transition_to("Jump")
-	elif Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
+	elif not player.last_movement_buttons.empty():
 		state_machine.transition_to("Run")
 	elif Input.is_action_just_pressed("block"):
 		state_machine.transition_to("Block_Windup")

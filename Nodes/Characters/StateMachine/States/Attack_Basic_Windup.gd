@@ -14,7 +14,8 @@ func _ready():
 	self.add_child(timer)
 
 
-func enter():
+func enter(_msg := {}):
+	.enter(_msg)
 	timer.start()
 
 
@@ -42,6 +43,6 @@ func _stop_attack_windup():
 	if input == null:
 		state_machine.transition_to("Idle")
 	elif input == player.PossibleInput.ATTACK_BASIC:
-		state_machine.transition_to("Attack_Basic_1")
+		state_machine.transition_to("Attack_Basic")
 	elif input == player.PossibleInput.BLOCK:
 		state_machine.transition_to("Block_Windup")

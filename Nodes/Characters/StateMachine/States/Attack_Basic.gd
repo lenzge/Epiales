@@ -15,7 +15,8 @@ func _ready():
 	self.add_child(timer)
 
 
-func enter():
+func enter(_msg := {}):
+	.enter(_msg)
 	attack_count = 0
 	timer.start()
 

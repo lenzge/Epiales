@@ -14,7 +14,8 @@ func _ready():
 	self.add_child(timer)
 
 
-func enter():
+func enter(_msg := {}):
+	.enter(_msg)
 	player.velocity = Vector2.ZERO
 	timer.start()
 
