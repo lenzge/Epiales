@@ -16,7 +16,6 @@ func _ready():
 	yield(owner, "ready")
 	for child in get_children():
 		child.state_machine = self
-		print(child.name)
 	print("STATEMACHINE: Init. complete.")
 	state.enter()
 
@@ -39,7 +38,6 @@ func transition_to(target_state_name):
 		print("STATEMACHINE WARNING: State not found: " + target_state_name)
 		return
 	
-	print("StateMachine: " + target_state_name)
 	state.exit()
 	state = get_node(target_state_name)
 	state.enter()

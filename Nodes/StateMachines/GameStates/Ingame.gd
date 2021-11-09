@@ -16,7 +16,8 @@ func enter():
 
 	if !player_instance:
 		player_instance = PLAYER.instance()
-		player_spawn = level_instance.get_node("PlayerSpawn").position
+		player_spawn = level_instance.get_player_spawn()
+		print(player_spawn)
 		player_instance.position = player_spawn
 		var camera = Camera2D.new()
 		camera.current = true			#placeholder, to be determined how to implement
