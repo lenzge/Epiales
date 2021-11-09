@@ -20,9 +20,10 @@ tile_data = PoolIntArray( 720924, 1, 0, 720925, 1, 0, 720926, 1, 0, 720927, 1, 0
 
 [node name="Puppet" parent="Enemy2" instance=ExtResource( 4 )]
 position = Vector2( -181.538, 531.266 )
+direction = 1
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 58.4426, 467.001 )
+position = Vector2( 110.827, 471.763 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2( 3.54099, -41.7799 )

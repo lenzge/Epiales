@@ -2,17 +2,17 @@ class_name Puppet
 extends KinematicBody2D
 
 
-export var walk_speed = 50
-export var running_speed = 100
-export var attack_speed = 200
+export var walk_speed = 80
+export var running_speed = 230
+export var attack_speed = 300
 export var max_walk_angle = 0.7
 export var gravity = 100
 export var snap_to_ground_val = 20.0
 export var direction = -1
 export var attack_time = 0.3
-export var recovery_time = 2
-export var windup_time = 0.2
-export(Array, int) var attack_force = [300, 300, 400]
+export var recovery_time = 1.5
+export var windup_time = 0.3
+export(Array, int) var attack_force = [400, 500, 400]
 export(Array, int) var attack_knockback = [0.4, 0.2, 0.4]
 export var max_attack_combo = 2
 
@@ -64,7 +64,7 @@ func fall():
 
 func move(speed):
 	# Turn automatically on cliffs and walls
-	if is_on_wall() or not floor_detection_raycast.is_colliding() and is_on_floor():
+	if not floor_detection_raycast.is_colliding() and is_on_floor():
 		flip_direction()
 	velocity.x = speed * direction
 	fall()
@@ -77,10 +77,10 @@ func move_backwards(delta):
 	fall()
 	
 func attack_move(delta, attack_chain) -> void:
-	if not attack_chain: # If running
+	if not attack_chain: 
 		velocity.x = attack_speed * direction
-	else: # If not running: slow step foreward
-		velocity.x = attack_speed * direction
+	else:
+		velocity.x = running_speed * direction
 	fall()
 		
 func flip_direction():

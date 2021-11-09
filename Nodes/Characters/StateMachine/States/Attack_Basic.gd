@@ -27,4 +27,5 @@ func _on_timeout():
 		state_machine.transition_to("Attack_Basic_Recovery")
 
 func _on_Attack_body_entered(body):
+	print("PLAYER: Attack Enemy witch attack: ", attack_count)
 	emit_signal("attack_enemy", attack_count -1)

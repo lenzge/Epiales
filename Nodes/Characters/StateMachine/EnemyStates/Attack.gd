@@ -16,6 +16,7 @@ func enter(_msg := {}):
 	timer.set_wait_time(enemy.attack_time)
 	timer.start()
 	self.connect("attack_player", enemy, "on_attack_player")
+	enemy.chased_player.connect("block", self, "on_block")
 	
 
 
@@ -32,5 +33,8 @@ func _on_timeout():
 	
 	
 func _on_AttackArea_body_entered(body):
-	print(attack_count)
+	print("ENEMY: Attack Player witch attack: ", attack_count)
 	emit_signal("attack_player", attack_count)
+	
+func on_block():
+	state_machine.transition_to("Attack_Recovery")

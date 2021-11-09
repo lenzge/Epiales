@@ -16,6 +16,7 @@ extents = Vector2( 22.411, 36.0031 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "Attack"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -196,6 +197,8 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=6]
 resource_name = "Patrol"
+length = 3.0
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("AttackArea/CollisionShape2D:disabled")
 tracks/0/interp = 1
@@ -239,10 +242,10 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 2.9 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ false, true ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("PlayerDetectionArea/Left:disabled")
@@ -251,10 +254,10 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 2.9 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -283,7 +286,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.226341, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 0.917647, 0.180392, 0.180392, 1 ), Color( 0.933333, 0.32549, 0.32549, 1 ), Color( 0.92549, 0.627451, 0.627451, 1 ) ]
+"values": [ Color( 0.917647, 0.180392, 0.180392, 0.392157 ), Color( 0.933333, 0.32549, 0.32549, 1 ), Color( 0.92549, 0.627451, 0.627451, 1 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("AttackArea/CollisionShape2D:disabled")
@@ -302,16 +305,16 @@ tracks/2/keys = {
 extents = Vector2( 10.2695, 41.4635 )
 
 [sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 15.496, 41.9932 )
+extents = Vector2( 15.496, 31.7351 )
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 24, 40 )
+extents = Vector2( 24, 31.7351 )
 
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 104, 40 )
+extents = Vector2( 128, 40 )
 
 [sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 104, 40.2489 )
+extents = Vector2( 128, 40.2489 )
 
 [node name="Puppet" type="KinematicBody2D"]
 collision_layer = 8
@@ -352,25 +355,25 @@ disabled = true
 collision_layer = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackDetectionArea"]
-position = Vector2( 34.0582, -0.264862 )
+position = Vector2( 32, 8 )
 shape = SubResource( 9 )
 
 [node name="AttackWindupDetectionArea" type="Area2D" parent="."]
 collision_layer = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackWindupDetectionArea"]
-position = Vector2( 56, -0.26487 )
+position = Vector2( 56, 8 )
 shape = SubResource( 10 )
 
 [node name="PlayerDetectionArea" type="Area2D" parent="."]
 collision_layer = 64
 
 [node name="Right" type="CollisionShape2D" parent="PlayerDetectionArea"]
-position = Vector2( 104, 0.248855 )
+position = Vector2( 128, 0.248855 )
 shape = SubResource( 11 )
 
 [node name="Left" type="CollisionShape2D" parent="PlayerDetectionArea"]
-position = Vector2( -104, 0.248855 )
+position = Vector2( -128, 0.248855 )
 shape = SubResource( 12 )
 
 [node name="StateMachine" type="Node" parent="."]

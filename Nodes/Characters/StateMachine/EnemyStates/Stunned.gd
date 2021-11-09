@@ -9,7 +9,6 @@ func enter(_msg := {}):
 	direction = _msg.direction
 	enemy.velocity = Vector2.ZERO
 	timer.set_wait_time(_msg.time)
-	print(timer.wait_time)
 	timer.start()
 	
 
