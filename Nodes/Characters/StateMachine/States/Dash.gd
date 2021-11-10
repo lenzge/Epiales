@@ -15,7 +15,8 @@ func _ready():
 	self.add_child(timer)
 
 
-func enter():
+func enter(_msg := {}):
+	.enter(_msg)
 	timer.start()
 	# todo: change player hitbox so player can deal damage while dashing
 
