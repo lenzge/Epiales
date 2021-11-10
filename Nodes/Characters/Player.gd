@@ -120,5 +120,6 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 
+
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
