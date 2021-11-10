@@ -14,3 +14,4 @@ func get_player_spawn() -> Vector2:
 
 func get_enemy_spawns():
 	return enemy_spawn_positions
+
