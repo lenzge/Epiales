@@ -3,7 +3,7 @@ extends GameState
 var startscreen
 
 # Called by the state machine upon changing the active state
-func enter():
+func enter(_msg := {}):
 	#placeholder startscreen
 	startscreen = Panel.new()
 	var message = Label.new()

@@ -21,7 +21,7 @@ func physics_update(_delta):
 
 
 # Called by the state machine upon changing the active state
-func enter():
+func enter(_msg := {}):
 	pass
 
 

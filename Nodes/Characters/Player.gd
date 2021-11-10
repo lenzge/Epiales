@@ -12,18 +12,19 @@ var velocity := Vector2(0,0)
 
 export var speed = 300
 export var attack_step_speed = 150
+export var max_attack_combo = 3
 export var gravity = 3000
 export var jump_impulse = 1000
 
 export var windup_time : float = 0.2
-export var block_time : float = 0.33
+export var block_time : float = 0.2
 export var attack_time : float = 0.2
 export var recovery_time : float = 0.2
 
-
 onready var sprite : Sprite = $Sprite
-onready var hitbox_block : CollisionShape2D = $HitboxBlock
-onready var hitbox_attack : CollisionShape2D = $HitboxAttack
+onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
+onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
+
 
 
 func get_direction():
@@ -40,6 +41,8 @@ func _process(delta):
 	# Queue Attack in Array
 	if len(last_input) <= 4:
 		if Input.is_action_just_pressed("attack"):
+			if not last_input.empty() and last_input[0] == PossibleInput.BLOCK:
+				last_input.clear()
 			last_input.push_front(PossibleInput.ATTACK_BASIC)
 		
 	# Cancel attack, clear queue
@@ -79,12 +82,14 @@ func move(delta):
 	else:
 		velocity.x = 0
 		
+	fall(delta)
+
+func fall(delta):
 	# Apply gravity
 	velocity.y += gravity * delta
 	
 	# Move character
 	velocity = move_and_slide(velocity,Vector2.UP)
-
 
 # Lets the player step forward.
 # Call while attacking
@@ -120,5 +125,21 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 
+
+func knockback(delta, force):
+	if sprite.flip_h == true:
+		velocity.x = force
+	else:
+		velocity.x = -force
+	fall(delta)
+
+
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
+
+
+func _on_Body_area_entered(area):
+	# switch damage force, depending on enemy attack
+	var force = 300
+	var time = 0.5
+	$StateMachine.transition_to("Stunned", {"force" :force, "time": time})

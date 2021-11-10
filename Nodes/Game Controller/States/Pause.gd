@@ -4,7 +4,7 @@ var pausescreen
 onready var ingame = $"../../HUD"
 
 # Called by the state machine upon changing the active state
-func enter():
+func enter(_msg := {}):
 	get_tree().paused = true
 	if !pausescreen:
 		#placeholder pausescreen

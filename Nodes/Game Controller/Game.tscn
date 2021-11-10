@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Nodes/Game Controller/Game.gd" type="Script" id=1]
-[ext_resource path="res://Nodes/StateMachines/GameStates/Ingame.gd" type="Script" id=2]
-[ext_resource path="res://Nodes/StateMachines/StateMachine.gd" type="Script" id=3]
-[ext_resource path="res://Nodes/StateMachines/GameStates/Start.gd" type="Script" id=4]
-[ext_resource path="res://Nodes/StateMachines/GameStates/Pause.gd" type="Script" id=5]
+[ext_resource path="res://Nodes/Game Controller/States/Start.gd" type="Script" id=2]
+[ext_resource path="res://Nodes/Util/StateMachine.gd" type="Script" id=3]
+[ext_resource path="res://Nodes/Game Controller/States/Ingame.gd" type="Script" id=4]
+[ext_resource path="res://Nodes/Game Controller/States/Pause.gd" type="Script" id=5]
 
 [node name="Game" type="Node"]
 pause_mode = 2
@@ -15,10 +15,10 @@ script = ExtResource( 3 )
 initial_state = NodePath("Start")
 
 [node name="Start" type="Node" parent="StateMachine"]
-script = ExtResource( 4 )
+script = ExtResource( 2 )
 
 [node name="Ingame" type="Node" parent="StateMachine"]
-script = ExtResource( 2 )
+script = ExtResource( 4 )
 
 [node name="Pause" type="Node" parent="StateMachine"]
 script = ExtResource( 5 )

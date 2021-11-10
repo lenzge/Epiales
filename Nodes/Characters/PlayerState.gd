@@ -1,7 +1,10 @@
 class_name PlayerState
 extends State
 
-var player : KinematicBody2D
+
+var player : Player
+onready var animationPlayer = $"../../AnimationPlayer"
+
 
 # Owner of the statemachine is a player
 func _ready():
@@ -9,3 +12,5 @@ func _ready():
 	player = owner as KinematicBody2D
 	assert(player != null)
 
+func enter(_msg := {}):
+	animationPlayer.play(self.name)
