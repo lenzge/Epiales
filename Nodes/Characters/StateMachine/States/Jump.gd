@@ -1,6 +1,7 @@
 extends PlayerState
 
-func enter():
+func enter(_msg := {}):
+	.enter(_msg)
 	player.velocity.y = -player.jump_impulse
 	
 func physics_update(delta):
@@ -11,4 +12,6 @@ func physics_update(delta):
 			state_machine.transition_to("Idle")
 		else:
 			state_machine.transition_to("Run")
+	elif Input.is_action_just_pressed("dash")  and player.can_dash:
+		state_machine.transition_to("Dash")
 
