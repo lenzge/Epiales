@@ -14,20 +14,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Game Controller/Game.gd"
 }, {
-"base": "State",
+"base": "Reference",
 "class": "GameState",
 "language": "GDScript",
-"path": "res://Nodes/StateMachines/GameState.gd"
+"path": "res://Nodes/Game Controller/GameState.gd"
 }, {
 "base": "",
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://addons/godot-git-plugin/git_api.gdns"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "Level",
 "language": "GDScript",
-"path": "res://Nodes/Experimental/Maps/Level.gd"
+"path": "res://Nodes/Maps/BaseLevel.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
@@ -37,17 +37,17 @@ _global_script_classes=[ {
 "base": "State",
 "class": "PlayerState",
 "language": "GDScript",
-"path": "res://Nodes/StateMachines/PlayerState.gd"
+"path": "res://Nodes/Characters/PlayerState.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "State",
 "language": "GDScript",
-"path": "res://Nodes/StateMachines/State.gd"
+"path": "res://Nodes/Util/State.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "StateMachine",
 "language": "GDScript",
-"path": "res://Nodes/StateMachines/StateMachine.gd"
+"path": "res://Nodes/Util/StateMachine.gd"
 } ]
 _global_script_class_icons={
 "Game": "",

@@ -9,7 +9,7 @@ var level_instance : Level
 var player_spawn : Position2D
 
 # Called by the state machine upon changing the active state
-func enter():
+func enter(_msg := {}):
 	if !level_instance:
 		level_instance = LEVEL.instance()
 		game.add_child(level_instance)
