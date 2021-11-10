@@ -5,6 +5,7 @@ extends KinematicBody2D
 export var gravity = 100
 export var direction = -1
 
+# Different speed in different states
 export var walk_speed = 80
 export var running_speed = 230
 export var attack_speed = 300
@@ -13,6 +14,7 @@ export var windup_time = 0.3
 export var attack_time = 0.3
 export var recovery_time = 1.5
 
+# Attack combo with different force
 export(Array, int) var attack_force = [400, 500, 400]
 export(Array, int) var attack_knockback = [0.4, 0.2, 0.4]
 export var max_attack_combo = 2
@@ -25,9 +27,11 @@ onready var attack_area  = $AttackArea/CollisionShape2D
 onready var attack_windup_detection_area = $AttackWindupDetectionArea/CollisionShape2D
 onready var sprite : Sprite = $Sprite
 
+var velocity : Vector2
+
 signal hit_player(force, time, direction)
 
-var velocity : Vector2
+# Enemy has to know the player to interact with
 var chased_player : Player
 
 func _ready() -> void:

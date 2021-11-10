@@ -24,6 +24,8 @@ direction = 1
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 110.827, 471.763 )
+windup_time = 0.05
+recovery_time = 0.1
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2( 3.54099, -41.7799 )

@@ -367,7 +367,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 10.2695, 41.4635 )
+extents = Vector2( 10.2695, 31.8329 )
 
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 15.496, 31.7351 )
@@ -408,7 +408,7 @@ anims/Stunned = SubResource( 7 )
 collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2( 28.6901, -5.26487 )
+position = Vector2( 28.6901, 3.73513 )
 shape = SubResource( 8 )
 
 [node name="AttackDetectionArea" type="Area2D" parent="."]
