@@ -6,6 +6,7 @@ export var gravity = 100
 export var direction = -1
 
 # Different speed in different states
+export var windup_speed = 40
 export var walk_speed = 80
 export var running_speed = 230
 export var attack_speed = 300
@@ -41,7 +42,7 @@ func _ready() -> void:
 	attack_area.position.x = attack_area.position.x * direction
 	attack_detection_area.position.x = attack_detection_area.position.x * direction
 	attack_windup_detection_area.position.x = attack_windup_detection_area.position.x * direction
-	pos_raycast()
+	floor_detection_raycast.position.x = floor_detection_raycast.position.x * direction
 	
 	# Connect Player and signals
 	chased_player = $"../../Player"
@@ -51,17 +52,20 @@ func _ready() -> void:
 # debugging action
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
-	
-func pos_raycast():
-	floor_detection_raycast.position.x = $CollisionShape2D.shape.get_extents().x * direction
+
+func find_player():
+	if direction == 1 and chased_player.position.x < position.x or direction == -1 and chased_player.position.x > position.x:
+		flip_direction()
+
+func windup_move(delta):
+	move(windup_speed)
 
 func patrol(delta):
 	move(walk_speed)
 	
 func chase(delta):
-	if direction == 1 and chased_player.position.x < position.x or direction == -1 and chased_player.position.x > position.x:
-		flip_direction()
-	move(running_speed)
+	if floor_detection_raycast.is_colliding() and is_on_floor():
+		move(running_speed)
 	
 func fall():
 	velocity.y += gravity
@@ -92,18 +96,19 @@ func attack_move(delta, attack_chain) -> void:
 func flip_direction():
 	direction = direction * -1
 	sprite.flip_h = not sprite.flip_h
-	pos_raycast()
 	attack_area.position.x = attack_area.position.x * -1
 	attack_detection_area.position.x = attack_detection_area.position.x * -1
 	attack_windup_detection_area.position.x = attack_windup_detection_area.position.x * -1
+	floor_detection_raycast.position.x = floor_detection_raycast.position.x * -1
 	
 func knockback(delta, force, direction):
 	velocity.x = force * direction
 	fall()
 
 	
-func on_hit(force, time, direction):
-	$StateMachine.transition_to("Stunned", {"force" :force, "time": time, "direction": direction})
+func on_hit(force, time, direction, body):
+	if body == self:
+		$StateMachine.transition_to("Stunned", {"force" :force, "time": time, "direction": direction})
 	
 	
 func on_attack_player(attack_count):

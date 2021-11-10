@@ -31,7 +31,7 @@ onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
 
-signal hit_enemy(force, time, direction)
+signal hit_enemy(force, time, direction, body)
 signal block
 
 var direction : int = 1
@@ -147,16 +147,17 @@ func dash_move(delta):
 
 # Flip Sprite and Hitbox
 func _flip_sprite_in_movement_dir() -> void:
-	if velocity.x < 0:
-		direction = -1
-		sprite.flip_h = true
-		hitbox_block.position.x = -abs(hitbox_block.position.x)
-		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
-	elif velocity.x > 0:
-		direction = 1
-		sprite.flip_h = false
-		hitbox_block.position.x = abs(hitbox_block.position.x)
-		hitbox_attack.position.x = abs(hitbox_attack.position.x)
+	if not last_movement_buttons.empty():
+		if last_movement_buttons[0] == MovementDir.LEFT:#velocity.x < 0:
+			direction = -1
+			sprite.flip_h = true
+			hitbox_block.position.x = -abs(hitbox_block.position.x)
+			hitbox_attack.position.x = -abs(hitbox_attack.position.x)
+		elif last_movement_buttons[0] == MovementDir.RIGHT:#velocity.x > 0:
+			direction = 1
+			sprite.flip_h = false
+			hitbox_block.position.x = abs(hitbox_block.position.x)
+			hitbox_attack.position.x = abs(hitbox_attack.position.x)
 
 func knockback(delta, force, direction):
 	velocity.x = force * direction
@@ -174,6 +175,6 @@ func on_hit(force, time, direction):
 		$StateMachine.transition_to("Stunned", {"force" :force, "time": time, "direction": direction})
 	
 	
-func on_attack_enemy(attack_count):
-	emit_signal("hit_enemy",attack_force[attack_count], attack_knockback[attack_count], direction)
+func on_attack_enemy(attack_count, body):
+	emit_signal("hit_enemy",attack_force[attack_count], attack_knockback[attack_count], direction, body)
 

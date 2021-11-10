@@ -1,6 +1,6 @@
 extends PlayerState
 
-signal attack_enemy(attack_cont)
+signal attack_enemy(attack_cont, body)
 var attack_count : int
 
 func enter(_msg := {}):
@@ -28,4 +28,4 @@ func _on_timeout():
 
 func _on_Attack_body_entered(body):
 	print("PLAYER: Attack Enemy witch attack: ", attack_count)
-	emit_signal("attack_enemy", attack_count -1)
+	emit_signal("attack_enemy", attack_count -1, body)

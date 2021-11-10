@@ -6,7 +6,7 @@ func enter(_msg := {}):
 	player.velocity = Vector2.ZERO
 
 
-func update(delta):
+func physics_update(delta):
 	if not player.is_on_floor():
 		state_machine.transition_to("Fall")
 		return

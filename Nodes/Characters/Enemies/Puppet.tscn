@@ -15,8 +15,8 @@
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack_windup.png" type="Texture" id=13]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack_recovery.png" type="Texture" id=14]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 22.411, 36.0031 )
+[sub_resource type="CapsuleShape2D" id=13]
+radius = 25.1569
 
 [sub_resource type="Animation" id=2]
 resource_name = "Attack"
@@ -376,10 +376,10 @@ extents = Vector2( 15.496, 31.7351 )
 extents = Vector2( 24, 31.7351 )
 
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 128, 40 )
+extents = Vector2( 120, 85.1781 )
 
 [sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 128, 40.2489 )
+extents = Vector2( 120, 85.1781 )
 
 [node name="Puppet" type="KinematicBody2D"]
 collision_layer = 8
@@ -389,10 +389,10 @@ script = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.00113, 4.31743 )
 rotation = 0.0241607
-shape = SubResource( 1 )
+shape = SubResource( 13 )
 
 [node name="FloorDetectionRaycast" type="RayCast2D" parent="."]
-position = Vector2( -0.612068, 0.248855 )
+position = Vector2( 23.8248, 0.248855 )
 enabled = true
 collision_mask = 32
 
@@ -410,6 +410,7 @@ collision_layer = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 position = Vector2( 28.6901, 3.73513 )
 shape = SubResource( 8 )
+disabled = true
 
 [node name="AttackDetectionArea" type="Area2D" parent="."]
 collision_layer = 64
@@ -426,15 +427,14 @@ position = Vector2( 56, 4.352 )
 shape = SubResource( 10 )
 
 [node name="PlayerDetectionArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 64
 
 [node name="Right" type="CollisionShape2D" parent="PlayerDetectionArea"]
-position = Vector2( 128, 0.248855 )
+position = Vector2( 120, -40 )
 shape = SubResource( 11 )
 
 [node name="Left" type="CollisionShape2D" parent="PlayerDetectionArea"]
-position = Vector2( -128, 0.248855 )
+position = Vector2( -120, -40 )
 shape = SubResource( 12 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -463,9 +463,9 @@ script = ExtResource( 7 )
 script = ExtResource( 8 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -3.55271e-15, -0.26487 )
+position = Vector2( -0.612068, -0.26487 )
 scale = Vector2( 0.0955947, 0.0955947 )
-texture = ExtResource( 1 )
+texture = ExtResource( 11 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = -19.8438
