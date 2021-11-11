@@ -11,18 +11,22 @@ const last_input = []
 var velocity := Vector2(0,0)
 var can_dash := true
 
-export var speed = 300
-export var attack_step_speed = 150
-export var dash_speed = 700
-export var max_attack_combo = 3
-export var gravity = 3000
-export var jump_impulse = 1000
+export(int) var speed :int = 300
+export(int) var attack_step_speed :int= 150
+export(int) var dash_speed :int = 700
+export(int) var gravity :int = 3000
+export(int) var jump_impulse :int = 1000
+export(int) var knock_back_impulse :int = 3000
+export(int) var max_attack_combo :int = 3
 
-export var windup_time : float = 0.2
-export var block_time : float = 0.2
-export var attack_time : float = 0.2
-export var recovery_time : float = 0.2
-export var dash_time : float = 0.2
+# Friction is stronger the smaller the value
+export(float, 0, 1) var friction_ground : float = 0.2
+
+export(float) var windup_time : float = 0.2
+export(float) var block_time : float = 0.2
+export(float) var attack_time : float = 0.2
+export(float) var recovery_time : float = 0.2
+export(float) var dash_time : float = 0.2
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
@@ -84,20 +88,15 @@ func move(delta):
 	# Actual movement
 	if not last_movement_buttons.empty():
 		if last_movement_buttons[0] == MovementDir.LEFT:
-			velocity.x = -speed
+			_move_with_friction(-speed, friction_ground)
 		elif last_movement_buttons[0] == MovementDir.RIGHT:
-			velocity.x = speed
+			_move_with_friction(speed, friction_ground)
 	else:
-		velocity.x = 0
+		_move_with_friction(0, friction_ground)
 		
-	fall(delta)
+	_fall(delta)
 
-func fall(delta):
-	# Apply gravity
-	velocity.y += gravity * delta
-	
-	# Move character
-	velocity = move_and_slide(velocity,Vector2.UP)
+
 
 # Lets the player step forward.
 # Call while attacking
@@ -106,14 +105,14 @@ func attack_move(delta) -> void:
 	
 	if not last_movement_buttons.empty(): # If running
 		if last_movement_buttons[0] == MovementDir.LEFT:
-			velocity.x = -speed
+			_move_with_friction(-speed, friction_ground)
 		elif last_movement_buttons[0] == MovementDir.RIGHT:
-			velocity.x = speed
+			_move_with_friction(speed, friction_ground)
 	else: # If not running: slow step foreward
 		if sprite.flip_h == true:
-			velocity.x = -attack_step_speed
+			_move_with_friction(-attack_step_speed, friction_ground)
 		else:
-			velocity.x = attack_step_speed
+			_move_with_friction(attack_step_speed, friction_ground)
 	
 	# Depending on game design Apply gravity here !!! If no gravity make sure that player is actually on floor and not 0.000000000001 above it
 	# --> leads to issues with canceling windup states because player is falling
@@ -128,14 +127,13 @@ func dash_move(delta):
 	_flip_sprite_in_movement_dir()
 	
 	if sprite.flip_h:
-		velocity.x = -dash_speed
+		_move_with_friction(-dash_speed, friction_ground)
 	else:
-		velocity.x = dash_speed
+		_move_with_friction(dash_speed, friction_ground)
 	
 	velocity.y += gravity * delta
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
-
 
 
 # Flip Sprite and Hitbox
@@ -149,12 +147,23 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 
-func knockback(delta, force):
+func _knockback(force):
 	if sprite.flip_h == true:
 		velocity.x = force
 	else:
 		velocity.x = -force
-	fall(delta)
+
+
+func _fall(delta):
+	# Apply gravity
+	velocity.y += gravity * delta
+	
+	# Move character
+	velocity = move_and_slide(velocity,Vector2.UP)
+
+
+func _move_with_friction(speed : float, frictiontype : float) -> void:
+	velocity.x += (speed - velocity.x) * frictiontype
 
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
@@ -162,6 +171,5 @@ func _physics_process(delta):
 
 func _on_Body_area_entered(area):
 	# switch damage force, depending on enemy attack
-	var force = 300
 	var time = 0.5
-	$StateMachine.transition_to("Stunned", {"force" :force, "time": time})
+	$StateMachine.transition_to("Stunned", {"force" :knock_back_impulse, "time": time})

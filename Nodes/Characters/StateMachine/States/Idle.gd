@@ -3,7 +3,10 @@ extends PlayerState
 
 func enter(_msg := {}):
 	.enter(_msg)
-	player.velocity = Vector2.ZERO
+	
+
+func physics_update(delta):
+	player.move(delta)
 
 
 func update(delta):
