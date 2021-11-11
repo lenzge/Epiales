@@ -22,6 +22,7 @@ export var max_attack_combo = 2
 
 
 onready var floor_detection_raycast : RayCast2D = $FloorDetectionRaycast
+onready var wall_detection_raycast : RayCast2D = $WallDetectionRaycast
 onready var player_detection_area : Area2D = $PlayerDetectionArea
 onready var attack_detection = $AttackDetection
 onready var attack_area  = $AttackArea/CollisionShape2D
@@ -43,6 +44,7 @@ func _ready() -> void:
 	attack_detection.rotation_degrees = attack_detection.rotation_degrees * direction
 	attack_windup_detection.rotation_degrees = attack_windup_detection.rotation_degrees * direction
 	floor_detection_raycast.position.x = floor_detection_raycast.position.x * direction
+	wall_detection_raycast.rotation_degrees = wall_detection_raycast.rotation_degrees * direction
 	
 	# Connect Player and signals
 	chased_player = $"../../Player"
@@ -74,7 +76,7 @@ func fall():
 func move(speed):
 	# Turn automatically on cliffs 
 	# _is_on_wall() cant't be used because of weird interactions with the player. Other solution
-	if not floor_detection_raycast.is_colliding() and is_on_floor():
+	if wall_detection_raycast.is_colliding() or not floor_detection_raycast.is_colliding() and is_on_floor():
 		flip_direction()
 	velocity.x = speed * direction
 	fall()
@@ -100,6 +102,7 @@ func flip_direction():
 	attack_detection.rotation_degrees = attack_detection.rotation_degrees * -1
 	attack_windup_detection.rotation_degrees = attack_windup_detection.rotation_degrees * -1
 	floor_detection_raycast.position.x = floor_detection_raycast.position.x * -1
+	wall_detection_raycast.rotation_degrees = wall_detection_raycast.rotation_degrees * -1
 	
 func knockback(delta, force, direction):
 	velocity.x = force * direction

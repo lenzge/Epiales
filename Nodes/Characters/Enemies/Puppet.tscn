@@ -466,6 +466,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="WallDetectionRaycast" type="RayCast2D" parent="."]
+rotation = -1.5708
+scale = Vector2( 1, 0.7 )
+enabled = true
+collision_mask = 32
+
 [connection signal="body_entered" from="AttackArea" to="StateMachine/Attack" method="_on_AttackArea_body_entered"]
 [connection signal="body_entered" from="PlayerDetectionArea" to="StateMachine/Patrol" method="_on_PlayerDetectionArea_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionArea" to="StateMachine/Chase" method="_on_PlayerDetectionArea_body_exited"]
