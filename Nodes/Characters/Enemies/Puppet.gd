@@ -29,8 +29,6 @@ onready var sprite : Sprite = $Sprite
 
 var velocity : Vector2
 
-signal hit_player(force, time, direction)
-
 # Enemy has to know the player to interact with
 var chased_player : Player
 
@@ -45,8 +43,8 @@ func _ready() -> void:
 	
 	# Connect Player and signals
 	chased_player = $"../../Player"
-	self.connect("hit_player", chased_player, "on_hit")
-	chased_player.connect("hit_enemy", self, "on_hit")
+	#self.connect("hit_player", chased_player, "on_hit")
+	#chased_player.connect("hit_enemy", self, "on_hit")
 	
 # debugging action
 func _physics_process(delta):
@@ -96,15 +94,11 @@ func flip_direction():
 	attack_area.position.x = attack_area.position.x * -1
 	attack_detection_area.position.x = attack_detection_area.position.x * -1
 	attack_windup_detection_area.position.x = attack_windup_detection_area.position.x * -1
+	attack_area.get_parent().direction *= -1 
 	
 func knockback(delta, force, direction):
 	velocity.x = force * direction
 	fall()
 
-	
-func on_hit(force, time, direction):
-	$StateMachine.transition_to("Stunned", {"force" :force, "time": time, "direction": direction})
-	
-	
-func on_attack_player(attack_count):
-	emit_signal("hit_player",attack_force[attack_count], attack_knockback[attack_count], direction)
+func _on_hit_start(emitter : DamageEmitter):
+	$StateMachine.transition_to("Stunned", {"force" : emitter.knockback_force, "time": emitter.knockback_time, "direction": emitter.direction})

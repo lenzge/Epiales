@@ -31,9 +31,6 @@ onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
 
-signal hit_enemy(force, time, direction)
-signal block
-
 var direction : int = 1
 
 
@@ -152,11 +149,13 @@ func _flip_sprite_in_movement_dir() -> void:
 		sprite.flip_h = true
 		hitbox_block.position.x = -abs(hitbox_block.position.x)
 		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
+		hitbox_attack.get_parent().direction = -1
 	elif velocity.x > 0:
 		direction = 1
 		sprite.flip_h = false
 		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
+		hitbox_attack.get_parent().direction = 1
 
 func knockback(delta, force, direction):
 	velocity.x = force * direction
@@ -166,14 +165,17 @@ func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
 
 
-func on_hit(force, time, direction):
-	if $StateMachine.state.name == "Block" and not direction == self.direction:
-		emit_signal("block")
+func _on_hit_start(emitter : DamageEmitter):
+	if $StateMachine.state.name == "Block" and emitter.is_directed and not direction == self.direction:
+		emitter.block()
 		print("PLAYER: block")
 	else:
-		$StateMachine.transition_to("Stunned", {"force" :force, "time": time, "direction": direction})
+		emitter.hit()
+		$StateMachine.transition_to("Stunned", {"force" : emitter.knockback_force, "time": emitter.knockback_time, "direction": emitter.direction})
 	
 	
-func on_attack_enemy(attack_count):
-	emit_signal("hit_enemy",attack_force[attack_count], attack_knockback[attack_count], direction)
+
+
+
+
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet.gd" type="Script" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_block.png" type="Texture" id=12]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack_windup.png" type="Texture" id=13]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack_recovery.png" type="Texture" id=14]
+[ext_resource path="res://Nodes/Util/DamageEmitter.gd" type="Script" id=15]
+[ext_resource path="res://Nodes/Util/DamageReceiver.gd" type="Script" id=16]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 22.411, 36.0031 )
@@ -366,6 +368,9 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 24.6726, 39.383 )
+
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 10.2695, 31.8329 )
 
@@ -404,11 +409,26 @@ anims/Chase = SubResource( 5 )
 anims/Patrol = SubResource( 6 )
 anims/Stunned = SubResource( 7 )
 
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource( 16 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2( -0.630669, 2.94313 )
+shape = SubResource( 13 )
+
 [node name="AttackArea" type="Area2D" parent="."]
 collision_layer = 16
+script = ExtResource( 15 )
+damagae_amount = 20
+knockback_force = 300.0
+knockback_time = 0.4
+direction = 1.0
+is_directed = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2( 28.6901, 3.73513 )
+position = Vector2( 28, 3 )
 shape = SubResource( 8 )
 
 [node name="AttackDetectionArea" type="Area2D" parent="."]
@@ -419,6 +439,7 @@ position = Vector2( 31.4388, 4.63261 )
 shape = SubResource( 9 )
 
 [node name="AttackWindupDetectionArea" type="Area2D" parent="."]
+position = Vector2( 0.032, 0 )
 collision_layer = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackWindupDetectionArea"]
@@ -476,6 +497,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="on_hit_start" from="HitBox" to="." method="_on_hit_start"]
 [connection signal="body_entered" from="AttackArea" to="StateMachine/Attack" method="_on_AttackArea_body_entered"]
 [connection signal="body_entered" from="AttackDetectionArea" to="StateMachine/Chase" method="_on_AttackDetectionArea_body_entered"]
 [connection signal="body_entered" from="AttackWindupDetectionArea" to="StateMachine/Patrol" method="_on_AttackWindupDetectionArea_body_entered"]
