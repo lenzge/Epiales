@@ -7,6 +7,8 @@ func enter(_msg := {}):
 
 
 func physics_update(delta):
+	player.fall(delta)
+	
 	if not player.is_on_floor():
 		state_machine.transition_to("Fall")
 		return
