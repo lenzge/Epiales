@@ -10,6 +10,9 @@ func enter(_msg := {}):
 func physics_update(delta):
 	enemy.chase(delta)
 	
+	if enemy.attack_detection.is_colliding():
+		state_machine.transition_to("Attack")
+	
 	# No instant turn
 	fixed_update_time += delta
 	if(fixed_update_time > 1):
@@ -20,6 +23,3 @@ func _on_PlayerDetectionArea_body_exited(body):
 	if state_machine.state == self:
 		state_machine.transition_to("Patrol")
 
-func _on_AttackDetectionArea_body_entered(body):
-	if state_machine.state == self:
-		state_machine.transition_to("Attack")

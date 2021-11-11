@@ -23,9 +23,9 @@ export var max_attack_combo = 2
 
 onready var floor_detection_raycast : RayCast2D = $FloorDetectionRaycast
 onready var player_detection_area : Area2D = $PlayerDetectionArea
-onready var attack_detection_area = $AttackDetectionArea/CollisionShape2D
+onready var attack_detection = $AttackDetection
 onready var attack_area  = $AttackArea/CollisionShape2D
-onready var attack_windup_detection_area = $AttackWindupDetectionArea/CollisionShape2D
+onready var attack_windup_detection = $AttackWindupDetection
 onready var sprite : Sprite = $Sprite
 
 var velocity : Vector2
@@ -40,8 +40,8 @@ func _ready() -> void:
 	if direction == 1:
 		sprite.flip_h = true
 	attack_area.position.x = attack_area.position.x * direction
-	attack_detection_area.position.x = attack_detection_area.position.x * direction
-	attack_windup_detection_area.position.x = attack_windup_detection_area.position.x * direction
+	attack_detection.rotation_degrees = attack_detection.rotation_degrees * direction
+	attack_windup_detection.rotation_degrees = attack_windup_detection.rotation_degrees * direction
 	floor_detection_raycast.position.x = floor_detection_raycast.position.x * direction
 	
 	# Connect Player and signals
@@ -97,8 +97,8 @@ func flip_direction():
 	direction = direction * -1
 	sprite.flip_h = not sprite.flip_h
 	attack_area.position.x = attack_area.position.x * -1
-	attack_detection_area.position.x = attack_detection_area.position.x * -1
-	attack_windup_detection_area.position.x = attack_windup_detection_area.position.x * -1
+	attack_detection.rotation_degrees = attack_detection.rotation_degrees * -1
+	attack_windup_detection.rotation_degrees = attack_windup_detection.rotation_degrees * -1
 	floor_detection_raycast.position.x = floor_detection_raycast.position.x * -1
 	
 func knockback(delta, force, direction):
