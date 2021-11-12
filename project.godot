@@ -9,10 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Game",
+"language": "GDScript",
+"path": "res://Nodes/Game Controller/Game.gd"
+}, {
+"base": "Reference",
+"class": "GameState",
+"language": "GDScript",
+"path": "res://Nodes/Game Controller/GameState.gd"
+}, {
 "base": "",
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://addons/godot-git-plugin/git_api.gdns"
+}, {
+"base": "Reference",
+"class": "Level",
+"language": "GDScript",
+"path": "res://Nodes/Maps/BaseLevel.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
@@ -22,20 +37,23 @@ _global_script_classes=[ {
 "base": "State",
 "class": "PlayerState",
 "language": "GDScript",
-"path": "res://Nodes/Characters/StateMachine/PlayerState.gd"
+"path": "res://Nodes/Characters/PlayerState.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "State",
 "language": "GDScript",
-"path": "res://Nodes/Characters/StateMachine/State.gd"
+"path": "res://Nodes/Util/State.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "StateMachine",
 "language": "GDScript",
-"path": "res://Nodes/Characters/StateMachine/StateMachine.gd"
+"path": "res://Nodes/Util/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"Game": "",
+"GameState": "",
 "GitAPI": "",
+"Level": "",
 "Player": "",
 "PlayerState": "",
 "State": "",
@@ -45,7 +63,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Epiales"
-run/main_scene="res://Nodes/Maps/Level.tscn"
+run/main_scene="res://Nodes/Game Controller/Game.tscn"
 config/icon="res://Nodes/Experimental/Placeholder/luci_sprite_own.png"
 
 [gdnative]

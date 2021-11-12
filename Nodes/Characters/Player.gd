@@ -149,12 +149,14 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 
+
 func knockback(delta, force):
 	if sprite.flip_h == true:
 		velocity.x = force
 	else:
 		velocity.x = -force
 	fall(delta)
+
 
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
