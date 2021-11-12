@@ -9,12 +9,17 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area2D",
+"class": "Checkpoint",
+"language": "GDScript",
+"path": "res://Nodes/Maps/Checkpoint.gd"
+}, {
 "base": "Node",
 "class": "Game",
 "language": "GDScript",
 "path": "res://Nodes/Game Controller/Game.gd"
 }, {
-"base": "Reference",
+"base": "State",
 "class": "GameState",
 "language": "GDScript",
 "path": "res://Nodes/Game Controller/GameState.gd"
@@ -24,7 +29,7 @@ _global_script_classes=[ {
 "language": "NativeScript",
 "path": "res://addons/godot-git-plugin/git_api.gdns"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "Level",
 "language": "GDScript",
 "path": "res://Nodes/Maps/BaseLevel.gd"
@@ -39,17 +44,18 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Characters/PlayerState.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://Nodes/Util/State.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://Nodes/Util/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"Checkpoint": "",
 "Game": "",
 "GameState": "",
 "GitAPI": "",

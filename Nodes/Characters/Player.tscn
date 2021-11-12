@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Luci/idle.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Nodes/Characters/States/Block.gd" type="Script" id=10]
 [ext_resource path="res://Nodes/Characters/States/Block_Windup.gd" type="Script" id=11]
 [ext_resource path="res://Nodes/Characters/States/Attack_Basic_Windup.gd" type="Script" id=12]
+[ext_resource path="res://Nodes/Characters/States/Dash.gd" type="Script" id=13]
 [ext_resource path="res://Nodes/Characters/States/Block_Recovery.gd" type="Script" id=14]
 [ext_resource path="res://Nodes/Characters/States/Attack_Basic.gd" type="Script" id=15]
 [ext_resource path="res://Nodes/Experimental/Luci/block.png" type="Texture" id=16]
@@ -19,7 +20,6 @@
 [ext_resource path="res://Nodes/Experimental/Luci/attack.png" type="Texture" id=19]
 [ext_resource path="res://Nodes/Experimental/Luci/attack_recovery.png" type="Texture" id=20]
 [ext_resource path="res://Nodes/Characters/States/Stunned.gd" type="Script" id=21]
-
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 11.0179
@@ -601,10 +601,10 @@ tracks/4/keys = {
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.929412, 0.45098, 0.45098, 1 )
 position = Vector2( -1.52588e-05, -21.6239 )
 scale = Vector2( 0.239182, 0.238852 )
 texture = ExtResource( 1 )
-modulate = Color( 0.929412, 0.45098, 0.45098, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.280609, 4.26873 )
