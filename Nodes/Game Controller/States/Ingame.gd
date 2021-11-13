@@ -1,11 +1,12 @@
+class_name Ingame
 extends GameState
 
 
 const PLAYER = preload("res://Nodes/Characters/Player.tscn")
 const LEVEL = preload("res://Nodes/Experimental/Maps/Level.tscn")
 
-var player_instance : Player
-var level_instance : Level
+var player_instance 
+var level_instance
 var player_spawn : Position2D
 
 # Called by the state machine upon changing the active state
