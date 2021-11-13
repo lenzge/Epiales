@@ -5,10 +5,10 @@ extends Node
 # Emitted when transitioning to a new state.
 signal transitioned(state_name)
 
-
 # Initial state 
 export var initial_state := NodePath()
 onready var state: State = get_node(initial_state)
+#onready var animationPlayer = $"../AnimationPlayer"
 
 # Assigns itself to an object
 func _ready():
@@ -16,7 +16,6 @@ func _ready():
 	yield(owner, "ready")
 	for child in get_children():
 		child.state_machine = self
-		print(child.name)
 	print("STATEMACHINE: Init. complete.")
 	state.enter()
 
@@ -33,16 +32,16 @@ func _physics_process(delta):
 
 
 # Calls the current state's exit() function, then changes the active state, and calls its enter function
-func transition_to(target_state_name, msg: Dictionary = {}):
+func transition_to(target_state_name):
 	# Safety check, if the state name is correct
 	if not has_node(target_state_name):
 		print("STATEMACHINE WARNING: State not found: " + target_state_name)
 		return
 	
-	print("StateMachine: " + target_state_name)
 	state.exit()
 	state = get_node(target_state_name)
-	state.enter(msg)
+	state.enter()
+#	animationPlayer.play(state.name)
 	emit_signal("transitioned", state.name)
 
 

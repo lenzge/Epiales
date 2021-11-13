@@ -195,6 +195,7 @@ func _slow_with_friction(friction : float) -> void:
 			velocity.x -= friction
 
 
+
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
 
