@@ -163,7 +163,8 @@ func _physics_process(delta):
 
 
 func _on_Body_area_entered(area):
-	# switch damage force, depending on enemy attack
-	var force = 300
-	var time = 0.5
-	$StateMachine.transition_to("Stunned", {"force" :force, "time": time})
+	if area.name is Checkpoint:
+		# switch damage force, depending on enemy attack
+		var force = 300
+		var time = 0.5
+		$StateMachine.transition_to("Stunned", {"force" :force, "time": time})

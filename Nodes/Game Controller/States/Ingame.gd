@@ -13,11 +13,10 @@ func enter(_msg := {}):
 	if !level_instance:
 		level_instance = LEVEL.instance()
 		game.add_child(level_instance)
-	
-	
-	
+		
 	if !player_instance:
 		player_instance = PLAYER.instance()
+		player_instance.set_owner(level_instance)
 		level_instance.spawn_player(player_instance)
 
 # Corresponds to the `_physics_process()` callback
