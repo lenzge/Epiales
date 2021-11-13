@@ -2,12 +2,15 @@ class_name Level
 extends Node
 
 export(NodePath) var player_spawn_path
+var player_instance : Player
 var player_spawn : Vector2
+var current_spawnpoint
 var current_spawnpoint_prio = -1
 
 func _ready():
 	if not player_spawn:
 		player_spawn = get_node(player_spawn_path).position
+		current_spawnpoint = player_spawn
 
 
 func set_player_spawn(_player_spawn : Vector2) -> void:
@@ -24,11 +27,14 @@ func spawn_player(player : Player) -> void:
 	var camera = Camera2D.new()
 	camera.current = true			#placeholder, to be determined how to implement
 	player.add_child(camera)
+	player_instance = player
 	add_child(player)
 
 func _on_Checkoint_checkoint_entered(new_spawnpoint: Vector2, prio: int) -> void:
-	print("[DEBUG] ~ ",self.name," player_spawn on enter:", player_spawn, "prio: ", prio)
-	if new_spawnpoint.x > player_spawn.x or prio > current_spawnpoint_prio:
-		player_spawn = new_spawnpoint
+	if new_spawnpoint.x > current_spawnpoint.x or prio > current_spawnpoint_prio:
+		current_spawnpoint = new_spawnpoint
 		current_spawnpoint_prio = prio
-	print("[DEBUG] ~ ",self.name," player_spawn after:", player_spawn)
+
+func _on_player_entered_deadzone():
+	print("[DEBUG] @class",name ," current_spawnpoint: ",current_spawnpoint," of type Vector2: ",current_spawnpoint is Vector2)
+	player_instance.position = current_spawnpoint
