@@ -599,7 +599,6 @@ tracks/4/keys = {
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
-friction_ground = 0.3
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.929412, 0.45098, 0.45098, 1 )

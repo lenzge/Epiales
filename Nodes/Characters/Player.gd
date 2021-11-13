@@ -7,6 +7,7 @@ enum PossibleInput {ATTACK_BASIC, BLOCK, JUMP}
 
 const last_movement_buttons = []
 const last_input = []
+var _use_joy_controller := false
 
 var velocity := Vector2(0,0)
 var can_dash := true
@@ -16,11 +17,12 @@ export(int) var attack_step_speed :int= 150
 export(int) var dash_speed :int = 700
 export(int) var gravity :int = 3000
 export(int) var jump_impulse :int = 1000
-export(int) var knock_back_impulse :int = 3000
+export(int) var knock_back_impulse :int = 500
 export(int) var max_attack_combo :int = 3
 
-# Friction is stronger the smaller the value
-export(float, 0, 1) var friction_ground : float = 0.2
+# Friction is weaker the smaller the value is
+export(float) var acceleration : float = 0.3
+export(float) var friction_ground : float = 40
 
 export(float) var windup_time : float = 0.2
 export(float) var block_time : float = 0.2
@@ -32,6 +34,15 @@ onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
 
+
+func _input(event):
+	if (event is InputEventKey or 
+		event is InputEventMouse):
+			_use_joy_controller = false
+	
+	elif (event is InputEventJoypadButton or
+		event is InputEventJoypadMotion):
+			_use_joy_controller = true
 
 
 func get_direction():
@@ -88,14 +99,15 @@ func move(delta):
 	# Actual movement
 	if not last_movement_buttons.empty():
 		if last_movement_buttons[0] == MovementDir.LEFT:
-			_move_with_friction(-speed, friction_ground)
+			_accelerate(-speed, acceleration)
 		elif last_movement_buttons[0] == MovementDir.RIGHT:
-			_move_with_friction(speed, friction_ground)
+			_accelerate(speed, acceleration)
 	else:
-		_move_with_friction(0, friction_ground)
+		_slow_with_friction(friction_ground)
 		
 	_fall(delta)
-
+	
+	velocity = move_and_slide(velocity, Vector2.UP)
 
 
 # Lets the player step forward.
@@ -105,33 +117,33 @@ func attack_move(delta) -> void:
 	
 	if not last_movement_buttons.empty(): # If running
 		if last_movement_buttons[0] == MovementDir.LEFT:
-			_move_with_friction(-speed, friction_ground)
+			_accelerate(-speed, acceleration)
 		elif last_movement_buttons[0] == MovementDir.RIGHT:
-			_move_with_friction(speed, friction_ground)
+			_accelerate(speed, acceleration)
 	else: # If not running: slow step foreward
 		if sprite.flip_h == true:
-			_move_with_friction(-attack_step_speed, friction_ground)
+			_accelerate(-attack_step_speed, acceleration)
 		else:
-			_move_with_friction(attack_step_speed, friction_ground)
+			_accelerate(attack_step_speed, acceleration)
 	
 	# Depending on game design Apply gravity here !!! If no gravity make sure that player is actually on floor and not 0.000000000001 above it
 	# --> leads to issues with canceling windup states because player is falling
-	velocity.y += gravity * delta
+	_fall(delta)
 	
 	velocity = move_and_slide(velocity,Vector2.UP)
 
+
 ## Moves the player at dash speed
-##
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
 func dash_move(delta):
 	_flip_sprite_in_movement_dir()
 	
 	if sprite.flip_h:
-		_move_with_friction(-dash_speed, friction_ground)
+		velocity.x += ((-dash_speed - velocity.x) * acceleration)
 	else:
-		_move_with_friction(dash_speed, friction_ground)
+		velocity.x += ((dash_speed - velocity.x) * acceleration)
 	
-	velocity.y += gravity * delta
+	_fall(delta)
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -147,6 +159,7 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 
+
 func _knockback(force):
 	if sprite.flip_h == true:
 		velocity.x = force
@@ -154,16 +167,33 @@ func _knockback(force):
 		velocity.x = -force
 
 
+## Applies gravity to the player
 func _fall(delta):
-	# Apply gravity
 	velocity.y += gravity * delta
+
+
+## Accelerates the player
+func _accelerate(target_speed : float, _acceleration : float) -> void:
+	# Limit velocity to target speed
+	var limited_accel
 	
-	# Move character
-	velocity = move_and_slide(velocity,Vector2.UP)
+	if _use_joy_controller:
+		limited_accel = ((target_speed * ( Input.get_action_strength("move_left") + Input.get_action_strength("move_right") ) - velocity.x )* _acceleration)
+	else:
+		limited_accel = ((target_speed - velocity.x) * _acceleration)
+	velocity.x += limited_accel
 
 
-func _move_with_friction(speed : float, frictiontype : float) -> void:
-	velocity.x += (speed - velocity.x) * frictiontype
+## Slows the player down with friction
+func _slow_with_friction(friction : float) -> void:
+	if abs(velocity.x) - (friction + 1) <= friction:
+		velocity.x = 0
+	else:
+		if velocity.x < 0:
+			velocity.x += friction
+		else:
+			velocity.x -= friction
+
 
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
