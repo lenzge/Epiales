@@ -122,9 +122,9 @@ func attack_move(delta) -> void:
 			_accelerate(speed, acceleration)
 	else: # If not running: slow step foreward
 		if sprite.flip_h == true:
-			_accelerate(-attack_step_speed, acceleration)
+			velocity.x = ((-attack_step_speed - velocity.x) * acceleration)
 		else:
-			_accelerate(attack_step_speed, acceleration)
+			velocity.x = ((attack_step_speed - velocity.x) * acceleration)
 	
 	# Depending on game design Apply gravity here !!! If no gravity make sure that player is actually on floor and not 0.000000000001 above it
 	# --> leads to issues with canceling windup states because player is falling
