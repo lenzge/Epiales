@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet.gd" type="Script" id=2]
@@ -17,8 +17,8 @@
 [ext_resource path="res://Nodes/Util/DamageEmitter.gd" type="Script" id=15]
 [ext_resource path="res://Nodes/Util/DamageReceiver.gd" type="Script" id=16]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 22.411, 36.0031 )
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 25.1569
 
 [sub_resource type="Animation" id=2]
 resource_name = "Attack"
@@ -368,38 +368,32 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 24.6726, 39.383 )
-
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 10.2695, 31.8329 )
 
-[sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 15.496, 31.7351 )
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 25.1785
+height = 15.074
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 24, 31.7351 )
+extents = Vector2( 120, 85.1781 )
 
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 128, 40 )
-
-[sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 128, 40.2489 )
+extents = Vector2( 120, 85.1781 )
 
 [node name="Puppet" type="KinematicBody2D"]
-collision_layer = 8
+collision_layer = 2
 collision_mask = 38
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.00113, 4.31743 )
-rotation = 0.0241607
 shape = SubResource( 1 )
 
 [node name="FloorDetectionRaycast" type="RayCast2D" parent="."]
-position = Vector2( -0.612068, 0.248855 )
+position = Vector2( 23.8248, 0.248855 )
 enabled = true
-collision_mask = 32
+collision_mask = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 2 )
@@ -409,54 +403,49 @@ anims/Chase = SubResource( 5 )
 anims/Patrol = SubResource( 6 )
 anims/Stunned = SubResource( 7 )
 
-[node name="HitBox" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 2
-script = ExtResource( 16 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2( -0.630669, 2.94313 )
-shape = SubResource( 13 )
-
 [node name="AttackArea" type="Area2D" parent="."]
-collision_layer = 16
+position = Vector2( 28.69, 3.735 )
+collision_layer = 2
 script = ExtResource( 15 )
+emitter_path = NodePath("..")
 damagae_amount = 20
-knockback_force = 300.0
+knockback_force = 400.0
 knockback_time = 0.4
-direction = 1.0
+direction = 180.0
 is_directed = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2( 28, 3 )
 shape = SubResource( 8 )
+disabled = true
 
-[node name="AttackDetectionArea" type="Area2D" parent="."]
-collision_layer = 64
+[node name="AttackDetection" type="RayCast2D" parent="."]
+rotation = -1.5708
+enabled = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackDetectionArea"]
-position = Vector2( 31.4388, 4.63261 )
+[node name="AttackWindupDetection" type="RayCast2D" parent="."]
+rotation = -1.5708
+scale = Vector2( 1, 1.5 )
+enabled = true
+
+[node name="DamageReceiver" type="Area2D" parent="."]
+position = Vector2( -1.001, 4.317 )
+collision_layer = 2
+script = ExtResource( 16 )
+receiver_path = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageReceiver"]
 shape = SubResource( 9 )
 
-[node name="AttackWindupDetectionArea" type="Area2D" parent="."]
-position = Vector2( 0.032, 0 )
-collision_layer = 64
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackWindupDetectionArea"]
-position = Vector2( 56, 4.352 )
-shape = SubResource( 10 )
-
 [node name="PlayerDetectionArea" type="Area2D" parent="."]
-visible = false
-collision_layer = 64
+collision_layer = 8
 
 [node name="Right" type="CollisionShape2D" parent="PlayerDetectionArea"]
-position = Vector2( 128, 0.248855 )
-shape = SubResource( 11 )
+position = Vector2( 120, -40 )
+shape = SubResource( 10 )
 
 [node name="Left" type="CollisionShape2D" parent="PlayerDetectionArea"]
-position = Vector2( -128, 0.248855 )
-shape = SubResource( 12 )
+position = Vector2( -120, -40 )
+shape = SubResource( 11 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 4 )
@@ -484,9 +473,9 @@ script = ExtResource( 7 )
 script = ExtResource( 8 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -3.55271e-15, -0.26487 )
+position = Vector2( -0.612068, -0.26487 )
 scale = Vector2( 0.0955947, 0.0955947 )
-texture = ExtResource( 1 )
+texture = ExtResource( 11 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = -19.8438
@@ -497,9 +486,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="on_hit_start" from="HitBox" to="." method="_on_hit_start"]
-[connection signal="body_entered" from="AttackArea" to="StateMachine/Attack" method="_on_AttackArea_body_entered"]
-[connection signal="body_entered" from="AttackDetectionArea" to="StateMachine/Chase" method="_on_AttackDetectionArea_body_entered"]
-[connection signal="body_entered" from="AttackWindupDetectionArea" to="StateMachine/Patrol" method="_on_AttackWindupDetectionArea_body_entered"]
+[node name="WallDetectionRaycast" type="RayCast2D" parent="."]
+rotation = -1.5708
+scale = Vector2( 1, 0.7 )
+enabled = true
+collision_mask = 36
+
+[connection signal="block" from="AttackArea" to="StateMachine/Attack" method="on_attack_blocked"]
+[connection signal="hit" from="AttackArea" to="StateMachine/Attack" method="on_attack_hit"]
+[connection signal="on_hit_start" from="DamageReceiver" to="." method="on_hit"]
 [connection signal="body_entered" from="PlayerDetectionArea" to="StateMachine/Patrol" method="_on_PlayerDetectionArea_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionArea" to="StateMachine/Chase" method="_on_PlayerDetectionArea_body_exited"]

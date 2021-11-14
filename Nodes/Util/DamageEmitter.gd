@@ -1,6 +1,7 @@
 class_name DamageEmitter
 extends Area2D
 
+export var emitter_path : NodePath
 export var damagae_amount : int
 export var knockback_force : float
 export var knockback_time : float
@@ -8,23 +9,27 @@ export var knockback_time : float
 export var direction : float
 export var is_directed : bool
 
-signal block()
-signal hit()
+signal block(receiver)
+signal hit(receiver)
 
 var is_consumed : bool
+var emitter : Node
+
+func _ready():
+	emitter = get_node(emitter_path)
+
 
 func _physics_process(delta):
 	is_consumed = false
 	
 
-
-func block():
+func block(receiver):
 	if not is_consumed:
 		is_consumed = true 
-		emit_signal("block")
+		emit_signal("block", receiver)
 
 
-func hit():
+func hit(receiver):
 	if not is_consumed:
 		is_consumed = false
-		emit_signal("hit")
+		emit_signal("hit", receiver)

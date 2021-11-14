@@ -1,6 +1,5 @@
 extends PlayerState
 
-signal attack_enemy(attack_cont)
 var attack_count : int
 
 func enter(_msg := {}):
@@ -25,7 +24,3 @@ func _on_timeout():
 		state_machine.transition_to("Block_Windup")
 	else:
 		state_machine.transition_to("Attack_Basic_Recovery")
-
-func _on_Attack_body_entered(body):
-	print("PLAYER: Attack Enemy witch attack: ", attack_count)
-	emit_signal("attack_enemy", attack_count -1)

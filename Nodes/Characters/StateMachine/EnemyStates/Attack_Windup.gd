@@ -7,7 +7,7 @@ func enter(_msg := {}):
 	
 
 func physics_update(delta):
-	enemy.chase(delta)
+	enemy.windup_move(delta)
 
 
 func _on_timeout():

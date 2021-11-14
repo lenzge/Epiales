@@ -28,8 +28,9 @@ export(Array, int) var attack_force = [200, 300, 400]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5]
 
 onready var sprite : Sprite = $Sprite
-onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
-onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
+onready var hitbox_block : Area2D = $Block
+onready var hitbox_attack : Area2D = $Attack
+
 
 var direction : int = 1
 
@@ -144,18 +145,19 @@ func dash_move(delta):
 
 # Flip Sprite and Hitbox
 func _flip_sprite_in_movement_dir() -> void:
-	if velocity.x < 0:
-		direction = -1
-		sprite.flip_h = true
-		hitbox_block.position.x = -abs(hitbox_block.position.x)
-		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
-		hitbox_attack.get_parent().direction = -1
-	elif velocity.x > 0:
-		direction = 1
-		sprite.flip_h = false
-		hitbox_block.position.x = abs(hitbox_block.position.x)
-		hitbox_attack.position.x = abs(hitbox_attack.position.x)
-		hitbox_attack.get_parent().direction = 1
+	if not last_movement_buttons.empty():
+		if last_movement_buttons[0] == MovementDir.LEFT:#velocity.x < 0:
+			direction = -1
+			sprite.flip_h = true
+			hitbox_block.position.x = -abs(hitbox_block.position.x)
+			hitbox_attack.position.x = -abs(hitbox_attack.position.x)
+			hitbox_attack.direction = 180.0
+		elif last_movement_buttons[0] == MovementDir.RIGHT:#velocity.x > 0:
+			direction = 1
+			sprite.flip_h = false
+			hitbox_block.position.x = abs(hitbox_block.position.x)
+			hitbox_attack.position.x = abs(hitbox_attack.position.x)
+			hitbox_attack.direction = 0.0
 
 func knockback(delta, force, direction):
 	velocity.x = force * direction
@@ -165,17 +167,18 @@ func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
 
 
-func _on_hit_start(emitter : DamageEmitter):
-	if $StateMachine.state.name == "Block" and emitter.is_directed and not direction == self.direction:
-		emitter.block()
+func on_hit(emitter : DamageEmitter):
+	var direction
+	if emitter.is_directed:
+			direction = int((emitter.direction + 90.0)) % 360
+			if direction >= 0 && direction <= 180 || direction <= -180 && direction >= -360:
+				direction = -1
+			else:
+				direction = 1
+	if $StateMachine.state.name == "Block" and not direction == self.direction:
+		emitter.block($"Hitbox")
 		print("PLAYER: block")
 	else:
-		emitter.hit()
-		$StateMachine.transition_to("Stunned", {"force" : emitter.knockback_force, "time": emitter.knockback_time, "direction": emitter.direction})
-	
-	
-
-
-
-
+		$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
+		emitter.hit($"Hitbox")
 

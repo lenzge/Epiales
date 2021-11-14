@@ -15,6 +15,7 @@ func enter(_msg := {}):
 func update(delta):
 	enemy.knockback(delta, force, direction)
 	# Action can't be cancelled
-	
+
+
 func _on_timeout():
 	state_machine.transition_to("Patrol")
