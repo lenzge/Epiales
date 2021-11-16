@@ -7,7 +7,6 @@ func enter(_msg := {}):
 	attack_count = 1
 	timer.set_wait_time(player.attack_time)
 	timer.start()
-	self.connect("attack_enemy", player, "on_attack_enemy")
 
 
 func physics_update(delta):
