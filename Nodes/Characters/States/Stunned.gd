@@ -6,7 +6,7 @@ var timer : SceneTreeTimer
 func enter(_msg := {}):
 	.enter(_msg)
 	force = _msg.force
-	player.velocity = Vector2.ZERO
+	player._knockback(force)
 	timer = get_tree().create_timer(_msg.time)
 	yield(timer, "timeout")
 	
@@ -14,6 +14,6 @@ func enter(_msg := {}):
 
 
 func physics_update(delta):
-	player.knockback(delta, force)
+	player.move(delta)
 	# Action can't be cancelled
 	
