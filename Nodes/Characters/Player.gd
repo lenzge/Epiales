@@ -199,8 +199,3 @@ func _slow_with_friction(friction : float) -> void:
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
 
-
-func _on_Body_area_entered(area):
-	# switch damage force, depending on enemy attack
-	var time = 0.5
-	$StateMachine.transition_to("Stunned", {"force" :knock_back_impulse, "time": time})
