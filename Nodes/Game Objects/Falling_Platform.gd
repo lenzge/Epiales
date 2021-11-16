@@ -23,6 +23,9 @@ func _process(delta):
 		$Sprite.position = Vector2(0 + positionX, 0 + positionY)
 	else:
 		if falling:
+			if !$CollisionShape2D.disabled or !$Player_Detector/CollisionShape2D.disabled:
+				$CollisionShape2D.disabled = true
+				$Player_Detector/CollisionShape2D.disabled = true
 			self.position.y += gravity * delta
 		if disappear:
 			$Sprite.modulate.a -= disappear_speed

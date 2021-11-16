@@ -162,7 +162,6 @@ func _physics_process(delta):
 
 func _on_Body_area_entered(area):
 	# switch damage force, depending on enemy attack
-	if area.owner.name == "Player":
-		var force = 300
-		var time = 0.5
-		$StateMachine.transition_to("Stunned", {"force" :force, "time": time})
+	var force = 300
+	var time = 0.5
+	#$StateMachine.transition_to("Stunned", {"force" :force, "time": time})

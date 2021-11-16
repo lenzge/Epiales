@@ -7,6 +7,7 @@ func enter(_msg := {}):
 
 
 func update(delta):
+	player.move_and_slide(Vector2.ZERO)
 	if not player.is_on_floor():
 		state_machine.transition_to("Fall")
 		return
