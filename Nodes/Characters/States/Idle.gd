@@ -7,11 +7,13 @@ func enter(_msg := {}):
 
 
 func update(delta):
-	player.move_and_slide(Vector2.ZERO)
+	
+	player.move_and_slide(delta * Vector2(0.0, player.gravity), Vector2.UP) 
+	
 	if not player.is_on_floor():
 		state_machine.transition_to("Fall")
 		return
-
+	
 	if Input.is_action_just_pressed("attack"):
 		state_machine.transition_to("Attack_Basic_Windup")
 	elif Input.is_action_just_pressed("jump"):
