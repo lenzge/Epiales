@@ -1,14 +1,14 @@
 class_name EnemyState
 extends State
 
-var enemy : Puppet
+var enemy : Enemy
 var timer : Timer
 onready var animationPlayer = $"../../AnimationPlayer"
 
 # Owner of the statemachine is a enemy
 func _ready():
 	yield(owner, "ready")
-	enemy = owner as Puppet
+	enemy = owner as Enemy
 	assert(enemy != null)
 	timer = Timer.new()
 	timer.set_autostart(false)
