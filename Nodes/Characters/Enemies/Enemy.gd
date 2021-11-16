@@ -43,7 +43,7 @@ func _ready() -> void:
 	attack_windup_detection.rotation_degrees = attack_windup_detection.rotation_degrees * direction
 	floor_detection_raycast.position.x = floor_detection_raycast.position.x * direction
 	wall_detection_raycast.rotation_degrees = wall_detection_raycast.rotation_degrees * direction
-	wall_detection_raycast.collide_with_areas = true
+	
 	
 	if direction == 1:
 		$"AttackArea".direction = 180

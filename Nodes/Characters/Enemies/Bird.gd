@@ -1,7 +1,9 @@
 extends Enemy
 
-export(NodePath) var patrol_points
-
+func _ready():
+	# For detecting Patrol Points
+	wall_detection_raycast.collide_with_areas = true
+	
 
 func windup_move(delta):
 	move(windup_speed)
@@ -15,9 +17,8 @@ func chase(delta):
 	
 
 func move(speed):
-	# Turn automatically on cliffs 
-	# _is_on_wall() cant't be used because of weird interactions with the player. Other solution
-	if wall_detection_raycast.is_colliding() or not floor_detection_raycast.is_colliding() and is_on_floor():
+	# Turn when colliding with PatrolPoints
+	if wall_detection_raycast.is_colliding():
 		flip_direction()
 	velocity.x = speed * direction
 	velocity = move_and_slide(velocity, Vector2.UP)
