@@ -1,11 +1,10 @@
-class_name PlayerState
+class_name GameState
 extends State
 
-var player : Player
+var game : Node
 
 # Owner of the statemachine is a player
 func _ready():
 	yield(owner, "ready")
-	player = owner as Player
-	assert(player != null)
-
+	game = owner as Node
+	assert(game != null)
