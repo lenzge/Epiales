@@ -5,11 +5,11 @@
 [ext_resource path="res://Nodes/Characters/StateMachine/EnemyStates/Patrol.gd" type="Script" id=3]
 [ext_resource path="res://Nodes/Characters/StateMachine/StateMachine.gd" type="Script" id=4]
 [ext_resource path="res://Nodes/Characters/StateMachine/EnemyStates/Attack.gd" type="Script" id=5]
-[ext_resource path="res://Nodes/Characters/StateMachine/EnemyStates/Attack_Windup.gd" type="Script" id=6]
+[ext_resource path="res://Nodes/Characters/StateMachine/EnemyStates/Bird_Attack_Windup.gd" type="Script" id=6]
 [ext_resource path="res://Nodes/Characters/StateMachine/EnemyStates/Stunned.gd" type="Script" id=7]
 [ext_resource path="res://Nodes/Characters/StateMachine/EnemyStates/Air.gd" type="Script" id=8]
-[ext_resource path="res://Nodes/Characters/StateMachine/EnemyStates/Attack_Recovery.gd" type="Script" id=9]
-[ext_resource path="res://Nodes/Characters/StateMachine/EnemyStates/Chase.gd" type="Script" id=10]
+[ext_resource path="res://Nodes/Characters/StateMachine/EnemyStates/Bird_Attack_Recovery.gd" type="Script" id=9]
+[ext_resource path="res://Nodes/Characters/StateMachine/EnemyStates/Drop_Attack.gd" type="Script" id=10]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_idle.png" type="Texture" id=11]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_block.png" type="Texture" id=12]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack_windup.png" type="Texture" id=13]
@@ -331,6 +331,7 @@ height = 15.074
 collision_layer = 2
 collision_mask = 38
 script = ExtResource( 2 )
+max_attack_combo = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.00113, 4.31743 )
@@ -338,6 +339,7 @@ shape = SubResource( 1 )
 
 [node name="FloorDetectionRaycast" type="RayCast2D" parent="."]
 position = Vector2( 23.8248, 0.248855 )
+scale = Vector2( 1, 0.8 )
 enabled = true
 collision_mask = 4
 
@@ -369,8 +371,8 @@ rotation = -1.5708
 enabled = true
 
 [node name="AttackWindupDetection" type="RayCast2D" parent="."]
-rotation = -1.5708
-scale = Vector2( 1, 1.5 )
+rotation = -0.828942
+scale = Vector2( 1, 6 )
 enabled = true
 
 [node name="DamageReceiver" type="Area2D" parent="."]
@@ -389,9 +391,6 @@ initial_state = NodePath("Patrol")
 [node name="Patrol" type="Node" parent="StateMachine"]
 script = ExtResource( 3 )
 
-[node name="Chase" type="Node" parent="StateMachine"]
-script = ExtResource( 10 )
-
 [node name="Attack_Windup" type="Node" parent="StateMachine"]
 script = ExtResource( 6 )
 
@@ -406,6 +405,9 @@ script = ExtResource( 7 )
 
 [node name="Air" type="Node" parent="StateMachine"]
 script = ExtResource( 8 )
+
+[node name="Drop_Attack" type="Node" parent="StateMachine"]
+script = ExtResource( 10 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -0.612068, -0.26487 )

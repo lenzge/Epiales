@@ -31,6 +31,8 @@ onready var state_machine : StateMachine = $StateMachine
 
 var velocity : Vector2
 
+var is_recovering : bool
+
 # Enemy has to know the player to interact with
 var chased_player : Player
 

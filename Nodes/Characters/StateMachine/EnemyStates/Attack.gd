@@ -26,6 +26,8 @@ func physics_update(delta):
 
 func _on_timeout():
 	attack_count += 1
+	#if is_blocked:
+		#state_machine.transition_to("Stunned")
 	if attack_chain and !is_blocked and is_hit and attack_count <= enemy.max_attack_combo:
 		is_hit = false
 		timer.start()

@@ -24,11 +24,9 @@ func move(speed):
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 func move_backwards(delta):
-	# Turn automatically on cliffs and walls
-	if is_on_wall() or not floor_detection_raycast.is_colliding() and is_on_floor():
-		flip_direction()
 	velocity.x = walk_speed * -direction
-	fall()
+	velocity.y -= gravity / 6
+	velocity = move_and_slide(velocity, Vector2.UP)
 	
 func attack_move(delta, attack_chain) -> void:
 	if not attack_chain: 
@@ -37,6 +35,11 @@ func attack_move(delta, attack_chain) -> void:
 		velocity.x = running_speed * direction
 	fall()
 		
+		
+func drop_move(delta):
+	velocity.x = running_speed * direction
+	velocity.y += gravity 
+	velocity = move_and_slide(velocity, Vector2.UP)
 
 func knockback(delta, force, direction):
 	velocity.x = force * direction

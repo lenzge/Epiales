@@ -5,10 +5,10 @@
 [ext_resource path="res://Nodes/Characters/Enemies/Bird.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 17.0956, 17.1966 )
+extents = Vector2( 17.0956, 66.6313 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 14.9766, 17.1966 )
+extents = Vector2( 14.9766, 69.5912 )
 
 [node name="Level" type="Node"]
 pause_mode = 2
@@ -19,7 +19,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PatrolPoints"]
-position = Vector2( -193.882, 5.2973 )
+position = Vector2( -193.882, 6.97906 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="PatrolPoints"]
@@ -61,3 +61,5 @@ drag_margin_bottom = 0.1
 
 [node name="Bird" parent="." instance=ExtResource( 3 )]
 position = Vector2( -277.496, 349.813 )
+gravity = 20
+running_speed = 350
