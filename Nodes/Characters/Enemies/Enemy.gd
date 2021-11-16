@@ -23,7 +23,6 @@ export var max_attack_combo = 2
 
 onready var floor_detection_raycast : RayCast2D = $FloorDetectionRaycast
 onready var wall_detection_raycast : RayCast2D = $WallDetectionRaycast
-onready var player_detection_area : Area2D = $PlayerDetectionArea
 onready var attack_detection = $AttackDetection
 onready var attack_area  = $AttackArea
 onready var attack_windup_detection = $AttackWindupDetection
@@ -44,6 +43,7 @@ func _ready() -> void:
 	attack_windup_detection.rotation_degrees = attack_windup_detection.rotation_degrees * direction
 	floor_detection_raycast.position.x = floor_detection_raycast.position.x * direction
 	wall_detection_raycast.rotation_degrees = wall_detection_raycast.rotation_degrees * direction
+	wall_detection_raycast.collide_with_areas = true
 	
 	if direction == 1:
 		$"AttackArea".direction = 180

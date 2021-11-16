@@ -1,6 +1,7 @@
 extends Enemy
 
-onready var player_detection_area : Area2D = $PlayerDetectionArea
+export(NodePath) var patrol_points
+
 
 func windup_move(delta):
 	move(windup_speed)
@@ -19,7 +20,7 @@ func move(speed):
 	if wall_detection_raycast.is_colliding() or not floor_detection_raycast.is_colliding() and is_on_floor():
 		flip_direction()
 	velocity.x = speed * direction
-	fall()
+	velocity = move_and_slide(velocity, Vector2.UP)
 	
 func move_backwards(delta):
 	# Turn automatically on cliffs and walls
