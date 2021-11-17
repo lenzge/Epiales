@@ -7,7 +7,9 @@ func enter(_msg := {}):
 	enemy.position_cache = enemy.global_position
 
 func physics_update(delta):
-	if not enemy.floor_detection_raycast.is_colliding() and not enemy.attack_detection.is_colliding() and enemy.global_position.y < target_position.y:
+	if not enemy.floor_detection_raycast.is_colliding() and not enemy.attack_detection.is_colliding(): #and enemy.global_position.y < target_position.y:
 		enemy.drop_move(delta, target_position)
-	else:
+	elif enemy.attack_detection.is_colliding():
 		state_machine.transition_to("Attack")
+	else:
+		state_machine.transition_to("Attack_Recovery")

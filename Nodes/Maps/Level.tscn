@@ -63,5 +63,5 @@ drag_margin_bottom = 0.1
 position = Vector2( -368.313, 354.018 )
 gravity = 20
 direction = 1
-running_speed = 350
+running_speed = 500
 attack_speed = 100
