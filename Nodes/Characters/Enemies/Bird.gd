@@ -40,9 +40,10 @@ func attack_move(delta, attack_chain) -> void:
 		
 		
 func drop_move(delta, target_position):
-	var desired_velocity = (target_position - global_position).normalized() * running_speed
-	var steering = desired_velocity - velocity
-	velocity = move_and_slide(velocity + steering, Vector2.UP)
+	velocity = Vector2(running_speed * direction, running_speed).normalized() * running_speed
+	#var desired_velocity = (target_position - global_position).normalized() * running_speed
+	#var steering = desired_velocity - velocity
+	velocity = move_and_slide(velocity, Vector2.UP)
 
 
 func knockback(delta, force, direction):
