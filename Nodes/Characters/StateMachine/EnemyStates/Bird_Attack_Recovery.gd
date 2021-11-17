@@ -1,5 +1,11 @@
-extends "res://Nodes/Characters/StateMachine/EnemyStates/Attack_Recovery.gd"
+extends EnemyState
 
 
-func physics_update(delta):
-	enemy.move_backwards(delta)
+func enter(_msg := {}):
+	.enter(_msg)
+	timer.set_wait_time(enemy.freeze_time)
+	timer.start()
+	
+
+func _on_timeout():
+	state_machine.transition_to("Repatrol")

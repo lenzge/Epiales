@@ -10,10 +10,12 @@ export var windup_speed = 40
 export var walk_speed = 80
 export var running_speed = 230
 export var attack_speed = 300
+export var recovery_speed = 120
 
 export var windup_time = 0.3
 export var attack_time = 0.3
 export var recovery_time = 1.5
+export var freeze_time = 0.5
 
 # Attack combo with different force
 export(Array, int) var attack_force = [400, 500, 400]

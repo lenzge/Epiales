@@ -100,7 +100,6 @@ func move(delta):
 func fall(delta):
 	# Apply gravity
 	velocity.y += gravity * delta
-	
 	# Move character
 	velocity = move_and_slide(velocity,Vector2.UP)
 
@@ -138,7 +137,6 @@ func dash_move(delta):
 		velocity.x = dash_speed
 	
 	velocity.y += gravity * delta
-	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 

@@ -1,5 +1,8 @@
 extends Enemy
 
+#  for finding way back to his old patrol point
+var position_cache
+
 func _ready():
 	# For detecting Patrol Points
 	wall_detection_raycast.collide_with_areas = true
@@ -24,9 +27,9 @@ func move(speed):
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 func move_backwards(delta):
-	velocity.x = walk_speed * -direction
-	velocity.y -= gravity / 6
-	velocity = move_and_slide(velocity, Vector2.UP)
+	var desired_velocity = (position_cache - global_position).normalized() * running_speed
+	var steering = desired_velocity - velocity
+	velocity = move_and_slide(velocity + steering, Vector2.UP)
 	
 func attack_move(delta, attack_chain) -> void:
 	if not attack_chain: 
@@ -36,12 +39,14 @@ func attack_move(delta, attack_chain) -> void:
 	fall()
 		
 		
-func drop_move(delta):
-	velocity.x = running_speed * direction
-	velocity.y += gravity 
-	velocity = move_and_slide(velocity, Vector2.UP)
+func drop_move(delta, target_position):
+	var desired_velocity = (target_position - global_position).normalized() * running_speed
+	var steering = desired_velocity - velocity
+	velocity = move_and_slide(velocity + steering, Vector2.UP)
+
 
 func knockback(delta, force, direction):
-	velocity.x = force * direction
-	fall()
+	velocity.x = force/2 * direction
+	velocity = move_and_slide(velocity, Vector2.UP)
+	#fall()
 

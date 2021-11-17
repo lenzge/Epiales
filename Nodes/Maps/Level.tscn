@@ -60,6 +60,8 @@ drag_margin_right = 0.0
 drag_margin_bottom = 0.1
 
 [node name="Bird" parent="." instance=ExtResource( 3 )]
-position = Vector2( -277.496, 349.813 )
+position = Vector2( -368.313, 354.018 )
 gravity = 20
+direction = 1
 running_speed = 350
+attack_speed = 100
