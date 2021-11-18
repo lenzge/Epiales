@@ -28,8 +28,8 @@ export(Array, int) var attack_force = [200, 300, 400]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5]
 
 onready var sprite : Sprite = $Sprite
-onready var hitbox_block : Area2D = $Block
 onready var hitbox_attack : Area2D = $Attack
+onready var hitbox : Area2D = $Hitbox
 
 
 var direction : int = 1
@@ -147,15 +147,13 @@ func _flip_sprite_in_movement_dir() -> void:
 		if last_movement_buttons[0] == MovementDir.LEFT:#velocity.x < 0:
 			direction = -1
 			sprite.flip_h = true
-			hitbox_block.position.x = -abs(hitbox_block.position.x)
 			hitbox_attack.position.x = -abs(hitbox_attack.position.x)
-			hitbox_attack.direction = 180.0
+			hitbox_attack.direction = 0
 		elif last_movement_buttons[0] == MovementDir.RIGHT:#velocity.x > 0:
 			direction = 1
 			sprite.flip_h = false
-			hitbox_block.position.x = abs(hitbox_block.position.x)
 			hitbox_attack.position.x = abs(hitbox_attack.position.x)
-			hitbox_attack.direction = 0.0
+			hitbox_attack.direction = 180
 
 func knockback(delta, force, direction):
 	velocity.x = force * direction
@@ -168,11 +166,14 @@ func _physics_process(delta):
 func on_hit(emitter : DamageEmitter):
 	var direction
 	if emitter.is_directed:
-			direction = int((emitter.direction + 90.0)) % 360
-			if direction >= 0 && direction <= 180 || direction <= -180 && direction >= -360:
-				direction = -1
-			else:
-				direction = 1
+		direction = emitter.direction
+	else:
+		direction = rad2deg((hitbox.global_position - emitter.global_position).angle_to(Vector2(1,0)))
+	direction = int((direction + 90.0)) % 360
+	if direction >= 0.0 && direction <= 180.0 || direction <= -180.0 && direction >= -360.0:
+		direction = 1
+	else:
+		direction = -1
 	if $StateMachine.state.name == "Block" and not direction == self.direction:
 		emitter.block($"Hitbox")
 		print("PLAYER: block")

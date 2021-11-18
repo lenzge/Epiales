@@ -3,6 +3,7 @@ extends PlayerState
 
 func enter(_msg := {}):
 	.enter(_msg)
+	player.hitbox.get_child(0).disabled = true
 	timer.set_wait_time(player.dash_time)
 	timer.start()
 	# todo: change player hitbox so player can deal damage while dashing
@@ -10,6 +11,11 @@ func enter(_msg := {}):
 
 func physics_update(delta):
 	player.dash_move(delta)
+
+
+func exit():
+	player.hitbox.get_child(0).disabled = false
+	timer.stop()
 
 
 func _on_timeout() -> void:
