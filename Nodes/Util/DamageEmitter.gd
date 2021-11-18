@@ -9,7 +9,7 @@ export var knockback_time : float
 export var direction : float
 export var is_directed : bool
 
-signal block(receiver)
+signal blocked(receiver)
 signal hit(receiver)
 
 var is_consumed : bool
@@ -23,10 +23,10 @@ func _physics_process(delta):
 	is_consumed = false
 	
 
-func block(receiver):
+func was_blocked(receiver):
 	if not is_consumed:
 		is_consumed = true 
-		emit_signal("block", receiver)
+		emit_signal("blocked", receiver)
 
 
 func hit(receiver):

@@ -177,7 +177,7 @@ func on_hit(emitter : DamageEmitter):
 	else:
 		direction = -1
 	if $StateMachine.state.name == "Block" and not direction == self.direction:
-		emitter.block($"Hitbox")
+		emitter.was_blocked($"Hitbox")
 		print("PLAYER: block")
 	else:
 		$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})

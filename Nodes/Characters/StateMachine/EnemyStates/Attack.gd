@@ -25,6 +25,7 @@ func physics_update(delta):
 
 
 func _on_timeout():
+	print(attack_count)
 	attack_count += 1
 	if attack_chain and !is_blocked and is_hit and attack_count <= enemy.max_attack_combo:
 		is_hit = false
