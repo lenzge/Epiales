@@ -14,4 +14,11 @@ func physics_update(delta):
 			state_machine.transition_to("Run")
 	elif Input.is_action_just_pressed("dash")  and player.can_dash:
 		state_machine.transition_to("Dash")
+	elif player.is_on_wall():
+		if Input.is_action_just_pressed("jump"):
+			if player.get_slide_collision(0).get_position().x > player.position.x:
+				player.velocity.x = -10 * player.speed
+			else:
+				player.velocity.x = 10 * player.speed
+			player.velocity.y = -player.jump_impulse
 
