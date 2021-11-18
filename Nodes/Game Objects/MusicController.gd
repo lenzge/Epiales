@@ -69,8 +69,7 @@ func start_tracking(body: Player, music_transition_area: MusicTransitionArea) ->
 	# init tracking data
 	player = body
 	player_last_position = body.position.x
-	transition_area_width = ((music_transition_area.scale.x * 2) + 
-			(body.get_node("CollisionShape2D").get_shape().extents.x * 2))
+	transition_area_width = ((music_transition_area.scale.x * 2))
 	
 	# start the paused Soundtrack
 	if node_hectic_music.stream_paused:

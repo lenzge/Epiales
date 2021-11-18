@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Game Controller/States/Ingame.gd"
 }, {
+"base": "Area2D",
+"class": "MusicTransitionArea",
+"language": "GDScript",
+"path": "res://Nodes/Game Objects/MusicTransitionArea.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -71,6 +76,7 @@ _global_script_class_icons={
 "GameState": "",
 "GitAPI": "",
 "Ingame": "",
+"MusicTransitionArea": "",
 "Player": "",
 "PlayerState": "",
 "Standard_Level": "",
