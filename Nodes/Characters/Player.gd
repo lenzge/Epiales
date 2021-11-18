@@ -14,14 +14,14 @@ var can_dash := true
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
-export(int) var dash_speed :int = 700
+export(Vector2) var dash_speed :Vector2 = Vector2(1000, 1000)
 export(int) var gravity :int = 3000
 export(int) var jump_impulse :int = 1000
 export(int) var knock_back_impulse :int = 500
 export(int) var max_attack_combo :int = 3
 
 # Friction is weaker the smaller the value is
-export(float) var acceleration : float = 0.3
+export(float, 0, 1, 0.01) var acceleration : float = 0.3
 export(float) var friction_ground : float = 40
 
 export(float) var windup_time : float = 0.2
@@ -92,7 +92,6 @@ func _process(delta):
 	if Input.is_action_just_released("move_right"):
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.RIGHT))
 
-
 func move(delta):
 	_flip_sprite_in_movement_dir()
 	
@@ -137,13 +136,26 @@ func attack_move(delta) -> void:
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
 func dash_move(delta):
 	_flip_sprite_in_movement_dir()
-	
-	if sprite.flip_h:
-		velocity.x += ((-dash_speed - velocity.x) * acceleration)
+	if _use_joy_controller:
+		var direction := Vector2(0,0)
+		direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
+		direction.y = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
+		print(direction)
+		if direction.x == 0 and direction.y == 0:
+			if sprite.flip_h:
+				direction.x = -1
+			else:
+				direction.x = 1
+		
+		velocity += ((dash_speed * direction.normalized() - velocity) * acceleration)
+
 	else:
-		velocity.x += ((dash_speed - velocity.x) * acceleration)
+		if sprite.flip_h:
+			velocity.x += ((-dash_speed.x - velocity.x) * acceleration)
+		else:
+			velocity.x += ((dash_speed.x - velocity.x) * acceleration)
 	
-	_fall(delta)
+	#_fall(delta)
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 

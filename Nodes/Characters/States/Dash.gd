@@ -18,6 +18,7 @@ func _ready():
 func enter(_msg := {}):
 	.enter(_msg)
 	timer.start()
+	player.can_dash = false
 	# todo: change player hitbox so player can deal damage while dashing
 
 
