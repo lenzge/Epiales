@@ -4,13 +4,14 @@ extends Camera2D
 enum Mode{
 	STATIC, # Do not move from specified position
 	FOLLOW, # Follow parent object
-	TRANSITION, # Transition smoothly between modes
+#	TRANSITION, # Transition smoothly between modes
 	CUTSCENE, # Control Camera through commands
 }
 
-var current_mode = Mode.FOLLOW
-var camera_speed = 500.0
-var reverse_drag = 0.75
+export var current_mode = Mode.FOLLOW
+export var camera_speed = 500.0
+export var reverse_drag = 0.75
+export var destination = Vector2(0, 0)
 
 onready var parent = get_parent()
 
@@ -30,9 +31,19 @@ func _process(delta):
 			current_mode = Mode.STATIC
 
 	match current_mode:
+		Mode.STATIC:
+			destination = position
 		Mode.FOLLOW:
 			var reverse_drag_vector = Vector2(0, 0) if parent.velocity && parent.velocity.x == 0 else Vector2(parent.velocity.x, 0.0) * reverse_drag 
-			self.position = self.position.move_toward(parent.position + reverse_drag_vector, camera_speed * delta)
-		Mode.STATIC:
+			destination = parent.position + reverse_drag_vector
+			#position = position.move_toward(parent.position + reverse_drag_vector, camera_speed * delta)
+		Mode.CUTSCENE:
 			pass
-			
+	if destination.round() != position.round():
+		position = position.move_toward(destination, camera_speed * delta)		
+		
+func set_destination(var new_destination):
+	destination = new_destination
+	
+func set_mode(var new_mode):
+	current_mode = new_mode
