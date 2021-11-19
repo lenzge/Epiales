@@ -21,14 +21,16 @@ export(int) var knock_back_impulse :int = 500
 export(int) var max_attack_combo :int = 3
 
 # Friction is weaker the smaller the value is
-export(float, 0, 1, 0.01) var acceleration : float = 0.3
+export(float, 0, 1, 0.001) var acceleration : float = 0.3
 export(float) var friction_ground : float = 40
+export(float, 0, 1, 0.001) var acceleration_after_dash : float = 0.05
 
 export(float) var windup_time : float = 0.2
 export(float) var block_time : float = 0.2
 export(float) var attack_time : float = 0.2
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
+export(float) var dash_recovery_time : float = 0.2
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
@@ -134,26 +136,39 @@ func attack_move(delta) -> void:
 
 ## Moves the player at dash speed
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
-func dash_move(delta):
+func dash_move(delta, after_dash : bool):
 	_flip_sprite_in_movement_dir()
-	if _use_joy_controller:
-		var direction := Vector2(0,0)
-		direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
-		direction.y = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
-		print(direction)
-		if direction.x == 0 and direction.y == 0:
-			if sprite.flip_h:
-				direction.x = -1
-			else:
-				direction.x = 1
-		
-		velocity += ((dash_speed * direction.normalized() - velocity) * acceleration)
-
-	else:
-		if sprite.flip_h:
-			velocity.x += ((-dash_speed.x - velocity.x) * acceleration)
+	
+	if after_dash:
+		# Move normally only with less friction
+		if not last_movement_buttons.empty():
+			if last_movement_buttons[0] == MovementDir.LEFT:
+				_accelerate(-speed, acceleration_after_dash)
+			elif last_movement_buttons[0] == MovementDir.RIGHT:
+				_accelerate(speed, acceleration_after_dash)
 		else:
-			velocity.x += ((dash_speed.x - velocity.x) * acceleration)
+			_accelerate(0, acceleration_after_dash)
+		
+		_fall(delta)
+	
+	else:
+		if _use_joy_controller:
+			var direction := Vector2(0,0)
+			direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
+			direction.y = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
+			if direction.x == 0 and direction.y == 0:
+				if sprite.flip_h:
+					direction.x = -1
+				else:
+					direction.x = 1
+			
+			velocity += ((dash_speed * direction.normalized() - velocity) * acceleration)
+		
+		else:
+			if sprite.flip_h:
+				velocity.x += ((-dash_speed.x - velocity.x) * acceleration)
+			else:
+				velocity.x += ((dash_speed.x - velocity.x) * acceleration)
 	
 	#_fall(delta)
 	
@@ -184,7 +199,7 @@ func _fall(delta):
 	velocity.y += gravity * delta
 
 
-## Accelerates the player
+## Accelerates the player (like function 1/x)
 func _accelerate(target_speed : float, _acceleration : float) -> void:
 	# Limit velocity to target speed
 	var limited_accel
@@ -196,7 +211,7 @@ func _accelerate(target_speed : float, _acceleration : float) -> void:
 	velocity.x += limited_accel
 
 
-## Slows the player down with friction
+## Slows the player down with friction (linear lowdonw)
 func _slow_with_friction(friction : float) -> void:
 	if abs(velocity.x) - (friction + 1) <= friction:
 		velocity.x = 0
