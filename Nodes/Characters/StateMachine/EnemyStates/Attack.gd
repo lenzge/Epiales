@@ -18,6 +18,8 @@ func enter(_msg := {}):
 		attack_chain = false
 	timer.set_wait_time(enemy.attack_time)
 	timer.start()
+	enemy.attack_area.knockback_force = enemy.attack_force[attack_count]
+	enemy.attack_area.knockback_time = enemy.attack_knockback[attack_count]
 
 
 func physics_update(delta):
@@ -31,6 +33,8 @@ func _on_timeout():
 	if attack_chain and !is_blocked and is_hit and attack_count <= enemy.max_attack_combo:
 		is_hit = false
 		timer.start()
+		enemy.attack_area.knockback_force = enemy.attack_force[attack_count]
+		enemy.attack_area.knockback_time = enemy.attack_knockback[attack_count]
 	else:
 		state_machine.transition_to("Attack_Recovery")
 

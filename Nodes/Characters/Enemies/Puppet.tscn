@@ -410,7 +410,7 @@ script = ExtResource( 15 )
 emitter_path = NodePath("..")
 damagae_amount = 20
 knockback_force = 400.0
-knockback_time = 0.4
+knockback_time = 0.2
 direction = 180.0
 is_directed = true
 
@@ -492,8 +492,8 @@ scale = Vector2( 1, 0.7 )
 enabled = true
 collision_mask = 36
 
-[connection signal="block" from="AttackArea" to="StateMachine/Attack" method="on_attack_blocked"]
 [connection signal="hit" from="AttackArea" to="StateMachine/Attack" method="on_attack_hit"]
-[connection signal="on_hit_start" from="DamageReceiver" to="." method="on_hit"]
+[connection signal="on_hit_start" from="Hitbox" to="." method="on_hit"]
+[connection signal="blocked" from="DamageBox" to="." method="_on_blocked"]
 [connection signal="body_entered" from="PlayerDetectionArea" to="StateMachine/Patrol" method="_on_PlayerDetectionArea_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionArea" to="StateMachine/Chase" method="_on_PlayerDetectionArea_body_exited"]
