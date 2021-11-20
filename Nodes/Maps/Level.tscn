@@ -30,7 +30,6 @@ dash_speed = 1000
 windup_time = 0.05
 recovery_time = 0.1
 dash_time = 0.2
-attack_force = [ 200, 300, 600 ]
 attack_knockback = [ 0.2, 0.2, 0.3 ]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

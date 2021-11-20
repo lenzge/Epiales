@@ -128,4 +128,5 @@ func on_hit(emitter : DamageEmitter):
 		direction = -1
 	else:
 		direction = 1
+	emitter.hit($"Hitbox")
 	state_machine.transition_to("Stunned", {"force": emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
