@@ -109,7 +109,6 @@ func flip_direction():
 
 
 func on_hit(emitter : DamageEmitter):
-	print("hitted LOOL")
 	var direction
 	if emitter.is_directed:
 		direction = emitter.direction
@@ -125,5 +124,4 @@ func on_hit(emitter : DamageEmitter):
 
 
 func on_blocked(receiver):
-	print("BLOCK")
 	state_machine.transition_to("Attack_Recovery")

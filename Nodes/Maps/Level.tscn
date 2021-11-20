@@ -64,7 +64,7 @@ position = Vector2( -368.313, 354.018 )
 gravity = 20
 direction = 1
 running_speed = 500
-attack_speed = 100
+attack_speed = 200
 
 [node name="Puppet" parent="." instance=ExtResource( 4 )]
-position = Vector2( 216.13, 529.731 )
+position = Vector2( 639.274, 434.957 )

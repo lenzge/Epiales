@@ -32,5 +32,4 @@ func was_blocked(receiver):
 func hit(receiver):
 	if not is_consumed:
 		is_consumed = false
-		print(receiver, "hit with force:", knockback_force)
 		emit_signal("hit", receiver)
