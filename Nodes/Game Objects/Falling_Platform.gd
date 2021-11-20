@@ -141,7 +141,7 @@ func update_editor():
 	# Else if the texture is set change the texture
 	elif texture:
 		if not look_node is Sprite:
-			if look_node.is_inside_tree():
+			if look_node and look_node.is_inside_tree():
 				look_node.queue_free()
 				look_node = null
 		if !look_node:
