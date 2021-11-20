@@ -1,14 +1,16 @@
 class_name PlayerState
 extends State
 
+
 var player : Player
 var timer : Timer
 onready var animationPlayer = $"../../AnimationPlayer"
 
+
 # Owner of the statemachine is a player
 func _ready():
 	yield(owner, "ready")
-	player = owner as Player
+	player = owner as KinematicBody2D
 	assert(player != null)
 	timer = Timer.new()
 	timer.set_autostart(false)
