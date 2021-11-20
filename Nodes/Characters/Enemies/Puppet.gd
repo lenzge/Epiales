@@ -46,6 +46,7 @@ func _ready() -> void:
 	floor_detection_raycast.position.x = floor_detection_raycast.position.x * direction
 	wall_detection_raycast.rotation_degrees = wall_detection_raycast.rotation_degrees * direction
 	
+	
 	if direction == 1:
 		$"AttackArea".direction = 0
 	else:
@@ -130,3 +131,7 @@ func on_hit(emitter : DamageEmitter):
 		direction = 1
 	emitter.hit($"Hitbox")
 	state_machine.transition_to("Stunned", {"force": emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
+
+
+func _on_blocked(receiver):
+	state_machine.transition_to("Attack_Recovery")

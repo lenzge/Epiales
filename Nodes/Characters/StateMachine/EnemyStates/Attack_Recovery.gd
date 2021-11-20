@@ -6,8 +6,8 @@ func enter(_msg := {}):
 	timer.start()
 	
 
-#func physics_update(delta):
-	#enemy.move_backwards(delta)
+func physics_update(delta):
+	enemy.move_backwards(delta)
 
 
 func _on_timeout():
