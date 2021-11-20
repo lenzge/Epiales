@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Nodes/Camera/CameraController.gd" type="Script" id=1]
+[ext_resource path="res://Nodes/Camera/Line2D_Drawer.gd" type="Script" id=2]
+
+[node name="Camera2D" type="Camera2D"]
+position = Vector2( 3.54099, -41.7799 )
+current = true
+zoom = Vector2( 0.6, 0.6 )
+limit_smoothed = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.0
+drag_margin_top = 0.6
+drag_margin_right = 0.0
+drag_margin_bottom = 0.35
+script = ExtResource( 1 )
+
+[node name="RayCast2D_Down" type="RayCast2D" parent="."]
+enabled = true
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Line2D_Down" type="Line2D" parent="RayCast2D_Down"]
+script = ExtResource( 2 )
+
+[node name="RayCast2D_Left" type="RayCast2D" parent="."]
+enabled = true
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Line2D_Left" type="Line2D" parent="RayCast2D_Left"]
+script = ExtResource( 2 )
+
+[node name="RayCast2D_Right" type="RayCast2D" parent="."]
+enabled = true
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Line2D_Right" type="Line2D" parent="RayCast2D_Right"]
+script = ExtResource( 2 )
