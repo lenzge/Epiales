@@ -1,6 +1,6 @@
 extends Line2D
 
-
+# For debugging raycasts
 onready var parent_raycast = get_parent()
 
 
