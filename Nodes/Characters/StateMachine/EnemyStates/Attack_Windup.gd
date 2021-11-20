@@ -11,5 +11,4 @@ func physics_update(delta):
 
 
 func _on_timeout():
-	pass
-	#state_machine.transition_to("Attack")
+	state_machine.transition_to("Attack")

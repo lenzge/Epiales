@@ -44,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Characters/StateMachine/PlayerState.gd"
 }, {
+"base": "Enemy",
+"class": "Puppet",
+"language": "GDScript",
+"path": "res://Nodes/Characters/Enemies/Puppet.gd"
+}, {
 "base": "Node",
 "class": "State",
 "language": "GDScript",
@@ -62,6 +67,7 @@ _global_script_class_icons={
 "GitAPI": "",
 "Player": "",
 "PlayerState": "",
+"Puppet": "",
 "State": "",
 "StateMachine": ""
 }
