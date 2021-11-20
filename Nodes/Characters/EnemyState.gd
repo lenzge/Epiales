@@ -1,7 +1,7 @@
 class_name EnemyState
 extends State
 
-var enemy : Enemy
+onready var enemy : Enemy
 var timer : Timer
 onready var animationPlayer = $"../../AnimationPlayer"
 

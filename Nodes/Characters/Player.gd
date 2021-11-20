@@ -170,13 +170,11 @@ func _flip_sprite_in_movement_dir() -> void:
 #func knockback(delta, force, direction):
 	#velocity.x = force * direction
 	#fall(delta)
-	#if velocity.x < 0:
+	if velocity.x < 0:
 		sprite.flip_h = true
-		hitbox_block.position.x = -abs(hitbox_block.position.x)
 		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
 	elif velocity.x > 0:
 		sprite.flip_h = false
-		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 
 

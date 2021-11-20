@@ -5,12 +5,9 @@ func enter(_msg := {}):
 	.enter(_msg)
 	
 
-func physics_update(delta):
-	player.move(delta)
-
 
 func physics_update(delta):
-	player.fall(delta)
+	player._fall(delta)
 	
 	if not player.is_on_floor():
 		state_machine.transition_to("Fall")

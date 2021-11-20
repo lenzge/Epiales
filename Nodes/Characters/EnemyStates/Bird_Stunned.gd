@@ -1,4 +1,4 @@
-extends "res://Nodes/Characters/StateMachine/EnemyStates/Stunned.gd"
+extends "res://Nodes/Characters/EnemyStates/Stunned.gd"
 
 
 func _on_timeout():

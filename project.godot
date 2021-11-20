@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "BaseLevel",
+"language": "GDScript",
+"path": "res://Nodes/Maps/BaseLevel.gd"
+}, {
+"base": "Area2D",
+"class": "Checkpoint",
+"language": "GDScript",
+"path": "res://Nodes/Game Objects/Checkpoint.gd"
+}, {
 "base": "Area2D",
 "class": "DamageEmitter",
 "language": "GDScript",
@@ -27,17 +37,7 @@ _global_script_classes=[ {
 "base": "State",
 "class": "EnemyState",
 "language": "GDScript",
-"path": "res://Nodes/Characters/StateMachine/EnemyState.gd"
-}, {
-"base": "Node",
-"class": "BaseLevel",
-"language": "GDScript",
-"path": "res://Nodes/Maps/BaseLevel.gd"
-}, {
-"base": "Area2D",
-"class": "Checkpoint",
-"language": "GDScript",
-"path": "res://Nodes/Game Objects/Checkpoint.gd"
+"path": "res://Nodes/Characters/EnemyState.gd"
 }, {
 "base": "Node",
 "class": "Game",
@@ -69,15 +69,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Characters/PlayerState.gd"
 }, {
-"base": "Node",
-"class": "Standard_Level",
-"language": "GDScript",
-"path": "res://Nodes/Maps/StandardLevel.gd"
-}, {
 "base": "Enemy",
 "class": "Puppet",
 "language": "GDScript",
 "path": "res://Nodes/Characters/Enemies/Puppet.gd"
+}, {
+"base": "Node",
+"class": "Standard_Level",
+"language": "GDScript",
+"path": "res://Nodes/Maps/StandardLevel.gd"
 }, {
 "base": "Node",
 "class": "State",
@@ -90,12 +90,12 @@ _global_script_classes=[ {
 "path": "res://Nodes/Util/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"BaseLevel": "",
+"Checkpoint": "",
 "DamageEmitter": "",
 "DamageReceiver": "",
 "Enemy": "",
 "EnemyState": "",
-"BaseLevel": "",
-"Checkpoint": "",
 "Game": "",
 "GameState": "",
 "GitAPI": "",

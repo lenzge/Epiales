@@ -53,7 +53,6 @@ shape = SubResource( 2 )
 
 [node name="CoralSailor" parent="Area2D2" instance=ExtResource( 1 )]
 position = Vector2( 64.7325, 17.1473 )
-collision_layer = 2
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( 3.56763, -11.2975 )
