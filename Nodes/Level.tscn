@@ -1,7 +1,26 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Placeholder/new_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Nodes/Characters/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Nodes/Camera/Camera2D.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 142.495, 47.7999 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 31.3866, 31.4981 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 129.377, 14.9674 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 32.4715, 48.2186 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 30.3546, 79.4597 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 573.198, 13.0813 )
 
 [node name="Level" type="Node"]
 pause_mode = 2
@@ -13,20 +32,63 @@ show_collision = true
 collision_bounce = 0.51
 collision_mask = 1023
 format = 1
-tile_data = PoolIntArray( 720924, 1, 0, 720925, 1, 0, 720926, 1, 0, 720927, 1, 0, 720928, 1, 0, 983056, 1, 0, 983057, 1, 0, 983058, 1, 0, 983059, 1, 0, 983060, 1, 0, 983061, 1, 0, 983062, 1, 0, 983063, 1, 0, 983064, 1, 0, 983065, 1, 0, 1245171, 1, 0, 1245172, 1, 0, 1245173, 1, 0, 1245174, 1, 0, 1245175, 1, 0, 1245176, 1, 0, 1245177, 1, 0, 1245178, 1, 0, 1245179, 1, 0, 1245180, 1, 0, 1245181, 1, 0, 1245182, 1, 0, 1245183, 1, 0, 1179648, 1, 0, 1179649, 1, 0, 1179650, 1, 0, 1179651, 1, 0, 1179652, 1, 0, 1179653, 1, 0, 1179654, 1, 0, 1179655, 1, 0, 1179656, 1, 0, 1179657, 1, 0, 1179658, 1, 0, 1179659, 1, 0, 1179660, 1, 0, 1179661, 1, 0, 1179662, 1, 0 )
+tile_data = PoolIntArray( 720924, 1, 0, 720925, 1, 0, 720926, 1, 0, 720927, 1, 0, 720928, 1, 0, 917493, 1, 0, 917494, 1, 0, 983029, 1, 0, 983030, 1, 0, 1048565, 1, 0, 1048566, 1, 0, 1048567, 1, 0, 1048568, 1, 0, 1048575, 1, 0, 983040, 1, 0, 983044, 1, 0, 983045, 1, 0, 983046, 1, 0, 983047, 1, 0, 983048, 1, 0, 983049, 1, 0, 983050, 1, 0, 983051, 1, 0, 983052, 1, 0, 983056, 1, 0, 983057, 1, 0, 983058, 1, 0, 983059, 1, 0, 983060, 1, 0, 983061, 1, 0, 983062, 1, 0, 983063, 1, 0, 983064, 1, 0, 983065, 1, 0, 1114101, 1, 0, 1114102, 1, 0, 1114103, 1, 0, 1114104, 1, 0, 1114111, 1, 0, 1048576, 1, 0, 1048580, 1, 0, 1048581, 1, 0, 1048582, 1, 0, 1048583, 1, 0, 1048584, 1, 0, 1048585, 1, 0, 1048586, 1, 0, 1048587, 1, 0, 1048588, 1, 0, 1179637, 1, 0, 1179638, 1, 0, 1179639, 1, 0, 1179640, 1, 0, 1179641, 1, 0, 1179642, 1, 0, 1179643, 1, 0, 1179644, 1, 0, 1179645, 1, 0, 1179646, 1, 0, 1179647, 1, 0, 1114112, 1, 0, 1114116, 1, 0, 1114117, 1, 0, 1114118, 1, 0, 1114119, 1, 0, 1114120, 1, 0, 1114121, 1, 0, 1114122, 1, 0, 1114123, 1, 0, 1114124, 1, 0, 1245163, 1, 0, 1245164, 1, 0, 1245165, 1, 0, 1245166, 1, 0, 1245167, 1, 0, 1245168, 1, 0, 1245169, 1, 0, 1245170, 1, 0, 1245171, 1, 0, 1245172, 1, 0, 1245173, 1, 0, 1245174, 1, 0, 1245175, 1, 0, 1245176, 1, 0, 1245177, 1, 0, 1245178, 1, 0, 1245179, 1, 0, 1245180, 1, 0, 1245181, 1, 0, 1245182, 1, 0, 1245183, 1, 0, 1179648, 1, 0, 1179649, 1, 0, 1179650, 1, 0, 1179651, 1, 0, 1179652, 1, 0, 1179653, 1, 0, 1179654, 1, 0, 1179655, 1, 0, 1179656, 1, 0, 1179657, 1, 0, 1179658, 1, 0, 1179659, 1, 0, 1179660, 1, 0, 1179661, 1, 0, 1179662, 1, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 73.9989, 277.496 )
+position = Vector2( 301.673, 223.518 )
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2( 3.54099, -41.7799 )
-current = true
-zoom = Vector2( 0.6, 0.6 )
-limit_smoothed = true
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-smoothing_enabled = true
-drag_margin_left = 0.0
-drag_margin_top = 0.6
-drag_margin_right = 0.0
-drag_margin_bottom = 0.1
+[node name="Camera2D" parent="Player" instance=ExtResource( 3 )]
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+position = Vector2( 0, 3.05176e-05 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="StaticBody2D6"]
+position = Vector2( 272.005, 529.3 )
+shape = SubResource( 6 )
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2( 0, 3.05176e-05 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D5"]
+position = Vector2( 0.626038, 513.294 )
+shape = SubResource( 5 )
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2( 0, 3.05176e-05 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D4"]
+position = Vector2( -97.4937, 559.741 )
+shape = SubResource( 4 )
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2( 0, 3.05176e-05 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2( -255.57, 529.642 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2( 0, 3.05176e-05 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2( -318.474, 496.775 )
+shape = SubResource( 2 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 0, 3.05176e-05 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( -96.2118, 589.22 )
+shape = SubResource( 1 )

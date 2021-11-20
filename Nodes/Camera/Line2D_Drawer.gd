@@ -14,6 +14,9 @@ func _process(delta):
 
 
 func _draw():
-	#print("I am drawing")
-	draw_line(parent_raycast.position, parent_raycast.position + parent_raycast.get_cast_to(), Color(0, 0, 255), 10.0, true)
-	print(parent_raycast.get_cast_to())
+	var line_color = Color(0, 0, 255)
+	if(parent_raycast.get_cast_to().x < 0):
+		line_color = Color(255, 0, 0)
+	elif(parent_raycast.get_cast_to().x > 0):
+		line_color= Color(0, 255, 0)
+	draw_line(parent_raycast.position, parent_raycast.position + parent_raycast.get_cast_to(), line_color, 10.0, true)
