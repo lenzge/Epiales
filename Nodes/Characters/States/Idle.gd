@@ -10,10 +10,13 @@ func physics_update(delta):
 
 
 func update(delta):
+	
+	player.move_and_slide(delta * Vector2(0.0, player.gravity), Vector2.UP) 
+	
 	if not player.is_on_floor():
 		state_machine.transition_to("Fall")
 		return
-
+	
 	if Input.is_action_just_pressed("attack"):
 		state_machine.transition_to("Attack_Basic_Windup")
 	elif Input.is_action_just_pressed("jump"):
