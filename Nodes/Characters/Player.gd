@@ -52,8 +52,6 @@ func _input(event):
 
 func get_direction():
 	return velocity.length()
-	# Below returns zero even if player is moving but left and right are pressed.
-	#return (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 
 
 func pop_combat_queue():
@@ -166,14 +164,12 @@ func _flip_sprite_in_movement_dir() -> void:
 			#sprite.flip_h = false
 			#hitbox_attack.position.x = abs(hitbox_attack.position.x)
 			#hitbox_attack.direction = 180
-
-#func knockback(delta, force, direction):
-	#velocity.x = force * direction
-	#fall(delta)
 	if velocity.x < 0:
+		direction = -1
 		sprite.flip_h = true
 		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
 	elif velocity.x > 0:
+		direction = 1
 		sprite.flip_h = false
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 
@@ -183,6 +179,11 @@ func _knockback(force):
 		velocity.x = force
 	else:
 		velocity.x = -force
+		
+func knockback(delta, force, direction):
+	velocity.x = force * direction
+	_fall(delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
 
 
 ## Applies gravity to the player

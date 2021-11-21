@@ -34,7 +34,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Characters/Enemies/Enemy.gd"
 }, {
-"base": "Reference",
+"base": "State",
 "class": "EnemyState",
 "language": "GDScript",
 "path": "res://Nodes/Characters/EnemyState.gd"
@@ -64,7 +64,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Characters/Player.gd"
 }, {
-"base": "Reference",
+"base": "State",
 "class": "PlayerState",
 "language": "GDScript",
 "path": "res://Nodes/Characters/PlayerState.gd"
@@ -79,12 +79,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Maps/StandardLevel.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://Nodes/Util/State.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://Nodes/Util/StateMachine.gd"

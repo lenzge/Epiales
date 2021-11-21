@@ -13,10 +13,9 @@ func enter(_msg := {}):
 	timer.start()
 	
 
-
 func physics_update(delta):
-	player.move(delta)
-	#player.knockback(delta, force, direction)
+	#player.move(delta)
+	player.knockback(delta, force, direction)
 	# Action can't be cancelled
 	
 func _on_timeout():
