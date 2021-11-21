@@ -21,6 +21,7 @@ script = ExtResource( 1 )
 enabled = true
 collision_mask = 2
 collide_with_areas = true
+collide_with_bodies = false
 
 [node name="Line2D_Down" type="Line2D" parent="RayCast2D_Down"]
 script = ExtResource( 2 )
@@ -29,6 +30,7 @@ script = ExtResource( 2 )
 enabled = true
 collision_mask = 2
 collide_with_areas = true
+collide_with_bodies = false
 
 [node name="Line2D_Left" type="Line2D" parent="RayCast2D_Left"]
 script = ExtResource( 2 )
@@ -37,6 +39,7 @@ script = ExtResource( 2 )
 enabled = true
 collision_mask = 2
 collide_with_areas = true
+collide_with_bodies = false
 
 [node name="Line2D_Right" type="Line2D" parent="RayCast2D_Right"]
 script = ExtResource( 2 )

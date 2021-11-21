@@ -55,7 +55,7 @@ func _process(delta):
 		Mode.STATIC:
 			destination = position
 		Mode.FOLLOW:
-			var reverse_drag_vector = Vector2(0, 0) if parent.velocity && parent.velocity.x == 0 else Vector2(parent.velocity.x, 0.0) * reverse_drag 
+			var reverse_drag_vector = Vector2(0, 0) #if parent.velocity && parent.velocity.x == 0 else Vector2(parent.velocity.x, 0.0) * reverse_drag 
 			destination = parent.position + reverse_drag_vector
 			#position = position.move_toward(parent.position + reverse_drag_vector, camera_speed * delta)
 		Mode.CUTSCENE:
