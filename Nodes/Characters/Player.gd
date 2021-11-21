@@ -17,12 +17,13 @@ export(int) var attack_step_speed :int= 150
 export(int) var dash_speed :int = 700
 export(int) var gravity :int = 3000
 export(int) var jump_impulse :int = 1000
-export(int) var knock_back_impulse :int = 500
+export(int) var knock_back_impulse :int = 300
 export(int) var max_attack_combo :int = 3
 
 # Friction is weaker the smaller the value is
 export(float) var acceleration : float = 0.3
 export(float) var friction_ground : float = 40
+export(float) var friction_knockback : float = 25
 
 export(float) var windup_time : float = 0.2
 export(float) var block_time : float = 0.2
@@ -151,6 +152,12 @@ func dash_move(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
+func move_knockback(delta):
+	_slow_with_friction(friction_knockback)
+	_fall(delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+
 # Flip Sprite and Hitbox
 func _flip_sprite_in_movement_dir() -> void:
 	#if not last_movement_buttons.empty():
@@ -174,12 +181,13 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 
 
-func _knockback(force):
+func set_knockback(force):
 	if sprite.flip_h == true:
 		velocity.x = force
 	else:
 		velocity.x = -force
-		
+
+
 func knockback(delta, force, direction):
 	velocity.x = force * direction
 	_fall(delta)
