@@ -39,36 +39,7 @@ position = Vector2( 62.3417, 76.9701 )
 player_path = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 58.8007, 118.75 )
-
-[node name="StaticBody2D6" type="StaticBody2D" parent="."]
-position = Vector2( 0, 3.05176e-05 )
-collision_layer = 2
-collision_mask = 2
-
-[node name="StaticBody2D5" type="StaticBody2D" parent="."]
-position = Vector2( 0, 3.05176e-05 )
-collision_layer = 2
-collision_mask = 2
-
-[node name="StaticBody2D4" type="StaticBody2D" parent="."]
-position = Vector2( 0, 3.05176e-05 )
-collision_layer = 2
-collision_mask = 2
-
-[node name="StaticBody2D3" type="StaticBody2D" parent="."]
-position = Vector2( 0, 3.05176e-05 )
-collision_layer = 2
-collision_mask = 2
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2( 0, 3.05176e-05 )
-collision_layer = 2
-collision_mask = 2
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 2
-collision_mask = 2
+position = Vector2( 236.334, 120.085 )
 
 [node name="Area2D6" type="Area2D" parent="."]
 collision_layer = 2
