@@ -23,5 +23,6 @@ func enter(_msg := {}):
 # Corresponds to the `_physics_process()` callback
 func physics_update(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
+		player_instance.last_movement_buttons.clear()
 		state_machine.transition_to("Pause")
 
