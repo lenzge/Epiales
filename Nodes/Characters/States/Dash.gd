@@ -3,6 +3,7 @@ extends PlayerState
 var timer_dash : Timer
 var timer_windup :Timer
 var after_dash := false
+var direction := Vector2()
 
 
 func _ready():
@@ -17,6 +18,8 @@ func enter(_msg := {}):
 	timer_windup.start()
 	player.can_dash = false
 	after_dash = false
+	direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
+	direction.y = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
 	# todo: change player hitbox so player can deal damage while dashing
 
 
@@ -26,7 +29,7 @@ func exit():
 
 
 func physics_update(delta):
-	player.dash_move(delta, after_dash)
+	player.dash_move(delta, direction, after_dash)
 
 
 func _end_dash_state() -> void:

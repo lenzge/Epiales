@@ -136,7 +136,7 @@ func attack_move(delta) -> void:
 
 ## Moves the player at dash speed
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
-func dash_move(delta, after_dash : bool):
+func dash_move(delta : float, dir : Vector2, after_dash : bool):
 	_flip_sprite_in_movement_dir()
 	
 	if after_dash:
@@ -153,25 +153,18 @@ func dash_move(delta, after_dash : bool):
 	
 	else:
 		if _use_joy_controller:
-			var direction := Vector2(0,0)
-			direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
-			direction.y = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
-			if direction.x == 0 and direction.y == 0:
+			if dir.x == 0 and dir.y == 0:
 				if sprite.flip_h:
-					direction.x = -1
+					dir.x = -1
 				else:
-					direction.x = 1
-			
-			velocity += ((dash_speed * direction.normalized() - velocity) * acceleration)
-		
+					dir.x = 1
+			velocity += ((dash_speed * dir.normalized() - velocity) * acceleration)
 		else:
 			if sprite.flip_h:
 				velocity.x += ((-dash_speed.x - velocity.x) * acceleration)
 			else:
 				velocity.x += ((dash_speed.x - velocity.x) * acceleration)
-	
 	#_fall(delta)
-	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
