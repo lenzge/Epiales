@@ -11,6 +11,8 @@ var _use_joy_controller := false
 
 var velocity := Vector2(0,0)
 var can_dash := true
+var can_hang_on_wall := true
+var hang_on_wall_velocity_save := 0.0
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -29,6 +31,9 @@ export(float) var block_time : float = 0.2
 export(float) var attack_time : float = 0.2
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
+
+export(float) var wall_hang_acceleration : float = 0.1
+export(float) var wall_hang_max_acceleration : float = 500.0
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
@@ -56,9 +61,11 @@ func pop_combat_queue():
 
 
 func _process(delta):
-	# Check if player can dash
+	# Check if player can dash and hang on wall
 	if is_on_floor():
 		can_dash = true
+		can_hang_on_wall = true
+		hang_on_wall_velocity_save = 0.0
 	# todo: add other conditions (i.e. player hits dash resetter obj)
 	
 	# Queue Attack in Array
