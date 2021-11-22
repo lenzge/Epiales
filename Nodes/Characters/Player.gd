@@ -19,6 +19,7 @@ export(int) var attack_step_speed :int= 150
 export(int) var dash_speed :int = 700
 export(int) var gravity :int = 3000
 export(int) var jump_impulse :int = 1000
+export(int) var wall_jump_speed :int = 1000
 export(int) var knock_back_impulse :int = 500
 export(int) var max_attack_combo :int = 3
 
@@ -32,9 +33,11 @@ export(float) var attack_time : float = 0.2
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 
+export(float) var wall_hang_max_entrance_y_velocity : float = 0.2
 export(float) var wall_hang_acceleration : float = 0.1
 export(float) var wall_hang_max_acceleration : float = 500.0
-export(float) var wall_jump_power : float = 8.0
+export(float) var wall_jump_deceleration : float = 0.1
+export(float) var wall_jump_time : float = 0.5
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
@@ -153,6 +156,15 @@ func dash_move(delta):
 	
 	_fall(delta)
 	
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+
+## Moves the player with a deceleration instead of an acceleration
+## Call when in a wall jump
+func move_wall_jump(delta):
+	_flip_sprite_in_movement_dir()
+	_accelerate(0, wall_jump_deceleration)
+	_fall(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 

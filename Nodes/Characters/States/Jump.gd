@@ -15,7 +15,8 @@ func physics_update(delta):
 	elif Input.is_action_just_pressed("dash")  and player.can_dash:
 		state_machine.transition_to("Dash")
 	elif player.can_hang_on_wall and player.is_on_wall():
-		if Input.is_action_pressed("hang_on_wall"):
+		if Input.is_action_pressed("hang_on_wall") and \
+				player.velocity.y > (-player.jump_impulse * player.wall_hang_max_entrance_y_velocity):
 			state_machine.transition_to("Wall_Hang")
 		elif Input.is_action_just_pressed("jump"):
 			state_machine.transition_to("Wall_Jump")
