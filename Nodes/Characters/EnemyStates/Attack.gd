@@ -2,7 +2,6 @@ extends EnemyState
 
 # depending on last state (windup or chase) attack chain is possible
 var attack_chain : bool
-var attack_count : int = 0
 var is_blocked : bool
 var is_hit : bool
 
@@ -12,13 +11,14 @@ func enter(_msg := {}):
 	is_hit = false
 	if state_machine.last_state.name == "Attack_Windup":
 		attack_chain = true
-		attack_count = 1
+		enemy.attack_count += 1
 	else:
-		attack_count = 0
+		enemy.attack_count = 0
 		attack_chain = false
 	timer.set_wait_time(enemy.attack_time)
 	timer.start()
-	enemy.attack_area.knockback_force = enemy.attack_force[attack_count]
+	enemy.attack_area.knockback_force = enemy.attack_force[enemy.attack_count]
+
 
 
 func physics_update(delta):
@@ -26,14 +26,13 @@ func physics_update(delta):
 
 
 func _on_timeout():
-	attack_count += 1
-	#if is_blocked:
-		#state_machine.transition_to("Stunned")
-	if attack_chain and !is_blocked and is_hit and attack_count <= enemy.max_attack_combo:
+	if attack_chain and !is_blocked and is_hit and enemy.attack_count < enemy.max_attack_combo:
 		is_hit = false
-		timer.start()
-		enemy.attack_area.knockback_force = enemy.attack_force[attack_count]
+		state_machine.transition_to("Attack_Windup")
 	else:
+		if state_machine.last_state.name == "Attack_Windup":
+			enemy.set_attack_recover()
+			enemy.attack_count = 0
 		state_machine.transition_to("Attack_Recovery")
 
 

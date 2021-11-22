@@ -11,16 +11,22 @@ export var running_speed = 230
 export var attack_speed = 300
 export var recovery_speed = 120
 
+export var chase_windup_time = 0.5
 export var windup_time = 0.3
 export var attack_time = 0.3
 export var recovery_time = 1.5
+export var attack_recovery_time = 1.5
+export var chase_recovery_time = 5
 export var freeze_time = 0.5
+export var giveup_time = 3.0
 
 # Attack combo with different force
 export(Array, int) var attack_force = [600, 400, 800]
+var attack_count : int
 export var max_attack_combo = 2
 
 onready var player_detection_area : Area2D = $PlayerDetectionArea
+onready var player_follow_area : Area2D = $PlayerFollowArea
 onready var attack_detection = $AttackDetection
 onready var attack_area = $AttackArea
 onready var damage_box = $DamageBox
@@ -32,7 +38,10 @@ onready var floor_detection_raycast : RayCast2D = $FloorDetectionRaycast
 onready var wall_detection_raycast : RayCast2D = $WallDetectionRaycast
 
 var velocity : Vector2
-var is_recovering : bool
+var is_attack_recovering : bool
+var is_chase_recovering : bool
+var attack_recover_timer
+var chase_recover_timer
 
 # Enemy has to know the player to interact with
 var chased_player : Player
@@ -50,7 +59,6 @@ func _ready() -> void:
 	hitbox.connect("on_hit_start", self, "on_hit")
 	attack_area.connect("blocked", self, "on_blocked")
 	
-	
 	if direction == 1:
 		$"AttackArea".direction = 0
 	else:
@@ -58,14 +66,65 @@ func _ready() -> void:
 	
 	# Connect Player and signals
 	chased_player = $"../Player"
+
+	_init_timer()
+	
+
+func _init_timer():
+	chase_recover_timer = Timer.new()
+	chase_recover_timer.set_autostart(false)
+	chase_recover_timer.set_one_shot(true)
+	chase_recover_timer.set_timer_process_mode(0)
+	chase_recover_timer.connect("timeout", self, "_on_chase_recover_timeout")
+	self.add_child(chase_recover_timer)
+	attack_recover_timer = Timer.new()
+	attack_recover_timer.set_autostart(false)
+	attack_recover_timer.set_one_shot(true)
+	attack_recover_timer.set_timer_process_mode(0)
+	attack_recover_timer.connect("timeout", self, "_on_attack_recover_timeout")
+	self.add_child(attack_recover_timer)
+
+	
+	
+func _on_chase_recover_timeout():
+	is_chase_recovering = false
+	player_detection_area.get_child(0).disabled = false
+	player_follow_area.get_child(0).disabled = false
+	
+func _on_attack_recover_timeout():
+	is_attack_recovering = false
+	
+func set_attack_recover():
+	is_attack_recovering = true
+	attack_recover_timer.set_wait_time(attack_recovery_time)
+	attack_recover_timer.start()
+	
+func set_chase_recover():
+	is_chase_recovering = true
+	chase_recover_timer.set_wait_time(chase_recovery_time)
+	chase_recover_timer.start()
+	player_detection_area.get_child(0).disabled = true
+	player_follow_area.get_child(0).disabled = true
 	
 # debugging action
 func _physics_process(delta):
 	$Label.text = state_machine.state.name
 
-func find_player():
-	if direction == 1 and chased_player.position.x < position.x or direction == -1 and chased_player.position.x > position.x:
+func follow_player():
+	if not moving_in_player_direction():
 		flip_direction()
+
+func moving_in_player_direction():
+	if direction == 1 and chased_player.position.x < position.x or direction == -1 and chased_player.position.x > position.x:
+		return false
+	else:
+		return true
+
+func is_player_on_other_plattform():
+	if chased_player.global_position.y < global_position.y and chased_player.is_on_floor():
+		return true
+	else:
+		return false
 
 func windup_move(delta):
 	pass
