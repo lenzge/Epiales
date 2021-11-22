@@ -54,7 +54,7 @@ drag_margin_right = 0.0
 drag_margin_bottom = 0.1
 
 [node name="Bird" parent="." instance=ExtResource( 3 )]
-position = Vector2( 304.853, 334.219 )
+position = Vector2( -376.481, 355.546 )
 gravity = 20
 direction = 1
 running_speed = 500
@@ -62,4 +62,3 @@ attack_speed = 200
 
 [node name="Puppet" parent="." instance=ExtResource( 4 )]
 position = Vector2( -1142.64, 521.224 )
-attack_knockback = [ 0.5, 1.0, 0.4 ]

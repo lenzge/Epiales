@@ -1,6 +1,7 @@
 extends PlayerState
 
 var attack_count : int
+var direction
 
 func enter(_msg := {}):
 	.enter(_msg)

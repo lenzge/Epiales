@@ -17,8 +17,7 @@ export var recovery_time = 1.5
 export var freeze_time = 0.5
 
 # Attack combo with different force
-export(Array, int) var attack_force = [400, 500, 400]
-export(Array, int) var attack_knockback = [0.4, 0.2, 0.4]
+export(Array, int) var attack_force = [600, 400, 800]
 export var max_attack_combo = 2
 
 onready var player_detection_area : Area2D = $PlayerDetectionArea

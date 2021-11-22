@@ -28,7 +28,7 @@ radius = 11.0179
 height = 44.7304
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 10.75, 30.6763 )
+extents = Vector2( 15.4453, 30.6763 )
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 10.25
@@ -797,7 +797,7 @@ collision_mask = 2
 script = ExtResource( 9 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
-position = Vector2( -5.25, -0.5 )
+position = Vector2( -2.58032, -1.16742 )
 shape = SubResource( 2 )
 disabled = true
 

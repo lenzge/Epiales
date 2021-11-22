@@ -23,7 +23,7 @@ export(int) var max_attack_combo :int = 3
 # Friction is weaker the smaller the value is
 export(float, 0, 1, 0.001) var acceleration : float = 0.3
 export(float) var friction_ground : float = 40
-export(float) var friction_knockback : float = 10
+export(float) var friction_knockback : float = 20
 export(float, 0, 1, 0.001) var acceleration_after_dash : float = 0.05
 
 export(float) var windup_time : float = 0.2
@@ -201,11 +201,11 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 
 
-func set_knockback(force):
-	if sprite.flip_h == true:
-		velocity.x = force
-	else:
-		velocity.x = -force
+func set_knockback(force, direction):
+	#if sprite.flip_h == true:
+	velocity.x = force * direction
+	#else:
+		#velocity.x = -force
 
 
 func knockback(delta, force, direction):

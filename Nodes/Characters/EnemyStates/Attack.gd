@@ -19,7 +19,6 @@ func enter(_msg := {}):
 	timer.set_wait_time(enemy.attack_time)
 	timer.start()
 	enemy.attack_area.knockback_force = enemy.attack_force[attack_count]
-	enemy.attack_area.knockback_time = enemy.attack_knockback[attack_count]
 
 
 func physics_update(delta):
@@ -34,7 +33,6 @@ func _on_timeout():
 		is_hit = false
 		timer.start()
 		enemy.attack_area.knockback_force = enemy.attack_force[attack_count]
-		enemy.attack_area.knockback_time = enemy.attack_knockback[attack_count]
 	else:
 		state_machine.transition_to("Attack_Recovery")
 

@@ -376,8 +376,8 @@ radius = 25.1785
 height = 15.074
 
 [sub_resource type="CapsuleShape2D" id=10]
-radius = 24.945
-height = 24.4842
+radius = 19.5681
+height = 31.9567
 
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 120, 85.1781 )
@@ -419,6 +419,7 @@ direction = 180.0
 is_directed = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2( 2, 0 )
 shape = SubResource( 8 )
 disabled = true
 
