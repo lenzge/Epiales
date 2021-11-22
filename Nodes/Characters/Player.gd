@@ -28,6 +28,7 @@ export(float, 0, 1, 0.001) var acceleration_after_dash : float = 0.05
 export(float) var windup_time : float = 0.2
 export(float) var block_time : float = 0.2
 export(float) var attack_time : float = 0.2
+export(float) var attack_cooldown_time : float =  10
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 export(float) var dash_recovery_time : float = 0.2
