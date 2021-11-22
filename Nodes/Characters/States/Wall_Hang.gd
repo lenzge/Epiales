@@ -19,9 +19,8 @@ func physics_update(delta):
 		else:
 			transition_to("Run")
 		
-	elif Input.is_action_pressed("jump") and player.is_on_wall():
-		transition_to("Jump")
-		wall_jump()
+	elif Input.is_action_just_pressed("jump") and player.is_on_wall():
+		transition_to("Wall_Jump")
 	elif Input.is_action_pressed("hang_on_wall") and player.is_on_wall():
 		if player.velocity.y > player.wall_hang_max_acceleration:
 			transition_to("Fall")
@@ -37,11 +36,3 @@ func transition_to(state: String):
 		player.hang_on_wall_velocity_save = player.velocity.y
 	player.gravity = player_gravity_save
 	state_machine.transition_to(state)
-
-
-func wall_jump():
-	player.velocity.y = -player.jump_impulse
-	if player.get_slide_collision(0).get_position().x > player.position.x:
-		player.velocity.x = -player.wall_jump_power * player.speed
-	else:
-		player.velocity.x = player.wall_jump_power * player.speed

@@ -34,7 +34,7 @@ export(float) var dash_time : float = 0.2
 
 export(float) var wall_hang_acceleration : float = 0.1
 export(float) var wall_hang_max_acceleration : float = 500.0
-export(float) var wall_jump_power : float = 10.0
+export(float) var wall_jump_power : float = 8.0
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock

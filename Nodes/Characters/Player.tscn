@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Luci/idle.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Nodes/Experimental/Luci/attack.png" type="Texture" id=19]
 [ext_resource path="res://Nodes/Experimental/Luci/attack_recovery.png" type="Texture" id=20]
 [ext_resource path="res://Nodes/Characters/States/Stunned.gd" type="Script" id=21]
+[ext_resource path="res://Nodes/Characters/States/Wall_Jump.gd" type="Script" id=22]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 11.0179
@@ -672,6 +673,9 @@ script = ExtResource( 21 )
 
 [node name="Wall_Hang" type="Node" parent="StateMachine"]
 script = ExtResource( 9 )
+
+[node name="Wall_Jump" type="Node" parent="StateMachine"]
+script = ExtResource( 22 )
 
 [node name="Block" type="Area2D" parent="."]
 
