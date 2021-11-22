@@ -62,3 +62,4 @@ attack_speed = 200
 
 [node name="Puppet" parent="." instance=ExtResource( 4 )]
 position = Vector2( -1142.64, 521.224 )
+attack_knockback = [ 0.5, 1.0, 0.4 ]

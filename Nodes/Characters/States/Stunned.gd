@@ -11,11 +11,12 @@ func enter(_msg := {}):
 	player.velocity = Vector2.ZERO
 	timer.set_wait_time(_msg.time)
 	timer.start()
+	player.set_knockback(force * 1.8)
 	
 
 func physics_update(delta):
-	#player.move(delta)
-	player.knockback(delta, force, direction)
+	player.move_knockback(delta)
+	#player.knockback(delta, force, direction)
 	# Action can't be cancelled
 	
 func _on_timeout():
