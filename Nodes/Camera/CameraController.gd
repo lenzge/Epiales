@@ -61,7 +61,7 @@ func _physics_process(delta):
 	
 	if raycast_left.is_colliding():
 		if raycast_right.is_colliding():
-			destination.x = (raycast_right.get_collision_point().x - raycast_left.get_collision_point().x) / 2
+			destination.x = (raycast_right.get_collision_point().x + raycast_left.get_collision_point().x) / 2
 			#destination.x = center_point
 		else:	
 			#print(raycast_left, raycast_left.get_collision_point(), raycast_left.get_cast_to(), raycast_left.get_collider().name, " I am colliding left!")
