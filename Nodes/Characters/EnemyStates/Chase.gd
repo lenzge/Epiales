@@ -12,7 +12,7 @@ func enter(_msg := {}):
 func physics_update(delta):
 	enemy.chase(delta)
 	
-	if enemy.attack_detection.is_colliding() or not enemy.moving_in_player_direction():
+	if enemy.attack_detection.is_colliding() or not enemy.is_moving_in_player_direction():
 		enemy.set_chase_recover()
 		state_machine.transition_to("Attack")
 	

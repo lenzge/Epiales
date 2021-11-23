@@ -459,7 +459,7 @@ knockback_time = 0.2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageBox"]
 shape = SubResource( 10 )
 
-[node name="EnemyDetection" type="RayCast2D" parent="."]
+[node name="EnemyDetectionRaycast" type="RayCast2D" parent="."]
 rotation = -1.5708
 scale = Vector2( 1, 1.7 )
 enabled = true

@@ -11,8 +11,8 @@ func physics_update(delta):
 	if enemy.attack_windup_detection.is_colliding() and not enemy.is_attack_recovering:
 		state_machine.transition_to("Attack_Windup")
 
-	if enemy.enemy_detection.is_colliding():
-		if enemy.enemy_detection.get_collider().direction == enemy.direction:
+	if enemy.enemy_detection_raycast.is_colliding():
+		if enemy.enemy_detection_raycast.get_collider().direction == enemy.direction:
 			state_machine.transition_to("Freeze")
 		else:
 			enemy.flip_direction()

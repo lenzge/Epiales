@@ -520,7 +520,7 @@ collision_mask = 36
 position = Vector2( -1.00113, -56 )
 shape = SubResource( 13 )
 
-[node name="EnemyDetection" type="RayCast2D" parent="."]
+[node name="EnemyDetectionRaycast" type="RayCast2D" parent="."]
 position = Vector2( 25, 0 )
 rotation = -1.5708
 scale = Vector2( 1, 1.3 )

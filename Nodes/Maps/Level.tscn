@@ -59,7 +59,7 @@ gravity = 20
 direction = 1
 running_speed = 500
 attack_speed = 200
-attack_recovery_time = 5.0
+attack_cooldown_time = 3.0
 
 [node name="Puppet2" parent="." instance=ExtResource( 4 )]
 position = Vector2( -1204.87, 519.81 )
@@ -70,5 +70,4 @@ recovery_speed = 50
 position = Vector2( -849.969, 525.473 )
 windup_speed = 0
 recovery_speed = 50
-attack_recovery_time = 4.0
 freeze_time = 1.0

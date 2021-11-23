@@ -12,10 +12,6 @@ func patrol(delta):
 func chase(delta):
 	if floor_detection_raycast.is_colliding() and is_on_floor():
 		move(running_speed)
-	
-func fall():
-	velocity.y += gravity
-	velocity = move_and_slide(velocity, Vector2.UP)
 
 func move(speed):
 	# Turn automatically on cliffs 
@@ -40,8 +36,6 @@ func attack_move(delta, attack_chain) -> void:
 		velocity.x = running_speed * direction
 	fall()
 		
-
-
 
 func knockback(delta, force, direction):
 	velocity.x = force * -direction
