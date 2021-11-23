@@ -22,6 +22,7 @@ func move(speed):
 	# _is_on_wall() cant't be used because of weird interactions with the player. Other solution
 	if wall_detection_raycast.is_colliding() or not floor_detection_raycast.is_colliding() and is_on_floor():
 		flip_direction()
+	
 	velocity.x = speed * direction
 	fall()
 	

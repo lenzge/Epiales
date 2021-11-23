@@ -12,10 +12,13 @@ func enter(_msg := {}):
 func physics_update(delta):
 	enemy.chase(delta)
 	
-	if enemy.attack_detection.is_colliding() or not enemy.moving_in_player_direction() or enemy.is_player_on_other_plattform():
+	if enemy.attack_detection.is_colliding() or not enemy.moving_in_player_direction():
 		enemy.set_chase_recover()
 		state_machine.transition_to("Attack")
 	
+	if enemy.is_player_on_other_plattform():
+		enemy.set_chase_recover()
+		state_machine.transition_to("Patrol")
 	# No instant turn
 	#fixed_update_time += delta
 	#if(fixed_update_time > 1):

@@ -36,6 +36,7 @@ onready var sprite : Sprite = $Sprite
 onready var state_machine : StateMachine = $StateMachine
 onready var floor_detection_raycast : RayCast2D = $FloorDetectionRaycast
 onready var wall_detection_raycast : RayCast2D = $WallDetectionRaycast
+onready var enemy_detection : RayCast2D = $EnemyDetection
 
 var velocity : Vector2
 var is_attack_recovering : bool
@@ -55,6 +56,8 @@ func _ready() -> void:
 	attack_windup_detection.rotation_degrees = attack_windup_detection.rotation_degrees * direction
 	floor_detection_raycast.position.x = floor_detection_raycast.position.x * direction
 	wall_detection_raycast.rotation_degrees = wall_detection_raycast.rotation_degrees * direction
+	enemy_detection.rotation_degrees = enemy_detection.rotation_degrees * direction
+	enemy_detection.position.x = enemy_detection.position.x * direction
 	
 	hitbox.connect("on_hit_start", self, "on_hit")
 	attack_area.connect("blocked", self, "on_blocked")
@@ -159,6 +162,8 @@ func flip_direction():
 	attack_windup_detection.rotation_degrees = attack_windup_detection.rotation_degrees * -1
 	floor_detection_raycast.position.x = floor_detection_raycast.position.x * -1
 	wall_detection_raycast.rotation_degrees = wall_detection_raycast.rotation_degrees * -1
+	enemy_detection.rotation_degrees = enemy_detection.rotation_degrees * -1
+	enemy_detection.position.x = enemy_detection.position.x * -1
 	if attack_area.direction == 180.0:
 		attack_area.direction = 0.0
 	else:

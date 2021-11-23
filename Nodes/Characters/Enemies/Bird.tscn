@@ -330,8 +330,8 @@ radius = 25.1785
 height = 15.074
 
 [sub_resource type="CapsuleShape2D" id=10]
-radius = 24.945
-height = 24.4842
+radius = 15.5045
+height = 38.3344
 
 [node name="Bird" type="KinematicBody2D"]
 collision_layer = 2
@@ -450,6 +450,7 @@ shape = SubResource( 1 )
 
 [node name="DamageBox" type="Area2D" parent="."]
 position = Vector2( -1.001, 4.317 )
+collision_layer = 2
 script = ExtResource( 15 )
 damagae_amount = 20
 knockback_force = 200.0
@@ -457,6 +458,12 @@ knockback_time = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageBox"]
 shape = SubResource( 10 )
+
+[node name="EnemyDetection" type="RayCast2D" parent="."]
+rotation = -1.5708
+scale = Vector2( 1, 1.7 )
+enabled = true
+collision_mask = 2
 
 [connection signal="hit" from="AttackArea" to="StateMachine/Attack" method="on_attack_hit"]
 [connection signal="on_hit_start" from="DamageReceiver" to="." method="on_hit"]
