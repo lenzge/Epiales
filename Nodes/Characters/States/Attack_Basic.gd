@@ -40,3 +40,5 @@ func _stop_attack():
 		state_machine.transition_to("Block_Windup")
 	else:
 		state_machine.transition_to("Attack_Basic_Recovery")
+	
+	player.attack_cooldown_timer.start()

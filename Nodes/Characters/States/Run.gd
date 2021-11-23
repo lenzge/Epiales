@@ -9,7 +9,8 @@ func physics_update(delta):
 	player.move(delta)
 
 	if Input.is_action_just_pressed("attack"):
-		state_machine.transition_to("Attack_Basic_Windup")
+		if player.attack_cooldown_timer.time_left == 0:
+			state_machine.transition_to("Attack_Basic_Windup")
 	elif Input.is_action_just_pressed("jump"):
 		state_machine.transition_to("Jump")
 	elif Input.is_action_just_pressed("block"):

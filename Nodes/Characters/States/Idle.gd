@@ -18,7 +18,8 @@ func update(delta):
 		return
 	
 	if Input.is_action_just_pressed("attack"):
-		state_machine.transition_to("Attack_Basic_Windup")
+		if player.attack_cooldown_timer.time_left == 0:
+			state_machine.transition_to("Attack_Basic_Windup")
 	elif Input.is_action_just_pressed("jump"):
 		state_machine.transition_to("Jump")
 	elif not player.last_movement_buttons.empty():

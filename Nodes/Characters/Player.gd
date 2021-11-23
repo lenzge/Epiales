@@ -11,6 +11,7 @@ var _use_joy_controller := false
 
 var velocity := Vector2(0,0)
 var can_dash := true
+var attack_cooldown_timer : Timer
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -37,6 +38,15 @@ onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
 
+
+func _ready():
+	attack_cooldown_timer = Timer.new()
+	attack_cooldown_timer.autostart = false
+	attack_cooldown_timer.set_autostart(false)
+	attack_cooldown_timer.set_one_shot(true)
+	attack_cooldown_timer.set_timer_process_mode(0)
+	attack_cooldown_timer.set_wait_time(attack_cooldown_time)
+	self.add_child(attack_cooldown_timer)
 
 func _input(event):
 	if (event is InputEventKey or 
