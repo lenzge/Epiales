@@ -18,6 +18,9 @@ export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
 export(int) var dash_speed :int = 700
 export(int) var gravity :int = 3000
+export(int) var wall_hang_gravity : int = 300
+export(int) var wall_hang_max_gravity : int = 500
+export(int) var wall_hang_min_entrance_y_velocity : int = -200
 export(int) var jump_impulse :int = 1000
 export(int) var wall_jump_speed :int = 1000
 export(int) var knock_back_impulse :int = 500
@@ -33,9 +36,6 @@ export(float) var attack_time : float = 0.2
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 
-export(float) var wall_hang_max_entrance_y_velocity : float = 0.2
-export(float) var wall_hang_acceleration : float = 0.1
-export(float) var wall_hang_max_acceleration : float = 500.0
 export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
 
@@ -156,6 +156,21 @@ func dash_move(delta):
 	
 	_fall(delta)
 	
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+
+## Moves the player with a special gravitational force for the wall_hang
+## Call when player is in wall hang
+func move_wall_hang(delta):
+	_flip_sprite_in_movement_dir()
+	
+	if not last_movement_buttons.empty():
+		if last_movement_buttons[0] == MovementDir.LEFT:
+			_accelerate(-speed, acceleration)
+		elif last_movement_buttons[0] == MovementDir.RIGHT:
+			_accelerate(speed, acceleration)
+	
+	velocity.y += wall_hang_gravity * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
