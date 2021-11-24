@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Nodes/Game Objects/MusicController.gd" type="Script" id=1]
+
+[node name="MusicController" type="Node"]
+script = ExtResource( 1 )
+calm_music_path = "res://Nodes/Experimental/Placeholder/Fairgroundroom1_Demo1.mp3"
+hectic_music_path = "res://Nodes/Experimental/Placeholder/Sea_levelhectic_Demo_1.mp3"
+starting_track = 1
+
+[node name="Calm_music" type="AudioStreamPlayer" parent="."]
+
+[node name="Hectic_music" type="AudioStreamPlayer" parent="."]
