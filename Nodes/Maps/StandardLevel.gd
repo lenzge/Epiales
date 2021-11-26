@@ -7,6 +7,9 @@ var player_spawn : Vector2
 var current_spawnpoint
 var current_spawnpoint_prio = -1
 
+# Enemy can connect to spawned player
+signal player_spawned
+
 func _ready():
 	if not player_spawn:
 		player_spawn = get_node(player_spawn_path).position
@@ -29,6 +32,8 @@ func spawn_player(player) -> void:
 	player.add_child(camera)
 	player_instance = player
 	add_child(player)
+	emit_signal("player_spawned")
+	
 
 func _on_Checkoint_checkpoint_entered(new_spawnpoint: Vector2, prio: int) -> void:
 	if new_spawnpoint.x > current_spawnpoint.x or prio > current_spawnpoint_prio:

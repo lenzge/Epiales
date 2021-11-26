@@ -72,11 +72,11 @@ func _ready() -> void:
 	# Connect Hitboxes and Player
 	hitbox.connect("on_hit_start", self, "on_hit")
 	attack_area.connect("blocked", self, "on_blocked")
-	chased_player = $"../Player"
-
+	owner.connect("player_spawned", self, "_on_player_spawned")
+	
 	_init_timer()
-
-
+	
+	
 # Debugging action
 func _physics_process(delta):
 	$Label.text = state_machine.state.name
@@ -125,7 +125,7 @@ func knockback(delta, force, direction):
 	pass
 		
 		
-	
+		
 func flip_direction():
 	direction = direction * -1
 	sprite.flip_h = not sprite.flip_h
@@ -198,3 +198,7 @@ func set_chase_recover():
 	chase_recover_timer.start()
 	player_detection_area.get_child(0).disabled = true
 	player_follow_area.get_child(0).disabled = true
+
+func _on_player_spawned():
+	chased_player = owner.player_instance
+	
