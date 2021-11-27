@@ -11,6 +11,8 @@ var _use_joy_controller := false
 
 var velocity := Vector2(0,0)
 var can_dash := true
+var can_reset_dash := true
+var started_dash_in_air := false
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -30,7 +32,7 @@ export(float) var block_time : float = 0.2
 export(float) var attack_time : float = 0.2
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
-export(float) var dash_recovery_time : float = 0.2
+export(float) var dash_recovery_time : float = 1.0
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
@@ -60,6 +62,10 @@ func pop_combat_queue():
 func _process(delta):
 	# Check if player can dash
 	if is_on_floor():
+		if started_dash_in_air:
+			can_reset_dash = true
+			started_dash_in_air = false
+	if can_reset_dash:
 		can_dash = true
 	# todo: add other conditions (i.e. player hits dash resetter obj)
 	

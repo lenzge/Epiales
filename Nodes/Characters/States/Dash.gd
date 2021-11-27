@@ -15,28 +15,35 @@ func _ready():
 func enter(_msg := {}):
 	.enter(_msg)
 	timer_dash.start()
+	timer_windup.stop()
 	timer_windup.start()
 	player.can_dash = false
+	player.can_reset_dash = false
 	after_dash = false
 	direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
 	direction.y = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
+	if !player.is_on_floor():
+		player.started_dash_in_air = true
 	# todo: change player hitbox so player can deal damage while dashing
 
 
 func exit():
 	timer_dash.stop()
-	timer_windup.stop()
 
 
 func physics_update(delta):
-	player.dash_move(delta, direction, after_dash)
-
-
-func _end_dash_state() -> void:
-	if player.last_movement_buttons.empty():
-		state_machine.transition_to("Idle")
+	if after_dash:
+		if player.last_movement_buttons.empty():
+			state_machine.transition_to("Idle")
+		else:
+			state_machine.transition_to("Run")
 	else:
-		state_machine.transition_to("Run")
+		player.dash_move(delta, direction, after_dash)
+
+
+func _end_dash_recovery() -> void:
+	timer_windup.stop()
+	player.can_reset_dash = true
 
 
 func _stop_dash() -> void:
@@ -57,5 +64,5 @@ func _init_timers() -> void:
 	timer_windup.set_one_shot(true)
 	timer_windup.set_timer_process_mode(Timer.TIMER_PROCESS_PHYSICS)
 	timer_windup.set_wait_time(player.dash_time + player.dash_recovery_time)
-	timer_windup.connect("timeout", self, "_end_dash_state")
+	timer_windup.connect("timeout", self, "_end_dash_recovery")
 	self.add_child(timer_windup)
