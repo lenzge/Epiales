@@ -2,7 +2,6 @@ class_name Puppet
 extends Enemy
 
 
-
 func windup_move(delta):
 	move(windup_speed)
 

@@ -38,11 +38,12 @@ func transition_to(target_state_name, msg: Dictionary = {}):
 		print("STATEMACHINE WARNING: State not found: " + target_state_name)
 		return
 		
-	last_state = state
-	state.exit()
-	state = get_node(target_state_name)
-	state.enter(msg)
-#	animationPlayer.play(state.name)
-	emit_signal("transitioned", state.name)
+	# Dying can't be cancelled
+	if not state.name == "Die":
+		last_state = state
+		state.exit()
+		state = get_node(target_state_name)
+		state.enter(msg)
+		emit_signal("transitioned", state.name)
 
 

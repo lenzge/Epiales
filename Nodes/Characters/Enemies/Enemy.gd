@@ -3,6 +3,7 @@ extends KinematicBody2D
 
 export var gravity = 100
 export var direction = -1
+export var health_points = 1000
 
 # Different speed in different states
 export var windup_speed = 40
@@ -23,6 +24,8 @@ export var attack_cooldown_time = 1.5
 export var chase_cooldown_time = 5
 # Time till enemy stops chasing
 export var giveup_time = 3.0
+# Time between no health and despawning
+export var dying_time = 3.0
 
 # Attack combo with different force
 export(Array, int) var attack_force = [600, 400, 800]
@@ -30,6 +33,7 @@ export var max_attack_combo = 2
 
 onready var state_machine : StateMachine = $StateMachine
 onready var sprite : Sprite = $Sprite
+onready var health_bar = $HealthBar
 onready var floor_detection_raycast : RayCast2D = $FloorDetectionRaycast
 onready var wall_detection_raycast : RayCast2D = $WallDetectionRaycast
 onready var enemy_detection_raycast : RayCast2D = $EnemyDetectionRaycast
@@ -69,13 +73,14 @@ func _ready() -> void:
 		attack_area.direction = 180
 	_set_all_in_right_direction(direction)
 	
-	# Connect Hitboxes and Player
+	# Connect Signals
 	hitbox.connect("on_hit_start", self, "on_hit")
 	attack_area.connect("blocked", self, "on_blocked")
 	owner.connect("player_spawned", self, "_on_player_spawned")
+	health_bar.connect("zero_hp", self, "_on_zero_hp")
 	
 	_init_timer()
-	
+	health_bar.set_max_health(health_points)
 	
 # Debugging action
 func _physics_process(delta):
@@ -148,11 +153,14 @@ func on_hit(emitter : DamageEmitter):
 	else:
 		direction = 1
 	emitter.hit(hitbox)
+	health_bar.get_damage(emitter.knockback_force)
 	state_machine.transition_to("Stunned", {"force": emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
+
+func _on_zero_hp():
+	state_machine.transition_to("Die")
 
 func on_blocked(receiver):
 	state_machine.transition_to("Attack_Recovery")
-	
 	
 
 func _set_all_in_right_direction(direction):
@@ -201,4 +209,7 @@ func set_chase_recover():
 
 func _on_player_spawned():
 	chased_player = owner.player_instance
+	
+func despawning():
+	queue_free()
 	

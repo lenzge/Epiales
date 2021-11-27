@@ -3,6 +3,7 @@ extends Enemy
 #  for finding way back to his old patrol point
 var position_cache
 
+
 func _ready():
 	# For detecting Patrol Points
 	wall_detection_raycast.collide_with_areas = true
