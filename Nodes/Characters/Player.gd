@@ -135,7 +135,9 @@ func attack_move(delta) -> void:
 	velocity = move_and_slide(velocity,Vector2.UP)
 
 
-func attack_up_down_move(delta) -> void:
+## Deccelerates the player when in up or down Attack on ground or in crouch
+## Call in _physics_process when player attacks up or down on ground
+func attack_up_down_ground_move(delta) -> void:
 	_flip_sprite_in_movement_dir()
 	
 	_accelerate(0, acceleration)

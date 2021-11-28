@@ -23,7 +23,7 @@ func exit():
 
 
 func physics_update(delta):
-	player.attack_up_down_move(delta)
+	player.attack_up_down_ground_move(delta)
 
 
 func _stop_block_recovery():

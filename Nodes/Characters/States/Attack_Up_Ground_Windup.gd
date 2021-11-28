@@ -1,5 +1,7 @@
 extends PlayerState
 
+## It's basicly the same as the Attack_Basic_Windup state
+
 var timer : Timer
 
 func _ready():

@@ -18,12 +18,14 @@ func _ready():
 func enter(msg :={}):
 	.enter(msg)
 	timer.start()
+	# enable the attack hitboxes
 	player.get_node("Attack_Up_Ground/HitboxAttack_Front").disabled = false
 	player.get_node("Attack_Up_Ground/HitboxAttack_Top").disabled = false
 
 
 func exit():
 	timer.stop()
+	# disable the attack hitboxes
 	player.get_node("Attack_Up_Ground/HitboxAttack_Front").disabled = true
 	player.get_node("Attack_Up_Ground/HitboxAttack_Top").disabled = true
 
@@ -38,4 +40,4 @@ func _stop_attack():
 
 
 func physics_update(delta):
-	player.attack_up_down_move(delta)
+	player.attack_up_down_ground_move(delta)
