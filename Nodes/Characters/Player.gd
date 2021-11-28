@@ -32,7 +32,7 @@ export(float) var block_time : float = 0.2
 export(float) var attack_time : float = 0.2
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
-export(float) var dash_recovery_time : float = 1.0
+export(float) var dash_cooldown_time : float = 1.0
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock

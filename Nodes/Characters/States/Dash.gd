@@ -1,7 +1,7 @@
 extends PlayerState
 
 var timer_dash : Timer
-var timer_windup :Timer
+var timer_cooldown :Timer
 var after_dash := false
 var direction := Vector2()
 
@@ -15,8 +15,8 @@ func _ready():
 func enter(_msg := {}):
 	.enter(_msg)
 	timer_dash.start()
-	timer_windup.stop()
-	timer_windup.start()
+	timer_cooldown.stop()
+	timer_cooldown.start()
 	player.can_dash = false
 	player.can_reset_dash = false
 	after_dash = false
@@ -41,8 +41,8 @@ func physics_update(delta):
 		player.dash_move(delta, direction, after_dash)
 
 
-func _end_dash_recovery() -> void:
-	timer_windup.stop()
+func _end_dash_cooldown() -> void:
+	timer_cooldown.stop()
 	player.can_reset_dash = true
 
 
@@ -59,10 +59,10 @@ func _init_timers() -> void:
 	timer_dash.connect("timeout", self, "_stop_dash")
 	self.add_child(timer_dash)
 	
-	timer_windup = Timer.new()
-	timer_windup.set_autostart(false)
-	timer_windup.set_one_shot(true)
-	timer_windup.set_timer_process_mode(Timer.TIMER_PROCESS_PHYSICS)
-	timer_windup.set_wait_time(player.dash_time + player.dash_recovery_time)
-	timer_windup.connect("timeout", self, "_end_dash_recovery")
-	self.add_child(timer_windup)
+	timer_cooldown = Timer.new()
+	timer_cooldown.set_autostart(false)
+	timer_cooldown.set_one_shot(true)
+	timer_cooldown.set_timer_process_mode(Timer.TIMER_PROCESS_PHYSICS)
+	timer_cooldown.set_wait_time(player.dash_time + player.dash_cooldown_time)
+	timer_cooldown.connect("timeout", self, "_end_dash_cooldown")
+	self.add_child(timer_cooldown)
