@@ -35,6 +35,7 @@ export(float) var dash_recovery_time : float = 0.2
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
+onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
 
 
 func _input(event):
@@ -134,6 +135,15 @@ func attack_move(delta) -> void:
 	velocity = move_and_slide(velocity,Vector2.UP)
 
 
+func attack_up_down_move(delta) -> void:
+	_flip_sprite_in_movement_dir()
+	
+	_accelerate(0, acceleration)
+	_fall(delta)
+	
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+
 ## Moves the player at dash speed
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
 func dash_move(delta : float, dir : Vector2, after_dash : bool):
@@ -174,10 +184,12 @@ func _flip_sprite_in_movement_dir() -> void:
 		sprite.flip_h = true
 		hitbox_block.position.x = -abs(hitbox_block.position.x)
 		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
+		hitbox_up_attack.scale.x = -abs(scale.x)
 	elif velocity.x > 0:
 		sprite.flip_h = false
 		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
+		hitbox_up_attack.scale.x = abs(scale.x)
 
 
 func _knockback(force):
