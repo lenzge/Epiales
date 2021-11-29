@@ -795,6 +795,7 @@ script = ExtResource( 21 )
 position = Vector2( 32, 7 )
 collision_mask = 2
 script = ExtResource( 9 )
+damage_amount = 20
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
 position = Vector2( -2.58032, -1.16742 )
