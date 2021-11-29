@@ -82,10 +82,10 @@ func _process(delta):
 	
 	# Fill movement Array
 	if Input.is_action_just_pressed("move_left"):
-		last_input.clear()
+		#last_input.clear()
 		last_movement_buttons.push_front(MovementDir.LEFT)
 	if Input.is_action_just_pressed("move_right"):
-		last_input.clear()
+		#last_input.clear()
 		last_movement_buttons.push_front(MovementDir.RIGHT)
 
 	# Clear Movement Array

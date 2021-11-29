@@ -17,7 +17,6 @@ func _ready():
 
 func enter(_msg := {}):
 	.enter(_msg)
-	attack_count = 0
 	timer.start()
 
 
@@ -31,12 +30,14 @@ func physics_update(delta):
 
 func _stop_attack():
 	# Transition to next state
-	var input = player.pop_combat_queue()
+	var input = player.pop_combat_queue() # todo: change this --> pops queeu two times in combo (here and in windup)
 	
 	if input == player.PossibleInput.ATTACK_BASIC && attack_count <= player.max_attack_combo:
-		timer.start()
 		attack_count += 1
+		state_machine.transition_to("Attack_Basic_Windup")
 	elif input == player.PossibleInput.BLOCK:
+		attack_count = 0
 		state_machine.transition_to("Block_Windup")
 	else:
+		attack_count = 0
 		state_machine.transition_to("Attack_Basic_Recovery")
