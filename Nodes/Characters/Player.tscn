@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Luci/idle.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -27,6 +27,9 @@
 [ext_resource path="res://Nodes/Characters/States/Attack_Down_Ground_Windup.gd" type="Script" id=25]
 [ext_resource path="res://Nodes/Characters/States/Attack_Down_Ground.gd" type="Script" id=26]
 [ext_resource path="res://Nodes/Characters/States/Attack_Down_Ground_Recovery.gd" type="Script" id=27]
+[ext_resource path="res://Nodes/Characters/States/Crouch_Block_Windup.gd" type="Script" id=28]
+[ext_resource path="res://Nodes/Characters/States/Crouch_Block.gd" type="Script" id=29]
+[ext_resource path="res://Nodes/Characters/States/Crouch_Block_Recovery.gd" type="Script" id=30]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 11.0179
@@ -46,6 +49,9 @@ extents = Vector2( 29.8462, 16.0556 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 47.846, 16.99 )
+
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 2.98965, 19.5056 )
 
 [sub_resource type="Animation" id=7]
 tracks/0/type = "value"
@@ -688,6 +694,15 @@ script = ExtResource( 23 )
 [node name="Crouch" type="Node" parent="StateMachine"]
 script = ExtResource( 24 )
 
+[node name="Crouch_Block_Windup" type="Node" parent="StateMachine"]
+script = ExtResource( 28 )
+
+[node name="Crouch_Block" type="Node" parent="StateMachine"]
+script = ExtResource( 29 )
+
+[node name="Crouch_Block_Recovery" type="Node" parent="StateMachine"]
+script = ExtResource( 30 )
+
 [node name="Attack_Down_Ground_Windup" type="Node" parent="StateMachine"]
 script = ExtResource( 25 )
 
@@ -728,6 +743,13 @@ disabled = true
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Ground"]
 position = Vector2( 0.374565, 18.7288 )
 shape = SubResource( 6 )
+disabled = true
+
+[node name="Crouch_Block" type="Area2D" parent="."]
+
+[node name="HitboxBlock" type="CollisionShape2D" parent="Crouch_Block"]
+position = Vector2( 18.4207, 17.1434 )
+shape = SubResource( 15 )
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -10,7 +10,7 @@ func _ready():
 	timer.set_one_shot(true)
 	timer.set_timer_process_mode(0)
 	timer.set_wait_time(player.recovery_time)
-	timer.connect("timeout", self, "_stop_block_recovery")
+	timer.connect("timeout", self, "_stop_attack_recovery")
 	self.add_child(timer)
 
 func enter(msg :={}):
@@ -26,5 +26,5 @@ func physics_update(delta):
 	player.crouch_move(delta)
 
 
-func _stop_block_recovery():
+func _stop_attack_recovery():
 	state_machine.transition_to("Crouch")

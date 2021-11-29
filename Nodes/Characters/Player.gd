@@ -41,6 +41,7 @@ onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
+onready var hitbox_crouch_block : Area2D = $Crouch_Block
 
 
 func _input(event):
@@ -199,12 +200,14 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = -abs(scale.x)
 		hitbox_down_attack.scale.x = -abs(scale.x)
+		hitbox_crouch_block.scale.x = -abs(scale.x)
 	elif velocity.x > 0:
 		sprite.flip_h = false
 		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = abs(scale.x)
 		hitbox_down_attack.scale.x = abs(scale.x)
+		hitbox_crouch_block.scale.x = abs(scale.x)
 
 
 func _knockback(force):
