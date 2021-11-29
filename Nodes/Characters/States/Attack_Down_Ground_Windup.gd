@@ -28,10 +28,13 @@ func update(delta):
 	# Action can be cancelled (not by moving)
 	if not player.is_on_floor():
 		state_machine.transition_to("Fall")
+		player._exit_crouch()
 	elif Input.is_action_just_pressed("jump"):
 		state_machine.transition_to("Jump")
+		player._exit_crouch()
 	elif Input.is_action_just_pressed("dash")  and player.can_dash:
 		state_machine.transition_to("Dash")
+		player._exit_crouch()
 
 
 func physics_update(delta):

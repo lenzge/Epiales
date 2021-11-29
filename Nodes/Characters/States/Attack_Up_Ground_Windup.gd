@@ -30,14 +30,14 @@ func update(delta):
 		state_machine.transition_to("Fall")
 	elif Input.is_action_just_pressed("jump"):
 		state_machine.transition_to("Jump")
-	elif Input.is_action_pressed("block"):
+	elif Input.is_action_just_pressed("block"):
 		state_machine.transition_to("Block_Windup")
 	elif Input.is_action_just_pressed("dash")  and player.can_dash:
 		state_machine.transition_to("Dash")
 
 
 func physics_update(delta):
-	player.crouch_move(delta)
+	player.attack_up_ground_move(delta)
 
 
 func _stop_attack_windup():

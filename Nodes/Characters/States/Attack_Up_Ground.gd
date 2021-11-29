@@ -40,4 +40,4 @@ func _stop_attack():
 
 
 func physics_update(delta):
-	player.attack_up_down_ground_move(delta)
+	player.attack_up_ground_move(delta)

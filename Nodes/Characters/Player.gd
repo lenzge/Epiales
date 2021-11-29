@@ -12,6 +12,9 @@ var _use_joy_controller := false
 var velocity := Vector2(0,0)
 var can_dash := true
 
+onready var collision_shape_original_height : float = $CollisionShape2D.shape.height
+onready var collision_shape_original_pos_y : float = $CollisionShape2D.position.y
+
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
 export(Vector2) var dash_speed :Vector2 = Vector2(1000, 1000)
@@ -139,16 +142,14 @@ func attack_move(delta) -> void:
 
 ## Deccelerates the player when in up or down Attack on ground or in crouch
 ## Call in _physics_process when player attacks up or down on ground
-func attack_up_down_ground_move(delta) -> void:
+func attack_up_ground_move(delta) -> void:
 	_flip_sprite_in_movement_dir()
-	
-	_accelerate(0, acceleration)
+	_slow_with_friction(friction_ground)
 	_fall(delta)
-	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
-## Basically the same as "attack_up_down_ground_move()" but with another friction
+## Basically the same as "attack_up_ground_move()" but with another friction
 func crouch_move(delta) -> void:
 	_flip_sprite_in_movement_dir()
 	_slow_with_friction(friction_ground_on_crouch)
@@ -240,6 +241,24 @@ func _slow_with_friction(friction : float) -> void:
 		else:
 			velocity.x -= friction
 
+
+func _enter_crouch():
+	# change the height of the player's collisionshape to half of it
+	var collision_shape = $CollisionShape2D
+	if collision_shape_original_height == collision_shape.shape.height:
+		collision_shape.shape.height /= 2
+		
+		var collision_pos_y_change = collision_shape.shape.height / 2
+		
+		collision_shape.position.y += collision_pos_y_change
+		$Hitbox/Hitbox.position.y += collision_pos_y_change
+
+
+func _exit_crouch():
+	var collision_shape = $CollisionShape2D
+	collision_shape.shape.height = collision_shape_original_height
+	collision_shape.position.y = collision_shape_original_pos_y
+	$Hitbox/Hitbox.position.y = collision_shape_original_pos_y
 
 
 func _physics_process(delta):

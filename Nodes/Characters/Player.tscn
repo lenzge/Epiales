@@ -44,10 +44,10 @@ extents = Vector2( 16.436, 32.3632 )
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 29.8462, 16.0556 )
 
-[sub_resource type="RectangleShape2D" id=14]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 47.846, 16.99 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -121,7 +121,7 @@ tracks/5/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -183,7 +183,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -269,7 +269,7 @@ tracks/6/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -331,7 +331,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -394,7 +394,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -469,7 +469,7 @@ tracks/5/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -545,7 +545,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 length = 0.2
 loop = true
 tracks/0/type = "value"
@@ -727,17 +727,17 @@ disabled = true
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Ground"]
 position = Vector2( 0.374565, 18.7288 )
-shape = SubResource( 14 )
+shape = SubResource( 6 )
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Attack_Basic = SubResource( 6 )
-anims/Attack_Basic_Recovery = SubResource( 7 )
-anims/Attack_Basic_Windup = SubResource( 8 )
-anims/Block = SubResource( 9 )
-anims/Block_Recovery = SubResource( 10 )
-anims/Block_Windup = SubResource( 11 )
-anims/Idle = SubResource( 12 )
-anims/Stunned = SubResource( 13 )
+anims/Attack_Basic = SubResource( 7 )
+anims/Attack_Basic_Recovery = SubResource( 8 )
+anims/Attack_Basic_Windup = SubResource( 9 )
+anims/Block = SubResource( 10 )
+anims/Block_Recovery = SubResource( 11 )
+anims/Block_Windup = SubResource( 12 )
+anims/Idle = SubResource( 13 )
+anims/Stunned = SubResource( 14 )
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Body_area_entered"]
