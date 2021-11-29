@@ -242,6 +242,8 @@ func _slow_with_friction(friction : float) -> void:
 			velocity.x -= friction
 
 
+## Change the players collisionshape when in entering crouch
+## Called on entering the crouch state
 func _enter_crouch():
 	# change the height of the player's collisionshape to half of it
 	var collision_shape = $CollisionShape2D
@@ -254,6 +256,8 @@ func _enter_crouch():
 		$Hitbox/Hitbox.position.y += collision_pos_y_change
 
 
+## Reset the players collisionshape when exiting crouch
+## Called whenever the player leaves the crouch states
 func _exit_crouch():
 	var collision_shape = $CollisionShape2D
 	collision_shape.shape.height = collision_shape_original_height
