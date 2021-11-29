@@ -22,4 +22,6 @@ func physics_update(delta):
 		state_machine.transition_to("Idle")
 	elif Input.is_action_just_pressed("dash")  and player.can_dash:
 		state_machine.transition_to("Dash")
+	elif Input.is_action_pressed("move_down"):
+		state_machine.transition_to("Crouch")
 

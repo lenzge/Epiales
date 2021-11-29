@@ -23,6 +23,7 @@ export(int) var max_attack_combo :int = 3
 # Friction is weaker the smaller the value is
 export(float, 0, 1, 0.001) var acceleration : float = 0.3
 export(float) var friction_ground : float = 40
+export(float) var friction_ground_on_crouch : float = 20
 export(float, 0, 1, 0.001) var acceleration_after_dash : float = 0.05
 
 export(float) var windup_time : float = 0.2
@@ -35,6 +36,7 @@ export(float) var dash_recovery_time : float = 0.2
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
+onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
 
 
@@ -146,6 +148,14 @@ func attack_up_down_ground_move(delta) -> void:
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
+## Basically the same as "attack_up_down_ground_move()" but with another friction
+func crouch_move(delta) -> void:
+	_flip_sprite_in_movement_dir()
+	_slow_with_friction(friction_ground_on_crouch)
+	_fall(delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+
 ## Moves the player at dash speed
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
 func dash_move(delta : float, dir : Vector2, after_dash : bool):
@@ -187,11 +197,13 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_block.position.x = -abs(hitbox_block.position.x)
 		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = -abs(scale.x)
+		hitbox_down_attack.scale.x = -abs(scale.x)
 	elif velocity.x > 0:
 		sprite.flip_h = false
 		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = abs(scale.x)
+		hitbox_down_attack.scale.x = abs(scale.x)
 
 
 func _knockback(force):
