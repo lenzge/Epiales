@@ -28,7 +28,7 @@ func physics_update(delta):
 	player.attack_up_ground_move(delta)
 
 
-func _stop_attack_windup():
+func _on_timeout():
 	var input = player.pop_combat_queue()
 	if input == null:
 		state_machine.transition_to("Idle")

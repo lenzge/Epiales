@@ -18,7 +18,7 @@ func exit():
 	player.get_node("Attack_Down_Ground/HitboxAttack").disabled = true
 
 
-func _stop_attack():
+func _on_timeout():
 	var input = player.pop_combat_queue()
 	state_machine.transition_to("Attack_Down_Ground_Recovery")
 

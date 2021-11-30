@@ -21,5 +21,5 @@ func physics_update(delta):
 	player.crouch_move(delta)
 
 
-func _stop_block():
+func _on_timeout():
 	state_machine.transition_to("Crouch_Block_Recovery")

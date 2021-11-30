@@ -20,7 +20,7 @@ func exit():
 	player.get_node("Attack_Up_Ground/HitboxAttack_Top").disabled = true
 
 
-func _stop_attack():
+func _on_timeout():
 	var input = player.pop_combat_queue()
 	
 	if input == player.PossibleInput.BLOCK:
