@@ -14,6 +14,8 @@ var can_dash := true
 var can_reset_dash := true
 var started_dash_in_air := false
 
+var dash_cooldown_timer
+
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
 export(Vector2) var dash_speed :Vector2 = Vector2(1000, 1000)
@@ -44,6 +46,11 @@ onready var hitbox : Area2D = $Hitbox
 
 
 var direction : int = 1
+
+
+func _ready():
+	_init_timer()
+
 
 func _input(event):
 	if (event is InputEventKey or 
@@ -248,7 +255,6 @@ func _slow_with_friction(friction : float) -> void:
 			velocity.x -= friction
 
 
-
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
 
@@ -271,3 +277,22 @@ func on_hit(emitter : DamageEmitter):
 		$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
 		emitter.hit($"Hitbox")
 
+
+# Timer
+func _init_timer():
+	dash_cooldown_timer = Timer.new()
+	dash_cooldown_timer.set_autostart(false)
+	dash_cooldown_timer.set_one_shot(true)
+	dash_cooldown_timer.set_timer_process_mode(0)
+	dash_cooldown_timer.connect("timeout", self, "_on_dash_cooldown_timeout")
+	self.add_child(dash_cooldown_timer)
+
+
+func _on_dash_cooldown_timeout():
+	dash_cooldown_timer.stop()
+	can_reset_dash = true
+
+
+func start_dash_cooldown():
+	dash_cooldown_timer.set_wait_time(dash_cooldown_time)
+	dash_cooldown_timer.start()

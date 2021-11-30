@@ -1,10 +1,7 @@
 extends PlayerState
 
-var timer_dash : Timer
-var timer_cooldown :Timer
 var after_dash := false
 var direction := Vector2()
-
 
 func _ready():
 	._ready()
@@ -14,9 +11,7 @@ func _ready():
 
 func enter(_msg := {}):
 	.enter(_msg)
-	timer_dash.start()
-	timer_cooldown.stop()
-	timer_cooldown.start()
+	timer.start()
 	player.can_dash = false
 	player.can_reset_dash = false
 	after_dash = false
@@ -25,10 +20,6 @@ func enter(_msg := {}):
 	if !player.is_on_floor():
 		player.started_dash_in_air = true
 	# todo: change player hitbox so player can deal damage while dashing
-
-
-func exit():
-	timer_dash.stop()
 
 
 func physics_update(delta):
@@ -41,28 +32,10 @@ func physics_update(delta):
 		player.dash_move(delta, direction, after_dash)
 
 
-func _end_dash_cooldown() -> void:
-	timer_cooldown.stop()
-	player.can_reset_dash = true
-
-
-func _stop_dash() -> void:
+func _on_timeout() -> void:
 	after_dash = true
+	player.start_dash_cooldown()
 
 
 func _init_timers() -> void:
-	timer_dash = Timer.new()
-	timer_dash.set_autostart(false)
-	timer_dash.set_one_shot(true)
-	timer_dash.set_timer_process_mode(Timer.TIMER_PROCESS_PHYSICS)
-	timer_dash.set_wait_time(player.dash_time)
-	timer_dash.connect("timeout", self, "_stop_dash")
-	self.add_child(timer_dash)
-	
-	timer_cooldown = Timer.new()
-	timer_cooldown.set_autostart(false)
-	timer_cooldown.set_one_shot(true)
-	timer_cooldown.set_timer_process_mode(Timer.TIMER_PROCESS_PHYSICS)
-	timer_cooldown.set_wait_time(player.dash_time + player.dash_cooldown_time)
-	timer_cooldown.connect("timeout", self, "_end_dash_cooldown")
-	self.add_child(timer_cooldown)
+	timer.start(player.dash_time)
