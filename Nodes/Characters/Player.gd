@@ -20,13 +20,14 @@ export(int) var attack_step_speed :int= 150
 export(Vector2) var dash_speed :Vector2 = Vector2(1000, 1000)
 export(int) var gravity :int = 3000
 export(int) var jump_impulse :int = 1000
-export(int) var knock_back_impulse :int = 500
+export(int) var knock_back_impulse :int = 300
 export(int) var max_attack_combo :int = 3
 
 # Friction is weaker the smaller the value is
 export(float, 0, 1, 0.001) var acceleration : float = 0.3
 export(float) var friction_ground : float = 40
 export(float) var friction_ground_on_crouch : float = 20
+export(float) var friction_knockback : float = 20
 export(float, 0, 1, 0.001) var acceleration_after_dash : float = 0.05
 
 export(float) var windup_time : float = 0.2
@@ -36,13 +37,19 @@ export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 export(float) var dash_recovery_time : float = 0.2
 
+export(Array, int) var attack_force = [200, 300, 400]
+export(Array, int) var attack_knockback = [0.2, 0.2, 0.5]
+
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
-onready var hitbox_attack : CollisionShape2D = $Attack/HitboxAttack
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
 onready var hitbox_crouch_block : Area2D = $Crouch_Block
+onready var hitbox_attack : Area2D = $Attack
+onready var hitbox : Area2D = $Hitbox
 
+
+var direction : int = 1
 
 func _input(event):
 	if (event is InputEventKey or 
@@ -56,8 +63,6 @@ func _input(event):
 
 func get_direction():
 	return velocity.length()
-	# Below returns zero even if player is moving but left and right are pressed.
-	#return (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 
 
 func pop_combat_queue():
@@ -192,29 +197,52 @@ func dash_move(delta : float, dir : Vector2, after_dash : bool):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
+func move_knockback(delta):
+	_slow_with_friction(friction_knockback)
+	_fall(delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+
 # Flip Sprite and Hitbox
 func _flip_sprite_in_movement_dir() -> void:
+	#if not last_movement_buttons.empty():
+		#if last_movement_buttons[0] == MovementDir.LEFT:#velocity.x < 0:
+			#direction = -1
+			#sprite.flip_h = true
+			#hitbox_attack.position.x = -abs(hitbox_attack.position.x)
+			#hitbox_attack.direction = 0
+		#elif last_movement_buttons[0] == MovementDir.RIGHT:#velocity.x > 0:
+			#direction = 1
+			#sprite.flip_h = false
+			#hitbox_attack.position.x = abs(hitbox_attack.position.x)
+			#hitbox_attack.direction = 180
 	if velocity.x < 0:
+		direction = -1
 		sprite.flip_h = true
-		hitbox_block.position.x = -abs(hitbox_block.position.x)
 		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = -abs(scale.x)
 		hitbox_down_attack.scale.x = -abs(scale.x)
 		hitbox_crouch_block.scale.x = -abs(scale.x)
 	elif velocity.x > 0:
+		direction = 1
 		sprite.flip_h = false
-		hitbox_block.position.x = abs(hitbox_block.position.x)
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = abs(scale.x)
 		hitbox_down_attack.scale.x = abs(scale.x)
 		hitbox_crouch_block.scale.x = abs(scale.x)
 
 
-func _knockback(force):
-	if sprite.flip_h == true:
-		velocity.x = force
-	else:
-		velocity.x = -force
+func set_knockback(force, direction):
+	#if sprite.flip_h == true:
+	velocity.x = force * direction
+	#else:
+		#velocity.x = -force
+
+
+func knockback(delta, force, direction):
+	velocity.x = force * direction
+	_fall(delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
 
 
 ## Applies gravity to the player
@@ -270,4 +298,23 @@ func _exit_crouch():
 
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
+
+
+func on_hit(emitter : DamageEmitter):
+	var direction
+	if emitter.is_directed:
+		direction = emitter.direction
+	else:
+		direction = rad2deg((hitbox.global_position - emitter.global_position).angle_to(Vector2(1,0)))
+	direction = int((direction + 90.0)) % 360
+	if direction >= 0.0 && direction <= 180.0 || direction <= -180.0 && direction >= -360.0:
+		direction = 1
+	else:
+		direction = -1
+	if $StateMachine.state.name == "Block" and not direction == self.direction:
+		emitter.was_blocked($"Hitbox")
+		print("PLAYER: block")
+	else:
+		$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
+		emitter.hit($"Hitbox")
 

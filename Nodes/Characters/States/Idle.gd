@@ -5,9 +5,6 @@ func enter(_msg := {}):
 	.enter(_msg)
 	
 
-func physics_update(delta):
-	player.move(delta)
-
 
 func update(delta):
 	
