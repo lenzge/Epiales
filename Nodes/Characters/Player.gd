@@ -155,32 +155,19 @@ func attack_move(delta) -> void:
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
 func dash_move(delta : float, dir : Vector2, after_dash : bool):
 	_flip_sprite_in_movement_dir()
-	
-	if after_dash:
-		# Move normally only with less friction
-		if not last_movement_buttons.empty():
-			if last_movement_buttons[0] == MovementDir.LEFT:
-				_accelerate(-speed, acceleration_after_dash)
-			elif last_movement_buttons[0] == MovementDir.RIGHT:
-				_accelerate(speed, acceleration_after_dash)
-		else:
-			_accelerate(0, acceleration_after_dash)
-		
-		_fall(delta)
-	
-	else:
-		if _use_joy_controller:
-			if dir.x == 0 and dir.y == 0:
-				if sprite.flip_h:
-					dir.x = -1
-				else:
-					dir.x = 1
-			velocity += ((dash_speed * dir.normalized() - velocity) * acceleration)
-		else:
+
+	if _use_joy_controller:
+		if dir.x == 0 and dir.y == 0:
 			if sprite.flip_h:
-				velocity.x += ((-dash_speed.x - velocity.x) * acceleration)
+				dir.x = -1
 			else:
-				velocity.x += ((dash_speed.x - velocity.x) * acceleration)
+				dir.x = 1
+		velocity += ((dash_speed * dir.normalized() - velocity) * acceleration)
+	else:
+		if sprite.flip_h:
+			velocity.x += ((-dash_speed.x - velocity.x) * acceleration)
+		else:
+			velocity.x += ((dash_speed.x - velocity.x) * acceleration)
 	#_fall(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
