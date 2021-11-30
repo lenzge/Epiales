@@ -44,7 +44,6 @@ onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
-onready var hitbox_crouch_block : Area2D = $Crouch_Block
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
 
@@ -222,14 +221,12 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = -abs(scale.x)
 		hitbox_down_attack.scale.x = -abs(scale.x)
-		hitbox_crouch_block.scale.x = -abs(scale.x)
 	elif velocity.x > 0:
 		direction = 1
 		sprite.flip_h = false
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = abs(scale.x)
 		hitbox_down_attack.scale.x = abs(scale.x)
-		hitbox_crouch_block.scale.x = abs(scale.x)
 
 
 func set_knockback(force, direction):
@@ -284,7 +281,7 @@ func _enter_crouch():
 		var collision_pos_y_change = collision_shape.shape.height / 2
 		
 		collision_shape.position.y += collision_pos_y_change
-		$Hitbox/Hitbox.position.y += collision_pos_y_change
+		$Hitbox/CollisionShape2D.position.y += collision_pos_y_change
 
 
 ## Reset the players collisionshape when exiting crouch
@@ -293,7 +290,7 @@ func _exit_crouch():
 	var collision_shape = $CollisionShape2D
 	collision_shape.shape.height = collision_shape_original_height
 	collision_shape.position.y = collision_shape_original_pos_y
-	$Hitbox/Hitbox.position.y = collision_shape_original_pos_y
+	$Hitbox/CollisionShape2D.position.y = collision_shape_original_pos_y
 
 
 func _physics_process(delta):

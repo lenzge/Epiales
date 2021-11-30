@@ -3,13 +3,13 @@ extends PlayerState
 func _ready():
 	._ready()
 	yield(owner, "ready")
-	timer = Timer.new()
 
 
 func enter(_msg := {}):
 	.enter(_msg)
 	timer.set_wait_time(player.windup_time)
 	timer.start()
+	print("Test")
 
 
 # Check if attack is canceled

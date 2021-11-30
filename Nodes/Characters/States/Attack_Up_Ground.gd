@@ -26,6 +26,8 @@ func _on_timeout():
 	if input == player.PossibleInput.BLOCK:
 		state_machine.transition_to("Block_Windup")
 	else:
+		player.hitbox_up_attack.knockback_force = player.attack_force[0]
+		player.hitbox_up_attack.knockback_time = player.attack_knockback[0]
 		state_machine.transition_to("Attack_Up_Ground_Recovery")
 
 
