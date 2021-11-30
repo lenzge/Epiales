@@ -18,4 +18,7 @@ func update(delta):
 
 
 func _on_timeout():
-	state_machine.transition_to("Patrol")
+	state_machine.transition_to("Freeze")
+
+
+

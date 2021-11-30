@@ -8,5 +8,5 @@ func enter(_msg := {}):
 	
 
 func _on_timeout():
-	enemy.set_attack_recover()
-	state_machine.transition_to("Repatrol")
+	state_machine.transition_to("Patrol")
+
