@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Nodes/Characters/HealthBar.gd" type="Script" id=1]
+[ext_resource path="res://Nodes/Experimental/Sprites/Over.png" type="Texture" id=2]
+[ext_resource path="res://Nodes/Experimental/Sprites/Under.png" type="Texture" id=3]
+[ext_resource path="res://Nodes/Experimental/Sprites/Progress.png" type="Texture" id=4]
+
+[node name="HealthBar" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthUnder" type="TextureProgress" parent="."]
+margin_right = 176.0
+margin_bottom = 40.0
+value = 70.0
+texture_under = ExtResource( 3 )
+texture_over = ExtResource( 2 )
+texture_progress = ExtResource( 4 )
+tint_progress = Color( 0.92549, 0.192157, 0.192157, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthOver" type="TextureProgress" parent="."]
+margin_right = 176.0
+margin_bottom = 40.0
+value = 50.0
+texture_over = ExtResource( 2 )
+texture_progress = ExtResource( 4 )
+tint_progress = Color( 0.0313726, 0.678431, 0.0392157, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

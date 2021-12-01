@@ -1,17 +1,15 @@
-class_name PlayerState
+class_name EnemyState
 extends State
 
-
-var player : Player
+onready var enemy : Enemy
 var timer : Timer
 onready var animationPlayer = $"../../AnimationPlayer"
 
-
-# Owner of the statemachine is a player
+# Owner of the statemachine is a enemy
 func _ready():
 	yield(owner, "ready")
-	player = owner as KinematicBody2D
-	assert(player != null)
+	enemy = owner as Enemy
+	assert(enemy != null)
 	timer = Timer.new()
 	timer.set_autostart(false)
 	timer.set_one_shot(true)
@@ -21,6 +19,6 @@ func _ready():
 
 func enter(_msg := {}):
 	animationPlayer.play(self.name)
-	
+
 func exit():
 	timer.stop()
