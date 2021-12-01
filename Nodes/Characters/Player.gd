@@ -82,17 +82,18 @@ func _process(delta):
 	
 	# Fill movement Array
 	if Input.is_action_just_pressed("move_left"):
-		#last_input.clear()
+		last_input.clear()
 		last_movement_buttons.push_front(MovementDir.LEFT)
 	if Input.is_action_just_pressed("move_right"):
-		#last_input.clear()
+		last_input.clear()
 		last_movement_buttons.push_front(MovementDir.RIGHT)
 
 	# Clear Movement Array
-	if Input.is_action_just_released("move_left"):
+	if not Input.is_action_pressed("move_left"):
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.LEFT))
-	if Input.is_action_just_released("move_right"):
+	if not Input.is_action_pressed("move_right"):
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.RIGHT))
+
 
 func move(delta):
 	_flip_sprite_in_movement_dir()
@@ -123,9 +124,9 @@ func attack_move(delta) -> void:
 			_accelerate(speed, acceleration)
 	else: # If not running: slow step foreward
 		if sprite.flip_h == true:
-			velocity.x = ((-attack_step_speed - velocity.x) * acceleration)
+			velocity.x += ((-attack_step_speed - velocity.x) * acceleration)
 		else:
-			velocity.x = ((attack_step_speed - velocity.x) * acceleration)
+			velocity.x += ((attack_step_speed - velocity.x) * acceleration)
 	
 	# Depending on game design Apply gravity here !!! If no gravity make sure that player is actually on floor and not 0.000000000001 above it
 	# --> leads to issues with canceling windup states because player is falling

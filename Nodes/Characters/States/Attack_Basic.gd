@@ -1,7 +1,7 @@
 extends PlayerState
 
 var timer : Timer
-var attack_count : int
+var attack_count := 1 # Needs to be 1 because increment happens after the attack
 
 func _ready():
 	._ready()
@@ -30,14 +30,15 @@ func physics_update(delta):
 
 func _stop_attack():
 	# Transition to next state
-	var input = player.pop_combat_queue() # todo: change this --> pops queeu two times in combo (here and in windup)
+	var input = player.last_input.back()
 	
-	if input == player.PossibleInput.ATTACK_BASIC && attack_count <= player.max_attack_combo:
+	if input == player.PossibleInput.ATTACK_BASIC && attack_count < player.max_attack_combo:
 		attack_count += 1
 		state_machine.transition_to("Attack_Basic_Windup")
 	elif input == player.PossibleInput.BLOCK:
-		attack_count = 0
+		attack_count = 1
+		player.pop_combat_queue()
 		state_machine.transition_to("Block_Windup")
 	else:
-		attack_count = 0
+		attack_count = 1
 		state_machine.transition_to("Attack_Basic_Recovery")
