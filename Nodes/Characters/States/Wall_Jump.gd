@@ -1,18 +1,9 @@
 extends PlayerState
 
-var timer : Timer
-
 
 func _ready():
 	._ready()
 	yield(owner, "ready")
-	timer = Timer.new()
-	timer.set_autostart(false)
-	timer.set_one_shot(true)
-	timer.set_timer_process_mode(Timer.TIMER_PROCESS_PHYSICS)
-	timer.set_wait_time(player.wall_jump_time)
-	timer.connect("timeout", self, "_return_control")
-	self.add_child(timer)
 
 
 func enter(_msg := {}):
@@ -24,6 +15,7 @@ func enter(_msg := {}):
 	else:
 		player.velocity.x = player.wall_jump_speed
 	
+	timer.set_wait_time(player.wall_jump_time)
 	timer.start()
 
 
@@ -37,9 +29,5 @@ func physics_update(delta):
 		state_machine.transition_to("Run")
 
 
-func exit():
-	timer.stop()
-
-
-func _return_control() -> void:
+func _on_timeout() -> void:
 	state_machine.transition_to("Fall")
