@@ -48,8 +48,9 @@ onready var sprite : Sprite = $Sprite
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
 
-
 var direction : int = 1
+
+signal blocked
 
 func _input(event):
 	if (event is InputEventKey or 
@@ -292,8 +293,8 @@ func on_hit(emitter : DamageEmitter):
 	else:
 		direction = -1
 	if $StateMachine.state.name == "Block" and not direction == self.direction:
+		emit_signal("blocked")
 		emitter.was_blocked($"Hitbox")
-		print("PLAYER: block")
 	else:
 		$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
 		emitter.hit($"Hitbox")
