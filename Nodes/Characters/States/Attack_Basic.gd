@@ -1,34 +1,21 @@
 extends PlayerState
 
-var timer : Timer
 var attack_count := 1 # Needs to be 1 because increment happens after the attack
-
-func _ready():
-	._ready()
-	yield(owner, "ready")
-	timer = Timer.new()
-	timer.set_autostart(false)
-	timer.set_one_shot(true)
-	timer.set_timer_process_mode(0)
-	timer.set_wait_time(player.attack_time)
-	timer.connect("timeout", self, "_stop_attack")
-	self.add_child(timer)
 
 
 func enter(_msg := {}):
 	.enter(_msg)
+	timer.set_wait_time(player.attack_time)
 	timer.start()
-
-
-func exit():
-	timer.stop()
+	player.hitbox_attack.knockback_force = player.attack_force[attack_count -1]
+	player.hitbox_attack.knockback_time = player.attack_knockback[attack_count -1]
 
 
 func physics_update(delta):
 	player.attack_move(delta)
 
 
-func _stop_attack():
+func _on_timeout():
 	# Transition to next state
 	var input = player.last_input.back()
 	
