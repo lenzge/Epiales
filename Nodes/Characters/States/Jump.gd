@@ -15,4 +15,4 @@ func physics_update(delta):
 	elif Input.is_action_just_pressed("dash")  and player.can_dash:
 		state_machine.transition_to("Dash")
 	elif Input.is_action_just_pressed("attack"):
-		state_machine.transition_to("Attack_Air")
+		state_machine.transition_to("Attack_Basic")

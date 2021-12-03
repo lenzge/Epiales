@@ -25,7 +25,6 @@ func get_player_spawn() -> Vector2:
 
 
 func spawn_player(player) -> void:
-	print(player_spawn)
 	player.position = player_spawn
 	var camera = Camera2D.new()
 	camera.current = true			#placeholder, to be determined how to implement
@@ -41,5 +40,4 @@ func _on_Checkoint_checkpoint_entered(new_spawnpoint: Vector2, prio: int) -> voi
 		current_spawnpoint_prio = prio
 
 func _on_player_entered_deadzone():
-	print("[DEBUG] @class",name ," current_spawnpoint: ",current_spawnpoint," of type Vector2: ",current_spawnpoint is Vector2)
 	player_instance.position = current_spawnpoint

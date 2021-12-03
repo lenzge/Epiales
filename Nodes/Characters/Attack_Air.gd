@@ -14,7 +14,7 @@ func enter(_msg := {}):
 
 func physics_update(delta):
 	player.attack_move(delta)
-
+	
 
 func _on_timeout():
 	# Transition to next state

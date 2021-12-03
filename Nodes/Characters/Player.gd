@@ -137,9 +137,9 @@ func attack_move(delta) -> void:
 	
 	# Depending on game design Apply gravity here !!! If no gravity make sure that player is actually on floor and not 0.000000000001 above it
 	# --> leads to issues with canceling windup states because player is falling
-	_fall(delta)
+	velocity.y -= gravity * delta * 0.2
 	
-	velocity = move_and_slide(velocity,Vector2.UP)
+#	velocity = move_and_slide(velocity,Vector2.UP)
 
 
 ## Moves the player at dash speed
