@@ -12,6 +12,7 @@ func enter(_msg := {}):
 	# Puppet in attack chain
 	if state_machine.last_state.name == "Attack_Windup":
 		attack_chain = true
+		enemy.attack_count += 1
 	else:
 		enemy.attack_count = 0
 		attack_chain = false
@@ -26,6 +27,7 @@ func physics_update(delta):
 
 
 func _on_timeout():
+	print(enemy.attack_count)
 	if attack_chain and not is_blocked and is_hit and enemy.attack_count < enemy.max_attack_combo:
 		is_hit = false
 		state_machine.transition_to("Attack_Windup")

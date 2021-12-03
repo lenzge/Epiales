@@ -13,6 +13,7 @@ var velocity := Vector2(0,0)
 var can_dash := true
 var can_reset_dash := true
 var started_dash_in_air := false
+var in_charged_attack := false
 
 var can_hang_on_wall := true
 var hang_on_wall_velocity_save := 0.0
@@ -34,7 +35,7 @@ export(int) var max_attack_combo :int = 3
 # Friction is weaker the smaller the value is
 export(float, 0, 1, 0.001) var acceleration : float = 0.3
 export(float) var friction_ground : float = 40
-export(float) var friction_knockback : float = 20
+export(float) var friction_knockback : float = 30
 export(float, 0, 1, 0.001) var acceleration_after_dash : float = 0.05
 
 export(float) var windup_time : float = 0.2
@@ -48,8 +49,8 @@ export(float) var dash_cooldown_time : float = 1.0
 
 export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
-export(Array, int) var attack_force = [200, 300, 400]
-export(Array, int) var attack_knockback = [0.2, 0.2, 0.5]
+export(Array, int) var attack_force = [200, 300, 400, 800]
+export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_attack : Area2D = $Attack
@@ -286,22 +287,26 @@ func _physics_process(delta):
 
 
 func on_hit(emitter : DamageEmitter):
-	var direction
-	if emitter.is_directed:
-		direction = emitter.direction
+	if in_charged_attack:
+		# only damage
+		pass
 	else:
-		direction = rad2deg((hitbox.global_position - emitter.global_position).angle_to(Vector2(1,0)))
-	direction = int((direction + 90.0)) % 360
-	if direction >= 0.0 && direction <= 180.0 || direction <= -180.0 && direction >= -360.0:
-		direction = 1
-	else:
-		direction = -1
-	if $StateMachine.state.name == "Block" and not direction == self.direction:
-		emit_signal("blocked")
-		emitter.was_blocked($"Hitbox")
-	else:
-		$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
-		emitter.hit($"Hitbox")
+		var direction
+		if emitter.is_directed:
+			direction = emitter.direction
+		else:
+			direction = rad2deg((hitbox.global_position - emitter.global_position).angle_to(Vector2(1,0)))
+		direction = int((direction + 90.0)) % 360
+		if direction >= 0.0 && direction <= 180.0 || direction <= -180.0 && direction >= -360.0:
+			direction = 1
+		else:
+			direction = -1
+		if $StateMachine.state.name == "Block" and not direction == self.direction:
+			emit_signal("blocked")
+			emitter.was_blocked($"Hitbox")
+		else:
+			$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
+			emitter.hit($"Hitbox")
 
 
 # Timer
