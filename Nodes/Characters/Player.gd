@@ -38,8 +38,10 @@ export(float) var friction_knockback : float = 20
 export(float, 0, 1, 0.001) var acceleration_after_dash : float = 0.05
 
 export(float) var windup_time : float = 0.2
+export(float) var charged_windup_time : float = 0.7
 export(float) var block_time : float = 0.2
 export(float) var attack_time : float = 0.2
+export(float) var charged_attack_time : float = 0.4
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 export(float) var dash_cooldown_time : float = 1.0
@@ -52,6 +54,7 @@ export(Array, int) var attack_knockback = [0.2, 0.2, 0.5]
 onready var sprite : Sprite = $Sprite
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
+onready var charge_ontroller = $ChargeController
 
 var direction : int = 1
 
