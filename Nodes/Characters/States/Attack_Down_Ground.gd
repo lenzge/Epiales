@@ -20,7 +20,8 @@ func exit():
 
 func _on_timeout():
 	var input = player.pop_combat_queue()
-	player.hitbox_down_attack.knockback_force = 0
+	#TODO: knockback_force should be 0, but then the enemy gets no damage...
+	player.hitbox_down_attack.knockback_force = player.attack_force[0]
 	player.hitbox_down_attack.knockback_time = player.attack_knockback[0]
 	state_machine.transition_to("Attack_Down_Ground_Recovery")
 
