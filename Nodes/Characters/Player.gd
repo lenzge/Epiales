@@ -14,13 +14,20 @@ var can_dash := true
 var can_reset_dash := true
 var started_dash_in_air := false
 
+var can_hang_on_wall := true
+var hang_on_wall_velocity_save := 0.0
+
 var dash_cooldown_timer
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
 export(Vector2) var dash_speed :Vector2 = Vector2(1000, 1000)
 export(int) var gravity :int = 3000
+export(int) var wall_hang_gravity : int = 300
+export(int) var wall_hang_max_gravity : int = 500
+export(int) var wall_hang_min_entrance_y_velocity : int = -200
 export(int) var jump_impulse :int = 1000
+export(int) var wall_jump_speed :int = 1000
 export(int) var knock_back_impulse :int = 300
 export(int) var max_attack_combo :int = 3
 
@@ -37,6 +44,8 @@ export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 export(float) var dash_cooldown_time : float = 1.0
 
+export(float) var wall_jump_deceleration : float = 0.1
+export(float) var wall_jump_time : float = 0.5
 export(Array, int) var attack_force = [200, 300, 400]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5]
 
@@ -44,8 +53,9 @@ onready var sprite : Sprite = $Sprite
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
 
-
 var direction : int = 1
+
+signal blocked
 
 
 func _ready():
@@ -71,13 +81,15 @@ func pop_combat_queue():
 
 
 func _process(delta):
-	# Check if player can dash
+	# Check if player can dash and hang on wall
 	if is_on_floor():
 		if started_dash_in_air:
 			can_reset_dash = true
 			started_dash_in_air = false
 	if can_reset_dash:
 		can_dash = true
+		can_hang_on_wall = true
+		hang_on_wall_velocity_save = 0.0
 	# todo: add other conditions (i.e. player hits dash resetter obj)
 	
 	# Queue Attack in Array
@@ -106,10 +118,11 @@ func _process(delta):
 		last_movement_buttons.push_front(MovementDir.RIGHT)
 
 	# Clear Movement Array
-	if Input.is_action_just_released("move_left"):
+	if not Input.is_action_pressed("move_left"):
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.LEFT))
-	if Input.is_action_just_released("move_right"):
+	if not Input.is_action_pressed("move_right"):
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.RIGHT))
+
 
 func move(delta):
 	_flip_sprite_in_movement_dir()
@@ -140,9 +153,9 @@ func attack_move(delta) -> void:
 			_accelerate(speed, acceleration)
 	else: # If not running: slow step foreward
 		if sprite.flip_h == true:
-			velocity.x = ((-attack_step_speed - velocity.x) * acceleration)
+			velocity.x += ((-attack_step_speed - velocity.x) * acceleration)
 		else:
-			velocity.x = ((attack_step_speed - velocity.x) * acceleration)
+			velocity.x += ((attack_step_speed - velocity.x) * acceleration)
 	
 	# Depending on game design Apply gravity here !!! If no gravity make sure that player is actually on floor and not 0.000000000001 above it
 	# --> leads to issues with canceling windup states because player is falling
@@ -171,6 +184,29 @@ func dash_move(delta : float, dir : Vector2, after_dash : bool):
 	#_fall(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+
+## Moves the player with a special gravitational force for the wall_hang
+## Call when player is in wall hang
+func move_wall_hang(delta):
+	_flip_sprite_in_movement_dir()
+	
+	if not last_movement_buttons.empty():
+		if last_movement_buttons[0] == MovementDir.LEFT:
+			_accelerate(-speed, acceleration)
+		elif last_movement_buttons[0] == MovementDir.RIGHT:
+			_accelerate(speed, acceleration)
+	
+	velocity.y += wall_hang_gravity * delta
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+
+## Moves the player with a deceleration instead of an acceleration
+## Call when in a wall jump
+func move_wall_jump(delta):
+	_flip_sprite_in_movement_dir()
+	_accelerate(0, wall_jump_deceleration)
+	_fall(delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
 
 func move_knockback(delta):
 	_slow_with_friction(friction_knockback)
@@ -258,8 +294,8 @@ func on_hit(emitter : DamageEmitter):
 	else:
 		direction = -1
 	if $StateMachine.state.name == "Block" and not direction == self.direction:
+		emit_signal("blocked")
 		emitter.was_blocked($"Hitbox")
-		print("PLAYER: block")
 	else:
 		$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
 		emitter.hit($"Hitbox")
