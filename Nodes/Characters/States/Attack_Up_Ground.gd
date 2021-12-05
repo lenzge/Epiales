@@ -29,7 +29,7 @@ func _on_timeout():
 		player.hitbox_up_attack.knockback_force = player.attack_force[0]
 		player.hitbox_up_attack.knockback_time = player.attack_knockback[0]
 		#player.hitbox_up_attack.is_directed = true
-		player.hitbox_up_attack.direction = Vector2(0, 1)
+		#player.hitbox_up_attack.direction = Vector2(0, 1)
 		state_machine.transition_to("Attack_Up_Ground_Recovery")
 
 
