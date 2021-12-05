@@ -344,7 +344,7 @@ func on_hit(emitter : DamageEmitter):
 		direction = 1
 	else:
 		direction = -1
-	if $StateMachine.state.name == "Block" and not direction == self.direction:
+	if ($StateMachine.state.name == "Block" or $StateMachine.state.name == "Crouch_Block") and not direction == self.direction:
 		emit_signal("blocked")
 		emitter.was_blocked($"Hitbox")
 	else:
