@@ -12,7 +12,6 @@ func enter(_msg := {}):
 	# Puppet in attack chain
 	if state_machine.last_state.name == "Attack_Windup":
 		attack_chain = true
-		enemy.attack_count += 1
 	else:
 		enemy.attack_count = 0
 		attack_chain = false
