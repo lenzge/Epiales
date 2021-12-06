@@ -19,7 +19,7 @@ func update(delta):
 		state_machine.transition_to("Jump")
 	elif Input.is_action_just_pressed("block"):
 		state_machine.transition_to("Block_Windup")
-	elif Input.is_action_just_pressed("dash")  and player.can_dash:
+	elif Input.is_action_just_pressed("dash") and player.can_dash:
 		state_machine.transition_to("Dash")
 
 
@@ -32,6 +32,6 @@ func _on_timeout():
 	if input == null:
 		state_machine.transition_to("Idle")
 	elif input == player.PossibleInput.ATTACK_BASIC:
-		state_machine.transition_to("Attack_Up_Air")
+		state_machine.transition_to("Attack_Down_Air")
 	elif input == player.PossibleInput.BLOCK:
 		state_machine.transition_to("Block_Windup")

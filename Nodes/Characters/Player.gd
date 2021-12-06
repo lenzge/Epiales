@@ -192,7 +192,9 @@ func crouch_move(delta) -> void:
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
-func attack_up_air_move(delta):
+## Deccelerate the player when inup or down attack in air and fall slower
+## Call in _physics_process when player attacks up or down in air
+func attack_updown_air_move(delta):
 	_flip_sprite_in_movement_dir()
 	_slow_with_friction(friction_air)
 	velocity.y += in_air_gravity * delta

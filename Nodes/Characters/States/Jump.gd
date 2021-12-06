@@ -22,3 +22,5 @@ func physics_update(delta):
 			state_machine.transition_to("Wall_Jump")
 	elif Input.is_action_pressed("move_up") and Input.is_action_just_pressed("attack"):
 		state_machine.transition_to("Attack_Up_Air_Windup")
+	elif Input.is_action_pressed("move_down") and Input.is_action_just_pressed("attack"):
+		state_machine.transition_to("Attack_Down_Air_Windup")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Luci/idle.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -41,6 +41,9 @@
 [ext_resource path="res://Nodes/Characters/States/Attack_Up_Air_Windup.gd" type="Script" id=39]
 [ext_resource path="res://Nodes/Characters/States/Attack_Up_Air.gd" type="Script" id=40]
 [ext_resource path="res://Nodes/Characters/States/Attack_Up_Air_Recovery.gd" type="Script" id=41]
+[ext_resource path="res://Nodes/Characters/States/Attack_Down_Air_Windup.gd" type="Script" id=42]
+[ext_resource path="res://Nodes/Characters/States/Attack_Down_Air.gd" type="Script" id=43]
+[ext_resource path="res://Nodes/Characters/States/Attack_Down_Recovery.gd" type="Script" id=44]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 11.0179
@@ -921,6 +924,15 @@ script = ExtResource( 40 )
 [node name="Attack_Up_Air_Recovery" type="Node" parent="StateMachine"]
 script = ExtResource( 41 )
 
+[node name="Attack_Down_Air_Windup" type="Node" parent="StateMachine"]
+script = ExtResource( 42 )
+
+[node name="Attack_Down_Air" type="Node" parent="StateMachine"]
+script = ExtResource( 43 )
+
+[node name="Attack_Down_Air_Recovery" type="Node" parent="StateMachine"]
+script = ExtResource( 44 )
+
 [node name="Attack" type="Area2D" parent="."]
 position = Vector2( 32, 7 )
 collision_mask = 2
@@ -965,6 +977,7 @@ shape = SubResource( 6 )
 disabled = true
 
 [node name="Attack_Up_Air" type="Area2D" parent="."]
+collision_mask = 2
 script = ExtResource( 32 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Up_Air"]
@@ -973,6 +986,7 @@ shape = SubResource( 7 )
 disabled = true
 
 [node name="Attack_Down_Air" type="Area2D" parent="."]
+collision_mask = 2
 script = ExtResource( 32 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Air"]
