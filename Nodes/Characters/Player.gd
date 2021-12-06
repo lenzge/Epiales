@@ -26,6 +26,7 @@ export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
 export(Vector2) var dash_speed :Vector2 = Vector2(1000, 1000)
 export(int) var gravity :int = 3000
+export(int) var in_air_gravity : int = 500
 export(int) var wall_hang_gravity : int = 300
 export(int) var wall_hang_max_gravity : int = 500
 export(int) var wall_hang_min_entrance_y_velocity : int = -200
@@ -39,6 +40,7 @@ export(float, 0, 1, 0.001) var acceleration : float = 0.3
 export(float) var friction_ground : float = 40
 export(float) var friction_ground_on_crouch : float = 20
 export(float) var friction_knockback : float = 20
+export(float) var friction_air : float = 20
 export(float, 0, 1, 0.001) var acceleration_after_dash : float = 0.05
 
 export(float) var windup_time : float = 0.2
@@ -57,6 +59,8 @@ onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
+onready var hitbox_up_attack_air : Area2D = $Attack_Up_Air
+onready var hitbox_down_attack_air : Area2D = $Attack_Down_Air
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
 
@@ -188,6 +192,13 @@ func crouch_move(delta) -> void:
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
+func attack_up_air_move(delta):
+	_flip_sprite_in_movement_dir()
+	_slow_with_friction(friction_air)
+	velocity.y += in_air_gravity * delta
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+
 ## Moves the player at dash speed
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
 func dash_move(delta : float, dir : Vector2, after_dash : bool):
@@ -232,6 +243,7 @@ func move_wall_jump(delta):
 	_fall(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+
 func move_knockback(delta):
 	_slow_with_friction(friction_knockback)
 	_fall(delta)
@@ -257,12 +269,16 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = -abs(scale.x)
 		hitbox_down_attack.scale.x = -abs(scale.x)
+		hitbox_up_attack_air.scale.x = -abs(hitbox_up_attack_air.scale.x)
+		hitbox_down_attack_air.scale.x = -abs(hitbox_down_attack_air.scale.x)
 	elif velocity.x > 0:
 		direction = 1
 		sprite.flip_h = false
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = abs(scale.x)
 		hitbox_down_attack.scale.x = abs(scale.x)
+		hitbox_up_attack_air.scale.x = abs(hitbox_up_attack_air.scale.x)
+		hitbox_down_attack_air.scale.x = abs(hitbox_down_attack_air.scale.x)
 
 
 func set_knockback(force, direction):
