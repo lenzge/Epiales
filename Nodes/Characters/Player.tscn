@@ -36,8 +36,6 @@
 [ext_resource path="res://Nodes/Characters/States/Wall_Hang.gd" type="Script" id=34]
 [ext_resource path="res://Nodes/Characters/States/Wall_Jump.gd" type="Script" id=35]
 [ext_resource path="res://Nodes/Characters/ChargeController.gd" type="Script" id=36]
-[ext_resource path="res://Nodes/Experimental/Placeholder/progress_charge.png" type="Texture" id=37]
-[ext_resource path="res://Nodes/Experimental/Placeholder/Over_charge.png" type="Texture" id=38]
 [ext_resource path="res://Nodes/Experimental/Placeholder/progress_charge.png" type="Texture" id=39]
 [ext_resource path="res://Nodes/Experimental/Placeholder/Over_charge.png" type="Texture" id=40]
 
@@ -905,8 +903,7 @@ script = ExtResource( 35 )
 [node name="Attack" type="Area2D" parent="."]
 position = Vector2( 32, 7 )
 collision_mask = 2
-script = ExtResource( 23 )
-is_directed = true
+script = ExtResource( 32 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
 shape = SubResource( 2 )
@@ -969,9 +966,9 @@ margin_top = -68.4527
 margin_right = 150.905
 margin_bottom = -19.4527
 rect_scale = Vector2( 0.33535, 0.33535 )
-texture_under = ExtResource( 37 )
-texture_over = ExtResource( 38 )
-texture_progress = ExtResource( 37 )
+texture_under = ExtResource( 39 )
+texture_over = ExtResource( 40 )
+texture_progress = ExtResource( 39 )
 tint_under = Color( 0.235294, 0.235294, 0.686275, 0.203922 )
 tint_progress = Color( 0.0980392, 0.0745098, 0.768627, 1 )
 __meta__ = {

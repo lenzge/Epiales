@@ -62,7 +62,7 @@ onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
-onready var charge_ontroller = $ChargeController
+onready var charge_controller = $ChargeController
 
 var direction : int = 1
 

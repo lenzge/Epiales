@@ -3,8 +3,9 @@ extends PlayerState
 
 func enter(_msg := {}):
 	.enter(_msg)
-	if Input.is_action_pressed("charge"): # and player.charge_ontroller.charge_points > 0:
+	if Input.is_action_pressed("charge") and player.charge_controller.charge_points > 0:
 		player.in_charged_attack = true
+		player.charge_controller._on_charged_action()
 		timer.set_wait_time(player.charged_windup_time)
 	else:
 		player.in_charged_attack = false
