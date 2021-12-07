@@ -129,9 +129,9 @@ func _process(delta):
 		last_movement_buttons.push_front(MovementDir.RIGHT)
 
 	# Clear Movement Array
-	if not Input.is_action_pressed("move_left"):
+	if not Input.is_action_pressed("move_left") and last_movement_buttons.find(MovementDir.LEFT) != -1:
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.LEFT))
-	if not Input.is_action_pressed("move_right"):
+	if not Input.is_action_pressed("move_right") and last_movement_buttons.find(MovementDir.RIGHT) != -1:
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.RIGHT))
 
 
