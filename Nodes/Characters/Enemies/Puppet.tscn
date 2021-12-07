@@ -25,15 +25,15 @@
 radius = 25.1569
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 10.2695, 31.8329 )
+extents = Vector2( 19.3566, 31.8329 )
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 25.1785
-height = 15.074
+radius = 17.001
+height = 38.632
 
 [sub_resource type="CapsuleShape2D" id=4]
-radius = 19.5681
-height = 31.9567
+radius = 16.3025
+height = 36.1946
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 320, 97 )
@@ -320,18 +320,6 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Color( 0.956863, 0.109804, 0.109804, 0.811765 ), Color( 1, 1, 1, 0 ) ]
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath("DamageBox/CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
 [sub_resource type="Animation" id=13]
 length = 3.0
@@ -384,18 +372,6 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( -0.612068, -0.26487 ), Vector2( -0.612068, -8 ), Vector2( -0.612068, -0.264871 ), Vector2( -0.612068, -8 ), Vector2( -5.96046e-08, -0.264871 ), Vector2( -2.98023e-08, -8 ), Vector2( -0.612068, -0.26487 ) ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("DamageBox/CollisionShape2D:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
 
 [sub_resource type="Animation" id=14]
 length = 0.3
@@ -441,6 +417,8 @@ tracks/2/keys = {
 collision_layer = 2
 collision_mask = 36
 script = ExtResource( 2 )
+attack_cooldown_time = 4.0
+attack_force = [ 600, 400, 600 ]
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 4 )
@@ -477,10 +455,9 @@ script = ExtResource( 18 )
 script = ExtResource( 19 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 0.917647, 0.180392, 0.180392, 0.392157 )
 position = Vector2( -0.612068, -0.26487 )
 scale = Vector2( 0.0955947, 0.0955947 )
-texture = ExtResource( 12 )
+texture = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.00113, 4.31743 )
@@ -525,7 +502,7 @@ direction = 180.0
 is_directed = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2( 2, 0 )
+position = Vector2( -3.34543, 0.890899 )
 shape = SubResource( 2 )
 disabled = true
 
@@ -543,13 +520,14 @@ position = Vector2( -1.001, 4.317 )
 collision_layer = 2
 script = ExtResource( 15 )
 damagae_amount = 20
-knockback_force = 200.0
+knockback_force = 300.0
 knockback_time = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageBox"]
 shape = SubResource( 4 )
 
 [node name="PlayerDetectionArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
@@ -557,6 +535,7 @@ position = Vector2( 0, -49 )
 shape = SubResource( 5 )
 
 [node name="PlayerFollowArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerFollowArea"]
 position = Vector2( -1.00113, -56 )
