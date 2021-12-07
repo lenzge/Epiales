@@ -34,6 +34,7 @@ export(int) var jump_impulse :int = 1000
 export(int) var wall_jump_speed :int = 1000
 export(int) var knock_back_impulse :int = 300
 export(int) var max_attack_combo :int = 3
+export(int) var attack_air_down_knockback_impulse :int = 250
 
 # Friction is weaker the smaller the value is
 export(float, 0, 1, 0.001) var acceleration : float = 0.3
@@ -388,3 +389,7 @@ func _on_dash_cooldown_timeout():
 func start_dash_cooldown():
 	dash_cooldown_timer.set_wait_time(dash_cooldown_time)
 	dash_cooldown_timer.start()
+
+
+func _on_Attack_Down_Air_hit(receiver):
+	velocity.y = -attack_air_down_knockback_impulse
