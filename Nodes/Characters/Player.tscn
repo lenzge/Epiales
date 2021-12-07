@@ -815,6 +815,7 @@ script = ExtResource( 22 )
 position = Vector2( 32, 7 )
 collision_mask = 2
 script = ExtResource( 23 )
+is_directed = true
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
 shape = SubResource( 2 )

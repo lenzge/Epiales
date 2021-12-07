@@ -448,10 +448,10 @@ position = Vector2( 266.699, 437.506 )
 position = Vector2( 767.133, 308.651 )
 
 [node name="Puppet3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1805.71, 530.665 )
+position = Vector2( 1888.77, 530.665 )
 
 [node name="Puppet4" parent="." instance=ExtResource( 5 )]
-position = Vector2( 2361.33, 518.414 )
+position = Vector2( 2754.1, 528.344 )
 
 [node name="Bird" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1519.81, -101.022 )

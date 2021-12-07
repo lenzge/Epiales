@@ -27,11 +27,11 @@ radius = 25.1569
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 19.3566, 31.8329 )
 
-[sub_resource type="CapsuleShape2D" id=15]
+[sub_resource type="CapsuleShape2D" id=3]
 radius = 17.001
 height = 38.632
 
-[sub_resource type="CapsuleShape2D" id=16]
+[sub_resource type="CapsuleShape2D" id=4]
 radius = 16.3025
 height = 36.1946
 
@@ -513,7 +513,7 @@ script = ExtResource( 16 )
 receiver_path = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource( 15 )
+shape = SubResource( 3 )
 
 [node name="DamageBox" type="Area2D" parent="."]
 position = Vector2( -1.001, 4.317 )
@@ -524,7 +524,7 @@ knockback_force = 300.0
 knockback_time = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageBox"]
-shape = SubResource( 16 )
+shape = SubResource( 4 )
 
 [node name="PlayerDetectionArea" type="Area2D" parent="."]
 visible = false

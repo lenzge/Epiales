@@ -27,7 +27,7 @@ func physics_update(delta):
 
 
 func _on_timeout():
-	print(enemy.attack_count)
+	print("ATTACK: ", enemy.attack_count)
 	if attack_chain and not is_blocked and is_hit and enemy.attack_count < enemy.max_attack_combo:
 		is_hit = false
 		state_machine.transition_to("Attack_Windup")
