@@ -53,7 +53,7 @@ export(float) var dash_cooldown_time : float = 1.0
 
 export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
-export(Array, int) var attack_force = [200, 300, 400, 800]
+export(Array, int) var attack_force = [200, 300, 400, 600]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
 onready var sprite : Sprite = $Sprite
