@@ -429,6 +429,12 @@ scale = Vector2( 1, 0.8 )
 enabled = true
 collision_mask = 4
 
+[node name="FloorBackDetectionRaycast" type="RayCast2D" parent="."]
+position = Vector2( -23.825, 0.249 )
+scale = Vector2( 1, 0.8 )
+enabled = true
+collision_mask = 4
+
 [node name="WallDetectionRaycast" type="RayCast2D" parent="."]
 rotation = -1.5708
 scale = Vector2( 1, 0.7 )

@@ -9,8 +9,7 @@ func patrol(delta):
 	move(walk_speed)
 	
 func chase(delta):
-	if floor_detection_raycast.is_colliding() and is_on_floor():
-		move(running_speed)
+	move(running_speed)
 
 func move(speed):
 	# Turn automatically on cliffs 
@@ -22,13 +21,14 @@ func move(speed):
 	fall()
 	
 func move_backwards(delta):
-	# Turn automatically on cliffs and walls
-	if is_on_wall() or not floor_detection_raycast.is_colliding() and is_on_floor():
-		flip_direction()
+	if not floor_back_detection_raycast.is_colliding() and is_on_floor():
+		return
 	velocity.x = walk_speed * -direction
 	fall()
 	
 func attack_move(delta, attack_chain) -> void:
+	if not floor_detection_raycast.is_colliding() and is_on_floor():
+		return
 	if not attack_chain: 
 		velocity.x = attack_speed * direction
 	else:

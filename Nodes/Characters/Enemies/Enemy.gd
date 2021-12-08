@@ -35,6 +35,7 @@ onready var state_machine : StateMachine = $StateMachine
 onready var sprite : Sprite = $Sprite
 onready var health_bar = $HealthBar
 onready var floor_detection_raycast : RayCast2D = $FloorDetectionRaycast
+onready var floor_back_detection_raycast : RayCast2D = $FloorBackDetectionRaycast
 onready var wall_detection_raycast : RayCast2D = $WallDetectionRaycast
 onready var enemy_detection_raycast : RayCast2D = $EnemyDetectionRaycast
 
@@ -175,6 +176,7 @@ func _set_all_in_right_direction(direction):
 	attack_detection.rotation_degrees = attack_detection.rotation_degrees * direction
 	attack_windup_detection.rotation_degrees = attack_windup_detection.rotation_degrees * direction
 	floor_detection_raycast.position.x = floor_detection_raycast.position.x * direction
+	floor_back_detection_raycast.position.x = floor_back_detection_raycast.position.x * direction
 	wall_detection_raycast.rotation_degrees = wall_detection_raycast.rotation_degrees * direction
 	enemy_detection_raycast.rotation_degrees = enemy_detection_raycast.rotation_degrees * direction
 	enemy_detection_raycast.position.x = enemy_detection_raycast.position.x * direction
@@ -225,7 +227,7 @@ func set_chase_recover():
 	
 func set_flip_cooldown():
 	is_flip_cooldown = true
-	flip_cooldown_timer.set_wait_time(0.5)
+	flip_cooldown_timer.set_wait_time(0.3)
 	flip_cooldown_timer.start()
 
 func _on_player_spawned():

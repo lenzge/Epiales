@@ -468,6 +468,11 @@ position = Vector2( 23.8248, 0.248855 )
 enabled = true
 collision_mask = 4
 
+[node name="FloorBackDetectionRaycast" type="RayCast2D" parent="."]
+position = Vector2( -23.825, 0.249 )
+enabled = true
+collision_mask = 4
+
 [node name="WallDetectionRaycast" type="RayCast2D" parent="."]
 rotation = -1.5708
 scale = Vector2( 1, 0.7 )
@@ -535,7 +540,6 @@ knockback_time = 0.2
 shape = SubResource( 4 )
 
 [node name="PlayerDetectionArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
