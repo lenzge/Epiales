@@ -39,5 +39,6 @@ func _on_Checkoint_checkpoint_entered(new_spawnpoint: Vector2, prio: int) -> voi
 		current_spawnpoint = new_spawnpoint
 		current_spawnpoint_prio = prio
 
-func _on_player_entered_deadzone():
+func _on_player_entered_deadzone(dmg, fear):
+	print("[DEBUG] @class",name ," dealt_dmg: ",dmg," dealt_fear: ",fear)
 	player_instance.position = current_spawnpoint
