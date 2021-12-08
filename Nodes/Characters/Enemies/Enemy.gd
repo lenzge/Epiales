@@ -38,6 +38,8 @@ onready var floor_detection_raycast : RayCast2D = $FloorDetectionRaycast
 onready var wall_detection_raycast : RayCast2D = $WallDetectionRaycast
 onready var enemy_detection_raycast : RayCast2D = $EnemyDetectionRaycast
 
+# Puppet doesn't follow player, if a wall is in between
+onready var wall_between_raycast : RayCast2D = $WallBetweenRaycast
 # Puppet starts to follow player, when player entered
 onready var player_follow_area : Area2D = $PlayerFollowArea
 # Puppet starts to chase player, when player entered

@@ -490,6 +490,14 @@ rotation = -1.5708
 scale = Vector2( 1, 1.5 )
 enabled = true
 
+[node name="WallBetweenRaycast" type="RayCast2D" parent="."]
+visible = false
+position = Vector2( -409.91, 0 )
+rotation = -1.5708
+scale = Vector2( 1, 14.52 )
+enabled = true
+collision_mask = 4
+
 [node name="AttackArea" type="Area2D" parent="."]
 position = Vector2( 28.69, 3.735 )
 collision_layer = 2

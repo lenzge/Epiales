@@ -451,7 +451,7 @@ position = Vector2( 767.133, 308.651 )
 position = Vector2( 1888.77, 530.665 )
 
 [node name="Puppet4" parent="." instance=ExtResource( 5 )]
-position = Vector2( 2152.32, 530.463 )
+position = Vector2( 2807.84, 528.218 )
 
 [node name="Bird" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1519.81, -101.022 )
