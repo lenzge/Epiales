@@ -15,7 +15,7 @@ func physics_update(delta):
 	elif Input.is_action_just_pressed("dash")  and player.can_dash:
 		state_machine.transition_to("Dash")
 	elif Input.is_action_just_pressed("attack"):
-		state_machine.transition_to("Attack_Basic")
+		state_machine.transition_to("Attack_Basic_Windup")
 	elif player.can_hang_on_wall and player.is_on_wall():
 		if Input.is_action_pressed("hang_on_wall") and \
 		player.velocity.y > player.wall_hang_min_entrance_y_velocity:
