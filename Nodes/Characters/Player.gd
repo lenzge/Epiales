@@ -25,6 +25,7 @@ onready var collision_shape_original_pos_y : float = $CollisionShape2D.position.
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
+export(float) var air_attack_fall_speed :float = 0.2
 export(Vector2) var dash_speed :Vector2 = Vector2(1000, 1000)
 export(int) var gravity :int = 3000
 export(int) var wall_hang_gravity : int = 300
@@ -171,11 +172,10 @@ func attack_move(delta) -> void:
 			velocity.x += ((-attack_step_speed - velocity.x) * acceleration)
 		else:
 			velocity.x += ((attack_step_speed - velocity.x) * acceleration)
-	
-	# Depending on game design Apply gravity here !!! If no gravity make sure that player is actually on floor and not 0.000000000001 above it
-	# --> leads to issues with canceling windup states because player is falling
-#	velocity.y -= gravity * delta * 0.2
-	_fall(delta)
+
+	if velocity.y < 0:
+		velocity.y = 0;
+	velocity.y -= gravity * delta * air_attack_fall_speed
 	velocity = move_and_slide(velocity,Vector2.UP)
 
 

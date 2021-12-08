@@ -411,9 +411,6 @@ resource_local_to_scene = true
 } ]
 0/z_index = 0
 
-[sub_resource type="RectangleShape2D" id=44]
-extents = Vector2( 22.6794, 59.7717 )
-
 [node name="Level" type="Node"]
 pause_mode = 1
 script = ExtResource( 3 )
