@@ -22,6 +22,8 @@ var dash_cooldown_timer
 
 onready var collision_shape_original_height : float = $CollisionShape2D.shape.height
 onready var collision_shape_original_pos_y : float = $CollisionShape2D.position.y
+onready var hitbox_original_height : float = $Hitbox/CollisionShape2D.shape.height
+onready var hitbox_original_pos_y : float = $Hitbox/CollisionShape2D.position.y
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -53,7 +55,7 @@ export(float) var dash_cooldown_time : float = 1.0
 
 export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
-export(Array, int) var attack_force = [200, 300, 400, 800]
+export(Array, int) var attack_force = [200, 300, 400, 600]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
 onready var sprite : Sprite = $Sprite
@@ -315,22 +317,26 @@ func _slow_with_friction(friction : float) -> void:
 func _enter_crouch():
 	# change the height of the player's collisionshape to half of it
 	var collision_shape = $CollisionShape2D
+	var hitbox_shape = $Hitbox/CollisionShape2D
 	if collision_shape_original_height == collision_shape.shape.height:
 		collision_shape.shape.height /= 2
+		hitbox_shape.shape.height /= 2
 		
 		var collision_pos_y_change = collision_shape.shape.height / 2
 		
 		collision_shape.position.y += collision_pos_y_change
-		$Hitbox/CollisionShape2D.position.y += collision_pos_y_change
+		hitbox_shape.position.y += collision_pos_y_change
 
 
 ## Reset the players collisionshape when exiting crouch
 ## Called whenever the player leaves the crouch states
 func _exit_crouch():
 	var collision_shape = $CollisionShape2D
+	var hitbox_shape = $Hitbox/CollisionShape2D
 	collision_shape.shape.height = collision_shape_original_height
 	collision_shape.position.y = collision_shape_original_pos_y
-	$Hitbox/CollisionShape2D.position.y = collision_shape_original_pos_y
+	hitbox_shape.shape.height = hitbox_original_height
+	hitbox_shape.position.y = hitbox_original_pos_y
 
 
 func _physics_process(delta):
