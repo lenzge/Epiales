@@ -25,7 +25,6 @@ func get_player_spawn() -> Vector2:
 
 
 func spawn_player(player) -> void:
-	print(player_spawn)
 	player.position = player_spawn
 	var camera = Camera2D.new()
 	camera.current = true			#placeholder, to be determined how to implement

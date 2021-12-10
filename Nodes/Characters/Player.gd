@@ -3,7 +3,7 @@ extends KinematicBody2D
 
 # Movement
 enum MovementDir {LEFT, RIGHT}
-enum PossibleInput {ATTACK_BASIC, BLOCK, JUMP}
+enum PossibleInput {ATTACK_BASIC, ATTACK_AIR, BLOCK, JUMP}
 
 const last_movement_buttons = []
 const last_input = []
@@ -27,6 +27,7 @@ onready var hitbox_original_pos_y : float = $Hitbox/CollisionShape2D.position.y
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
+export(float) var air_attack_fall_speed :float = 0.2
 export(Vector2) var dash_speed :Vector2 = Vector2(1000, 1000)
 export(int) var gravity :int = 3000
 export(int) var in_air_gravity : int = 500
@@ -38,6 +39,7 @@ export(int) var wall_jump_speed :int = 1000
 export(int) var knock_back_impulse :int = 300
 export(int) var max_attack_combo :int = 3
 export(int) var attack_air_down_knockback_impulse :int = 250
+export(int) var air_attack_velocity :int = 1000
 
 # Friction is weaker the smaller the value is
 export(float, 0, 1, 0.001) var acceleration : float = 0.3
@@ -115,7 +117,10 @@ func _process(delta):
 		if Input.is_action_just_pressed("attack"):
 			if not last_input.empty() and last_input[0] == PossibleInput.BLOCK:
 				last_input.clear()
-			last_input.push_front(PossibleInput.ATTACK_BASIC)
+			if is_on_floor():
+				last_input.push_front(PossibleInput.ATTACK_BASIC)
+			else:
+				last_input.push_front(PossibleInput.ATTACK_AIR)
 		
 	# Cancel attack, clear queue
 	if Input.is_action_just_pressed("jump"):
@@ -174,11 +179,10 @@ func attack_move(delta) -> void:
 			velocity.x += ((-attack_step_speed - velocity.x) * acceleration)
 		else:
 			velocity.x += ((attack_step_speed - velocity.x) * acceleration)
-	
-	# Depending on game design Apply gravity here !!! If no gravity make sure that player is actually on floor and not 0.000000000001 above it
-	# --> leads to issues with canceling windup states because player is falling
-	_fall(delta)
-	
+
+	if velocity.y < 0:
+		velocity.y = 0;
+	velocity.y -= gravity * delta * air_attack_fall_speed
 	velocity = move_and_slide(velocity,Vector2.UP)
 
 
@@ -204,7 +208,8 @@ func crouch_move(delta) -> void:
 func attack_updown_air_move(delta):
 	_flip_sprite_in_movement_dir()
 	_slow_with_friction(friction_air)
-	velocity.y += in_air_gravity * delta
+	velocity.y -= gravity * delta * air_attack_fall_speed
+	#velocity.y += in_air_gravity * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
