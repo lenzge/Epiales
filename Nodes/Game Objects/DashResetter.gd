@@ -1,6 +1,6 @@
 extends DamageReceiver
 
-export (int) var durability = 21
+export (int) var durability = 10
 
 func _ready():
 	self.connect("on_hit_start", self, "_on_Self_hitted")
