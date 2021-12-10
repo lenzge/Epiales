@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Luci/idle.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -36,8 +36,14 @@
 [ext_resource path="res://Nodes/Characters/States/Wall_Hang.gd" type="Script" id=34]
 [ext_resource path="res://Nodes/Characters/States/Wall_Jump.gd" type="Script" id=35]
 [ext_resource path="res://Nodes/Characters/ChargeController.gd" type="Script" id=36]
-[ext_resource path="res://Nodes/Experimental/Placeholder/progress_charge.png" type="Texture" id=39]
-[ext_resource path="res://Nodes/Experimental/Placeholder/Over_charge.png" type="Texture" id=40]
+[ext_resource path="res://Nodes/Experimental/Placeholder/progress_charge.png" type="Texture" id=37]
+[ext_resource path="res://Nodes/Experimental/Placeholder/Over_charge.png" type="Texture" id=38]
+[ext_resource path="res://Nodes/Characters/States/Attack_Up_Air_Windup.gd" type="Script" id=39]
+[ext_resource path="res://Nodes/Characters/States/Attack_Up_Air.gd" type="Script" id=40]
+[ext_resource path="res://Nodes/Characters/States/Attack_Up_Air_Recovery.gd" type="Script" id=41]
+[ext_resource path="res://Nodes/Characters/States/Attack_Down_Air_Windup.gd" type="Script" id=42]
+[ext_resource path="res://Nodes/Characters/States/Attack_Down_Air.gd" type="Script" id=43]
+[ext_resource path="res://Nodes/Characters/States/Attack_Down_Recovery.gd" type="Script" id=44]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 11.0179
@@ -59,7 +65,13 @@ extents = Vector2( 29.8462, 16.0556 )
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 47.846, 16.99 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 48.3602, 17.4952 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 48.0796, 16.934 )
+
+[sub_resource type="Animation" id=9]
 length = 0.6
 loop = true
 step = 0.05
@@ -148,7 +160,7 @@ tracks/6/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -222,7 +234,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -296,7 +308,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=12]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -346,7 +358,7 @@ tracks/3/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=13]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -397,7 +409,7 @@ tracks/3/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=14]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -460,8 +472,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=13]
-resource_name = "Crouch"
+[sub_resource type="Animation" id=15]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -499,7 +510,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 13 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=16]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -561,7 +572,7 @@ tracks/4/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=17]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -661,7 +672,7 @@ tracks/7/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=18]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -737,7 +748,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=19]
 length = 0.2
 loop = true
 tracks/0/type = "value"
@@ -804,6 +815,7 @@ tracks/4/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 40
 script = ExtResource( 2 )
+air_attack_fall_speed = 0.1
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -1.52588e-05, -21.703 )
@@ -899,10 +911,29 @@ script = ExtResource( 34 )
 [node name="Wall_Jump" type="Node" parent="StateMachine"]
 script = ExtResource( 35 )
 
+[node name="Attack_Up_Air_Windup" type="Node" parent="StateMachine"]
+script = ExtResource( 39 )
+
+[node name="Attack_Up_Air" type="Node" parent="StateMachine"]
+script = ExtResource( 40 )
+
+[node name="Attack_Up_Air_Recovery" type="Node" parent="StateMachine"]
+script = ExtResource( 41 )
+
+[node name="Attack_Down_Air_Windup" type="Node" parent="StateMachine"]
+script = ExtResource( 42 )
+
+[node name="Attack_Down_Air" type="Node" parent="StateMachine"]
+script = ExtResource( 43 )
+
+[node name="Attack_Down_Air_Recovery" type="Node" parent="StateMachine"]
+script = ExtResource( 44 )
+
 [node name="Attack" type="Area2D" parent="."]
 position = Vector2( 32, 7 )
 collision_mask = 2
 script = ExtResource( 32 )
+damage_amount = 20
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
 shape = SubResource( 2 )
@@ -939,18 +970,36 @@ position = Vector2( 0.374565, 18.7288 )
 shape = SubResource( 6 )
 disabled = true
 
+[node name="Attack_Up_Air" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource( 32 )
+
+[node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Up_Air"]
+position = Vector2( 0, -47.1434 )
+shape = SubResource( 7 )
+disabled = true
+
+[node name="Attack_Down_Air" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource( 32 )
+
+[node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Air"]
+position = Vector2( 0.390617, 53.0351 )
+shape = SubResource( 8 )
+disabled = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Attack_Basic = SubResource( 7 )
-anims/Attack_Basic_Recovery = SubResource( 8 )
-anims/Attack_Basic_Windup = SubResource( 9 )
-anims/Block = SubResource( 10 )
-anims/Block_Recovery = SubResource( 11 )
-anims/Block_Windup = SubResource( 12 )
-anims/Crouch = SubResource( 13 )
-anims/Dash = SubResource( 14 )
-anims/Idle = SubResource( 15 )
-anims/Run = SubResource( 16 )
-anims/Stunned = SubResource( 17 )
+anims/Attack_Basic = SubResource( 9 )
+anims/Attack_Basic_Recovery = SubResource( 10 )
+anims/Attack_Basic_Windup = SubResource( 11 )
+anims/Block = SubResource( 12 )
+anims/Block_Recovery = SubResource( 13 )
+anims/Block_Windup = SubResource( 14 )
+anims/Crouch = SubResource( 15 )
+anims/Dash = SubResource( 16 )
+anims/Idle = SubResource( 17 )
+anims/Run = SubResource( 18 )
+anims/Stunned = SubResource( 19 )
 
 [node name="ChargeController" type="Control" parent="."]
 script = ExtResource( 36 )
@@ -964,9 +1013,9 @@ margin_top = -68.4527
 margin_right = 150.905
 margin_bottom = -19.4527
 rect_scale = Vector2( 0.33535, 0.33535 )
-texture_under = ExtResource( 39 )
-texture_over = ExtResource( 40 )
-texture_progress = ExtResource( 39 )
+texture_under = ExtResource( 37 )
+texture_over = ExtResource( 38 )
+texture_progress = ExtResource( 37 )
 tint_under = Color( 0.235294, 0.235294, 0.686275, 0.203922 )
 tint_progress = Color( 0.0980392, 0.0745098, 0.768627, 1 )
 __meta__ = {
@@ -975,3 +1024,4 @@ __meta__ = {
 
 [connection signal="blocked" from="." to="ChargeController" method="_on_blocked"]
 [connection signal="on_hit_start" from="Hitbox" to="." method="on_hit"]
+[connection signal="hit" from="Attack_Down_Air" to="." method="_on_Attack_Down_Air_hit"]
