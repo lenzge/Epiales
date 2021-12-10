@@ -35,9 +35,12 @@ onready var state_machine : StateMachine = $StateMachine
 onready var sprite : Sprite = $Sprite
 onready var health_bar = $HealthBar
 onready var floor_detection_raycast : RayCast2D = $FloorDetectionRaycast
+onready var floor_back_detection_raycast : RayCast2D = $FloorBackDetectionRaycast
 onready var wall_detection_raycast : RayCast2D = $WallDetectionRaycast
 onready var enemy_detection_raycast : RayCast2D = $EnemyDetectionRaycast
 
+# Puppet doesn't follow player, if a wall is in between
+onready var wall_between_raycast : RayCast2D = $WallBetweenRaycast
 # Puppet starts to follow player, when player entered
 onready var player_follow_area : Area2D = $PlayerFollowArea
 # Puppet starts to chase player, when player entered
@@ -60,9 +63,10 @@ var chased_player : Player
 # Timer for overall cooldown
 var is_attack_recovering : bool
 var is_chase_recovering : bool
+var is_flip_cooldown : bool
 var attack_recover_timer
 var chase_recover_timer
-
+var flip_cooldown_timer
 
 func _ready() -> void:
 	# Set everything in the right direction
@@ -132,13 +136,17 @@ func knockback(delta, force, direction):
 		
 		
 func flip_direction():
-	direction = direction * -1
-	sprite.flip_h = not sprite.flip_h
-	_set_all_in_right_direction(-1)
-	if attack_area.direction == 180.0:
-		attack_area.direction = 0.0
+	if not is_flip_cooldown:
+		set_flip_cooldown()
+		direction = direction * -1
+		sprite.flip_h = not sprite.flip_h
+		_set_all_in_right_direction(-1)
+		if attack_area.direction == 180.0:
+			attack_area.direction = 0.0
+		else:
+			attack_area.direction = 180.0
 	else:
-		attack_area.direction = 180.0
+		state_machine.transition_to("Freeze")
 
 
 func on_hit(emitter : DamageEmitter):
@@ -168,6 +176,7 @@ func _set_all_in_right_direction(direction):
 	attack_detection.rotation_degrees = attack_detection.rotation_degrees * direction
 	attack_windup_detection.rotation_degrees = attack_windup_detection.rotation_degrees * direction
 	floor_detection_raycast.position.x = floor_detection_raycast.position.x * direction
+	floor_back_detection_raycast.position.x = floor_back_detection_raycast.position.x * direction
 	wall_detection_raycast.rotation_degrees = wall_detection_raycast.rotation_degrees * direction
 	enemy_detection_raycast.rotation_degrees = enemy_detection_raycast.rotation_degrees * direction
 	enemy_detection_raycast.position.x = enemy_detection_raycast.position.x * direction
@@ -186,6 +195,12 @@ func _init_timer():
 	attack_recover_timer.set_timer_process_mode(0)
 	attack_recover_timer.connect("timeout", self, "_on_attack_recover_timeout")
 	self.add_child(attack_recover_timer)
+	flip_cooldown_timer = Timer.new()
+	flip_cooldown_timer.set_autostart(false)
+	flip_cooldown_timer.set_one_shot(true)
+	flip_cooldown_timer.set_timer_process_mode(0)
+	flip_cooldown_timer.connect("timeout", self, "_on_flip_cooldown_timeout")
+	self.add_child(flip_cooldown_timer)
 
 func _on_chase_recover_timeout():
 	is_chase_recovering = false
@@ -194,6 +209,9 @@ func _on_chase_recover_timeout():
 	
 func _on_attack_recover_timeout():
 	is_attack_recovering = false
+	
+func _on_flip_cooldown_timeout():
+	is_flip_cooldown = false
 	
 func set_attack_recover():
 	is_attack_recovering = true
@@ -206,6 +224,11 @@ func set_chase_recover():
 	chase_recover_timer.start()
 	player_detection_area.get_child(0).disabled = true
 	player_follow_area.get_child(0).disabled = true
+	
+func set_flip_cooldown():
+	is_flip_cooldown = true
+	flip_cooldown_timer.set_wait_time(0.3)
+	flip_cooldown_timer.start()
 
 func _on_player_spawned():
 	chased_player = owner.player_instance
