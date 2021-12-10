@@ -9,7 +9,6 @@ func enter(_msg := {}):
 	.enter(_msg)
 	timer.set_wait_time(player.windup_time)
 	timer.start()
-	print("Test")
 
 
 # Check if attack is canceled
@@ -34,6 +33,7 @@ func _on_timeout():
 	var input = player.pop_combat_queue()
 	if input == null:
 		state_machine.transition_to("Idle")
+		player._exit_crouch()
 	elif input == player.PossibleInput.BLOCK:
 		state_machine.transition_to("Crouch_Block_Windup")
 	elif input == player.PossibleInput.ATTACK_BASIC:
