@@ -13,6 +13,7 @@ var velocity := Vector2(0,0)
 var can_dash := true
 var can_reset_dash := true
 var started_dash_in_air := false
+var in_charged_attack := false
 
 var can_hang_on_wall := true
 var hang_on_wall_velocity_save := 0.0
@@ -21,6 +22,8 @@ var dash_cooldown_timer
 
 onready var collision_shape_original_height : float = $CollisionShape2D.shape.height
 onready var collision_shape_original_pos_y : float = $CollisionShape2D.position.y
+onready var hitbox_original_height : float = $Hitbox/CollisionShape2D.shape.height
+onready var hitbox_original_pos_y : float = $Hitbox/CollisionShape2D.position.y
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -40,21 +43,23 @@ export(int) var attack_air_down_knockback_impulse :int = 250
 export(float, 0, 1, 0.001) var acceleration : float = 0.3
 export(float) var friction_ground : float = 40
 export(float) var friction_ground_on_crouch : float = 20
-export(float) var friction_knockback : float = 20
+export(float) var friction_knockback : float = 30
 export(float) var friction_air : float = 20
 export(float, 0, 1, 0.001) var acceleration_after_dash : float = 0.05
 
 export(float) var windup_time : float = 0.2
+export(float) var charged_windup_time : float = 0.7
 export(float) var block_time : float = 0.2
 export(float) var attack_time : float = 0.2
+export(float) var charged_attack_time : float = 0.4
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 export(float) var dash_cooldown_time : float = 1.0
 
 export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
-export(Array, int) var attack_force = [200, 300, 400]
-export(Array, int) var attack_knockback = [0.2, 0.2, 0.5]
+export(Array, int) var attack_force = [200, 300, 400, 600]
+export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
@@ -64,6 +69,7 @@ onready var hitbox_up_attack_air : Area2D = $Attack_Up_Air
 onready var hitbox_down_attack_air : Area2D = $Attack_Down_Air
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
+onready var charge_controller = $ChargeController
 
 var direction : int = 1
 
@@ -130,9 +136,9 @@ func _process(delta):
 		last_movement_buttons.push_front(MovementDir.RIGHT)
 
 	# Clear Movement Array
-	if not Input.is_action_pressed("move_left"):
+	if not Input.is_action_pressed("move_left") and last_movement_buttons.find(MovementDir.LEFT) != -1:
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.LEFT))
-	if not Input.is_action_pressed("move_right"):
+	if not Input.is_action_pressed("move_right") and last_movement_buttons.find(MovementDir.RIGHT) != -1:
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.RIGHT))
 
 
@@ -330,22 +336,26 @@ func _slow_with_friction(friction : float) -> void:
 func _enter_crouch():
 	# change the height of the player's collisionshape to half of it
 	var collision_shape = $CollisionShape2D
+	var hitbox_shape = $Hitbox/CollisionShape2D
 	if collision_shape_original_height == collision_shape.shape.height:
 		collision_shape.shape.height /= 2
+		hitbox_shape.shape.height /= 2
 		
 		var collision_pos_y_change = collision_shape.shape.height / 2
 		
 		collision_shape.position.y += collision_pos_y_change
-		$Hitbox/CollisionShape2D.position.y += collision_pos_y_change
+		hitbox_shape.position.y += collision_pos_y_change
 
 
 ## Reset the players collisionshape when exiting crouch
 ## Called whenever the player leaves the crouch states
 func _exit_crouch():
 	var collision_shape = $CollisionShape2D
+	var hitbox_shape = $Hitbox/CollisionShape2D
 	collision_shape.shape.height = collision_shape_original_height
 	collision_shape.position.y = collision_shape_original_pos_y
-	$Hitbox/CollisionShape2D.position.y = collision_shape_original_pos_y
+	hitbox_shape.shape.height = hitbox_original_height
+	hitbox_shape.position.y = hitbox_original_pos_y
 
 
 func _physics_process(delta):
@@ -353,22 +363,26 @@ func _physics_process(delta):
 
 
 func on_hit(emitter : DamageEmitter):
-	var direction
-	if emitter.is_directed:
-		direction = emitter.direction
+	if in_charged_attack:
+		# only damage
+		pass
 	else:
-		direction = rad2deg((hitbox.global_position - emitter.global_position).angle_to(Vector2(1,0)))
-	direction = int((direction + 90.0)) % 360
-	if direction >= 0.0 && direction <= 180.0 || direction <= -180.0 && direction >= -360.0:
-		direction = 1
-	else:
-		direction = -1
-	if ($StateMachine.state.name == "Block" or $StateMachine.state.name == "Crouch_Block") and not direction == self.direction:
-		emit_signal("blocked")
-		emitter.was_blocked($"Hitbox")
-	else:
-		$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
-		emitter.hit($"Hitbox")
+		var direction
+		if emitter.is_directed:
+			direction = emitter.direction
+		else:
+			direction = rad2deg((hitbox.global_position - emitter.global_position).angle_to(Vector2(1,0)))
+		direction = int((direction + 90.0)) % 360
+		if direction >= 0.0 && direction <= 180.0 || direction <= -180.0 && direction >= -360.0:
+			direction = 1
+		else:
+			direction = -1
+		if $StateMachine.state.name == "Block" and not direction == self.direction:
+			emit_signal("blocked")
+			emitter.was_blocked($"Hitbox")
+		else:
+			$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
+			emitter.hit($"Hitbox")
 
 
 # Timer

@@ -19,6 +19,5 @@ func _ready():
 		spawnpoint = self.position
 	
 func _on_Self_area_entered(entered_object):
-	print(entered_object.owner.name)
 	if entered_object.owner.name == "Player": #better Check needed! check with "is Player"
 		emit_signal("_checkpoint_entered",spawnpoint, prio)

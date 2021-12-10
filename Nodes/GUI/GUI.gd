@@ -7,7 +7,7 @@ onready var nightmare_bar = $NightmareBar/TextureProgress
 onready var tween = $Tween
 
 var animated_meter = 0
-var nightmare_meter_delta = 1
+var nightmare_meter_delta = 0.01
 
 
 # Called when the node enters the scene tree for the first time.
@@ -22,7 +22,7 @@ func _process(delta):
 	nightmare_bar.value = animated_meter
 	
 	if Input.is_action_pressed("ui_accept"):
-		update_nightmare_meter(50)
+		update_nightmare_meter(0)
 	
 	animated_meter = min(animated_meter + nightmare_meter_delta, nightmare_bar.max_value)
 	
