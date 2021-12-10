@@ -435,6 +435,9 @@ position = Vector2( 2045.8, 114.629 )
 [node name="Checkpoint2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 2750.38, 509.779 )
 
+[node name="Checkpoint4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 2169.79, 501.303 )
+
 [node name="Checkpoint" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1198.65, 168.097 )
 
@@ -443,6 +446,7 @@ position = Vector2( 3.77551, -105.714 )
 
 [node name="Deadzone" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1411.2, 711.155 )
+scale = Vector2( 1.2384, 2.11399 )
 
 [node name="Deadzone2" parent="." instance=ExtResource( 4 )]
 position = Vector2( -604.798, 717.505 )
@@ -460,7 +464,7 @@ dealt_damage = 5
 dealt_fear = 4
 
 [node name="Spike2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1649.93, 271.138 )
+position = Vector2( 1649.93, 247.138 )
 rotation = -1.5708
 dealt_damage = 5
 dealt_fear = 4
@@ -498,5 +502,8 @@ position = Vector2( 1698, -124 )
 
 [node name="DashResetter" parent="." instance=ExtResource( 9 )]
 position = Vector2( 2856.22, -269.051 )
+
+[node name="Checkpoint3" parent="." instance=ExtResource( 2 )]
+position = Vector2( -106, 408 )
 
 [editable path="Checkpoint"]
