@@ -37,6 +37,7 @@ export(int) var jump_impulse :int = 1000
 export(int) var wall_jump_speed :int = 1000
 export(int) var knock_back_impulse :int = 300
 export(int) var max_attack_combo :int = 3
+export(int) var attack_air_down_knockback_impulse :int = 700
 export(int) var air_attack_velocity :int = 1000
 
 # Friction is weaker the smaller the value is
@@ -44,6 +45,7 @@ export(float, 0, 1, 0.001) var acceleration : float = 0.3
 export(float) var friction_ground : float = 40
 export(float) var friction_ground_on_crouch : float = 20
 export(float) var friction_knockback : float = 30
+export(float) var friction_air : float = 20
 export(float, 0, 1, 0.001) var acceleration_after_dash : float = 0.05
 
 export(float) var windup_time : float = 0.2
@@ -64,6 +66,8 @@ onready var sprite : Sprite = $Sprite
 onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
+onready var hitbox_up_attack_air : Area2D = $Attack_Up_Air
+onready var hitbox_down_attack_air : Area2D = $Attack_Down_Air
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
 onready var charge_controller = $ChargeController
@@ -198,6 +202,22 @@ func crouch_move(delta) -> void:
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
+## Deccelerate the player when inup or down attack in air and fall slower
+## Call in _physics_process when player attacks up or down in air
+func attack_updown_air_move(delta):
+	_flip_sprite_in_movement_dir()
+	_slow_with_friction(friction_air)
+	
+	# When the player is in jump the gravity shall stay until the player falls
+	# Then the gravity should be less
+	if velocity.y < 0:
+		velocity.y += gravity * delta
+	else:
+		velocity.y += air_attack_fall_speed * delta * gravity
+		
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+
 ## Moves the player at dash speed
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
 func dash_move(delta : float, dir : Vector2, after_dash : bool):
@@ -242,6 +262,7 @@ func move_wall_jump(delta):
 	_fall(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+
 func move_knockback(delta):
 	_slow_with_friction(friction_knockback)
 	_fall(delta)
@@ -267,12 +288,16 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = -abs(scale.x)
 		hitbox_down_attack.scale.x = -abs(scale.x)
+		hitbox_up_attack_air.scale.x = -abs(hitbox_up_attack_air.scale.x)
+		hitbox_down_attack_air.scale.x = -abs(hitbox_down_attack_air.scale.x)
 	elif velocity.x > 0:
 		direction = 1
 		sprite.flip_h = false
 		hitbox_attack.position.x = abs(hitbox_attack.position.x)
 		hitbox_up_attack.scale.x = abs(scale.x)
 		hitbox_down_attack.scale.x = abs(scale.x)
+		hitbox_up_attack_air.scale.x = abs(hitbox_up_attack_air.scale.x)
+		hitbox_down_attack_air.scale.x = abs(hitbox_down_attack_air.scale.x)
 
 
 func set_knockback(force, direction):
@@ -388,3 +413,7 @@ func _on_dash_cooldown_timeout():
 func start_dash_cooldown():
 	dash_cooldown_timer.set_wait_time(dash_cooldown_time)
 	dash_cooldown_timer.start()
+
+
+func _on_Attack_Down_Air_hit(receiver):
+	velocity.y = -attack_air_down_knockback_impulse
