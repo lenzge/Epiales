@@ -16,9 +16,6 @@ func enter(_msg := {}):
 # Check if attack is canceled
 func update(delta):
 	# Action can be cancelled (not by moving)
-#	if not player.is_on_floor():
-#		state_machine.transition_to("Fall")
-#	el
 	if Input.is_action_just_pressed("jump"):
 		state_machine.transition_to("Jump")
 	elif Input.is_action_pressed("block"):
@@ -32,7 +29,7 @@ func update(delta):
 func physics_update(delta):
 	
 	if not player.in_charged_attack:
-		player.move(delta)
+		player.move(delta) #attack_move here?
 
 		# Action can be cancelled (not by moving)
 		if not player.is_on_floor():

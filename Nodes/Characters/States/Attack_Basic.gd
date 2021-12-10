@@ -22,10 +22,11 @@ func physics_update(delta):
 func _on_timeout():
 	# Transition to next state
 	var input = player.last_input.back()
+	print("[DEBUG] @class: ", self.name, " input: ", input)
 	if player.in_charged_attack:
 		player.in_charged_attack = false
 		_set_hitbox(-1)
-	if not player.in_charged_attack and input == player.PossibleInput.ATTACK_BASIC && attack_count < player.max_attack_combo:
+	elif input == player.PossibleInput.ATTACK_BASIC and attack_count < player.max_attack_combo:
 		attack_count += 1
 		state_machine.transition_to("Attack_Basic_Windup")
 	elif input == player.PossibleInput.BLOCK:
