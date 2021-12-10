@@ -11,7 +11,6 @@ func enter(msg :={}):
 	.enter(msg)
 	timer.set_wait_time(player.windup_time)
 	timer.start()
-	player.velocity.y = 0
 
 
 func update(delta):
@@ -31,7 +30,7 @@ func _on_timeout():
 	var input = player.pop_combat_queue()
 	if input == null:
 		state_machine.transition_to("Idle")
-	elif input == player.PossibleInput.ATTACK_BASIC:
+	elif input == player.PossibleInput.ATTACK_AIR:
 		state_machine.transition_to("Attack_Up_Air")
 	elif input == player.PossibleInput.BLOCK:
 		state_machine.transition_to("Block_Windup")

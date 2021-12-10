@@ -30,7 +30,6 @@ export(int) var attack_step_speed :int= 150
 export(float) var air_attack_fall_speed :float = 0.2
 export(Vector2) var dash_speed :Vector2 = Vector2(1000, 1000)
 export(int) var gravity :int = 3000
-export(int) var in_air_gravity : int = 500
 export(int) var wall_hang_gravity : int = 300
 export(int) var wall_hang_max_gravity : int = 500
 export(int) var wall_hang_min_entrance_y_velocity : int = -200
@@ -38,7 +37,7 @@ export(int) var jump_impulse :int = 1000
 export(int) var wall_jump_speed :int = 1000
 export(int) var knock_back_impulse :int = 300
 export(int) var max_attack_combo :int = 3
-export(int) var attack_air_down_knockback_impulse :int = 250
+export(int) var attack_air_down_knockback_impulse :int = 700
 export(int) var air_attack_velocity :int = 1000
 
 # Friction is weaker the smaller the value is
@@ -208,8 +207,14 @@ func crouch_move(delta) -> void:
 func attack_updown_air_move(delta):
 	_flip_sprite_in_movement_dir()
 	_slow_with_friction(friction_air)
-	velocity.y -= gravity * delta * air_attack_fall_speed
-	#velocity.y += in_air_gravity * delta
+	
+	# When the player is in jump the gravity shall stay until the player falls
+	# Then the gravity should be less
+	if velocity.y < 0:
+		velocity.y += gravity * delta
+	else:
+		velocity.y += air_attack_fall_speed * delta * gravity
+		
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
