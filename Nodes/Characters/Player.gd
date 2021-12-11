@@ -20,6 +20,8 @@ var hang_on_wall_velocity_save := 0.0
 
 var dash_cooldown_timer
 
+onready var sound_machine : SoundMachine = $SoundMachine
+
 onready var collision_shape_original_height : float = $CollisionShape2D.shape.height
 onready var collision_shape_original_pos_y : float = $CollisionShape2D.position.y
 onready var hitbox_original_height : float = $Hitbox/CollisionShape2D.shape.height
@@ -390,9 +392,11 @@ func on_hit(emitter : DamageEmitter):
 		if $StateMachine.state.name == "Block" and not direction == self.direction:
 			emit_signal("blocked")
 			emitter.was_blocked($"Hitbox")
+			sound_machine.play_sound("Blocking", false)
 		else:
 			$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
 			emitter.hit($"Hitbox")
+			sound_machine.play_sound("Hit", false)
 
 
 # Timer

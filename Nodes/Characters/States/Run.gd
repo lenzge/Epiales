@@ -1,6 +1,15 @@
 extends PlayerState
 
 
+func enter(msg := {}):
+	.enter(msg)
+	player.sound_machine.play_sound("Running", true)
+
+
+func exit():
+	player.sound_machine.stop_sound("Running")
+
+
 func physics_update(delta):
 	if not player.is_on_floor():
 		state_machine.transition_to("Fall")

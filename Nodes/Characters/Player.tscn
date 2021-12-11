@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Luci/idle.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -44,6 +44,12 @@
 [ext_resource path="res://Nodes/Characters/States/Attack_Down_Air_Windup.gd" type="Script" id=42]
 [ext_resource path="res://Nodes/Characters/States/Attack_Down_Air.gd" type="Script" id=43]
 [ext_resource path="res://Nodes/Characters/States/Attack_Down_Recovery.gd" type="Script" id=44]
+[ext_resource path="res://Nodes/Util/SoundMachine.gd" type="Script" id=45]
+[ext_resource path="res://Assets/Sounds/Footstep.mp3" type="AudioStream" id=46]
+[ext_resource path="res://Assets/Sounds/Blocking.mp3" type="AudioStream" id=47]
+[ext_resource path="res://Assets/Sounds/dash_2.mp3" type="AudioStream" id=48]
+[ext_resource path="res://Assets/Sounds/Jump2.mp3" type="AudioStream" id=49]
+[ext_resource path="res://Assets/Sounds/enemy_attack_impact4.mp3" type="AudioStream" id=50]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 11.0179
@@ -1019,6 +1025,28 @@ tint_progress = Color( 0.0980392, 0.0745098, 0.768627, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SoundMachine" type="Node2D" parent="."]
+script = ExtResource( 45 )
+
+[node name="Running" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 46 )
+bus = "Sounds"
+
+[node name="Blocking" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 47 )
+volume_db = -3.0
+
+[node name="Dash" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 48 )
+volume_db = -6.0
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 49 )
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 50 )
+volume_db = -3.0
 
 [connection signal="blocked" from="." to="ChargeController" method="_on_blocked"]
 [connection signal="on_hit_start" from="Hitbox" to="." method="on_hit"]

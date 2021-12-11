@@ -3,6 +3,7 @@ extends PlayerState
 func enter(_msg := {}):
 	.enter(_msg)
 	player.velocity.y = -player.jump_impulse
+	player.sound_machine.play_sound("Jump", false)
 	
 func physics_update(delta):
 	player.move(delta)

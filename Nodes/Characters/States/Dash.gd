@@ -19,6 +19,7 @@ func enter(_msg := {}):
 	direction.y = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
 	if !player.is_on_floor():
 		player.started_dash_in_air = true
+	player.sound_machine.play_sound("Dash", false)
 	# todo: change player hitbox so player can deal damage while dashing
 
 
