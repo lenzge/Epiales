@@ -821,6 +821,7 @@ tracks/4/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 40
 script = ExtResource( 2 )
+air_attack_fall_speed = 0.1
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -1.52588e-05, -21.703 )
@@ -938,6 +939,7 @@ script = ExtResource( 44 )
 position = Vector2( 32, 7 )
 collision_mask = 2
 script = ExtResource( 32 )
+damage_amount = 20
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
 shape = SubResource( 2 )

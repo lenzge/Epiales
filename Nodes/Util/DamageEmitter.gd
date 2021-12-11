@@ -2,7 +2,7 @@ class_name DamageEmitter
 extends Area2D
 
 export var emitter_path : NodePath
-export var damagae_amount : int
+export var damage_amount : int
 export var knockback_force : float
 export var knockback_time : float
 #Direction in degrees
