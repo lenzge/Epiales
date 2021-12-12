@@ -950,6 +950,7 @@ shape = SubResource( 3 )
 [node name="Attack_Up_Ground" type="Area2D" parent="."]
 collision_mask = 2
 script = ExtResource( 32 )
+damage_amount = 20
 
 [node name="HitboxAttack_Front" type="CollisionShape2D" parent="Attack_Up_Ground"]
 position = Vector2( 31.9465, 2.97638 )
@@ -964,6 +965,7 @@ disabled = true
 [node name="Attack_Down_Ground" type="Area2D" parent="."]
 collision_mask = 2
 script = ExtResource( 32 )
+damage_amount = 20
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Ground"]
 position = Vector2( 0.374565, 18.7288 )
@@ -973,6 +975,7 @@ disabled = true
 [node name="Attack_Up_Air" type="Area2D" parent="."]
 collision_mask = 2
 script = ExtResource( 32 )
+damage_amount = 20
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Up_Air"]
 position = Vector2( 0, -47.1434 )
@@ -982,6 +985,7 @@ disabled = true
 [node name="Attack_Down_Air" type="Area2D" parent="."]
 collision_mask = 2
 script = ExtResource( 32 )
+damage_amount = 20
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Air"]
 position = Vector2( 0.390617, 53.0351 )

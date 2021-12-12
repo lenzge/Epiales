@@ -6,7 +6,9 @@ func _ready():
 	self.connect("on_hit_start", self, "_on_Self_hit")
 
 func _on_Self_hit(body):
-	if body.name =="Attack" && body.owner.name == "Player": #better Chek needed! check with "is Player"
+	if (body.name =="Attack" or body.name == "Attack_Up_Ground" or \
+	body.name == "Attack_Down_Ground" or body.name == "Attack_Up_Air" or \
+	body.name == "Attack_Down_Air") && body.owner.name == "Player": #better Chek needed! check with "is Player"
 		print("in")
 		reduce_durability(body.damage_amount)
 		
