@@ -31,6 +31,7 @@ func _on_timeout():
 	if player.in_charged_attack:
 		player.in_charged_attack = false
 		_set_hitbox(-1)
+		state_machine.transition_to("Attack_Basic_Recovery")
 	elif input == player.PossibleInput.ATTACK_BASIC and attack_count < player.max_attack_combo and input_queue.size() > 0:
 		attack_count += 1
 		state_machine.transition_to("Attack_Basic_Windup")

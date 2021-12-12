@@ -13,17 +13,17 @@ func enter(_msg := {}):
 	timer.start()
 
 
-# Check if attack is canceled
-func update(delta):
-	# Action can be cancelled (not by moving)
-	if Input.is_action_just_pressed("jump"):
-		state_machine.transition_to("Jump")
-	elif Input.is_action_pressed("block"):
-		state_machine.transition_to("Block_Windup")
-	elif Input.is_action_just_pressed("dash") and player.can_dash:
-		state_machine.transition_to("Dash")
-	else:
-		state_machine.transition_to("Attack_Basic")
+# Check if attack is canceled (das selbe steht schon im physics_update)
+#func update(delta):
+#	# Action can be cancelled (not by moving)
+#	if Input.is_action_just_pressed("jump"):
+#		state_machine.transition_to("Jump")
+#	elif Input.is_action_pressed("block"):
+#		state_machine.transition_to("Block_Windup")
+#	elif Input.is_action_just_pressed("dash") and player.can_dash:
+#		state_machine.transition_to("Dash")
+#	else:
+#		state_machine.transition_to("Attack_Basic") #NOO
 
 # Check if attack is canceled (only if it isn't charged)
 func physics_update(delta):
@@ -45,7 +45,9 @@ func _on_timeout():
 	var input = player.pop_combat_queue()
 	if player.in_charged_attack or input == player.PossibleInput.ATTACK_BASIC:
 		state_machine.transition_to("Attack_Basic")
-	elif input == null:
+	else:
 		state_machine.transition_to("Idle")
-	elif input == player.PossibleInput.BLOCK:
-		state_machine.transition_to("Block_Windup")
+#	elif input == null:
+#		state_machine.transition_to("Idle")
+#	elif input == player.PossibleInput.BLOCK:
+#		state_machine.transition_to("Block_Windup") ## does this make sense?
