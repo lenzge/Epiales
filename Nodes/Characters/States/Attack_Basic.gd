@@ -11,6 +11,7 @@ func enter(_msg := {}):
 	else:
 		timer.set_wait_time(player.attack_time)
 	timer.start()
+	player.hitbox_attack.get_child(0).disabled = false
 	player.hitbox_attack.knockback_force = player.attack_force[attack_count -1]
 	player.hitbox_attack.knockback_time = player.attack_knockback[attack_count -1]
 
@@ -18,6 +19,9 @@ func enter(_msg := {}):
 func physics_update(delta):
 	player.attack_move(delta)
 
+func exit():
+	timer.stop()
+	player.hitbox_attack.get_child(0).disabled = true
 
 func _on_timeout():
 	# Transition to next state
