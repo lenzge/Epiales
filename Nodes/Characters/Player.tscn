@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=2]
+[gd_scene load_steps=71 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Luci/idle.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -50,6 +50,7 @@
 [ext_resource path="res://Assets/Sounds/dash_2.mp3" type="AudioStream" id=48]
 [ext_resource path="res://Assets/Sounds/Jump2.mp3" type="AudioStream" id=49]
 [ext_resource path="res://Assets/Sounds/enemy_attack_impact4.mp3" type="AudioStream" id=50]
+[ext_resource path="res://Assets/Sounds/slide.mp3" type="AudioStream" id=51]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 11.0179
@@ -1049,6 +1050,9 @@ stream = ExtResource( 49 )
 [node name="Hit" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 50 )
 volume_db = -3.0
+
+[node name="Slide" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 51 )
 
 [connection signal="blocked" from="." to="ChargeController" method="_on_blocked"]
 [connection signal="on_hit_start" from="Hitbox" to="." method="on_hit"]
