@@ -122,9 +122,7 @@ func _process(delta):
 				last_input.push_front(PossibleInput.ATTACK_AIR)
 		
 	# Cancel attack, clear queue
-	if Input.is_action_just_pressed("jump"):
-		last_input.clear()
-	elif Input.is_action_just_pressed("block"):
+	if Input.is_action_just_pressed("block"):
 		last_input.clear()
 		last_input.push_front(PossibleInput.BLOCK)
 	elif Input.is_action_just_pressed("jump"):
