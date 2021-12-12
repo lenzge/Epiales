@@ -11,6 +11,7 @@ func enter(msg :={}):
 	.enter(msg)
 	timer.set_wait_time(player.windup_time)
 	timer.start()
+	player.velocity.y = 0
 
 
 func update(delta):
