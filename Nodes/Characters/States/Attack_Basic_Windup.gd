@@ -45,9 +45,7 @@ func _on_timeout():
 	var input = player.pop_combat_queue()
 	if player.in_charged_attack or input == player.PossibleInput.ATTACK_BASIC:
 		state_machine.transition_to("Attack_Basic")
+	elif input == player.PossibleInput.BLOCK:
+		state_machine.transition_to("Block_Windup")
 	else:
 		state_machine.transition_to("Idle")
-#	elif input == null:
-#		state_machine.transition_to("Idle")
-#	elif input == player.PossibleInput.BLOCK:
-#		state_machine.transition_to("Block_Windup") ## does this make sense?
