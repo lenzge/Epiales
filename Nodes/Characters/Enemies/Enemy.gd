@@ -232,6 +232,7 @@ func set_flip_cooldown():
 
 func _on_player_spawned():
 	chased_player = owner.player_instance
+	print(chased_player)
 	
 func despawning():
 	queue_free()
