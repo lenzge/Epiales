@@ -15,12 +15,16 @@ func enter(_msg := {}):
 	player.can_dash = false
 	player.can_reset_dash = false
 	after_dash = false
+	player.hitbox.get_child(0).disabled = true
 	direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
 	direction.y = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
 	if !player.is_on_floor():
 		player.started_dash_in_air = true
 	# todo: change player hitbox so player can deal damage while dashing
 
+func exit():
+	.exit()
+	player.hitbox.get_child(0).disabled = false
 
 func physics_update(delta):
 	if after_dash:

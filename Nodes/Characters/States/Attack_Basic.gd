@@ -20,11 +20,10 @@ func physics_update(delta):
 	player.attack_move(delta)
 
 func exit():
-	timer.stop()
+	.exit()
 	player.hitbox_attack.get_child(0).disabled = true
 
 func _on_timeout():
-	print(attack_count)
 	# Transition to next state
 	var input
 	if player.last_input.size() == 0:
