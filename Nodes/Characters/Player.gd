@@ -18,6 +18,8 @@ var in_charged_attack := false
 var can_hang_on_wall := true
 var hang_on_wall_velocity_save := 0.0
 
+var add_jump_gravity_damper : bool = false
+
 var dash_cooldown_timer
 
 onready var collision_shape_original_height : float = $CollisionShape2D.shape.height
@@ -56,6 +58,7 @@ export(float) var charged_attack_time : float = 0.4
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 export(float) var dash_cooldown_time : float = 1.0
+export(float) var jump_gravity_damper : float = 0.75
 
 export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
@@ -315,7 +318,10 @@ func knockback(delta, force, direction):
 
 ## Applies gravity to the player
 func _fall(delta):
-	velocity.y += gravity * delta
+	if add_jump_gravity_damper:
+		velocity.y += gravity * delta * jump_gravity_damper
+	else:
+		velocity.y += gravity * delta
 
 
 ## Accelerates the player (like function 1/x)
