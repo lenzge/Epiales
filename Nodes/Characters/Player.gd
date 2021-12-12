@@ -101,7 +101,7 @@ func _process(delta):
 		if started_dash_in_air:
 			can_reset_dash = true
 			started_dash_in_air = false
-	if can_reset_dash:
+	if can_reset_dash and !started_dash_in_air:
 		can_dash = true
 		can_hang_on_wall = true
 		hang_on_wall_velocity_save = 0.0
