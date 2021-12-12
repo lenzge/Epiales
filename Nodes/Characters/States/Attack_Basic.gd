@@ -11,6 +11,7 @@ func enter(_msg := {}):
 	else:
 		timer.set_wait_time(player.attack_time)
 	timer.start()
+	player.hitbox_attack.get_child(0).disabled = false
 	player.hitbox_attack.knockback_force = player.attack_force[attack_count -1]
 	player.hitbox_attack.knockback_time = player.attack_knockback[attack_count -1]
 
@@ -18,8 +19,12 @@ func enter(_msg := {}):
 func physics_update(delta):
 	player.attack_move(delta)
 
+func exit():
+	timer.stop()
+	player.hitbox_attack.get_child(0).disabled = true
 
 func _on_timeout():
+	print(attack_count)
 	# Transition to next state
 	var input
 	if player.last_input.size() == 0:
@@ -31,6 +36,8 @@ func _on_timeout():
 	if player.in_charged_attack:
 		player.in_charged_attack = false
 		_set_hitbox(-1)
+		attack_count = 1
+		state_machine.transition_to("Attack_Basic_Recovery")
 	elif input == player.PossibleInput.ATTACK_BASIC and attack_count < player.max_attack_combo and input_queue.size() > 0:
 		attack_count += 1
 		state_machine.transition_to("Attack_Basic_Windup")
