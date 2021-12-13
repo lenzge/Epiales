@@ -53,32 +53,32 @@
 [ext_resource path="res://Assets/Luci/Luci_Crouch_11.png" type="Texture" id=51]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 10.9577
-height = 32.949
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 15.4453, 30.6763 )
+radius = 10.2543
+height = 34.4665
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 10.2671
 height = 34.4185
 
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 23.4436, 31.1231 )
+
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 16.436, 32.3632 )
+extents = Vector2( 14.2614, 27.2775 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 29.8462, 16.0556 )
+extents = Vector2( 39.7587, 16.0556 )
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 47.846, 16.99 )
+extents = Vector2( 103.316, 12.4479 )
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 48.3602, 17.4952 )
+extents = Vector2( 41.0107, 29.7721 )
 
 [sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 48.0796, 16.934 )
+extents = Vector2( 40.5356, 36.1726 )
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=9]
 resource_name = "Attack_Basic"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -105,7 +105,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=10]
 resource_name = "Attack_Basic_Recovery"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -132,7 +132,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=11]
 resource_name = "Attack_Basic_Windup"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -159,7 +159,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=12]
 resource_name = "Attack_Down_Air"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -186,7 +186,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=13]
 resource_name = "Attack_Down_Air_Recovery"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -213,7 +213,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=14]
 resource_name = "Attack_Down_Air_Windup"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -228,7 +228,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 51 ) ]
 }
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=15]
 resource_name = "Attack_Down_Ground"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -255,7 +255,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=16]
 resource_name = "Attack_Down_Ground_Recovery"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -282,7 +282,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=17]
 resource_name = "Attack_Down_Ground_Windup"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -297,7 +297,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 51 ) ]
 }
 
-[sub_resource type="Animation" id=30]
+[sub_resource type="Animation" id=18]
 resource_name = "Attack_Up_Air"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -324,7 +324,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=31]
+[sub_resource type="Animation" id=19]
 resource_name = "Attack_Up_Air_Recovery"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -351,7 +351,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=32]
+[sub_resource type="Animation" id=20]
 resource_name = "Attack_Up_Air_Windup"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -378,8 +378,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=15]
-resource_name = "Attack_Up_Ground"
+[sub_resource type="Animation" id=21]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -405,8 +404,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=16]
-resource_name = "Attack_Up_Ground_Recovery"
+[sub_resource type="Animation" id=22]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -432,8 +430,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=17]
-resource_name = "Attack_Up_Ground_Windup"
+[sub_resource type="Animation" id=23]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -459,8 +456,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=18]
-resource_name = "Block"
+[sub_resource type="Animation" id=24]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -486,8 +482,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=19]
-resource_name = "Block_Recovery"
+[sub_resource type="Animation" id=25]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -513,8 +508,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=20]
-resource_name = "Block_Windup"
+[sub_resource type="Animation" id=26]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -540,7 +534,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=33]
+[sub_resource type="Animation" id=27]
 resource_name = "Crouch"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -567,8 +561,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=21]
-resource_name = "Dash"
+[sub_resource type="Animation" id=28]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -606,8 +599,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 0.301961 ) ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "Fall"
+[sub_resource type="Animation" id=29]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -645,8 +637,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "Idle"
+[sub_resource type="Animation" id=30]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -684,8 +675,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=22]
-resource_name = "Jump"
+[sub_resource type="Animation" id=31]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -723,8 +713,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=11]
-resource_name = "Run"
+[sub_resource type="Animation" id=32]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -764,8 +753,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=23]
-resource_name = "Stunned"
+[sub_resource type="Animation" id=33]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -878,7 +866,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 50.25 )
+position = Vector2( 0, 50 )
 shape = SubResource( 1 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -975,100 +963,106 @@ script = ExtResource( 43 )
 [node name="Attack_Down_Air_Recovery" type="Node" parent="StateMachine"]
 script = ExtResource( 44 )
 
-[node name="Attack" type="Area2D" parent="."]
-position = Vector2( 32, 46 )
-collision_mask = 2
-script = ExtResource( 32 )
-damage_amount = 20
-
-[node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
-shape = SubResource( 2 )
-disabled = true
-
 [node name="Hitbox" type="Area2D" parent="."]
+position = Vector2( 0, 50 )
 collision_mask = 10
 script = ExtResource( 33 )
 receiver_path = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2( 0, 50.25 )
 shape = SubResource( 3 )
 
-[node name="Attack_Up_Ground" type="Area2D" parent="."]
-position = Vector2( 0, 41 )
+[node name="Attack" type="Area2D" parent="."]
+position = Vector2( 0, 50 )
 collision_mask = 2
 script = ExtResource( 32 )
 damage_amount = 20
+direction = Vector2( 1, 0 )
+
+[node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
+position = Vector2( 35.044, -3.27136 )
+shape = SubResource( 2 )
+disabled = true
+
+[node name="Attack_Up_Ground" type="Area2D" parent="."]
+position = Vector2( 0, 50 )
+collision_mask = 2
+script = ExtResource( 32 )
+damage_amount = 20
+direction = Vector2( 0, 1 )
 
 [node name="HitboxAttack_Front" type="CollisionShape2D" parent="Attack_Up_Ground"]
-position = Vector2( 31.9465, 2.97638 )
+position = Vector2( 25.647, 0 )
 shape = SubResource( 4 )
 disabled = true
 
 [node name="HitboxAttack_Top" type="CollisionShape2D" parent="Attack_Up_Ground"]
-position = Vector2( 18.5472, -46.0528 )
+position = Vector2( 0, -43.562 )
 shape = SubResource( 5 )
 disabled = true
 
 [node name="Attack_Down_Ground" type="Area2D" parent="."]
-position = Vector2( 0, 48 )
+position = Vector2( 0, 50 )
 collision_mask = 2
 script = ExtResource( 32 )
 damage_amount = 20
+direction = Vector2( 0, -1 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Ground"]
-position = Vector2( 0.374565, 18.7288 )
+position = Vector2( 0.219231, 15.5227 )
 shape = SubResource( 6 )
 disabled = true
 
 [node name="Attack_Up_Air" type="Area2D" parent="."]
-position = Vector2( 0, 41 )
+position = Vector2( 0, 50 )
 collision_mask = 2
 script = ExtResource( 32 )
 damage_amount = 20
+direction = Vector2( 0, 1 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Up_Air"]
-position = Vector2( 0, -47.1434 )
+position = Vector2( 0.0534821, -49.7712 )
 shape = SubResource( 7 )
 disabled = true
 
 [node name="Attack_Down_Air" type="Area2D" parent="."]
-position = Vector2( 0, 48 )
+position = Vector2( 0, 50 )
 collision_mask = 2
 script = ExtResource( 32 )
 damage_amount = 20
+direction = Vector2( 0, -1 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Air"]
-position = Vector2( 0.390617, 53.3324 )
+position = Vector2( 0.180381, 51.0199 )
 shape = SubResource( 8 )
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Attack_Basic = SubResource( 12 )
-anims/Attack_Basic_Recovery = SubResource( 13 )
-anims/Attack_Basic_Windup = SubResource( 14 )
-anims/Attack_Down_Air = SubResource( 24 )
-anims/Attack_Down_Air_Recovery = SubResource( 25 )
-anims/Attack_Down_Air_Windup = SubResource( 26 )
-anims/Attack_Down_Ground = SubResource( 27 )
-anims/Attack_Down_Ground_Recovery = SubResource( 28 )
-anims/Attack_Down_Ground_Windup = SubResource( 29 )
-anims/Attack_Up_Air = SubResource( 30 )
-anims/Attack_Up_Air_Recovery = SubResource( 31 )
-anims/Attack_Up_Air_Windup = SubResource( 32 )
-anims/Attack_Up_Ground = SubResource( 15 )
-anims/Attack_Up_Ground_Recovery = SubResource( 16 )
-anims/Attack_Up_Ground_Windup = SubResource( 17 )
-anims/Block = SubResource( 18 )
-anims/Block_Recovery = SubResource( 19 )
-anims/Block_Windup = SubResource( 20 )
-anims/Crouch = SubResource( 33 )
-anims/Dash = SubResource( 21 )
-anims/Fall = SubResource( 9 )
-anims/Idle = SubResource( 10 )
-anims/Jump = SubResource( 22 )
-anims/Run = SubResource( 11 )
-anims/Stunned = SubResource( 23 )
+anims/Attack_Basic = SubResource( 9 )
+anims/Attack_Basic_Recovery = SubResource( 10 )
+anims/Attack_Basic_Windup = SubResource( 11 )
+anims/Attack_Down_Air = SubResource( 12 )
+anims/Attack_Down_Air_Recovery = SubResource( 13 )
+anims/Attack_Down_Air_Windup = SubResource( 14 )
+anims/Attack_Down_Ground = SubResource( 15 )
+anims/Attack_Down_Ground_Recovery = SubResource( 16 )
+anims/Attack_Down_Ground_Windup = SubResource( 17 )
+anims/Attack_Up_Air = SubResource( 18 )
+anims/Attack_Up_Air_Recovery = SubResource( 19 )
+anims/Attack_Up_Air_Windup = SubResource( 20 )
+anims/Attack_Up_Ground = SubResource( 21 )
+anims/Attack_Up_Ground_Recovery = SubResource( 22 )
+anims/Attack_Up_Ground_Windup = SubResource( 23 )
+anims/Block = SubResource( 24 )
+anims/Block_Recovery = SubResource( 25 )
+anims/Block_Windup = SubResource( 26 )
+anims/Crouch = SubResource( 27 )
+anims/Dash = SubResource( 28 )
+anims/Fall = SubResource( 29 )
+anims/Idle = SubResource( 30 )
+anims/Jump = SubResource( 31 )
+anims/Run = SubResource( 32 )
+anims/Stunned = SubResource( 33 )
 anims/Wall_Hang = SubResource( 34 )
 anims/Wall_Jump = SubResource( 35 )
 
