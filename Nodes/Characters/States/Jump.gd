@@ -5,6 +5,19 @@ func enter(_msg := {}):
 	player.velocity.y = -player.jump_impulse
 	player.sound_machine.play_sound("Jump", false)
 	
+
+
+func exit():
+	player.add_jump_gravity_damper = false
+
+
+func update(delta):
+	if Input.is_action_pressed("jump") and player.velocity.y < 0:
+		player.add_jump_gravity_damper = true
+	else:
+		player.add_jump_gravity_damper = false
+
+
 func physics_update(delta):
 	player.move(delta)
 

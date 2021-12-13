@@ -18,14 +18,11 @@ var in_charged_attack := false
 var can_hang_on_wall := true
 var hang_on_wall_velocity_save := 0.0
 
+var add_jump_gravity_damper : bool = false
+
 var dash_cooldown_timer
 
 onready var sound_machine : SoundMachine = $SoundMachine
-
-onready var collision_shape_original_height : float = $CollisionShape2D.shape.height
-onready var collision_shape_original_pos_y : float = $CollisionShape2D.position.y
-onready var hitbox_original_height : float = $Hitbox/CollisionShape2D.shape.height
-onready var hitbox_original_pos_y : float = $Hitbox/CollisionShape2D.position.y
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -58,6 +55,7 @@ export(float) var charged_attack_time : float = 0.4
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 export(float) var dash_cooldown_time : float = 1.0
+export(float) var jump_gravity_damper : float = 0.75
 
 export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
@@ -65,15 +63,18 @@ export(Array, int) var attack_force = [200, 300, 400, 600]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
 onready var sprite : Sprite = $Sprite
-onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
 onready var hitbox_up_attack_air : Area2D = $Attack_Up_Air
 onready var hitbox_down_attack_air : Area2D = $Attack_Down_Air
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
+onready var collision_shape : CollisionShape2D = $CollisionShape2D
 onready var charge_controller = $ChargeController
 
+# For changing hitbox while crouching
+onready var original_height_hitbox = collision_shape.shape.height
+	
 var direction : int = 1
 
 signal blocked
@@ -81,6 +82,7 @@ signal blocked
 
 func _ready():
 	_init_timer()
+	
 
 
 func _input(event):
@@ -107,7 +109,7 @@ func _process(delta):
 		if started_dash_in_air:
 			can_reset_dash = true
 			started_dash_in_air = false
-	if can_reset_dash:
+	if can_reset_dash and !started_dash_in_air:
 		can_dash = true
 		can_hang_on_wall = true
 		hang_on_wall_velocity_save = 0.0
@@ -124,9 +126,7 @@ func _process(delta):
 				last_input.push_front(PossibleInput.ATTACK_AIR)
 		
 	# Cancel attack, clear queue
-	if Input.is_action_just_pressed("jump"):
-		last_input.clear()
-	elif Input.is_action_just_pressed("block"):
+	if Input.is_action_just_pressed("block"):
 		last_input.clear()
 		last_input.push_front(PossibleInput.BLOCK)
 	elif Input.is_action_just_pressed("jump"):
@@ -317,7 +317,10 @@ func knockback(delta, force, direction):
 
 ## Applies gravity to the player
 func _fall(delta):
-	velocity.y += gravity * delta
+	if add_jump_gravity_damper:
+		velocity.y += gravity * delta * jump_gravity_damper
+	else:
+		velocity.y += gravity * delta
 
 
 ## Accelerates the player (like function 1/x)
@@ -346,28 +349,21 @@ func _slow_with_friction(friction : float) -> void:
 ## Change the players collisionshape when in entering crouch
 ## Called on entering the crouch state
 func _enter_crouch():
-	# change the height of the player's collisionshape to half of it
-	var collision_shape = $CollisionShape2D
-	var hitbox_shape = $Hitbox/CollisionShape2D
-	if collision_shape_original_height == collision_shape.shape.height:
-		collision_shape.shape.height /= 2
-		hitbox_shape.shape.height /= 2
-		
-		var collision_pos_y_change = collision_shape.shape.height / 2
-		
-		collision_shape.position.y += collision_pos_y_change
-		hitbox_shape.position.y += collision_pos_y_change
+	if collision_shape.shape.height == original_height_hitbox:
+		hitbox.get_child(0).shape.height = original_height_hitbox/2
+		hitbox.get_child(0).position.y = hitbox.get_child(0).position.y + collision_shape.shape.height/4
+		collision_shape.shape.height = original_height_hitbox/2
+		collision_shape.position.y = collision_shape.position.y + collision_shape.shape.height/2
 
 
 ## Reset the players collisionshape when exiting crouch
 ## Called whenever the player leaves the crouch states
 func _exit_crouch():
-	var collision_shape = $CollisionShape2D
-	var hitbox_shape = $Hitbox/CollisionShape2D
-	collision_shape.shape.height = collision_shape_original_height
-	collision_shape.position.y = collision_shape_original_pos_y
-	hitbox_shape.shape.height = hitbox_original_height
-	hitbox_shape.position.y = hitbox_original_pos_y
+	collision_shape.position.y = collision_shape.position.y - collision_shape.shape.height/2
+	collision_shape.shape.height = collision_shape.shape.height * 2
+	hitbox.get_child(0).shape.height = collision_shape.shape.height
+	hitbox.get_child(0).position.y = hitbox.get_child(0).position.y - collision_shape.shape.height/4
+	
 
 
 func _physics_process(delta):
