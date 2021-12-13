@@ -512,7 +512,6 @@ damagae_amount = 20
 knockback_force = 400.0
 knockback_time = 0.2
 direction = 180.0
-is_directed = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 position = Vector2( -3.34543, 0.890899 )
@@ -548,6 +547,7 @@ shape = SubResource( 5 )
 
 [node name="PlayerFollowArea" type="Area2D" parent="."]
 visible = false
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerFollowArea"]
 position = Vector2( -1.00113, -56 )
