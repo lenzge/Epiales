@@ -10,6 +10,10 @@ func exit():
 	player.sound_machine.stop_sound("Running")
 
 
+func update(delta):
+	player.sound_machine.randomize_level("Running", -6.0, 3.0)
+
+
 func physics_update(delta):
 	if not player.is_on_floor():
 		state_machine.transition_to("Fall")
