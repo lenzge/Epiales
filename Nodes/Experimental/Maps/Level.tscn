@@ -436,10 +436,10 @@ position = Vector2( 2231.59, 216.514 )
 position = Vector2( 2750.38, 509.779 )
 
 [node name="Checkpoint" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1198.65, 168.097 )
+position = Vector2( 1198.65, 113.097 )
 
 [node name="CheckpointDetection" parent="Checkpoint" index="0"]
-position = Vector2( 3.77551, -105.714 )
+position = Vector2( 2.77551, -64.714 )
 
 [node name="Deadzone" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1411.2, 711.155 )

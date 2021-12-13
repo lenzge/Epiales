@@ -73,6 +73,8 @@ onready var charge_controller = $ChargeController
 
 # For changing hitbox while crouching
 onready var original_height_hitbox = collision_shape.shape.height
+# Enemy needs to know
+onready var _position = collision_shape.position
 	
 var direction : int = 1
 
