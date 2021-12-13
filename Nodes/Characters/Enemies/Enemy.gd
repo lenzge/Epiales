@@ -70,11 +70,9 @@ var flip_cooldown_timer
 
 func _ready() -> void:
 	# Set everything in the right direction
+	attack_area.direction.x = -1
 	if direction == 1:
 		sprite.flip_h = true
-		attack_area.direction = 0
-	else:
-		attack_area.direction = 180
 	_set_all_in_right_direction(direction)
 	
 	# Connect Signals
@@ -141,28 +139,15 @@ func flip_direction():
 		direction = direction * -1
 		sprite.flip_h = not sprite.flip_h
 		_set_all_in_right_direction(-1)
-		if attack_area.direction == 180.0:
-			attack_area.direction = 0.0
-		else:
-			attack_area.direction = 180.0
+		attack_area.direction.x *= -1
 	else:
 		state_machine.transition_to("Freeze")
 
 
 func on_hit(emitter : DamageEmitter):
-	var direction
-	if emitter.is_directed:
-		direction = emitter.direction
-	else:
-		direction = rad2deg((hitbox.global_position - emitter.global_position).angle_to(Vector2(1,0)))
-	direction = int((direction + 90.0)) % 360
-	if direction >= 0.0 && direction <= 180.0 || direction <= -180.0 && direction >= -360.0:
-		direction = -1
-	else:
-		direction = 1
 	emitter.hit(hitbox)
 	health_bar.get_damage(emitter.knockback_force)
-	state_machine.transition_to("Stunned", {"force": emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
+	state_machine.transition_to("Stunned", {"force": emitter.knockback_force, "time": emitter.knockback_time, "direction": (-1.0 if emitter.direction.x < 0.0 else 1.0)})
 
 func _on_zero_hp():
 	state_machine.transition_to("Die")
