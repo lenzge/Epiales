@@ -48,7 +48,8 @@ func _on_timeout():
 		attack_count = 1
 		state_machine.transition_to("Attack_Basic_Recovery")
 
-
+# to_charged = 1 -> transform to big charged hitbox
+# to_charged = -1 -> transform back to small/normal hitbox
 func _set_hitbox(to_charged):
 	var position = 40
 	var scale = 3

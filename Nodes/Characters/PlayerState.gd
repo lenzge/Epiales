@@ -21,6 +21,7 @@ func _ready():
 
 func enter(_msg := {}):
 	animationPlayer.play(self.name)
+	print(self.name)
 	
 func exit():
 	timer.stop()

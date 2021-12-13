@@ -20,10 +20,6 @@ var hang_on_wall_velocity_save := 0.0
 
 var dash_cooldown_timer
 
-onready var collision_shape_original_height : float = $CollisionShape2D.shape.height
-onready var collision_shape_original_pos_y : float = $CollisionShape2D.position.y
-onready var hitbox_original_height : float = $Hitbox/CollisionShape2D.shape.height
-onready var hitbox_original_pos_y : float = $Hitbox/CollisionShape2D.position.y
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -63,15 +59,18 @@ export(Array, int) var attack_force = [200, 300, 400, 600]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
 onready var sprite : Sprite = $Sprite
-onready var hitbox_block : CollisionShape2D = $Block/HitboxBlock
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
 onready var hitbox_up_attack_air : Area2D = $Attack_Up_Air
 onready var hitbox_down_attack_air : Area2D = $Attack_Down_Air
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
+onready var collision_shape : CollisionShape2D = $CollisionShape2D
 onready var charge_controller = $ChargeController
 
+# For changing hitbox while crouching
+onready var original_height_hitbox = collision_shape.shape.height
+	
 var direction : int = 1
 
 signal blocked
@@ -79,6 +78,7 @@ signal blocked
 
 func _ready():
 	_init_timer()
+	
 
 
 func _input(event):
@@ -344,28 +344,21 @@ func _slow_with_friction(friction : float) -> void:
 ## Change the players collisionshape when in entering crouch
 ## Called on entering the crouch state
 func _enter_crouch():
-	# change the height of the player's collisionshape to half of it
-	var collision_shape = $CollisionShape2D
-	var hitbox_shape = $Hitbox/CollisionShape2D
-	if collision_shape_original_height == collision_shape.shape.height:
-		collision_shape.shape.height /= 2
-		hitbox_shape.shape.height /= 2
-		
-		var collision_pos_y_change = collision_shape.shape.height / 2
-		
-		collision_shape.position.y += collision_pos_y_change
-		hitbox_shape.position.y += collision_pos_y_change
+	if collision_shape.shape.height == original_height_hitbox:
+		hitbox.get_child(0).shape.height = original_height_hitbox/2
+		hitbox.get_child(0).position.y = hitbox.get_child(0).position.y + collision_shape.shape.height/4
+		collision_shape.shape.height = original_height_hitbox/2
+		collision_shape.position.y = collision_shape.position.y + collision_shape.shape.height/2
 
 
 ## Reset the players collisionshape when exiting crouch
 ## Called whenever the player leaves the crouch states
 func _exit_crouch():
-	var collision_shape = $CollisionShape2D
-	var hitbox_shape = $Hitbox/CollisionShape2D
-	collision_shape.shape.height = collision_shape_original_height
-	collision_shape.position.y = collision_shape_original_pos_y
-	hitbox_shape.shape.height = hitbox_original_height
-	hitbox_shape.position.y = hitbox_original_pos_y
+	collision_shape.position.y = collision_shape.position.y - collision_shape.shape.height/2
+	collision_shape.shape.height = collision_shape.shape.height * 2
+	hitbox.get_child(0).shape.height = collision_shape.shape.height
+	hitbox.get_child(0).position.y = hitbox.get_child(0).position.y - collision_shape.shape.height/4
+	
 
 
 func _physics_process(delta):
