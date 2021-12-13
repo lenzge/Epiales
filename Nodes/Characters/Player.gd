@@ -26,7 +26,7 @@ var dash_cooldown_timer
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
 export(float) var air_attack_fall_speed :float = 0.2
-export(Vector2) var dash_speed :Vector2 = Vector2(1000, 1000)
+export(float) var dash_speed :float = 1000
 export(int) var gravity :int = 3000
 export(int) var wall_hang_gravity : int = 300
 export(int) var wall_hang_max_gravity : int = 500
@@ -44,7 +44,7 @@ export(float) var friction_ground : float = 40
 export(float) var friction_ground_on_crouch : float = 20
 export(float) var friction_knockback : float = 30
 export(float) var friction_air : float = 20
-export(float, 0, 1, 0.001) var acceleration_after_dash : float = 0.05
+export(float) var friction_dash: float = 5
 
 export(float) var windup_time : float = 0.2
 export(float) var charged_windup_time : float = 0.7
@@ -151,7 +151,7 @@ func move(delta):
 	_flip_sprite_in_movement_dir()
 	
 	# Actual movement
-	if not last_movement_buttons.empty():
+	if abs(velocity.x) <= speed and not last_movement_buttons.empty():
 		if last_movement_buttons[0] == MovementDir.LEFT:
 			_accelerate(-speed, acceleration)
 		elif last_movement_buttons[0] == MovementDir.RIGHT:
@@ -219,24 +219,31 @@ func attack_updown_air_move(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
-## Moves the player at dash speed
+## Slows the player down slowly in any direction whithout gravity.
+## Call after velocity is set manually.
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
-func dash_move(delta : float, dir : Vector2, after_dash : bool):
-	_flip_sprite_in_movement_dir()
-
-	if _use_joy_controller:
-		if dir.x == 0 and dir.y == 0:
-			if sprite.flip_h:
-				dir.x = -1
-			else:
-				dir.x = 1
-		velocity += ((dash_speed * dir.normalized() - velocity) * acceleration)
+func dash_move(delta:float, dir:Vector2, friction:float):
+	_flip_sprite_in_movement_dir() #change this in dash dir
+#
+#	if _use_joy_controller:
+#		if dir.x == 0 and dir.y == 0:
+#			if sprite.flip_h:
+#				dir.x = -1
+#			else:
+#				dir.x = 1
+#		velocity += ((dash_speed * dir.normalized() - velocity) * acceleration)
+#	else:
+#		if sprite.flip_h:
+#			velocity.x += ((-dash_speed.x - velocity.x) * acceleration)
+#		else:
+#			velocity.x += ((dash_speed.x - velocity.x) * acceleration)
+	
+	# slowly slowing down
+	if velocity.length() + 1 < friction:
+		velocity.x = 0
 	else:
-		if sprite.flip_h:
-			velocity.x += ((-dash_speed.x - velocity.x) * acceleration)
-		else:
-			velocity.x += ((dash_speed.x - velocity.x) * acceleration)
-	#_fall(delta)
+		velocity -= dir.normalized() * friction
+	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
@@ -272,17 +279,6 @@ func move_knockback(delta):
 
 # Flip Sprite and Hitbox
 func _flip_sprite_in_movement_dir() -> void:
-	#if not last_movement_buttons.empty():
-		#if last_movement_buttons[0] == MovementDir.LEFT:#velocity.x < 0:
-			#direction = -1
-			#sprite.flip_h = true
-			#hitbox_attack.position.x = -abs(hitbox_attack.position.x)
-			#hitbox_attack.direction = 0
-		#elif last_movement_buttons[0] == MovementDir.RIGHT:#velocity.x > 0:
-			#direction = 1
-			#sprite.flip_h = false
-			#hitbox_attack.position.x = abs(hitbox_attack.position.x)
-			#hitbox_attack.direction = 180
 	if velocity.x < 0:
 		direction = -1
 		sprite.flip_h = true
@@ -334,7 +330,7 @@ func _accelerate(target_speed : float, _acceleration : float) -> void:
 	velocity.x += limited_accel
 
 
-## Slows the player down with friction (linear lowdonw)
+## Slows the player down with friction (linear slowdown)
 func _slow_with_friction(friction : float) -> void:
 	if abs(velocity.x) - (friction + 1) <= friction:
 		velocity.x = 0
