@@ -46,6 +46,14 @@ func randomize_level(sound, min_level, max_level):
 		print("[SoundMachine] Could not randomize level of '", sound, "': Sound not found")
 
 
+func randomize_pitch(sound, min_pitch, max_pitch):
+	if is_sound_available(sound):
+		var node : AudioStreamPlayer2D = get_node(sound)
+		node.pitch_scale = rng.randf_range(min_pitch, max_pitch)
+	else:
+		print("[SoundMachine] Could not randomize pitch of '", sound, "': Sound not found")
+
+
 func is_sound_available(sound: String) -> bool:
 	if has_node(sound):
 		return true

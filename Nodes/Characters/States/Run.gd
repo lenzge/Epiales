@@ -12,6 +12,7 @@ func exit():
 
 func update(delta):
 	player.sound_machine.randomize_level("Running", -6.0, 3.0)
+	player.sound_machine.randomize_pitch("Running", 0.7, 1.5)
 
 
 func physics_update(delta):
