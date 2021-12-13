@@ -804,6 +804,11 @@ tracks/4/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 40
 script = ExtResource( 2 )
+speed = 400
+air_attack_fall_speed = 0.1
+acceleration = 0.135
+friction_ground = 27.0
+friction_ground_on_crouch = 8.0
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -1.52588e-05, -21.703 )
@@ -972,6 +977,5 @@ tint_progress = Color( 0.0980392, 0.0745098, 0.768627, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="blocked" from="." to="ChargeController" method="_on_blocked"]
 [connection signal="on_hit_start" from="Hitbox" to="." method="on_hit"]
