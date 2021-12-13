@@ -224,19 +224,6 @@ func attack_updown_air_move(delta):
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
 func dash_move(delta:float, dir:Vector2, friction:float):
 	_flip_sprite_in_movement_dir() #change this in dash dir
-#
-#	if _use_joy_controller:
-#		if dir.x == 0 and dir.y == 0:
-#			if sprite.flip_h:
-#				dir.x = -1
-#			else:
-#				dir.x = 1
-#		velocity += ((dash_speed * dir.normalized() - velocity) * acceleration)
-#	else:
-#		if sprite.flip_h:
-#			velocity.x += ((-dash_speed.x - velocity.x) * acceleration)
-#		else:
-#			velocity.x += ((dash_speed.x - velocity.x) * acceleration)
 	
 	# slowly slowing down
 	if velocity.length() + 1 < friction:

@@ -11,6 +11,7 @@ var checking_for_wall : float = 10.0
 func enter(_msg := {}):
 	.enter(_msg)
 	player.velocity.y = player.hang_on_wall_velocity_save
+	player.can_dash = true;
 	
 	# Save the position of the wall
 	if player.get_slide_collision(0).get_position().x > player.position.x:

@@ -41,6 +41,7 @@ func physics_update(delta):
 		elif Input.is_action_just_pressed("dash") and player.can_dash:
 			state_machine.transition_to("Dash")
 
+
 func _on_timeout():
 	var input = player.pop_combat_queue()
 	if player.in_charged_attack or input == player.PossibleInput.ATTACK_BASIC:
@@ -48,4 +49,5 @@ func _on_timeout():
 	elif input == player.PossibleInput.BLOCK:
 		state_machine.transition_to("Block_Windup")
 	else:
+		player.last_input.clear()
 		state_machine.transition_to("Idle")
