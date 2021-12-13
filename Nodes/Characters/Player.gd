@@ -286,7 +286,7 @@ func _flip_sprite_in_movement_dir() -> void:
 	if velocity.x < 0:
 		direction = -1
 		sprite.flip_h = true
-		hitbox_attack.position.x = -abs(hitbox_attack.position.x)
+		hitbox_attack.scale.x = -abs(hitbox_attack.scale.x)
 		hitbox_up_attack.scale.x = -abs(scale.x)
 		hitbox_down_attack.scale.x = -abs(scale.x)
 		hitbox_up_attack_air.scale.x = -abs(hitbox_up_attack_air.scale.x)
@@ -296,7 +296,7 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_attack.direction.x = 1
 		direction = 1
 		sprite.flip_h = false
-		hitbox_attack.position.x = abs(hitbox_attack.position.x)
+		hitbox_attack.scale.x = abs(hitbox_attack.scale.x)
 		hitbox_up_attack.scale.x = abs(scale.x)
 		hitbox_down_attack.scale.x = abs(scale.x)
 		hitbox_up_attack_air.scale.x = abs(hitbox_up_attack_air.scale.x)
@@ -376,12 +376,17 @@ func on_hit(emitter : DamageEmitter):
 		# only damage
 		pass
 	else:
-		var direction = -1.0 if emitter.direction.x < 0.0 else 1.0
-		if $StateMachine.state.name == "Block" and not direction == self.direction:
+		var direction_x
+		if is_equal_approx(emitter.direction.x, 0.0):
+			direction_x = (hitbox.global_position  - emitter.global_position).x 
+		else:
+			direction_x = emitter.direction.x
+		direction_x = -1.0 if emitter.direction.x < 0.0 else 1.0
+		if $StateMachine.state.name == "Block" and not direction_x == self.direction:
 			emit_signal("blocked")
 			emitter.was_blocked($"Hitbox")
 		else:
-			$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction})
+			$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction_x})
 			emitter.hit($"Hitbox")
 
 
