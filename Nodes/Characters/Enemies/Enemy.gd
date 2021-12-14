@@ -151,7 +151,10 @@ func on_hit(emitter : DamageEmitter):
 		direction_x = (hitbox.global_position - emitter.global_position).x 
 	else:
 		direction_x = emitter.direction.x
+	emitter.hit(hitbox)
+	health_bar.get_damage(emitter.knockback_force)
 	state_machine.transition_to("Stunned", {"force": emitter.knockback_force, "time": emitter.knockback_time, "direction": (-1.0 if direction_x < 0.0 else 1.0)})
+
 
 func _on_zero_hp():
 	state_machine.transition_to("Die")
