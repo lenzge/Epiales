@@ -37,5 +37,5 @@ func attack_move(delta, attack_chain) -> void:
 		
 
 func knockback(delta, force, direction):
-	velocity.x = force * -direction
+	velocity.x = force * direction
 	fall()

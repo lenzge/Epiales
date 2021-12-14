@@ -274,8 +274,9 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_down_attack.scale.x = -abs(scale.x)
 		hitbox_up_attack_air.scale.x = -abs(hitbox_up_attack_air.scale.x)
 		hitbox_down_attack_air.scale.x = -abs(hitbox_down_attack_air.scale.x)
-		hitbox_attack.direction.x = -1
+		hitbox_attack.direction = Vector2(-1, 0)
 	elif velocity.x > 0:
+		hitbox_attack.direction = Vector2(1, 0)
 		direction = 1
 		sprite.flip_h = false
 		hitbox_attack.scale.x = abs(hitbox_attack.scale.x)
