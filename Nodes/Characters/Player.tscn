@@ -60,30 +60,30 @@
 [ext_resource path="res://Assets/Sounds/slide.mp3" type="AudioStream" id=58]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 10.9577
-height = 32.949
+radius = 10.2543
+height = 34.4665
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 15.4453, 30.6763 )
-
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id=2]
 radius = 10.2671
 height = 34.4185
 
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 23.4436, 31.1231 )
+
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 16.436, 32.3632 )
+extents = Vector2( 14.2614, 27.2775 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 29.8462, 16.0556 )
+extents = Vector2( 39.7587, 16.0556 )
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 47.846, 16.99 )
+extents = Vector2( 103.316, 12.4479 )
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 48.3602, 17.4952 )
+extents = Vector2( 41.0107, 29.7721 )
 
 [sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 48.0796, 16.934 )
+extents = Vector2( 40.5356, 36.1726 )
 
 [sub_resource type="Animation" id=9]
 resource_name = "Attack_Basic"
@@ -873,7 +873,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 50.25 )
+position = Vector2( 0, 50 )
 shape = SubResource( 1 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -970,71 +970,77 @@ script = ExtResource( 43 )
 [node name="Attack_Down_Air_Recovery" type="Node" parent="StateMachine"]
 script = ExtResource( 44 )
 
-[node name="Attack" type="Area2D" parent="."]
-position = Vector2( 32, 46 )
-collision_mask = 2
-script = ExtResource( 32 )
-damage_amount = 20
-
-[node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
-shape = SubResource( 2 )
-disabled = true
-
 [node name="Hitbox" type="Area2D" parent="."]
+position = Vector2( 0, 50 )
 collision_mask = 10
 script = ExtResource( 33 )
 receiver_path = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2( 0, 50.25 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
-[node name="Attack_Up_Ground" type="Area2D" parent="."]
-position = Vector2( 0, 41 )
+[node name="Attack" type="Area2D" parent="."]
+position = Vector2( 0, 50 )
 collision_mask = 2
 script = ExtResource( 32 )
 damage_amount = 20
+direction = Vector2( 1, 0 )
+
+[node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
+position = Vector2( 35.044, -3.27136 )
+shape = SubResource( 3 )
+disabled = true
+
+[node name="Attack_Up_Ground" type="Area2D" parent="."]
+position = Vector2( 0, 50 )
+collision_mask = 2
+script = ExtResource( 32 )
+damage_amount = 20
+direction = Vector2( 0, 1 )
 
 [node name="HitboxAttack_Front" type="CollisionShape2D" parent="Attack_Up_Ground"]
-position = Vector2( 31.9465, 2.97638 )
+position = Vector2( 25.647, 0 )
 shape = SubResource( 4 )
 disabled = true
 
 [node name="HitboxAttack_Top" type="CollisionShape2D" parent="Attack_Up_Ground"]
-position = Vector2( 18.5472, -46.0528 )
+position = Vector2( 0, -43.562 )
 shape = SubResource( 5 )
 disabled = true
 
 [node name="Attack_Down_Ground" type="Area2D" parent="."]
-position = Vector2( 0, 48 )
+position = Vector2( 0, 50 )
 collision_mask = 2
 script = ExtResource( 32 )
 damage_amount = 20
+direction = Vector2( 0, -1 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Ground"]
-position = Vector2( 0.374565, 18.7288 )
+position = Vector2( 0.219231, 15.5227 )
 shape = SubResource( 6 )
 disabled = true
 
 [node name="Attack_Up_Air" type="Area2D" parent="."]
-position = Vector2( 0, 41 )
+position = Vector2( 0, 50 )
 collision_mask = 2
 script = ExtResource( 32 )
 damage_amount = 20
+direction = Vector2( 0, 1 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Up_Air"]
-position = Vector2( 0, -47.1434 )
+position = Vector2( 0.0534821, -49.7712 )
 shape = SubResource( 7 )
 disabled = true
 
 [node name="Attack_Down_Air" type="Area2D" parent="."]
-position = Vector2( 0, 48 )
+position = Vector2( 0, 50 )
 collision_mask = 2
 script = ExtResource( 32 )
 damage_amount = 20
+direction = Vector2( 0, -1 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Air"]
-position = Vector2( 0.390617, 53.3324 )
+position = Vector2( 0.180381, 51.0199 )
 shape = SubResource( 8 )
 disabled = true
 
