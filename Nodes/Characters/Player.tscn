@@ -857,8 +857,8 @@ tracks/1/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 40
 script = ExtResource( 2 )
-air_attack_fall_speed = 0.1
-block_time = 0.3
+gravity = 2000
+jump_impulse = 800
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 51 )

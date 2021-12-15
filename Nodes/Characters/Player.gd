@@ -26,7 +26,7 @@ onready var sound_machine : SoundMachine = $SoundMachine
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
-export(float) var air_attack_fall_speed :float = 0.2
+export(float) var air_attack_fall_speed :float = 0.1
 export(float) var dash_speed :float = 1000
 export(int) var gravity :int = 3000
 export(int) var wall_hang_gravity : int = 300
@@ -49,7 +49,7 @@ export(float) var friction_dash: float = 5
 
 export(float) var windup_time : float = 0.2
 export(float) var charged_windup_time : float = 0.7
-export(float) var block_time : float = 0.2
+export(float) var block_time : float = 0.3
 export(float) var attack_time : float = 0.2
 export(float) var charged_attack_time : float = 0.4
 export(float) var recovery_time : float = 0.2
@@ -219,18 +219,23 @@ func attack_updown_air_move(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
+## Called if jumping while dashing
+## Only adds gravity to dash movement
+func move_leap_jump(delta:float, dir:Vector2, friction:float):
+	_fall(delta)
+	dash_move(delta, dir, friction)
+
+
 ## Slows the player down slowly in any direction whithout gravity.
 ## Call after velocity is set manually.
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
 func dash_move(delta:float, dir:Vector2, friction:float):
 	_flip_sprite_in_movement_dir() #change this in dash dir
-	
 	# slowly slowing down
 	if velocity.length() + 1 < friction:
 		velocity.x = 0
 	else:
 		velocity -= dir.normalized() * friction
-	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
