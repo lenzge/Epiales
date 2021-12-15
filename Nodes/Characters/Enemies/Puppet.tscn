@@ -508,11 +508,9 @@ position = Vector2( 28.69, 3.735 )
 collision_layer = 2
 script = ExtResource( 15 )
 emitter_path = NodePath("..")
-damagae_amount = 20
 knockback_force = 400.0
 knockback_time = 0.2
-direction = 180.0
-is_directed = true
+direction = Vector2( 1, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 position = Vector2( -3.34543, 0.890899 )
@@ -532,7 +530,6 @@ shape = SubResource( 3 )
 position = Vector2( -1.001, 4.317 )
 collision_layer = 2
 script = ExtResource( 15 )
-damagae_amount = 20
 knockback_force = 300.0
 knockback_time = 0.2
 

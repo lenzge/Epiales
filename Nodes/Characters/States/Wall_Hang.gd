@@ -11,6 +11,7 @@ var checking_for_wall : float = 10.0
 func enter(_msg := {}):
 	.enter(_msg)
 	player.velocity.y = player.hang_on_wall_velocity_save
+	player.can_dash = true;
 	
 	# Save the position of the wall
 	if player.get_slide_collision(0).get_position().x > player.position.x:
@@ -21,6 +22,8 @@ func enter(_msg := {}):
 	# Save the position of the player
 	player_pos_x_save = player.position.x
 	player_pos_y_save = player.position.y
+	
+	player.sound_machine.play_sound("Slide", true)
 
 
 func physics_update(delta):
@@ -62,3 +65,5 @@ func exit():
 		player.can_hang_on_wall = false
 	else:
 		player.hang_on_wall_velocity_save = player.velocity.y
+	
+	player.sound_machine.stop_sound("Slide")
