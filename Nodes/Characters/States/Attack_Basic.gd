@@ -25,19 +25,14 @@ func exit():
 
 func _on_timeout():
 	# Transition to next state
-	var input
-	if player.last_input.size() == 0:
-		 input = -1
-	else:
-		input = player.last_input.back()
-	var input_queue = player.last_input
+	var input = player.last_input.back()
 
 	if player.in_charged_attack:
 		player.in_charged_attack = false
 		_set_hitbox(-1)
 		attack_count = 1
 		state_machine.transition_to("Attack_Basic_Recovery")
-	elif input == player.PossibleInput.ATTACK_BASIC and attack_count < player.max_attack_combo and input_queue.size() > 0:
+	elif input == player.PossibleInput.ATTACK_BASIC and attack_count < player.max_attack_combo:
 		attack_count += 1
 		state_machine.transition_to("Attack_Basic_Windup")
 	elif input == player.PossibleInput.BLOCK:
