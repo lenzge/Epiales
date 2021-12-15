@@ -17,6 +17,8 @@ func enter(_msg := {}):
 	
 	timer.set_wait_time(player.wall_jump_time)
 	timer.start()
+	
+	player.sound_machine.play_sound("Jump", false)
 
 
 func physics_update(delta):

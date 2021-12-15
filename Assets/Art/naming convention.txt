@@ -1,0 +1,15 @@
+Die naming convention erfolgt vom Groben ins Detail.
+
+
+ordner_bereich_element_version
+
+
+Beispiele: luci_pxanimation_walking_0.1
+           luci_3danimation_jumping_0.3
+           background_sprite_fairywheel_0.6
+           tiles_silhouette_barrier_0.2
+
+Alle assets die noch work in progress sind/enthalten werden in die Experimental Ordner (...x) hochgeladen.
+
+Fertige Artworks; Sprites etc. werden in die normalen Ordner hochgeladen.
+           

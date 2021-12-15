@@ -32,14 +32,15 @@ func physics_update(delta):
 		player.move(delta) #attack_move here?
 
 		# Action can be cancelled (not by moving)
-		if not player.is_on_floor():
-			state_machine.transition_to("Fall")
-		elif Input.is_action_just_pressed("jump"):
+#		if not player.is_on_floor():
+#			state_machine.transition_to("Fall")
+		if Input.is_action_just_pressed("jump"):
 			state_machine.transition_to("Jump")
 		elif Input.is_action_pressed("block"):
 			state_machine.transition_to("Block_Windup")
 		elif Input.is_action_just_pressed("dash") and player.can_dash:
 			state_machine.transition_to("Dash")
+
 
 func _on_timeout():
 	var input = player.pop_combat_queue()
@@ -48,4 +49,5 @@ func _on_timeout():
 	elif input == player.PossibleInput.BLOCK:
 		state_machine.transition_to("Block_Windup")
 	else:
+		player.last_input.clear()
 		state_machine.transition_to("Idle")
