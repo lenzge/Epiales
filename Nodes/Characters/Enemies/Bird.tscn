@@ -380,6 +380,7 @@ collision_layer = 2
 collision_mask = 36
 script = ExtResource( 2 )
 gravity = 10
+windup_time = 0.35
 max_attack_combo = 1
 
 [node name="StateMachine" type="Node" parent="."]
@@ -462,11 +463,9 @@ position = Vector2( 28.69, 3.735 )
 collision_layer = 2
 script = ExtResource( 15 )
 emitter_path = NodePath("..")
-damagae_amount = 20
 knockback_force = 400.0
 knockback_time = 0.4
 direction = 180.0
-is_directed = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 position = Vector2( 6.68176, 2.22725 )
@@ -493,7 +492,6 @@ shape = SubResource( 1 )
 position = Vector2( -1.001, 4.317 )
 collision_layer = 2
 script = ExtResource( 15 )
-damagae_amount = 20
 knockback_force = 200.0
 knockback_time = 0.2
 
