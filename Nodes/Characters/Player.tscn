@@ -59,8 +59,6 @@
 [ext_resource path="res://Assets/Sound/enemy_attack_impact4.mp3" type="AudioStream" id=57]
 [ext_resource path="res://Assets/Sound/slide.mp3" type="AudioStream" id=58]
 
-
-
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 10.2543
 height = 34.4665
@@ -859,11 +857,14 @@ tracks/1/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 40
 script = ExtResource( 2 )
-speed = 400
+speed = 450
 air_attack_fall_speed = 0.1
+wall_hang_gravity = 400
+wall_hang_max_gravity = 1000
 acceleration = 0.135
 friction_ground = 27.0
 friction_ground_on_crouch = 8.0
+wall_jump_deceleration = 0.095
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 51 )
