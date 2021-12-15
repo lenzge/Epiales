@@ -274,11 +274,7 @@ func move_knockback(delta):
 
 # Flip Sprite and Hitbox
 func _flip_sprite_in_movement_dir() -> void:
-	# turn?
-	
 	prev_direction = direction
-	#if not velocity.x == 0:
-		#print(velocity.x)
 	if velocity.x < 0:
 		direction = -1
 		sprite.flip_h = true
@@ -297,7 +293,6 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_down_attack.scale.x = abs(scale.x)
 		hitbox_up_attack_air.scale.x = abs(hitbox_up_attack_air.scale.x)
 		hitbox_down_attack_air.scale.x = abs(hitbox_down_attack_air.scale.x)
-
 
 func set_knockback(force, direction):
 	#if sprite.flip_h == true:
