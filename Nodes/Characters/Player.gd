@@ -46,6 +46,7 @@ export(float) var friction_ground_on_crouch : float = 20
 export(float) var friction_knockback : float = 30
 export(float) var friction_air : float = 20
 export(float) var friction_dash: float = 5
+export(float) var friction_leap_jump: float = 10
 
 export(float) var windup_time : float = 0.2
 export(float) var charged_windup_time : float = 0.7
@@ -55,6 +56,7 @@ export(float) var charged_attack_time : float = 0.4
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 export(float) var dash_cooldown_time : float = 1.0
+export(float) var leap_jump_time : float = 0.8
 export(float) var jump_gravity_damper : float = 0.75
 
 export(float) var wall_jump_deceleration : float = 0.1
@@ -232,10 +234,12 @@ func move_leap_jump(delta:float, dir:Vector2, friction:float):
 func dash_move(delta:float, dir:Vector2, friction:float):
 	_flip_sprite_in_movement_dir() #change this in dash dir
 	# slowly slowing down
-	if velocity.length() + 1 < friction:
+	velocity -= dir.normalized() * friction
+	# Check for wrap around effect 
+	# (friction overpowers velocity --> change of velocity sign)
+	if velocity.x * dir.x <= 0:
 		velocity.x = 0
-	else:
-		velocity -= dir.normalized() * friction
+	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 

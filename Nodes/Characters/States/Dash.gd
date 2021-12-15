@@ -42,10 +42,10 @@ func physics_update(delta):
 	
 	# if jumping while dash player needs to fall otherwhise space ship mode
 	if jumped:
-		player.move_leap_jump(delta, direction, player.friction_dash)
+		player.move_leap_jump(delta, direction, player.friction_leap_jump)
 		if player.is_on_floor():
 			_on_timeout() # get out of dash state. Timer was stopped at jump begin
-		return 
+		#return 
 	else:
 		if is_equal_approx(player.velocity.y, 0):
 			player.velocity.y = 0.5
@@ -57,6 +57,7 @@ func physics_update(delta):
 		state_machine.transition_to("Attack_Basic_Windup")
 	elif Input.is_action_just_pressed("jump") and not jumped and player.is_on_floor():
 		timer.stop()
+		timer.start(player.leap_jump_time)
 		jumped = true
 		player.velocity.y = -player.jump_impulse
 	elif Input.is_action_just_pressed("move_down"):
@@ -64,12 +65,6 @@ func physics_update(delta):
 
 
 func _on_timeout() -> void:
-#	# Keep dashing als long as the player is in the air (busy waiting)
-#	while(jumped):
-#		if(player.is_on_floor()):
-#			break
-#		yield(get_tree(), "idle_frame") # wait one frame
-	
 	if player.last_movement_buttons.empty():
 		state_machine.transition_to("Idle")
 	else:
