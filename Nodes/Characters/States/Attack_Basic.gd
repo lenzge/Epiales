@@ -29,7 +29,7 @@ func _on_timeout():
 	if player.last_input.size() == 0:
 		 input = -1
 	else:
-		input = player.last_input.pop_back()
+		input = player.last_input.back()
 	var input_queue = player.last_input
 
 	if player.in_charged_attack:
