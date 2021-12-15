@@ -44,7 +44,7 @@ func physics_update(delta):
 
 func _on_timeout():
 	var input = player.pop_combat_queue()
-	if player.in_charged_attack or input == player.PossibleInput.ATTACK_BASIC:
+	if player.in_charged_attack or input == player.PossibleInput.ATTACK_BASIC or player.PossibleInput.ATTACK_AIR:
 		state_machine.transition_to("Attack_Basic")
 	elif input == player.PossibleInput.BLOCK:
 		state_machine.transition_to("Block_Windup")

@@ -131,7 +131,6 @@ func _process(delta):
 		last_input.push_front(PossibleInput.BLOCK)
 	elif Input.is_action_just_pressed("jump"):
 		last_input.clear()
-		last_input.push_front(PossibleInput.JUMP)
 	
 	# Fill movement Array
 	if Input.is_action_just_pressed("move_left"):
