@@ -1,0 +1,106 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Nodes/Characters/Enemies/WalkingCharacter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/behavior_tree/src/blackboard.gd" type="Script" id=2]
+[ext_resource path="res://addons/behavior_tree/src/btnodes/composites/bt_selector.gd" type="Script" id=3]
+[ext_resource path="res://addons/behavior_tree/src/behavior_tree.gd" type="Script" id=4]
+[ext_resource path="res://addons/behavior_tree/src/btnodes/decorators/bt_conditional.gd" type="Script" id=5]
+[ext_resource path="res://addons/behavior_tree/src/btnodes/composites/bt_sequence.gd" type="Script" id=6]
+[ext_resource path="res://addons/behavior_tree/src/btnodes/bt_leaf.gd" type="Script" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 230, 105 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Node2D
+
+func intersect_ray(from : Vector2, to : Vector2, exceptions := {}, collision_mask := 0b11111111111111111111):
+	var space_state = get_world_2d().direct_space_state
+	return space_state.intersect_ray(from, to, exceptions, collision_mask)
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends BTConditional
+
+export var detection_area_path : NodePath
+
+onready var detection_area = get_node(detection_area_path)
+
+func _pre_tick(agent : Node, blackboard : Blackboard):
+	verified = false
+	var bodies = detection_area.get_overlapping_bodies()
+
+	for body in bodies:
+		if body is Player:
+			if agent.intersect_ray(agent.global_position, body.global_position, null, 4).empty():
+				verified = true
+				blackboard.set_data(\"Player\", body)
+				return
+			else:
+				blackboard.set_data(\"Player\", null)
+				return
+	blackboard.set_data(\"Player\", null)
+
+
+func on_player_detected(body):
+	"
+
+[node name="Character" instance=ExtResource( 1 )]
+
+[node name="Attack" type="Node" parent="StateMachine" index="4"]
+
+[node name="Attack_Windup" type="Node" parent="StateMachine" index="5"]
+
+[node name="Attack_Run" type="Node" parent="StateMachine" index="6"]
+
+[node name="Attack_Recovery" type="Node" parent="StateMachine" index="7"]
+
+[node name="PlayerDetectionArea" type="Area2D" parent="Flipping" index="0"]
+position = Vector2( 40, 0 )
+
+[node name="Shape" type="CollisionShape2D" parent="Flipping/PlayerDetectionArea" index="0"]
+position = Vector2( 210.303, 0 )
+shape = SubResource( 1 )
+
+[node name="AIController" type="Node2D" parent="." index="5"]
+script = SubResource( 2 )
+
+[node name="Blackboard" type="Node" parent="AIController" index="0"]
+script = ExtResource( 2 )
+
+[node name="BehaviorTree" type="Node" parent="AIController" index="1"]
+script = ExtResource( 4 )
+_blackboard = NodePath("../Blackboard")
+_agent = NodePath("..")
+
+[node name="BTSelector" type="Node" parent="AIController/BehaviorTree" index="0"]
+script = ExtResource( 3 )
+
+[node name="Is player detected\?" type="Node" parent="AIController/BehaviorTree/BTSelector" index="0"]
+script = SubResource( 3 )
+is_active = null
+debug = null
+abort_tree = null
+reverse = null
+detection_area_path = null
+
+[node name="BTSequence" type="Node" parent="AIController/BehaviorTree/BTSelector/Is player detected\?" index="0"]
+script = ExtResource( 6 )
+
+[node name="Set Random Wait Time" type="Node" parent="AIController/BehaviorTree/BTSelector/Is player detected\?/BTSequence" index="0"]
+script = ExtResource( 7 )
+
+[node name="BTSelector" type="Node" parent="AIController/BehaviorTree/BTSelector" index="1"]
+script = ExtResource( 3 )
+
+[node name="Detect Player" type="Node" parent="AIController/BehaviorTree/BTSelector/BTSelector" index="0"]
+script = ExtResource( 7 )
+
+[node name="Is edge or wall\?" type="Node" parent="AIController/BehaviorTree/BTSelector/BTSelector" index="1"]
+script = ExtResource( 5 )
+
+[node name="Turn" type="Node" parent="AIController/BehaviorTree/BTSelector/BTSelector/Is edge or wall\?" index="0"]
+script = ExtResource( 7 )
+
+[node name="Move_X" type="Node" parent="AIController/BehaviorTree/BTSelector/BTSelector" index="2"]
+script = ExtResource( 7 )
