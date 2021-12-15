@@ -4,7 +4,7 @@ extends State
 
 var player : Player
 var timer : Timer
-onready var animationPlayer = $"../../AnimationPlayer"
+onready var animationPlayer : AnimationPlayer = $"../../AnimationPlayer"
 
 
 # Owner of the statemachine is a player
@@ -20,9 +20,8 @@ func _ready():
 	self.add_child(timer)
 
 func enter(_msg := {}):
-	pass
-	player.animation_tree.travel(self.name)
-	#animationPlayer.play(self.name)
+	#player.animation_tree.travel(self.name)
+	animationPlayer.play(self.name)
 	
 func exit():
 	timer.stop()

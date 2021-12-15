@@ -9,6 +9,7 @@ func enter(_msg := {}):
 		timer.set_wait_time(player.charged_attack_time)
 		_set_hitbox(1)
 	else:
+		#player.animation_tree.travel("Attack_Basic")
 		timer.set_wait_time(player.attack_time)
 	timer.start()
 	player.hitbox_attack.get_child(0).disabled = false

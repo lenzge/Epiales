@@ -360,6 +360,7 @@ func _exit_crouch():
 
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
+	print(animation_tree.get_current_node())
 
 
 func on_hit(emitter : DamageEmitter):
