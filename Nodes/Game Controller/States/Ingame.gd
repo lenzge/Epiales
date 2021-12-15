@@ -3,7 +3,7 @@ extends GameState
 
 
 const PLAYER = preload("res://Nodes/Characters/Player.tscn")
-const LEVEL = preload("res://Nodes/Experimental/Maps/Level.tscn")
+const LEVEL = preload("res://Nodes/Maps/Level4.tscn")
 
 var player_instance 
 var level_instance
