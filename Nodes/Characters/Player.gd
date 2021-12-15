@@ -22,6 +22,7 @@ var add_jump_gravity_damper : bool = false
 
 var dash_cooldown_timer
 
+onready var sound_machine : SoundMachine = $SoundMachine
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -368,9 +369,11 @@ func on_hit(emitter : DamageEmitter):
 		if $StateMachine.state.name == "Block" and not direction_x == self.direction:
 			emit_signal("blocked")
 			emitter.was_blocked($"Hitbox")
+			sound_machine.play_sound("Blocking", false)
 		else:
 			$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction_x})
 			emitter.hit($"Hitbox")
+			sound_machine.play_sound("Hit", false)
 
 
 # Timer

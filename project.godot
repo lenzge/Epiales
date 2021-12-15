@@ -79,6 +79,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Characters/Enemies/Puppet.gd"
 }, {
+"base": "Node2D",
+"class": "SoundMachine",
+"language": "GDScript",
+"path": "res://Nodes/Util/SoundMachine.gd"
+}, {
 "base": "Node",
 "class": "Standard_Level",
 "language": "GDScript",
@@ -109,6 +114,7 @@ _global_script_class_icons={
 "Player": "",
 "PlayerState": "",
 "Puppet": "",
+"SoundMachine": "",
 "Standard_Level": "",
 "State": "",
 "StateMachine": ""
