@@ -4,6 +4,9 @@ extends KinematicBody2D
 # Movement
 enum MovementDir {LEFT, RIGHT}
 enum PossibleInput {ATTACK_BASIC, ATTACK_AIR, BLOCK, JUMP}
+# needed for running turn
+var direction : int = 1
+var prev_direction : int = 1
 
 const last_movement_buttons = []
 const last_input = []
@@ -23,6 +26,7 @@ var add_jump_gravity_damper : bool = false
 var dash_cooldown_timer
 
 onready var sound_machine : SoundMachine = $SoundMachine
+var animation_tree
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -77,13 +81,14 @@ onready var original_height_hitbox = collision_shape.shape.height
 # Enemy needs to know
 onready var _position = collision_shape.position
 	
-var direction : int = 1
+
 
 signal blocked
 
 
 func _ready():
 	_init_timer()
+	animation_tree = $AnimationTree.get("parameters/playback")
 	
 
 
@@ -269,6 +274,11 @@ func move_knockback(delta):
 
 # Flip Sprite and Hitbox
 func _flip_sprite_in_movement_dir() -> void:
+	# turn?
+	
+	prev_direction = direction
+	#if not velocity.x == 0:
+		#print(velocity.x)
 	if velocity.x < 0:
 		direction = -1
 		sprite.flip_h = true

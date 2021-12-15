@@ -20,7 +20,9 @@ func _ready():
 	self.add_child(timer)
 
 func enter(_msg := {}):
-	animationPlayer.play(self.name)
+	pass
+	player.animation_tree.travel(self.name)
+	#animationPlayer.play(self.name)
 	
 func exit():
 	timer.stop()
