@@ -52,12 +52,13 @@
 [ext_resource path="res://Assets/Art/Luci/Luci_DownAttack_12.png" type="Texture" id=50]
 [ext_resource path="res://Assets/Art/Luci/Luci_Crouch_11.png" type="Texture" id=51]
 [ext_resource path="res://Nodes/Util/SoundMachine.gd" type="Script" id=52]
-[ext_resource path="res://Assets/Sounds/One_Footstep.wav" type="AudioStream" id=53]
-[ext_resource path="res://Assets/Sounds/Blocking.mp3" type="AudioStream" id=54]
-[ext_resource path="res://Assets/Sounds/dash_2.mp3" type="AudioStream" id=55]
-[ext_resource path="res://Assets/Sounds/Jump2.mp3" type="AudioStream" id=56]
-[ext_resource path="res://Assets/Sounds/enemy_attack_impact4.mp3" type="AudioStream" id=57]
-[ext_resource path="res://Assets/Sounds/slide.mp3" type="AudioStream" id=58]
+[ext_resource path="res://Assets/Sound/One_Footstep.wav" type="AudioStream" id=53]
+[ext_resource path="res://Assets/Sound/Blocking.mp3" type="AudioStream" id=54]
+[ext_resource path="res://Assets/Sound/dash_2.mp3" type="AudioStream" id=55]
+[ext_resource path="res://Assets/Sound/Jump2.mp3" type="AudioStream" id=56]
+[ext_resource path="res://Assets/Sound/enemy_attack_impact4.mp3" type="AudioStream" id=57]
+[ext_resource path="res://Assets/Sound/slide.mp3" type="AudioStream" id=58]
+
 
 
 [sub_resource type="CapsuleShape2D" id=1]
