@@ -1,5 +1,87 @@
 extends Node
 
+###### New verision ######
+
+const USECS_PER_SECOND : int = 1_000_000
+const MSECS_PER_SECOND : int = 1_000
+const MUSIC_BASE_PATH : String = "res://Assets/Music/"
+
+var thread : Thread
+var running : bool = true
+
+var music_loaded = {}
+
+func _ready():
+	thread = Thread.new()
+	thread.start(self, "_thread_loop")
+
+
+func _thread_loop():
+	running = true
+	while running:
+		pass
+
+
+#### Every music is stored in the same folder -> therefore when loading a clip
+#### we only need the name of the music clip
+
+func play_music(music_name: String) -> bool:
+	# Test if the music is loaded, if not try to load it
+	if music_name in music_loaded or load_music(music_name):
+		pass
+	
+	return false
+
+
+func schedule_music(music_name: String, time_in_usec: int):
+	pass
+
+
+func load_music(music_name: String) -> bool:
+	
+	# Test if music is already loaded
+	if not music_name in music_loaded:
+		
+		# Test if file exists (base_path + music_name)
+		var file = File.new()
+		if file.file_exists(MUSIC_BASE_PATH + music_name):
+			
+			var music_player = MusicPlayer.new(MUSIC_BASE_PATH + music_name)
+			if music_player.loaded:
+				music_loaded[music_name] = music_player
+				self.add_child(music_player)
+			else:
+				music_player.queue_free()
+				return false
+			
+		else:
+			return false
+	
+	# If everything went good return true
+	return true
+
+
+func unload_music(music_name: String) -> void:
+	# test if music can be unloaded (is it playing, is it scheduled)
+	pass
+
+
+func _exit_tree():
+	running = false
+	thread.wait_to_finish()
+
+
+##############################################################################################################
+
+##############################################################################################################
+
+############################################# Old version ####################################################
+
+##############################################################################################################
+
+##############################################################################################################
+
+
 enum SoundtrackTypes {MUSIC_CALM, MUSIC_HECTIC}
 
 const VOLUME_RANGE : float = 80.0
@@ -22,7 +104,7 @@ onready var node_calm_music : AudioStreamPlayer = $Calm_music
 onready var node_hectic_music : AudioStreamPlayer = $Hectic_music
 
 
-func _ready():
+func _ready_old():
 	if is_active:
 		
 		# load soundtracks
@@ -44,7 +126,7 @@ func _ready():
 			node_calm_music.volume_db = -VOLUME_RANGE
 
 
-func _process(delta):
+func _process_old(delta):
 	if is_active:
 		track_player()
 		switch_soundtracks()
