@@ -2,6 +2,8 @@ extends Node
 
 ###### New verision ######
 
+export var SAMPLE_RATE : int = 44_100
+
 const USECS_PER_SECOND : int = 1_000_000
 const MSECS_PER_SECOND : int = 1_000
 const MUSIC_BASE_PATH : String = "res://Assets/Music/"
@@ -10,6 +12,18 @@ var thread : Thread
 var running : bool = true
 
 var music_loaded = {}
+var music_scheduled = {}
+var music_playing = []
+
+
+class ScheduleData:
+	var scheduled_in : int
+	var scheduled_at : int
+	
+	func _init(schedule_in: int, schedule_at: int):
+		scheduled_in = schedule_in
+		scheduled_at = schedule_at
+
 
 func _ready():
 	thread = Thread.new()
@@ -22,19 +36,30 @@ func _thread_loop():
 		pass
 
 
+#######
 #### Every music is stored in the same folder -> therefore when loading a clip
 #### we only need the name of the music clip
+#######
+
 
 func play_music(music_name: String) -> bool:
 	# Test if the music is loaded, if not try to load it
 	if music_name in music_loaded or load_music(music_name):
-		pass
+		schedule_music(music_name, 0) # 0 means play as soon as possible
+		return true
 	
 	return false
 
 
-func schedule_music(music_name: String, time_in_usec: int):
-	pass
+func schedule_music(music_name: String, beats: int) -> bool:
+	# Test if the music is loaded, if not try to load it
+	var time_in_usec = 0
+	if music_name in music_loaded or load_music(music_name):
+		var schedule_data = ScheduleData.new(time_in_usec, OS.get_ticks_usec()) # TODO: Change second parameter to last_update
+		music_scheduled[music_name] = schedule_data
+		return true
+	
+	return false
 
 
 func load_music(music_name: String) -> bool:
