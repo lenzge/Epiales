@@ -1137,6 +1137,8 @@ script = ExtResource( 2 )
 air_attack_fall_speed = 0.1
 charged_windup_time = 0.5
 block_time = 0.3
+gravity = 2000
+jump_impulse = 800
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 45 )

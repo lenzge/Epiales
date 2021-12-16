@@ -30,7 +30,7 @@ onready var sound_machine : SoundMachine = $SoundMachine
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
-export(float) var air_attack_fall_speed :float = 0.2
+export(float) var air_attack_fall_speed :float = 0.1
 export(float) var dash_speed :float = 1000
 export(int) var gravity :int = 3000
 export(int) var wall_hang_gravity : int = 300
@@ -50,15 +50,17 @@ export(float) var friction_ground_on_crouch : float = 20
 export(float) var friction_knockback : float = 30
 export(float) var friction_air : float = 20
 export(float) var friction_dash: float = 5
+export(float) var friction_leap_jump: float = 10
 
 export(float) var windup_time : float = 0.2
 export(float) var charged_windup_time : float = 0.7
-export(float) var block_time : float = 0.2
+export(float) var block_time : float = 0.3
 export(float) var attack_time : float = 0.2
 export(float) var charged_attack_time : float = 0.4
 export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 export(float) var dash_cooldown_time : float = 1.0
+export(float) var leap_jump_time : float = 0.8
 export(float) var jump_gravity_damper : float = 0.75
 
 export(float) var wall_jump_deceleration : float = 0.1
@@ -137,7 +139,6 @@ func _process(delta):
 		last_input.push_front(PossibleInput.BLOCK)
 	elif Input.is_action_just_pressed("jump"):
 		last_input.clear()
-		last_input.push_front(PossibleInput.JUMP)
 	
 	# Fill movement Array
 	if Input.is_action_just_pressed("move_left"):
@@ -226,17 +227,24 @@ func attack_updown_air_move(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
+## Called if jumping while dashing
+## Only adds gravity to dash movement
+func move_leap_jump(delta:float, dir:Vector2, friction:float):
+	_fall(delta)
+	dash_move(delta, dir, friction)
+
+
 ## Slows the player down slowly in any direction whithout gravity.
 ## Call after velocity is set manually.
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
 func dash_move(delta:float, dir:Vector2, friction:float):
 	_flip_sprite_in_movement_dir() #change this in dash dir
-	
 	# slowly slowing down
-	if velocity.length() + 1 < friction:
+	velocity -= dir.normalized() * friction
+	# Check for wrap around effect 
+	# (friction overpowers velocity --> change of velocity sign)
+	if velocity.x * dir.x <= 0:
 		velocity.x = 0
-	else:
-		velocity -= dir.normalized() * friction
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
