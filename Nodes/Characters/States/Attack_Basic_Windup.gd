@@ -34,7 +34,7 @@ func physics_update(delta):
 		# Action can be cancelled (not by moving)
 #		if not player.is_on_floor():
 #			state_machine.transition_to("Fall")
-		if Input.is_action_just_pressed("jump"):
+		if Input.is_action_just_pressed("jump") and player.is_on_floor():
 			state_machine.transition_to("Jump")
 		elif Input.is_action_pressed("block"):
 			state_machine.transition_to("Block_Windup")
