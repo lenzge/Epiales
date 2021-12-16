@@ -1,6 +1,7 @@
 extends PlayerState
 
 var direction := Vector2()
+var jumped := false
 
 func _ready():
 	._ready()
@@ -32,16 +33,35 @@ func enter(_msg := {}):
 
 func exit():
 	.exit()
+	jumped = false
 	player.hitbox.get_child(0).disabled = false
 	player.start_dash_cooldown()
 
 
 func physics_update(delta):
-	player.dash_move(delta, direction, player.friction_dash)
 	
+	# if jumping while dash player needs to fall otherwhise space ship mode
+	if jumped:
+		player.move_leap_jump(delta, direction, player.friction_leap_jump)
+		if player.is_on_floor():
+			_on_timeout() # get out of dash state. Timer was stopped at jump begin
+		#return 
+	else:
+		if is_equal_approx(player.velocity.y, 0):
+			player.velocity.y = 0.5
+		player.dash_move(delta, direction, player.friction_dash)
+	
+	# Check for exit conditions
 	if Input.is_action_just_pressed("attack"):
 		timer.stop()
 		state_machine.transition_to("Attack_Basic_Windup")
+	elif Input.is_action_just_pressed("jump") and not jumped and player.is_on_floor():
+		timer.stop()
+		timer.start(player.leap_jump_time)
+		jumped = true
+		player.velocity.y = -player.jump_impulse
+	elif Input.is_action_just_pressed("move_down"):
+		state_machine.transition_to("Crouch")
 
 
 func _on_timeout() -> void:
