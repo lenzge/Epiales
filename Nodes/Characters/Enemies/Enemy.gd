@@ -100,7 +100,7 @@ func is_moving_in_player_direction() -> bool:
 		return true
 
 func is_player_on_other_plattform() -> bool:
-	if chased_player.global_position.y < global_position.y and chased_player.is_on_floor():
+	if chased_player.global_position.y + 50 < global_position.y and chased_player.is_on_floor():
 		return true
 	else:
 		return false

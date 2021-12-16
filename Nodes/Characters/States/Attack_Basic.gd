@@ -46,7 +46,7 @@ func _on_timeout():
 # to_charged = 1 -> transform to big charged hitbox
 # to_charged = -1 -> transform back to small/normal hitbox
 func _set_hitbox(to_charged):
-	var position = 40
-	var scale = 3
+	var position = 10
+	var scale = 2
 	player.hitbox_attack.position.x = player.hitbox_attack.position.x + position * player.direction * to_charged
-	player.hitbox_attack.scale.x = player.hitbox_attack.scale.x + scale * to_charged
+	player.hitbox_attack.scale.x = player.hitbox_attack.scale.x + scale * player.direction * to_charged
