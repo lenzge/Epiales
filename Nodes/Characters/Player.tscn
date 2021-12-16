@@ -859,6 +859,7 @@ collision_mask = 40
 script = ExtResource( 2 )
 gravity = 2000
 jump_impulse = 800
+friction_ground_on_crouch = 15.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 51 )
