@@ -17,6 +17,7 @@ var can_dash := true
 var can_reset_dash := true
 var started_dash_in_air := false
 var in_charged_attack := false
+var attack_count := 1 # Needs to be 1 because increment happens after the attack
 
 var can_hang_on_wall := true
 var hang_on_wall_velocity_save := 0.0
@@ -26,7 +27,6 @@ var add_jump_gravity_damper : bool = false
 var dash_cooldown_timer
 
 onready var sound_machine : SoundMachine = $SoundMachine
-var animation_tree
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -88,7 +88,6 @@ signal blocked
 
 func _ready():
 	_init_timer()
-	animation_tree = $AnimationTree.get("parameters/playback")
 	
 
 
@@ -360,7 +359,6 @@ func _exit_crouch():
 
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
-	print(animation_tree.get_current_node())
 
 
 func on_hit(emitter : DamageEmitter):

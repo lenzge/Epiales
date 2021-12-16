@@ -6,7 +6,7 @@ func enter(msg := {}):
 	.enter(msg)
 	player.sound_machine.play_sound("Running", true)
 	update_count = 0
-	animationPlayer.animation_set_next("Run_Turn","Run")
+	
 
 func exit():
 	player.sound_machine.stop_sound("Running")

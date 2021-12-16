@@ -2,14 +2,16 @@ extends PlayerState
 
 
 func enter(_msg := {}):
-	.enter(_msg)
+	#.enter(_msg)
 	if Input.is_action_pressed("charge") and player.charge_controller.charge_points > 0:
 		player.in_charged_attack = true
+		player.attack_count = 4
 		player.charge_controller._on_charged_action()
 		timer.set_wait_time(player.charged_windup_time)
 	else:
 		player.in_charged_attack = false
 		timer.set_wait_time(player.windup_time)
+	animationPlayer.play("Attack_Basic" + str(player.attack_count)+"_Windup")
 	timer.start()
 
 

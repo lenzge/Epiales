@@ -1,20 +1,19 @@
 extends PlayerState
 
-var attack_count := 1 # Needs to be 1 because increment happens after the attack
 
 func enter(_msg := {}):
-	.enter(_msg)
+	#.enter(_msg)
 	if player.in_charged_attack:
-		attack_count = 4	# for getting the fourth entry of the arrays
+		player.attack_count = 4	# for getting the fourth entry of the arrays
 		timer.set_wait_time(player.charged_attack_time)
 		_set_hitbox(1)
 	else:
-		#player.animation_tree.travel("Attack_Basic")
 		timer.set_wait_time(player.attack_time)
+	animationPlayer.play("Attack_Basic" + str(player.attack_count))
 	timer.start()
 	player.hitbox_attack.get_child(0).disabled = false
-	player.hitbox_attack.knockback_force = player.attack_force[attack_count -1]
-	player.hitbox_attack.knockback_time = player.attack_knockback[attack_count -1]
+	player.hitbox_attack.knockback_force = player.attack_force[player.attack_count -1]
+	player.hitbox_attack.knockback_time = player.attack_knockback[player.attack_count -1]
 
 
 func physics_update(delta):
@@ -36,17 +35,15 @@ func _on_timeout():
 	if player.in_charged_attack:
 		player.in_charged_attack = false
 		_set_hitbox(-1)
-		attack_count = 1
 		state_machine.transition_to("Attack_Basic_Recovery")
-	elif input == player.PossibleInput.ATTACK_BASIC and attack_count < player.max_attack_combo and input_queue.size() > 0:
-		attack_count += 1
+	elif input == player.PossibleInput.ATTACK_BASIC and player.attack_count < player.max_attack_combo and input_queue.size() > 0:
+		player.attack_count += 1
 		state_machine.transition_to("Attack_Basic_Windup")
 	elif input == player.PossibleInput.BLOCK:
-		attack_count = 1
+		player.attack_count = 1
 		player.pop_combat_queue()
 		state_machine.transition_to("Block_Windup")
 	else:
-		attack_count = 1
 		state_machine.transition_to("Attack_Basic_Recovery")
 
 # to_charged = 1 -> transform to big charged hitbox
