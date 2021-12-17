@@ -17,7 +17,10 @@ func enter(_msg := {}):
 
 
 func physics_update(delta):
-	player.attack_move(delta)
+	if player.is_on_floor():
+		player.attack_move(delta)
+	else:
+		player.attack_updown_air_move(delta)
 
 func exit():
 	.exit()
@@ -31,8 +34,8 @@ func _on_timeout():
 		player.in_charged_attack = false
 		_set_hitbox(-1)
 		state_machine.transition_to("Attack_Basic_Recovery")
-	elif input == player.PossibleInput.ATTACK_BASIC and player.attack_count < player.max_attack_combo:
-		player.attack_count += 1
+	elif attack_count < player.max_attack_combo and input == player.PossibleInput.ATTACK_BASIC or input == player.PossibleInput.ATTACK_AIR:
+		attack_count += 1
 		state_machine.transition_to("Attack_Basic_Windup")
 	elif input == player.PossibleInput.BLOCK:
 		player.attack_count = 1
