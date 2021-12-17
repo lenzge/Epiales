@@ -29,8 +29,11 @@ func enter(_msg := {}):
 func physics_update(delta):
 	
 	if not player.in_charged_attack:
-		player.move(delta) #attack_move here?
-
+		if not player.is_on_floor():
+			player.attack_updown_air_move(delta)
+		else:
+			player.move(delta) #attack_move here?
+			
 		# Action can be cancelled (not by moving)
 #		if not player.is_on_floor():
 #			state_machine.transition_to("Fall")

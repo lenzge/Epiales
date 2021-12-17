@@ -216,7 +216,8 @@ func attack_updown_air_move(delta):
 	if velocity.y < 0:
 		velocity.y += gravity * delta
 	else:
-		velocity.y += air_attack_fall_speed * delta * gravity
+#		velocity.y += air_attack_fall_speed * delta * gravity
+		velocity.y = 20
 		
 	velocity = move_and_slide(velocity, Vector2.UP)
 
