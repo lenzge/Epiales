@@ -4,6 +4,7 @@ var update_count = 0
 
 func enter(msg := {}):
 	.enter(msg)
+	#animationPlayer.play("Walk")
 	player.sound_machine.play_sound("Running", true)
 	update_count = 0
 	
