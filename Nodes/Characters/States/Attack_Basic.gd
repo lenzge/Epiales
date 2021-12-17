@@ -14,6 +14,7 @@ func enter(_msg := {}):
 	player.hitbox_attack.get_child(0).disabled = false
 	player.hitbox_attack.knockback_force = player.attack_force[player.attack_count -1]
 	player.hitbox_attack.knockback_time = player.attack_knockback[player.attack_count -1]
+	print(player.attack_count)
 
 
 func physics_update(delta):
@@ -34,8 +35,8 @@ func _on_timeout():
 		player.in_charged_attack = false
 		_set_hitbox(-1)
 		state_machine.transition_to("Attack_Basic_Recovery")
-	elif attack_count < player.max_attack_combo and input == player.PossibleInput.ATTACK_BASIC or input == player.PossibleInput.ATTACK_AIR:
-		attack_count += 1
+	elif player.attack_count < player.max_attack_combo and (input == player.PossibleInput.ATTACK_BASIC or input == player.PossibleInput.ATTACK_AIR):
+		player.attack_count += 1
 		state_machine.transition_to("Attack_Basic_Windup")
 	elif input == player.PossibleInput.BLOCK:
 		player.attack_count = 1
