@@ -864,6 +864,7 @@ wall_hang_max_gravity = 1000
 acceleration = 0.135
 friction_ground = 27.0
 friction_ground_on_crouch = 8.0
+windup_time = 0.1
 wall_jump_deceleration = 0.095
 
 [node name="Sprite" type="Sprite" parent="."]
