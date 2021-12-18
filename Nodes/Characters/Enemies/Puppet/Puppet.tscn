@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Nodes/Characters/Enemies/AI/States/MoveForward.gd" type="Script" id=1]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet/PuppetCharacter.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Nodes/Util/SubStateMachine.gd" type="Script" id=10]
+[ext_resource path="res://Nodes/Util/StateMachine.gd" type="Script" id=11]
+
+[node name="Puppet" type="Node2D"]
+
+[node name="PuppetCharacter" parent="." instance=ExtResource( 4 )]
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 11 )
+initial_state = NodePath("Patrol")
+
+[node name="Combat" type="Node" parent="StateMachine"]
+script = ExtResource( 10 )
+
+[node name="Alarmed" type="Node" parent="StateMachine"]
+script = ExtResource( 10 )
+
+[node name="MoveForward" type="Node" parent="StateMachine/Alarmed"]
+
+[node name="LookAround" type="Node" parent="StateMachine/Alarmed"]
+
+[node name="Patrol" type="Node" parent="StateMachine"]
+script = ExtResource( 10 )
+initial_state = NodePath("MoveForward")
+
+[node name="MoveForward" type="Node" parent="StateMachine/Patrol"]
+script = ExtResource( 1 )
+processing_mode = 1
+move_speed = 1.0
+
+[node name="LookAround" type="Node" parent="StateMachine/Patrol"]
+
+[node name="Wait" type="Node" parent="StateMachine/Patrol"]

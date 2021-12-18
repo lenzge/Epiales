@@ -1,29 +1,36 @@
 extends CharacterState
 
-func enter(_msg := {}):
-	.enter(_msg)
-	assert("run_move_speed" in character)
-	assert("walk_move_speed" in character)
-	character.animation.play("Run")
+export var walk_move_accel : float
+export var run_move_accel : float
+
+func _ready():
 	processing_mode = 1
+	yield(owner, "ready")
+	assert("is_running" in character)
+
+
+func start_animation():
+	character.animation.play("Run")
+
 
 func physics_update(delta):
+	.physics_update(delta)
 	#Logic
 	if character.is_running:
-		character.velocity.x += character.move_input.x * character.walk_move_speed * delta
+		character.velocity.x += character.consume_move().x * walk_move_accel * delta
 	else:
-		character.velocity.x += character.move_input.x * character.run_move_speed * delta
+		character.velocity.x += character.consume_move().x* run_move_accel * delta
 	
 	character.velocity.y += character.gravity * delta
 	character.apply_air_drag(delta)
 	
 	character.move_and_slide(character.velocity, Vector2.UP)
-	
-	#Update Animation
-	if not is_equal_approx(character.move_input.x, 0.0):
+
+
+func update_animation(delta):
+	if not is_equal_approx(character.consume_move().x, 0.0):
 		if character.is_facing_right && character.move_input.x < 0.0 || !character.is_facing_right && character.move_input.x  > 0.0:
 			character.flip()
-	.physics_update(delta)
 
 
 func check_transitions(delta):

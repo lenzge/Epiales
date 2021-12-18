@@ -1,0 +1,681 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://Nodes/Characters/Enemies/States/Attack.gd" type="Script" id=1]
+[ext_resource path="res://Nodes/Characters/Enemies/States/Flinch.gd" type="Script" id=2]
+[ext_resource path="res://Nodes/Util/DamageEmitter.gd" type="Script" id=3]
+[ext_resource path="res://Nodes/Characters/Enemies/Character.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet/PuppetCharacter.gd" type="Script" id=5]
+[ext_resource path="res://Nodes/Characters/Enemies/States/Die.gd" type="Script" id=6]
+[ext_resource path="res://Nodes/Characters/Enemies/States/Fall.gd" type="Script" id=7]
+[ext_resource path="res://Nodes/Characters/Enemies/States/AttackRecovery.gd" type="Script" id=8]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/PuppetAttackWindUp.gd" type="Script" id=9]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackRun.gd" type="Script" id=10]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackFall.gd" type="Script" id=11]
+[ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_block_recover.png" type="Texture" id=12]
+[ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack_windup.png" type="Texture" id=13]
+[ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_block.png" type="Texture" id=14]
+[ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack_recovery.png" type="Texture" id=15]
+[ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_idle.png" type="Texture" id=16]
+[ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack.png" type="Texture" id=17]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 39.4651, 45.2828 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends CharacterState
+
+export(int, \"GRAVITY\", \"CONSTANT\") var fall_mode : int = 1
+export var constant_fall_speed : float = 0
+export var should_reset_y_velocity : bool = false
+
+func enter(_msg := {}):
+	.enter(_msg)
+	character.velocity.x = 0.0
+	if should_reset_y_velocity:
+		character.velocity.y = 0.0
+	if fall_mode == 1:
+		character.velocity.y = constant_fall_speed
+
+
+func physics_update(delta):
+	.physics_update(delta)
+	if fall_mode == 0:
+		character.velocity.y += character.gravity * delta
+		character.apply_air_drag(delta)
+	else:
+		character.apply_air_drag_x(delta)
+	character.velocity = character.move_and_slide(character.velocity, Vector2.UP)
+
+
+func start_animation():
+	.start_animation()
+	character.animation.play(\"Recoil\") 
+
+
+func _on_timeout():
+	state_machine.transition_to(\"Run\")
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends \"res://Nodes/Characters/Enemies/States/Run.gd\"
+
+
+func _on_attack():
+	state_machine.transition_to(\"AttackWindUp\")
+"
+
+[sub_resource type="Animation" id=4]
+resource_name = "Attack0"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 17 ), ExtResource( 12 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -3.55271e-15, -0.26487 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("StateMachine/Attack")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_timeout"
+} ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Attack1"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 17 ), ExtResource( 12 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -3.55271e-15, -0.26487 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("StateMachine/Attack")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_timeout"
+} ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "AttackFall"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 13 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -3.55271e-15, -0.26487 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "AttackRecovery"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 15 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -3.55271e-15, -0.26487 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("StateMachine/AttackRecovery")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_timeout"
+} ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "AttackRun"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 13 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -3.55271e-15, -0.26487 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "AttackWindUp0"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 13 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -3.55271e-15, -0.26487 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("StateMachine/AttackWindUp")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_timeout"
+} ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "AttackWindUp1"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 13 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -3.55271e-15, -0.26487 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("StateMachine/AttackWindUp")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_timeout"
+} ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Die"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 15 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.956863, 0.109804, 0.109804, 0.811765 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("StateMachine/Die")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_timeout"
+} ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "Fall"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 16 ) ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "Flinch"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.226341, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.917647, 0.180392, 0.180392, 0.392157 ), Color( 0.933333, 0.32549, 0.32549, 1 ), Color( 0.92549, 0.627451, 0.627451, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("StateMachine/Flinch")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_timeout"
+} ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "Recoil"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.756863, 0, 1, 0.392157 ), Color( 0.756863, 0, 1, 0.392157 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("StateMachine/Recoil")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_timeout"
+} ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "Run"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 16 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -0.612068, -0.26487 ), Vector2( -0.612068, -8 ), Vector2( -0.612068, -0.264871 ), Vector2( -0.612068, -8 ), Vector2( -5.96046e-08, -0.264871 ), Vector2( -2.98023e-08, -8 ), Vector2( -0.612068, -0.26487 ) ]
+}
+
+[node name="PuppetCharacter" instance=ExtResource( 4 )]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource( 5 )
+air_drag = 0.01
+health = 100.0
+max_health = 100.0
+_attack_area_path = NodePath("AttackArea")
+
+[node name="Sprite" parent="." index="0"]
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 16 )
+flip_h = true
+
+[node name="AttackArea" type="Area2D" parent="." index="2"]
+collision_layer = 2
+script = ExtResource( 3 )
+emitter_path = NodePath("..")
+
+[node name="Shape" type="CollisionShape2D" parent="AttackArea" index="0"]
+position = Vector2( 60, 0 )
+shape = SubResource( 1 )
+disabled = true
+
+[node name="HitBox" parent="." index="3"]
+collision_layer = 2
+
+[node name="StateMachine" parent="." index="4"]
+initial_state = NodePath("Run")
+
+[node name="AttackWindUp" type="Node" parent="StateMachine" index="0"]
+script = ExtResource( 9 )
+processing_mode = 1
+
+[node name="AttackRun" type="Node" parent="StateMachine" index="1"]
+script = ExtResource( 10 )
+processing_mode = 1
+
+[node name="AttackFall" type="Node" parent="StateMachine" index="2"]
+script = ExtResource( 11 )
+processing_mode = 1
+
+[node name="Attack" type="Node" parent="StateMachine" index="3"]
+script = ExtResource( 1 )
+processing_mode = 1
+attack_area_path = NodePath("../../AttackArea")
+
+[node name="Recoil" type="Node" parent="StateMachine" index="4"]
+script = SubResource( 2 )
+processing_mode = 1
+
+[node name="AttackRecovery" type="Node" parent="StateMachine" index="5"]
+script = ExtResource( 8 )
+processing_mode = 1
+
+[node name="Run" type="Node" parent="StateMachine" index="6"]
+script = SubResource( 3 )
+processing_mode = 1
+walk_move_accel = 200.0
+
+[node name="Fall" type="Node" parent="StateMachine" index="7"]
+script = ExtResource( 7 )
+processing_mode = 1
+
+[node name="Flinch" type="Node" parent="StateMachine" index="8"]
+script = ExtResource( 2 )
+processing_mode = 1
+
+[node name="Die" type="Node" parent="StateMachine" index="9"]
+script = ExtResource( 6 )
+processing_mode = 1
+
+[node name="AnimationPlayer" parent="." index="5"]
+anims/Attack0 = SubResource( 4 )
+anims/Attack1 = SubResource( 6 )
+anims/AttackFall = SubResource( 16 )
+anims/AttackRecovery = SubResource( 8 )
+anims/AttackRun = SubResource( 9 )
+anims/AttackWindUp0 = SubResource( 10 )
+anims/AttackWindUp1 = SubResource( 11 )
+anims/Die = SubResource( 5 )
+anims/Fall = SubResource( 13 )
+anims/Flinch = SubResource( 14 )
+anims/Recoil = SubResource( 12 )
+anims/Run = SubResource( 15 )

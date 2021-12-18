@@ -1,0 +1,48 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Nodes/Characters/Enemies/Character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Nodes/Characters/Enemies/States/Die.gd" type="Script" id=2]
+[ext_resource path="res://Nodes/Characters/Enemies/States/Fly.gd" type="Script" id=3]
+[ext_resource path="res://Nodes/Util/DamageEmitter.gd" type="Script" id=4]
+[ext_resource path="res://Nodes/Characters/Enemies/Bird/States/Dive.gd" type="Script" id=5]
+[ext_resource path="res://Nodes/Characters/Enemies/States/DirectionalFlinch.gd" type="Script" id=6]
+[ext_resource path="res://Nodes/Characters/Enemies/Bird/Bird.gd" type="Script" id=7]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 20.0
+
+[node name="Character" instance=ExtResource( 1 )]
+script = ExtResource( 7 )
+
+[node name="Shape" parent="." index="1"]
+shape = SubResource( 1 )
+
+[node name="Shape" parent="HitBox" index="0"]
+shape = SubResource( 2 )
+
+[node name="DamageBox" type="Area2D" parent="." index="3"]
+script = ExtResource( 4 )
+emitter_path = NodePath("..")
+damage_amount = 20
+knockback_force = 100.0
+
+[node name="Shape" type="CollisionShape2D" parent="DamageBox" index="0"]
+shape = SubResource( 3 )
+
+[node name="Fly" type="Node" parent="StateMachine" index="0"]
+script = ExtResource( 3 )
+
+[node name="Die" type="Node" parent="StateMachine" index="1"]
+script = ExtResource( 2 )
+
+[node name="Flinch" type="Node" parent="StateMachine" index="2"]
+script = ExtResource( 6 )
+
+[node name="Dive" type="Node" parent="StateMachine" index="3"]
+script = ExtResource( 5 )

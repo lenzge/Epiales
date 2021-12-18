@@ -3,18 +3,23 @@
 func enter(_msg := {}):
 	.enter(_msg)
 	assert("air_move_speed" in character)
+
+
+func start_animation():
 	character.animation.play("Fall")
+
 
 func physics_update(delta):
 	#Logic
-	character.velocity.x += character.move_input.x * character.air_move_speed * delta
+	character.velocity.x += character.consume_move().x * character.air_move_speed * delta
 	character.velocity.y += character.gravity * delta
 	character.apply_air_drag(delta)
 	
 	character.move_and_slide(character.velocity, Vector2.UP)
-	
-	#Update Animation
-	if not is_equal_approx(character.move_input.x, 0.0):
+
+
+func update_animation(delta):
+	if not is_equal_approx(character.consume_move().x, 0.0):
 		if character.is_facing_right && character.move_input.x < 0.0 || !character.is_facing_right && character.move_input.x  > 0.0:
 			character.flip()
 	.physics_update(delta)
