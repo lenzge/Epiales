@@ -2,7 +2,22 @@ extends Node
 
 ###### New verision ######
 
+#####   TODO   #####
+#
+# - Counting BPM
+# - Starting scheduled music
+#
+##### END TODO #####
+
+#######   Notices   ######
+#### Every music is stored in the same folder -> therefore when loading a clip
+#### we only need the name of the music clip
+####
+#### The BPM is controlled in this class
+####### END NOTICES ######
+
 export var SAMPLE_RATE : int = 44_100
+export var BPM : int = 120
 
 const USECS_PER_SECOND : int = 1_000_000
 const MSECS_PER_SECOND : int = 1_000
@@ -10,6 +25,10 @@ const MUSIC_BASE_PATH : String = "res://Assets/Music/"
 
 var thread : Thread
 var running : bool = true
+
+var usecs_per_update : float = 0
+var current_time : int = 0
+var last_update : int = 0
 
 var music_loaded = {}
 var music_scheduled = {}
@@ -26,20 +45,36 @@ class ScheduleData:
 
 
 func _ready():
+	usecs_per_update = (1.0 / SAMPLE_RATE) * USECS_PER_SECOND
 	thread = Thread.new()
 	thread.start(self, "_thread_loop")
 
 
 func _thread_loop():
 	running = true
+	
+	var update_counter : int = 0
+	current_time = OS.get_ticks_usec()
+	last_update = OS.get_ticks_usec()
+	
 	while running:
-		pass
-
-
-#######
-#### Every music is stored in the same folder -> therefore when loading a clip
-#### we only need the name of the music clip
-#######
+		
+		if !music_playing.empty():
+			# The start_time is the time the loop iteration started
+			var start_time = OS.get_ticks_usec()
+			
+			# count updates (sample rate)
+			if start_time >= last_update + usecs_per_update:
+				# last update is the start_time minus the difference between when the start_time should have happened to the actual start_time
+				last_update = start_time - (start_time - (last_update + usecs_per_update)) # = start_time when it should have happened
+				update_counter += 1
+			
+			# count seconds and print done updates
+			if last_update >= current_time + USECS_PER_SECOND:
+				print(update_counter)
+				update_counter = 0
+				# current time is the start_time minus the difference between when the start_time should have happened to the actual start_time
+				current_time = start_time - (start_time - (current_time + USECS_PER_SECOND)) # = start_time when it should have happened
 
 
 func play_music(music_name: String) -> bool:

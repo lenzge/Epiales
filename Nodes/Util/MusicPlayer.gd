@@ -1,11 +1,21 @@
 class_name MusicPlayer
 extends AudioStreamPlayer
 
+#####   TODO   #####
+#
+# - In and out points: When can music be started/stoped
+#	- Probably no out points: The music should always be able to stop / fade out
+# - Fading (is started, but only fade out hardcoded)
+#
+##### END TODO #####
+
+export(Array, Array, int) var in_points # Beats when new music can enter
 
 var loaded : bool = false
 
 var can_unloaded : bool = false
 var is_looping : bool = false setget set_is_looping, get_is_looping
+var fade_out : bool = false
 
 
 func _init(path: String):
@@ -22,6 +32,14 @@ func _init(path: String):
 		return
 	
 	loaded = true
+
+
+func _process(delta):
+	
+	if fade_out:
+		self.volume_db -= 1
+		if self.volume_db <= -80:
+			fade_out = false
 
 
 func set_is_looping(loop: bool) -> void:
