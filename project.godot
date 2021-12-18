@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
+"base": "Reference",
 "class": "BaseLevel",
 "language": "GDScript",
 "path": "res://Nodes/Game Controller/BaseLevel.gd"

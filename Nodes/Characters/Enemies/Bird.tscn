@@ -380,7 +380,12 @@ collision_layer = 2
 collision_mask = 36
 script = ExtResource( 2 )
 gravity = 10
+health_points = 1200
+windup_speed = 100
+walk_speed = 130
+attack_speed = 700
 windup_time = 0.35
+attack_time = 0.2
 max_attack_combo = 1
 
 [node name="StateMachine" type="Node" parent="."]
@@ -449,7 +454,7 @@ enabled = true
 
 [node name="AttackWindupDetection" type="RayCast2D" parent="."]
 rotation = -0.828942
-scale = Vector2( 1, 6 )
+scale = Vector2( 1, 8 )
 enabled = true
 
 [node name="EnemyDetectionRaycast" type="RayCast2D" parent="."]
