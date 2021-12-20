@@ -19,6 +19,8 @@ func enter(_msg := {}):
 		player_instance = PLAYER.instance()
 		player_instance.set_owner(level_instance)
 		level_instance.spawn_player(player_instance)
+	
+	music_controller.play_music("Boss_alternative.mp3")
 
 # Corresponds to the `_physics_process()` callback
 func physics_update(_delta):

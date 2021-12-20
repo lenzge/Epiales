@@ -21,6 +21,7 @@ export var BPM : int = 120
 
 export var print_beats : bool = false
 export var print_updates : bool = false
+export var is_active : bool = false
 
 const USECS_PER_SECOND : int = 1_000_000
 const MSECS_PER_SECOND : int = 1_000
@@ -57,8 +58,9 @@ func _ready():
 	usecs_per_update = (1.0 / SAMPLE_RATE) * USECS_PER_SECOND
 	beats_per_second = BPM / 60.0
 	seconds_per_beat = 1.0 / beats_per_second
-	thread = Thread.new()
-	thread.start(self, "_thread_loop")
+	if is_active:
+		thread = Thread.new()
+		thread.start(self, "_thread_loop")
 
 
 func _thread_loop(userdata):
@@ -80,39 +82,53 @@ func _thread_loop(userdata):
 				# last update is the start_time minus the difference between when the start_time should have happened to the actual start_time
 				last_update = start_time - (start_time - (last_update + usecs_per_update)) # = start_time when it should have happened
 				update_counter += 1
-			
-			# count beats
-			if start_time >= (beat_timer + (seconds_per_beat * USECS_PER_SECOND)):
-				beat_timer = start_time - (start_time - (beat_timer + (seconds_per_beat * USECS_PER_SECOND)))
-				beats += 1
-				for clip in music_scheduled:
-					clip.play(clip.empty_ms)
-				if print_beats:
-					print(beats)
-			
-			# count seconds and print done updates
-			if last_update >= current_time + USECS_PER_SECOND:
-				if print_updates:
-					print(update_counter)
-				update_counter = 0
-				# current time is the start_time minus the difference between when the start_time should have happened to the actual start_time
-				current_time = start_time - (start_time - (current_time + USECS_PER_SECOND)) # = start_time when it should have happened
+				
+				if music_playing.empty():
+					start_music(music_scheduled.keys()[0])
+					beat_timer = start_time
+				
+				# count beats
+				if start_time >= (beat_timer + (seconds_per_beat * USECS_PER_SECOND)):
+					beat_timer = start_time - (start_time - (beat_timer + (seconds_per_beat * USECS_PER_SECOND)))
+					beats += 1
+					for music_name in music_scheduled:
+						start_music(music_name)
+					if print_beats:
+						print(beats)
+				
+				# count seconds and print done updates
+				if last_update >= current_time + USECS_PER_SECOND:
+					if print_updates:
+						print(update_counter)
+					update_counter = 0
+					# current time is the start_time minus the difference between when the start_time should have happened to the actual start_time
+					current_time = start_time - (start_time - (current_time + USECS_PER_SECOND)) # = start_time when it should have happened
+		else:
+			beats = 0
+
+
+func start_music(music_name: String) -> void:
+	var clip = self.get_node(music_name.replace(".", ""))
+#	clip.play(clip.empty_ms / MSECS_PER_SECOND)
+	clip.play()
+	music_playing.append(music_name)
+	music_scheduled.erase(music_name)
 
 
 func play_music(music_name: String) -> bool:
 	# Test if the music is loaded, if not try to load it
 	if music_name in music_loaded or load_music(music_name):
-		schedule_music(music_name, 0) # 0 means play as soon as possible
-		return true
+		if schedule_music(music_name, 0): # 0 means play as soon as possible
+			return true
 	
 	return false
 
 
 func schedule_music(music_name: String, beats: int) -> bool:
 	# Test if the music is loaded, if not try to load it
-	var time_in_usec = 0
+	var time_in_msec = 0
 	if music_name in music_loaded or load_music(music_name):
-		var schedule_data = ScheduleData.new(time_in_usec, OS.get_ticks_usec()) # TODO: Change second parameter to last_update
+		var schedule_data = ScheduleData.new(time_in_msec, OS.get_ticks_msec()) # TODO: Change second parameter to last_update
 		music_scheduled[music_name] = schedule_data
 		return true
 	
@@ -131,6 +147,7 @@ func load_music(music_name: String) -> bool:
 			var music_player = MusicPlayer.new(MUSIC_BASE_PATH + music_name)
 			if music_player.loaded:
 				music_loaded[music_name] = music_player
+				music_player.name = music_name
 				self.add_child(music_player)
 			else:
 				music_player.queue_free()
@@ -150,7 +167,8 @@ func unload_music(music_name: String) -> void:
 
 func _exit_tree():
 	running = false
-	thread.wait_to_finish()
+	if is_active:
+		thread.wait_to_finish()
 
 
 ##############################################################################################################
@@ -172,7 +190,6 @@ export var calm_music_path : String
 export var hectic_music_path : String
 export(SoundtrackTypes) var starting_track
 export var interpolation_damper : float = 5.0
-export var is_active : bool = false
 
 var player : Player = null
 var player_last_position : float
