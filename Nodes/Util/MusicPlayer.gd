@@ -9,6 +9,7 @@ extends AudioStreamPlayer
 #
 ##### END TODO #####
 
+export var empty_ms : int = 500
 export(Array, Array, int) var in_points # Beats when new music can enter
 
 var loaded : bool = false
