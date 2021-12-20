@@ -415,7 +415,7 @@ tracks/2/keys = {
 
 [node name="Puppet" type="KinematicBody2D"]
 collision_layer = 2
-collision_mask = 36
+collision_mask = 37
 script = ExtResource( 2 )
 attack_cooldown_time = 4.0
 attack_force = [ 600, 400, 600 ]
@@ -535,11 +535,13 @@ knockback_time = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageBox"]
 shape = SubResource( 4 )
+disabled = true
 
 [node name="PlayerDetectionArea" type="Area2D" parent="."]
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
+visible = false
 position = Vector2( 0, -49 )
 shape = SubResource( 5 )
 

@@ -1,4 +1,4 @@
 extends AnimationPlayer
 
 func _ready():
-	animation_set_next("Run_Turn","Run")
+	animation_set_next("Run_Turn","Idle")

@@ -286,6 +286,9 @@ func _flip_sprite_in_movement_dir() -> void:
 	if velocity.x < 0:
 		direction = -1
 		sprite.flip_h = true
+		#hitbox.get_child(0).rotation_degrees = -abs(hitbox.get_child(0).rotation_degrees)
+		#collision_shape.rotation_degrees = -44.5#collision_shape.rotation_degrees * direction
+		#collision_shape.position.x = -abs(collision_shape.position.x)
 		hitbox_attack.scale.x = -abs(hitbox_attack.scale.x)
 		hitbox_up_attack.scale.x = -abs(scale.x)
 		hitbox_down_attack.scale.x = -abs(scale.x)
@@ -296,12 +299,16 @@ func _flip_sprite_in_movement_dir() -> void:
 		hitbox_attack.direction = Vector2(1, 0)
 		direction = 1
 		sprite.flip_h = false
+		#hitbox.get_child(0).rotation_degrees = abs(hitbox.get_child(0).rotation_degrees)
+		#collision_shape.rotation_degrees = 44.5 #abs(collision_shape.rotation_degrees)
+		#collision_shape.position.x = abs(collision_shape.position.x)
 		hitbox_attack.scale.x = abs(hitbox_attack.scale.x)
 		hitbox_up_attack.scale.x = abs(scale.x)
 		hitbox_down_attack.scale.x = abs(scale.x)
 		hitbox_up_attack_air.scale.x = abs(hitbox_up_attack_air.scale.x)
 		hitbox_down_attack_air.scale.x = abs(hitbox_down_attack_air.scale.x)
 
+	
 func set_knockback(force, direction):
 	#if sprite.flip_h == true:
 	velocity.x = force * direction

@@ -1104,8 +1104,20 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 0, 0 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
 
-[sub_resource type="Animation" id=47]
+[sub_resource type="Animation" id=43]
 resource_name = "Slide"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1132,7 +1144,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=43]
+[sub_resource type="Animation" id=44]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -1172,8 +1184,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 0.403922, 0.403922, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=44]
-resource_name = "Walk"
+[sub_resource type="Animation" id=45]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -1225,7 +1236,7 @@ tracks/3/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 0 ]
 }
 
-[sub_resource type="Animation" id=45]
+[sub_resource type="Animation" id=46]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1252,7 +1263,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=46]
+[sub_resource type="Animation" id=47]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1287,7 +1298,7 @@ jump_impulse = 800
 charged_windup_time = 0.5
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 67 )
+texture = ExtResource( 17 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = -18.0
@@ -1403,6 +1414,7 @@ script = ExtResource( 33 )
 receiver_path = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+visible = false
 shape = SubResource( 2 )
 
 [node name="Attack" type="Area2D" parent="."]
@@ -1505,11 +1517,11 @@ anims/Idle = SubResource( 39 )
 anims/Jump = SubResource( 40 )
 anims/Run = SubResource( 41 )
 anims/Run_Turn = SubResource( 42 )
-anims/Slide = SubResource( 47 )
-anims/Stunned = SubResource( 43 )
-anims/Walk = SubResource( 44 )
-anims/Wall_Hang = SubResource( 45 )
-anims/Wall_Jump = SubResource( 46 )
+anims/Slide = SubResource( 43 )
+anims/Stunned = SubResource( 44 )
+anims/Walk = SubResource( 45 )
+anims/Wall_Hang = SubResource( 46 )
+anims/Wall_Jump = SubResource( 47 )
 script = ExtResource( 63 )
 
 [node name="ChargeController" type="Control" parent="."]

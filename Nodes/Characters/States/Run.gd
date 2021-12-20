@@ -26,9 +26,9 @@ func physics_update(delta):
 		
 	player.move(delta)
 	# turn?
-	if update_count > 1 and not player.direction == player.prev_direction and abs(player.velocity.x) > 60 :
+	#if update_count > 1 and not player.direction == player.prev_direction and abs(player.velocity.x) > 60 :
 		#player.animation_tree.travel("Run_Turn")
-		animationPlayer.play("Run_Turn")
+		#animationPlayer.play("Run_Turn")
 
 	if Input.is_action_just_pressed("attack"):
 		if Input.is_action_pressed("move_up"):
