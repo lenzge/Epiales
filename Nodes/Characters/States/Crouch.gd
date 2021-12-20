@@ -1,11 +1,16 @@
 extends PlayerState
 
 func enter(msg :={}):
-	.enter(msg)
+	#.enter(msg)
 	player._enter_crouch()
 
 
 func update(delta):
+	if player.velocity.x > 100:
+		animationPlayer.play("Slide")
+	else:
+		animationPlayer.play("Crouch")
+	
 	if not player.is_on_floor():
 		player._exit_crouch()
 		state_machine.transition_to("Fall")

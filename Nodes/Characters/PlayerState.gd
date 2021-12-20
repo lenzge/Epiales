@@ -4,7 +4,7 @@ extends State
 
 var player : Player
 var timer : Timer
-onready var animationPlayer = $"../../AnimationPlayer"
+onready var animationPlayer : AnimationPlayer = $"../../AnimationPlayer"
 
 
 # Owner of the statemachine is a player

@@ -3,7 +3,6 @@ extends PlayerState
 
 func enter(_msg := {}):
 	.enter(_msg)
-	
 
 
 func update(delta):
