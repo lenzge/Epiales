@@ -79,7 +79,7 @@ onready var collision_shape : CollisionShape2D = $CollisionShape2D
 onready var charge_controller = $ChargeController
 
 # For changing hitbox while crouching
-onready var original_height_hitbox = collision_shape.shape.height
+#onready var original_height_hitbox = collision_shape.shape.height
 # Enemy needs to know
 onready var _position = collision_shape.position
 	
@@ -356,21 +356,13 @@ func _slow_with_friction(friction : float) -> void:
 ## Change the players collisionshape when in entering crouch
 ## Called on entering the crouch state
 func _enter_crouch():
-	if collision_shape.shape.height == original_height_hitbox:
-		hitbox.get_child(0).shape.height = original_height_hitbox/2
-		hitbox.get_child(0).position.y = hitbox.get_child(0).position.y + collision_shape.shape.height/4
-		collision_shape.shape.height = original_height_hitbox/2
-		collision_shape.position.y = collision_shape.position.y + collision_shape.shape.height/2
+	pass
 
 
 ## Reset the players collisionshape when exiting crouch
 ## Called whenever the player leaves the crouch states
 func _exit_crouch():
-	collision_shape.position.y = collision_shape.position.y - collision_shape.shape.height/2
-	collision_shape.shape.height = collision_shape.shape.height * 2
-	hitbox.get_child(0).shape.height = collision_shape.shape.height
-	hitbox.get_child(0).position.y = hitbox.get_child(0).position.y - collision_shape.shape.height/4
-	
+	pass
 
 
 func _physics_process(delta):
