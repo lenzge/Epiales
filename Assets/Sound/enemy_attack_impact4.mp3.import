@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/enemy_attack_impact4.mp3-94298e65b5309477ad812f4946c364e5.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/enemy_attack_impact4.mp3"
+dest_files=[ "res://.import/enemy_attack_impact4.mp3-94298e65b5309477ad812f4946c364e5.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

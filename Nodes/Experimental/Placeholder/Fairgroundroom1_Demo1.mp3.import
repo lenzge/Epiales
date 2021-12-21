@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Fairgroundroom1_Demo1.mp3-ba5b135b3dee4bd5c95cbd10bdfbbf4d.mp3str"
+
+[deps]
+
+source_file="res://Nodes/Experimental/Placeholder/Fairgroundroom1_Demo1.mp3"
+dest_files=[ "res://.import/Fairgroundroom1_Demo1.mp3-ba5b135b3dee4bd5c95cbd10bdfbbf4d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

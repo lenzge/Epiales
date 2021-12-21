@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Nodes/Experimental/Placeholder/new_tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Nodes/Characters/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Nodes/Characters/Enemies/Bird.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet.tscn" type="PackedScene" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 17.0956, 66.6313 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 14.9766, 69.5912 )
+
+[node name="Level" type="Node"]
+pause_mode = 2
+
+[node name="PatrolPoints" type="Area2D" parent="."]
+position = Vector2( -277.496, 349.813 )
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PatrolPoints"]
+position = Vector2( -193.882, 6.97906 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="PatrolPoints"]
+position = Vector2( 524.747, 7.41626 )
+shape = SubResource( 2 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+show_collision = true
+collision_bounce = 0.51
+collision_layer = 4
+collision_mask = 51
+format = 1
+tile_data = PoolIntArray( 720924, 1, 0, 720925, 1, 0, 720926, 1, 0, 720927, 1, 0, 720928, 1, 0, 1048556, 1, 0, 1048557, 1, 0, 1048558, 1, 0, 1048559, 1, 0, 983053, 1, 0, 983056, 1, 0, 983057, 1, 0, 983058, 1, 0, 983059, 1, 0, 983060, 1, 0, 983061, 1, 0, 983062, 1, 0, 983063, 1, 0, 983064, 1, 0, 983065, 1, 0, 1048589, 1, 0, 1114125, 1, 0, 1245120, 1, 0, 1245121, 1, 0, 1245122, 1, 0, 1245123, 1, 0, 1245124, 1, 0, 1245125, 1, 0, 1245126, 1, 0, 1245127, 1, 0, 1245128, 1, 0, 1245129, 1, 0, 1245130, 1, 0, 1245131, 1, 0, 1245132, 1, 0, 1245133, 1, 0, 1245134, 1, 0, 1245135, 1, 0, 1245136, 1, 0, 1245137, 1, 0, 1245138, 1, 0, 1245139, 1, 0, 1245140, 1, 0, 1245141, 1, 0, 1245142, 1, 0, 1245143, 1, 0, 1245144, 1, 0, 1245145, 1, 0, 1245146, 1, 0, 1245147, 1, 0, 1245148, 1, 0, 1245149, 1, 0, 1245150, 1, 0, 1245151, 1, 0, 1245152, 1, 0, 1245153, 1, 0, 1245154, 1, 0, 1245155, 1, 0, 1245156, 1, 0, 1245157, 1, 0, 1245158, 1, 0, 1245159, 1, 0, 1245160, 1, 0, 1245161, 1, 0, 1245162, 1, 0, 1245163, 1, 0, 1245168, 1, 0, 1245169, 1, 0, 1245170, 1, 0, 1245171, 1, 0, 1245172, 1, 0, 1245173, 1, 0, 1245174, 1, 0, 1245175, 1, 0, 1245176, 1, 0, 1245177, 1, 0, 1245178, 1, 0, 1245179, 1, 0, 1245180, 1, 0, 1245181, 1, 0, 1245182, 1, 0, 1245183, 1, 0, 1179648, 1, 0, 1179649, 1, 0, 1179650, 1, 0, 1179651, 1, 0, 1179652, 1, 0, 1179653, 1, 0, 1179654, 1, 0, 1179655, 1, 0, 1179656, 1, 0, 1179657, 1, 0, 1179658, 1, 0, 1179659, 1, 0, 1179660, 1, 0, 1179661, 1, 0, 1179662, 1, 0, 1179663, 1, 0 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( -611.987, 440.158 )
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2( 3.54099, -41.7799 )
+current = true
+zoom = Vector2( 0.6, 0.6 )
+limit_smoothed = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.0
+drag_margin_top = 0.6
+drag_margin_right = 0.0
+drag_margin_bottom = 0.1
+
+[node name="Bird" parent="." instance=ExtResource( 3 )]
+position = Vector2( -357.019, 343.154 )
+gravity = 20
+direction = 1
+running_speed = 500
+attack_speed = 200
+attack_cooldown_time = 3.0
+
+[node name="Puppet2" parent="." instance=ExtResource( 4 )]
+position = Vector2( -465.365, 532.523 )
+direction = 1
+recovery_speed = 50
+
+[node name="Puppet" parent="." instance=ExtResource( 4 )]
+position = Vector2( 340.867, 527.592 )
+windup_speed = 0
+recovery_speed = 50
+freeze_time = 1.0
