@@ -2055,15 +2055,19 @@ bus = "Sounds"
 
 [node name="Landing" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 54 )
+bus = "Sounds"
 
 [node name="Sword Swing 1" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 70 )
+bus = "Sounds"
 
 [node name="Sword Swing 2" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 69 )
+bus = "Sounds"
 
 [node name="Charged Attack" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 71 )
+bus = "Sounds"
 
 [connection signal="blocked" from="." to="ChargeController" method="_on_blocked"]
 [connection signal="on_hit_start" from="Hitbox" to="." method="on_hit"]

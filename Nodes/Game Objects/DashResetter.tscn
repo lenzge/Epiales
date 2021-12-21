@@ -23,3 +23,4 @@ script = ExtResource( 3 )
 
 [node name="Orb" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 4 )
+bus = "Sounds"
