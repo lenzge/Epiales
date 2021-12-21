@@ -1,11 +1,12 @@
 extends PlayerState
 
 onready var player_collision = get_node("../../CollisionShape2D")
+export (int) var COLLISION_LAYER_BIT = 3
+onready var collision_bit
 
 func enter(msg :={}):
 	.enter(msg)
 	player._enter_crouch()
-
 
 func update(delta):
 	if not player.is_on_floor():
@@ -31,13 +32,8 @@ func physics_update(delta):
 	player.crouch_move(delta)
 
 func crouch_jump():
-	if player_collision:
-		player_collision.set_disabled(true)
-		timer.start(0.065)
-		
-
-func _on_timeout():
-	player_collision.set_disabled(false)
+#	player.position.y+=10
+	player.set_collision_mask_bit(2,false)
 	player._exit_crouch()
 	state_machine.transition_to("Fall")
 
@@ -53,6 +49,16 @@ func _set_hitbox(to_crouch):
 		player.collision_shape.shape.height = player.collision_shape.shape.height * 2
 		player.hitbox.get_child(0).shape.height = player.collision_shape.shape.height
 		player.hitbox.get_child(0).position.y = player.hitbox.get_child(0).position.y - player.collision_shape.shape.height/4
-	
-	
-	
+
+
+
+func _on_GroundDetection_area_exited(area):
+	pass # Replace with function body.
+
+
+func _on_GroundDetection_body_shape_exited(body_id, body, body_shape, local_shape):
+	player.set_collision_mask_bit(2,true)
+	print("body name: ",body.name)
+	print("body id: ",body_id)
+	print("body shape: ",body_shape)
+	print("local shape: ",local_shape)
