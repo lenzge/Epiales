@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=2]
+[gd_scene load_steps=114 format=2]
 
 [ext_resource path="res://Assets/Art/Luci/Luci_Idle_11.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -27,9 +27,6 @@
 [ext_resource path="res://Nodes/Characters/States/Attack_Down_Ground_Windup.gd" type="Script" id=25]
 [ext_resource path="res://Nodes/Characters/States/Attack_Down_Ground.gd" type="Script" id=26]
 [ext_resource path="res://Nodes/Characters/States/Attack_Down_Ground_Recovery.gd" type="Script" id=27]
-[ext_resource path="res://Nodes/Characters/States/Crouch_Block_Windup.gd" type="Script" id=28]
-[ext_resource path="res://Nodes/Characters/States/Crouch_Block.gd" type="Script" id=29]
-[ext_resource path="res://Nodes/Characters/States/Crouch_Block_Recovery.gd" type="Script" id=30]
 [ext_resource path="res://Assets/Art/Luci/Luci_Block_11.png" type="Texture" id=31]
 [ext_resource path="res://Nodes/Util/DamageEmitter.gd" type="Script" id=32]
 [ext_resource path="res://Nodes/Util/DamageReceiver.gd" type="Script" id=33]
@@ -1026,7 +1023,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=34]
-length = 0.05
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -1050,6 +1047,30 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CollisionShape2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 49.5 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CollisionShape2D:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=35]
@@ -1115,7 +1136,7 @@ tracks/4/keys = {
 "values": [ Vector2( 2.22902, 0.732301 ) ]
 }
 
-[sub_resource type="Animation" id=47]
+[sub_resource type="Animation" id=36]
 resource_name = "Crouch_Block"
 length = 0.15
 tracks/0/type = "value"
@@ -1179,7 +1200,7 @@ tracks/4/keys = {
 "values": [ Vector2( 2.22902, 0.732301 ) ]
 }
 
-[sub_resource type="Animation" id=48]
+[sub_resource type="Animation" id=37]
 resource_name = "Crouch_Block_Recovery"
 length = 0.4
 tracks/0/type = "value"
@@ -1243,7 +1264,7 @@ tracks/4/keys = {
 "values": [ Vector2( 2.22902, 0.732301 ) ]
 }
 
-[sub_resource type="Animation" id=49]
+[sub_resource type="Animation" id=38]
 resource_name = "Crouch_Block_Windup"
 length = 0.05
 tracks/0/type = "value"
@@ -1307,7 +1328,7 @@ tracks/4/keys = {
 "values": [ Vector2( 2.22902, 0.732301 ) ]
 }
 
-[sub_resource type="Animation" id=36]
+[sub_resource type="Animation" id=39]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1370,7 +1391,7 @@ tracks/4/keys = {
 "values": [ Vector2( 0, 49.5 ) ]
 }
 
-[sub_resource type="Animation" id=37]
+[sub_resource type="Animation" id=40]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -1408,7 +1429,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=38]
+[sub_resource type="Animation" id=41]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1495,7 +1516,7 @@ tracks/6/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=39]
+[sub_resource type="Animation" id=42]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1558,7 +1579,7 @@ tracks/4/keys = {
 "values": [ Vector2( 1.72, 1 ) ]
 }
 
-[sub_resource type="Animation" id=40]
+[sub_resource type="Animation" id=43]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -1646,7 +1667,7 @@ tracks/6/keys = {
 "values": [ Vector2( 0, 49.5 ) ]
 }
 
-[sub_resource type="Animation" id=41]
+[sub_resource type="Animation" id=44]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1709,8 +1730,7 @@ tracks/4/keys = {
 "values": [ Vector2( 0, 57 ) ]
 }
 
-[sub_resource type="Animation" id=42]
-resource_name = "Slide"
+[sub_resource type="Animation" id=45]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -1760,7 +1780,7 @@ tracks/3/keys = {
 "values": [ Vector2( 2.22902, 0.732301 ) ]
 }
 
-[sub_resource type="Animation" id=43]
+[sub_resource type="Animation" id=46]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -1800,7 +1820,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 0.403922, 0.403922, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=44]
+[sub_resource type="Animation" id=47]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -1852,7 +1872,7 @@ tracks/3/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 0 ]
 }
 
-[sub_resource type="Animation" id=45]
+[sub_resource type="Animation" id=48]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1903,7 +1923,7 @@ tracks/3/keys = {
 "values": [ Vector2( 0, 43 ) ]
 }
 
-[sub_resource type="Animation" id=46]
+[sub_resource type="Animation" id=49]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1961,7 +1981,7 @@ gravity = 2000
 jump_impulse = 800
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 51 )
+texture = ExtResource( 45 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = -18.0
@@ -1973,8 +1993,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 57 )
-scale = Vector2( 2.22902, 0.732301 )
+position = Vector2( 0, 49.5 )
 shape = SubResource( 1 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -2028,15 +2047,6 @@ script = ExtResource( 23 )
 
 [node name="Crouch" type="Node" parent="StateMachine"]
 script = ExtResource( 24 )
-
-[node name="Crouch_Block_Windup" type="Node" parent="StateMachine"]
-script = ExtResource( 28 )
-
-[node name="Crouch_Block" type="Node" parent="StateMachine"]
-script = ExtResource( 29 )
-
-[node name="Crouch_Block_Recovery" type="Node" parent="StateMachine"]
-script = ExtResource( 30 )
 
 [node name="Attack_Down_Ground_Windup" type="Node" parent="StateMachine"]
 script = ExtResource( 25 )
@@ -2175,20 +2185,20 @@ anims/Block = SubResource( 32 )
 anims/Block_Recovery = SubResource( 33 )
 anims/Block_Windup = SubResource( 34 )
 anims/Crouch = SubResource( 35 )
-anims/Crouch_Block = SubResource( 47 )
-anims/Crouch_Block_Recovery = SubResource( 48 )
-anims/Crouch_Block_Windup = SubResource( 49 )
-anims/Dash = SubResource( 36 )
-anims/Fall = SubResource( 37 )
-anims/Idle = SubResource( 38 )
-anims/Jump = SubResource( 39 )
-anims/Run = SubResource( 40 )
-anims/Run_Turn = SubResource( 41 )
-anims/Slide = SubResource( 42 )
-anims/Stunned = SubResource( 43 )
-anims/Walk = SubResource( 44 )
-anims/Wall_Hang = SubResource( 45 )
-anims/Wall_Jump = SubResource( 46 )
+anims/Crouch_Block = SubResource( 36 )
+anims/Crouch_Block_Recovery = SubResource( 37 )
+anims/Crouch_Block_Windup = SubResource( 38 )
+anims/Dash = SubResource( 39 )
+anims/Fall = SubResource( 40 )
+anims/Idle = SubResource( 41 )
+anims/Jump = SubResource( 42 )
+anims/Run = SubResource( 43 )
+anims/Run_Turn = SubResource( 44 )
+anims/Slide = SubResource( 45 )
+anims/Stunned = SubResource( 46 )
+anims/Walk = SubResource( 47 )
+anims/Wall_Hang = SubResource( 48 )
+anims/Wall_Jump = SubResource( 49 )
 script = ExtResource( 63 )
 
 [node name="ChargeController" type="Control" parent="."]

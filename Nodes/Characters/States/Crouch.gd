@@ -22,7 +22,7 @@ func update(delta):
 	elif Input.is_action_just_pressed("dash"):
 		state_machine.transition_to("Dash")
 	elif Input.is_action_just_pressed("block"):
-		state_machine.transition_to("Crouch_Block_Windup")
+		state_machine.transition_to("Block_Windup")
 
 
 func physics_update(delta):
