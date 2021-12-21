@@ -52,12 +52,6 @@ export(float) var friction_air : float = 20
 export(float) var friction_dash: float = 5
 export(float) var friction_leap_jump: float = 10
 
-export(float) var windup_time : float = 0.2
-export(float) var charged_windup_time : float = 0.7
-export(float) var block_time : float = 0.3
-export(float) var attack_time : float = 0.2
-export(float) var charged_attack_time : float = 0.4
-export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 export(float) var dash_cooldown_time : float = 1.0
 export(float) var leap_jump_time : float = 0.8
@@ -81,8 +75,6 @@ onready var charge_controller = $ChargeController
 # Enemy needs to know
 onready var _position = collision_shape.position
 	
-
-
 signal blocked
 
 
@@ -283,28 +275,17 @@ func _flip_sprite_in_movement_dir() -> void:
 	prev_direction = direction
 	if velocity.x < 0:
 		direction = -1
-		sprite.flip_h = true
-		#hitbox.get_child(0).rotation_degrees = -abs(hitbox.get_child(0).rotation_degrees)
-		#collision_shape.rotation_degrees = -44.5#collision_shape.rotation_degrees * direction
-		#collision_shape.position.x = -abs(collision_shape.position.x)
-		hitbox_attack.scale.x = -abs(hitbox_attack.scale.x)
-		hitbox_up_attack.scale.x = -abs(scale.x)
-		hitbox_down_attack.scale.x = -abs(scale.x)
-		hitbox_up_attack_air.scale.x = -abs(hitbox_up_attack_air.scale.x)
-		hitbox_down_attack_air.scale.x = -abs(hitbox_down_attack_air.scale.x)
-		hitbox_attack.direction = Vector2(-1, 0)
+		#sprite.flip_h = true
 	elif velocity.x > 0:
-		hitbox_attack.direction = Vector2(1, 0)
 		direction = 1
-		sprite.flip_h = false
-		#hitbox.get_child(0).rotation_degrees = abs(hitbox.get_child(0).rotation_degrees)
-		#collision_shape.rotation_degrees = 44.5 #abs(collision_shape.rotation_degrees)
-		#collision_shape.position.x = abs(collision_shape.position.x)
-		hitbox_attack.scale.x = abs(hitbox_attack.scale.x)
-		hitbox_up_attack.scale.x = abs(scale.x)
-		hitbox_down_attack.scale.x = abs(scale.x)
-		hitbox_up_attack_air.scale.x = abs(hitbox_up_attack_air.scale.x)
-		hitbox_down_attack_air.scale.x = abs(hitbox_down_attack_air.scale.x)
+		#sprite.flip_h = false
+	scale.x = abs(scale.x) * direction
+	hitbox_attack.direction = Vector2(direction, 0)
+	hitbox_attack.scale.x = abs(hitbox_attack.scale.x) * direction
+	hitbox_up_attack.scale.x = abs(scale.x) * direction
+	hitbox_down_attack.scale.x = abs(scale.x) * direction
+	hitbox_up_attack_air.scale.x = abs(hitbox_up_attack_air.scale.x) * direction
+	hitbox_down_attack_air.scale.x = abs(hitbox_down_attack_air.scale.x) * direction
 
 	
 func set_knockback(force, direction):
