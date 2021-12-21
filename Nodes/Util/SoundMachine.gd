@@ -20,8 +20,11 @@ func play_sound(sound: String, loop: bool) -> void:
 			node.stream.loop = loop
 		# WAV
 		else:
-			node.stream.loop_mode = AudioStreamSample.LOOP_FORWARD
-			node.stream.loop_end = node.stream.get_length() * node.stream.mix_rate
+			if loop:
+				node.stream.loop_mode = AudioStreamSample.LOOP_FORWARD
+				node.stream.loop_end = node.stream.get_length() * node.stream.mix_rate
+			else:
+				node.stream.loop_mode = AudioStreamSample.LOOP_DISABLED
 		
 		node.play()
 		
