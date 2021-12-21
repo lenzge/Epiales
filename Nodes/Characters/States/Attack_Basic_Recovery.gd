@@ -1,9 +1,8 @@
 extends PlayerState
 
-
-	
 func enter(_msg := {}):
 	animationPlayer.play("Attack_Basic" + str(player.attack_count)+"_Recovery")
+	.animation_to_timer()
 	
 	
 func physics_update(delta):
@@ -18,7 +17,5 @@ func exit():
 	.exit()
 	player.attack_count = 1
 		
-func _on_animation_finished(anim_name):
-	if not anim_name == "Attack_Basic" + str(player.attack_count)+"_Recovery":
-		return
+func _on_timeout():
 	state_machine.transition_to("Idle")

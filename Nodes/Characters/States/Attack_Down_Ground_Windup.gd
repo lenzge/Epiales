@@ -1,14 +1,9 @@
 extends PlayerState
 
-func _ready():
-	._ready()
-	yield(owner, "ready")
-
 
 func enter(_msg := {}):
 	.enter(_msg)
-	timer.set_wait_time(player.windup_time)
-	timer.start()
+	.animation_to_timer()
 
 
 # Check if attack is canceled

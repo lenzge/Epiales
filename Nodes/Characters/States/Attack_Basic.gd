@@ -1,12 +1,10 @@
 extends PlayerState
 
-func _ready():
-	animationPlayer.connect("animation_finished", self, "_on_animation_finished")
-
 func enter(_msg := {}):
 	if player.in_charged_attack:
 		player.attack_count = 4	# for getting the fourth entry of the arrays
 	animationPlayer.play("Attack_Basic" + str(player.attack_count))
+	.animation_to_timer()
 	player.hitbox_attack.get_child(0).disabled = false
 	player.hitbox_attack.knockback_force = player.attack_force[player.attack_count -1]
 	player.hitbox_attack.knockback_time = player.attack_knockback[player.attack_count -1]
@@ -21,9 +19,7 @@ func exit():
 	.exit()
 	player.hitbox_attack.get_child(0).disabled = true
 	
-func _on_animation_finished(anim_name):
-	if not anim_name == "Attack_Basic" + str(player.attack_count):
-		return
+func _on_timeout():
 	# Transition to next state
 	var input = player.last_input.back()
 	if player.in_charged_attack:

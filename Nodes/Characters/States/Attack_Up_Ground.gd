@@ -1,14 +1,9 @@
 extends PlayerState
 
-func _ready():
-	._ready()
-	yield(owner, "ready")
-
 
 func enter(msg :={}):
 	.enter(msg)
-	timer.set_wait_time(player.attack_time)
-	timer.start()
+	.animation_to_timer()
 	# enable the attack hitboxes
 	player.get_node("Attack_Up_Ground/HitboxAttack_Front").disabled = false
 	player.get_node("Attack_Up_Ground/HitboxAttack_Top").disabled = false

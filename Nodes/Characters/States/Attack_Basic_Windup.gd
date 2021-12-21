@@ -1,8 +1,5 @@
 extends PlayerState
 
-func _ready():
-	animationPlayer.connect("animation_finished", self, "_on_animation_finished")
-
 func enter(_msg := {}):
 	if Input.is_action_pressed("charge") and player.charge_controller.charge_points > 0:
 		player.in_charged_attack = true
@@ -11,7 +8,7 @@ func enter(_msg := {}):
 	else:
 		player.in_charged_attack = false
 	animationPlayer.play("Attack_Basic" + str(player.attack_count)+"_Windup")
-
+	.animation_to_timer()
 
 func physics_update(delta):
 	
@@ -29,9 +26,7 @@ func physics_update(delta):
 		elif Input.is_action_pressed("block"):
 			state_machine.transition_to("Block_Windup")
 			
-func _on_animation_finished(anim_name):
-	if not anim_name == "Attack_Basic" + str(player.attack_count)+"_Windup":
-		return
+func _on_timeout():
 	var input = player.pop_combat_queue()
 	if player.in_charged_attack or input == player.PossibleInput.ATTACK_BASIC or player.PossibleInput.ATTACK_AIR:
 		state_machine.transition_to("Attack_Basic")
