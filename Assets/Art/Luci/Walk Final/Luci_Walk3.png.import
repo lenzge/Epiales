@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Luci_LightAttack3_11.png-5245840f9c82f67a1b00d07876adb807.stex"
+path="res://.import/Luci_Walk3.png-2d16b02e19d3eaafbe11dbd64c3d76e5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Luci/Luci_LightAttack3_11.png"
-dest_files=[ "res://.import/Luci_LightAttack3_11.png-5245840f9c82f67a1b00d07876adb807.stex" ]
+source_file="res://Assets/Art/Luci/Walk Final/Luci_Walk3.png"
+dest_files=[ "res://.import/Luci_Walk3.png-2d16b02e19d3eaafbe11dbd64c3d76e5.stex" ]
 
 [params]
 

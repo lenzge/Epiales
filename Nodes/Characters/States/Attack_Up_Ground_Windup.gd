@@ -2,15 +2,9 @@ extends PlayerState
 
 ## It's basicly the same as the Attack_Basic_Windup state
 
-func _ready():
-	._ready()
-	yield(owner, "ready")
-
-
 func enter(msg :={}):
 	.enter(msg)
-	timer.set_wait_time(player.windup_time)
-	timer.start()
+	.animation_to_timer()
 
 
 func update(delta):
