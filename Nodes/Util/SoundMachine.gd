@@ -57,6 +57,10 @@ func randomize_pitch(sound, min_pitch, max_pitch):
 		print("[SoundMachine] Could not randomize pitch of '", sound, "': Sound not found")
 
 
+func get_random(min_num: int, max_num: int) -> int:
+	return rng.randi_range(min_num, max_num)
+
+
 func is_sound_available(sound: String) -> bool:
 	if has_node(sound):
 		return true
