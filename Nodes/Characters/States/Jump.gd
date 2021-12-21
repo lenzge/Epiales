@@ -9,6 +9,9 @@ func enter(_msg := {}):
 
 func exit():
 	player.add_jump_gravity_damper = false
+	
+	if player.is_on_floor():
+		player.sound_machine.play_sound("Landing", false)
 
 
 func update(delta):

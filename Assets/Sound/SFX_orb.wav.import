@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SFX_orb.wav-b5edad2923bc636391f9a81b2103258c.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX_orb.wav"
+dest_files=[ "res://.import/SFX_orb.wav-b5edad2923bc636391f9a81b2103258c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
