@@ -1,34 +1,31 @@
 extends PlayerState
 
+func _ready():
+	animationPlayer.connect("animation_finished", self, "_on_animation_finished")
 
 func enter(_msg := {}):
-	#.enter(_msg)
 	if player.in_charged_attack:
 		player.attack_count = 4	# for getting the fourth entry of the arrays
-		timer.set_wait_time(player.charged_attack_time)
-	else:
-		timer.set_wait_time(player.attack_time)
 	animationPlayer.play("Attack_Basic" + str(player.attack_count))
-	timer.start()
 	player.hitbox_attack.get_child(0).disabled = false
 	player.hitbox_attack.knockback_force = player.attack_force[player.attack_count -1]
 	player.hitbox_attack.knockback_time = player.attack_knockback[player.attack_count -1]
-
-
+	
 func physics_update(delta):
 	if player.is_on_floor():
 		player.attack_move(delta)
 	else:
 		player.attack_updown_air_move(delta)
-
+		
 func exit():
 	.exit()
 	player.hitbox_attack.get_child(0).disabled = true
-
-func _on_timeout():
+	
+func _on_animation_finished(anim_name):
+	if not anim_name == "Attack_Basic" + str(player.attack_count):
+		return
 	# Transition to next state
 	var input = player.last_input.back()
-
 	if player.in_charged_attack:
 		player.in_charged_attack = false
 		state_machine.transition_to("Attack_Basic_Recovery")

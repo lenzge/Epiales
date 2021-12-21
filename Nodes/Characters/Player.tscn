@@ -234,7 +234,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=12]
-length = 0.2
+length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -315,6 +315,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=15]
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -341,6 +342,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=16]
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -367,6 +369,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=17]
+length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -394,6 +397,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=18]
 resource_name = "Attack_Basic4"
+length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -469,6 +473,7 @@ tracks/5/keys = {
 
 [sub_resource type="Animation" id=19]
 resource_name = "Attack_Basic4_Recovery"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -544,6 +549,7 @@ tracks/5/keys = {
 
 [sub_resource type="Animation" id=20]
 resource_name = "Attack_Basic4_Windup"
+length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -1773,7 +1779,7 @@ jump_impulse = 800
 charged_windup_time = 0.5
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 65 )
+texture = ExtResource( 61 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = -18.0
@@ -1785,8 +1791,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 33, 45.5 )
-scale = Vector2( 1.56, 1.16 )
+position = Vector2( 0, 49.5 )
 shape = SubResource( 48 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -1902,8 +1907,7 @@ damage_amount = 20
 direction = Vector2( 1, 0 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
-position = Vector2( 58.044, -17.2714 )
-scale = Vector2( 3.6, 1.32 )
+position = Vector2( 40.044, -3.27136 )
 shape = SubResource( 3 )
 disabled = true
 
