@@ -2,12 +2,6 @@ extends Node
 
 ###### New verision ######
 
-#####   TODO   #####
-#
-# - Starting scheduled music
-#
-##### END TODO #####
-
 #######   Notices   ######
 #### Every music is stored in the same folder -> therefore when loading a clip
 #### we only need the name of the music clip
@@ -91,16 +85,18 @@ func _thread_loop(userdata):
 			last_update = start_time - (start_time - (last_update + usecs_per_update)) # = start_time when it should have happened
 			update_counter += 1
 			
+			# start scheduled music
 			if music_playing.empty() and !music_scheduled.empty():
 				start_music(music_scheduled.keys()[0], start_time)
 				beat_timer = start_time
+			elif !music_scheduled.empty():
+				for music_name in music_scheduled:
+					start_music(music_name, start_time)
 			
 			# count beats
 			if start_time >= (beat_timer + (seconds_per_beat * USECS_PER_SECOND)):
 				beat_timer = start_time - (start_time - (beat_timer + (seconds_per_beat * USECS_PER_SECOND)))
 				beats += 1
-				for music_name in music_scheduled:
-					start_music(music_name, start_time)
 				for music_name in music_playing:
 					get_node(music_name.replace(".", "")).count_beat()
 				if print_beats:
