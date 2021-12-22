@@ -18,6 +18,8 @@ var can_unloaded : bool = false
 var is_looping : bool = false setget set_is_looping, get_is_looping
 var fade_out : bool = false
 
+var beats : int = 0
+
 
 func _init(path: String):
 	#load the music in here and set it as its own stream
@@ -42,6 +44,16 @@ func _process(delta):
 		self.volume_db -= 1
 		if self.volume_db <= -80:
 			fade_out = false
+			self.stop()
+
+
+func count_beats():
+	beats += 1
+
+
+func stop():
+	.stop()
+	beats = 0
 
 
 func set_is_looping(loop: bool) -> void:

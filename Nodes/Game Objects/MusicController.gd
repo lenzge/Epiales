@@ -80,40 +80,39 @@ func _thread_loop(userdata):
 	last_update = OS.get_ticks_usec()
 	beat_timer = OS.get_ticks_usec()
 	
-	while running:
+	while running and is_active:
 		
-		if !music_playing.empty() or !music_scheduled.empty():
-			# The start_time is the time the loop iteration started
-			var start_time = OS.get_ticks_usec()
+		# The start_time is the time the loop iteration started
+		var start_time = OS.get_ticks_usec()
+		
+		# count updates (sample rate)
+		if start_time >= last_update + usecs_per_update:
+			# last update is the start_time minus the difference between when the start_time should have happened to the actual start_time
+			last_update = start_time - (start_time - (last_update + usecs_per_update)) # = start_time when it should have happened
+			update_counter += 1
 			
-			# count updates (sample rate)
-			if start_time >= last_update + usecs_per_update:
-				# last update is the start_time minus the difference between when the start_time should have happened to the actual start_time
-				last_update = start_time - (start_time - (last_update + usecs_per_update)) # = start_time when it should have happened
-				update_counter += 1
-				
-				if music_playing.empty():
-					start_music(music_scheduled.keys()[0], start_time)
-					beat_timer = start_time
-				
-				# count beats
-				if start_time >= (beat_timer + (seconds_per_beat * USECS_PER_SECOND)):
-					beat_timer = start_time - (start_time - (beat_timer + (seconds_per_beat * USECS_PER_SECOND)))
-					beats += 1
-					for music_name in music_scheduled:
-						start_music(music_name, start_time)
-					if print_beats:
-						print(beats)
-				
-				# count seconds and print done updates
-				if last_update >= current_time + USECS_PER_SECOND:
-					if print_updates:
-						print(update_counter)
-					update_counter = 0
-					# current time is the start_time minus the difference between when the start_time should have happened to the actual start_time
-					current_time = start_time - (start_time - (current_time + USECS_PER_SECOND)) # = start_time when it should have happened
-		else:
-			beats = 0
+			if music_playing.empty() and !music_scheduled.empty():
+				start_music(music_scheduled.keys()[0], start_time)
+				beat_timer = start_time
+			
+			# count beats
+			if start_time >= (beat_timer + (seconds_per_beat * USECS_PER_SECOND)):
+				beat_timer = start_time - (start_time - (beat_timer + (seconds_per_beat * USECS_PER_SECOND)))
+				beats += 1
+				for music_name in music_scheduled:
+					start_music(music_name, start_time)
+				for music_name in music_playing:
+					get_node(music_name).count_beat()
+				if print_beats:
+					print(beats)
+			
+			# count seconds and print done updates
+			if last_update >= current_time + USECS_PER_SECOND:
+				if print_updates:
+					print(update_counter)
+				update_counter = 0
+				# current time is the start_time minus the difference between when the start_time should have happened to the actual start_time
+				current_time = start_time - (start_time - (current_time + USECS_PER_SECOND)) # = start_time when it should have happened
 
 
 func start_music(music_name: String, start_time: int) -> void:
@@ -141,6 +140,18 @@ func schedule_music(music_name: String, beats: int) -> bool:
 	if music_name in music_loaded or load_music(music_name):
 		var schedule_data = ScheduleData.new(time_in_msec * MSEC_TO_USEC_FACTOR, OS.get_ticks_usec())
 		music_scheduled[music_name] = schedule_data
+		return true
+	
+	return false
+
+
+func stop_music(music_name: String) -> bool:
+	if music_name in music_playing:
+		get_node(music_name).stop()
+		music_playing.erase(music_name)
+		return true
+	if music_name in music_scheduled:
+		music_scheduled.erase(music_name)
 		return true
 	
 	return false
