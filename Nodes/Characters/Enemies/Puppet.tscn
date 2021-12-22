@@ -10,7 +10,7 @@
 [ext_resource path="res://Nodes/Characters/EnemyStates/Air.gd" type="Script" id=8]
 [ext_resource path="res://Nodes/Characters/EnemyStates/Attack_Recovery.gd" type="Script" id=9]
 [ext_resource path="res://Nodes/Characters/EnemyStates/Chase.gd" type="Script" id=10]
-[ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_idle.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Art/Enemies/Idle.puppet22.png" type="Texture" id=11]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_block.png" type="Texture" id=12]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack_windup.png" type="Texture" id=13]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack_recovery.png" type="Texture" id=14]
@@ -322,7 +322,6 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=13]
-length = 3.0
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("AttackArea/CollisionShape2D:disabled")
@@ -361,16 +360,64 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:position")
+tracks/3/path = NodePath("Sprite:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -0.612068, -0.26487 ), Vector2( -0.612068, -8 ), Vector2( -0.612068, -0.264871 ), Vector2( -0.612068, -8 ), Vector2( -5.96046e-08, -0.264871 ), Vector2( -2.98023e-08, -8 ), Vector2( -0.612068, -0.26487 ) ]
+"values": [ Vector2( 0.5, 0.5 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -0.612068, -0.26487 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sprite:frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 1, 2, 3, 4, 5, 6, 7, 8 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Sprite:hframes")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 10 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Sprite:vframes")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
 }
 
 [sub_resource type="Animation" id=14]
@@ -456,8 +503,9 @@ script = ExtResource( 19 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -0.612068, -0.26487 )
-scale = Vector2( 0.0955947, 0.0955947 )
-texture = ExtResource( 13 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 11 )
+hframes = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.00113, 4.31743 )
