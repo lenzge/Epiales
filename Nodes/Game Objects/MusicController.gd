@@ -102,7 +102,7 @@ func _thread_loop(userdata):
 				for music_name in music_scheduled:
 					start_music(music_name, start_time)
 				for music_name in music_playing:
-					get_node(music_name).count_beat()
+					get_node(music_name.replace(".", "")).count_beat()
 				if print_beats:
 					print(beats)
 			
@@ -113,6 +113,10 @@ func _thread_loop(userdata):
 				update_counter = 0
 				# current time is the start_time minus the difference between when the start_time should have happened to the actual start_time
 				current_time = start_time - (start_time - (current_time + USECS_PER_SECOND)) # = start_time when it should have happened
+
+
+func get_time_to_next_beat_usec() -> int:
+	return int((beat_timer + (seconds_per_beat * USECS_PER_SECOND)) - last_update)
 
 
 func start_music(music_name: String, start_time: int) -> void:
@@ -128,7 +132,7 @@ func start_music(music_name: String, start_time: int) -> void:
 func play_music(music_name: String) -> bool:
 	# Test if the music is loaded, if not try to load it
 	if music_name in music_loaded or load_music(music_name):
-		if schedule_music(music_name, 0): # 0 means play as soon as possible
+		if schedule_music(music_name, 1): # 1 means play at next beat
 			return true
 	
 	return false
@@ -136,9 +140,9 @@ func play_music(music_name: String) -> bool:
 
 func schedule_music(music_name: String, beats: int) -> bool:
 	# Test if the music is loaded, if not try to load it
-	var time_in_msec = 0
+	var time_in_usec = (((beats - 1) * seconds_per_beat) * USECS_PER_SECOND) + get_time_to_next_beat_usec()
 	if music_name in music_loaded or load_music(music_name):
-		var schedule_data = ScheduleData.new(time_in_msec * MSEC_TO_USEC_FACTOR, OS.get_ticks_usec())
+		var schedule_data = ScheduleData.new(time_in_usec, OS.get_ticks_usec())
 		music_scheduled[music_name] = schedule_data
 		return true
 	

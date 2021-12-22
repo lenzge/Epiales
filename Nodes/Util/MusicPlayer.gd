@@ -47,7 +47,7 @@ func _process(delta):
 			self.stop()
 
 
-func count_beats():
+func count_beat():
 	beats += 1
 
 
