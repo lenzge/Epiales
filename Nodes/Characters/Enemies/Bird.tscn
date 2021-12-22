@@ -470,7 +470,6 @@ script = ExtResource( 15 )
 emitter_path = NodePath("..")
 knockback_force = 400.0
 knockback_time = 0.4
-direction = 180.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 position = Vector2( 6.68176, 2.22725 )
