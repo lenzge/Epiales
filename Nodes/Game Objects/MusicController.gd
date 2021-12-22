@@ -24,6 +24,7 @@ export var is_active : bool = false
 
 const USECS_PER_SECOND : int = 1_000_000
 const MSECS_PER_SECOND : int = 1_000
+const MSEC_TO_USEC_FACTOR : int = 1_000
 const MUSIC_BASE_PATH : String = "res://Assets/Music/"
 
 var thread : Thread
@@ -51,6 +52,15 @@ class ScheduleData:
 	func _init(schedule_in: int, schedule_at: int):
 		scheduled_in = schedule_in
 		scheduled_at = schedule_at
+	
+	func get_time_in_usec() -> int:
+		return scheduled_at + scheduled_in
+	
+	func get_time_in_msec() -> float:
+		return float(get_time_in_usec()) / MSEC_TO_USEC_FACTOR
+	
+	func get_time_in_seconds() -> float:
+		return float(get_time_in_usec()) / USECS_PER_SECOND
 
 
 func _ready():
@@ -83,7 +93,7 @@ func _thread_loop(userdata):
 				update_counter += 1
 				
 				if music_playing.empty():
-					start_music(music_scheduled.keys()[0])
+					start_music(music_scheduled.keys()[0], start_time)
 					beat_timer = start_time
 				
 				# count beats
@@ -91,7 +101,7 @@ func _thread_loop(userdata):
 					beat_timer = start_time - (start_time - (beat_timer + (seconds_per_beat * USECS_PER_SECOND)))
 					beats += 1
 					for music_name in music_scheduled:
-						start_music(music_name)
+						start_music(music_name, start_time)
 					if print_beats:
 						print(beats)
 				
@@ -106,12 +116,14 @@ func _thread_loop(userdata):
 			beats = 0
 
 
-func start_music(music_name: String) -> void:
+func start_music(music_name: String, start_time: int) -> void:
 	var clip = self.get_node(music_name.replace(".", ""))
-#	clip.play(clip.empty_ms / MSECS_PER_SECOND)
-	clip.play()
-	music_playing.append(music_name)
-	music_scheduled.erase(music_name)
+	var schedule_data = music_scheduled[music_name]
+	var start_playing_in = ((clip.empty_ms / MSECS_PER_SECOND) - ((schedule_data.get_time_in_usec() - start_time) / USECS_PER_SECOND)) + (AudioServer.get_time_to_next_mix() + AudioServer.get_output_latency())
+	if start_playing_in > 0:
+		clip.play(start_playing_in)
+		music_playing.append(music_name)
+		music_scheduled.erase(music_name)
 
 
 func play_music(music_name: String) -> bool:
@@ -127,7 +139,7 @@ func schedule_music(music_name: String, beats: int) -> bool:
 	# Test if the music is loaded, if not try to load it
 	var time_in_msec = 0
 	if music_name in music_loaded or load_music(music_name):
-		var schedule_data = ScheduleData.new(time_in_msec, last_update) # TODO: Change second parameter to last_update
+		var schedule_data = ScheduleData.new(time_in_msec * MSEC_TO_USEC_FACTOR, OS.get_ticks_usec())
 		music_scheduled[music_name] = schedule_data
 		return true
 	
