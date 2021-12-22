@@ -26,6 +26,6 @@ func _on_timeout():
 	if input == null:
 		state_machine.transition_to("Idle")
 	elif input == player.PossibleInput.BLOCK:
-		state_machine.transition_to("Crouch_Block_Windup")
+		state_machine.transition_to("Block_Windup")
 	elif input == player.PossibleInput.ATTACK_BASIC:
 		state_machine.transition_to("Attack_Down_Ground")
