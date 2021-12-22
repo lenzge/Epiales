@@ -3,6 +3,8 @@ extends PlayerState
 func enter(_msg := {}):
 	if player.in_charged_attack:
 		player.attack_count = 4	# for getting the fourth entry of the arrays
+	else:
+		player.sound_machine.play_sound("Sword Swing " + str(player.sound_machine.get_random(1, 2)), false)
 	animationPlayer.play("Attack_Basic" + str(player.attack_count))
 	.animation_to_timer()
 	player.hitbox_attack.get_child(0).disabled = false

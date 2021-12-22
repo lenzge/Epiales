@@ -10,6 +10,8 @@ func enter(msg :={}):
 	#TODO: knockback_force should be 0, but then the enemy gets no damage...
 	player.hitbox_down_attack.knockback_force = player.attack_force[0]
 	player.hitbox_down_attack.knockback_time = player.attack_knockback[0]
+	
+	player.sound_machine.play_sound("Sword Swing " + str(player.sound_machine.get_random(1, 2)), false)
 
 
 func exit():

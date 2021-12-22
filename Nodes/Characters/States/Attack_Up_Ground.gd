@@ -12,6 +12,8 @@ func enter(msg :={}):
 	player.hitbox_up_attack.knockback_time = player.attack_knockback[0]
 	#player.hitbox_up_attack.is_directed = true
 	#player.hitbox_up_attack.direction = Vector2(0, 1)
+	
+	player.sound_machine.play_sound("Sword Swing " + str(player.sound_machine.get_random(1, 2)), false)
 
 
 func exit():

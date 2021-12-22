@@ -5,6 +5,7 @@ func enter(_msg := {}):
 		player.in_charged_attack = true
 		player.attack_count = 4
 		player.charge_controller._on_charged_action()
+		player.sound_machine.play_sound("Charged Attack", false)
 	else:
 		player.in_charged_attack = false
 	animationPlayer.play("Attack_Basic" + str(player.attack_count)+"_Windup")
