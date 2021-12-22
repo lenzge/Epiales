@@ -3,7 +3,7 @@
 ## Description
 Emits damage to overlaping DamageReceiver objects. Contains data about dealt damage.
 
-## Properties
+## Property Descriptions
 ### public
 
  - Node **emitter**
@@ -31,7 +31,7 @@ Emits damage to overlaping DamageReceiver objects. Contains data about dealt dam
   
   Array of attached **CollisionShapes2D** and **CollisionPolygon2D**
 
-## Signals
+## Signal Descriptions
 
  - **blocked(** DamageReceiver receiver **)**
   
@@ -41,7 +41,7 @@ Emits damage to overlaping DamageReceiver objects. Contains data about dealt dam
   
   Emitted when the DamageEmitter has hit a DamageReceiver.
 
-## Methods
+## Method Descriptions
   - **blocked(** DamageReceiver receiver **)**
   
   Call this if a DamageReceiver received the emission and blocked it.
