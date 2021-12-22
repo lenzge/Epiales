@@ -28,17 +28,17 @@ Array of attached **CollisionShapes2D** and **CollisionPolygon2D**
 ## Signals
 
  - **blocked(** DamageReceiver receiver **)**
- Emitted when the DamageEmitter got blocked by a DamageReceiver.
+    Emitted when the DamageEmitter got blocked by a DamageReceiver.
 
 - **hit(** DamageReceiver receiver **)**
- Emitted when the DamageEmitter has hit a DamageReceiver.
+    Emitted when the DamageEmitter has hit a DamageReceiver.
 
 ## Methods
  - **blocked(** DamageReceiver receiver **)**
-Call this if a DamageReceiver received the emission and blocked it.
+    Call this if a DamageReceiver received the emission and blocked it.
 
  - **hit(** DamageReceiver receiver **)**
-Call this if a DamageReceiver received the emission and got hit.
+    Call this if a DamageReceiver received the emission and got hit.
 
  - **set disabled(** bool disabled **)**
 Set **true** to disable the emission.
