@@ -26,6 +26,11 @@ var add_jump_gravity_damper : bool = false
 
 var dash_cooldown_timer
 
+var transition_to_stunned : bool = false
+var stunned_knockback_force : float = 0.0
+var stunned_knockback_time : float = 0.0
+var stunned_direction_x : float = 0.0
+
 onready var sound_machine : SoundMachine = $SoundMachine
 
 export(int) var speed :int = 300
@@ -143,6 +148,10 @@ func _process(delta):
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.LEFT))
 	if not Input.is_action_pressed("move_right") and last_movement_buttons.find(MovementDir.RIGHT) != -1:
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.RIGHT))
+	
+	if transition_to_stunned:
+		transition_to_stunned = false
+		$StateMachine.transition_to("Stunned", {"force" :stunned_knockback_force, "time": stunned_knockback_time, "direction": stunned_direction_x})
 
 
 func move(delta):
@@ -356,7 +365,10 @@ func on_hit(emitter : DamageEmitter):
 			emitter.was_blocked($"Hitbox")
 			sound_machine.play_sound("Blocking", false)
 		else:
-			$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction_x})
+			transition_to_stunned = true
+			stunned_knockback_force = emitter.knockback_force
+			stunned_knockback_time = emitter.knockback_time
+			stunned_direction_x = direction_x
 			emitter.hit($"Hitbox")
 			sound_machine.play_sound("Hit", false)
 
