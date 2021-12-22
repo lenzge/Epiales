@@ -4,7 +4,6 @@ extends Node
 
 #####   TODO   #####
 #
-# - Counting BPM
 # - Starting scheduled music
 #
 ##### END TODO #####
@@ -128,7 +127,7 @@ func schedule_music(music_name: String, beats: int) -> bool:
 	# Test if the music is loaded, if not try to load it
 	var time_in_msec = 0
 	if music_name in music_loaded or load_music(music_name):
-		var schedule_data = ScheduleData.new(time_in_msec, OS.get_ticks_msec()) # TODO: Change second parameter to last_update
+		var schedule_data = ScheduleData.new(time_in_msec, last_update) # TODO: Change second parameter to last_update
 		music_scheduled[music_name] = schedule_data
 		return true
 	

@@ -27,6 +27,7 @@ func _init(path: String):
 		self.stream = music_stream
 		self.volume_db = 0
 		self.pitch_scale = 1
+		self.bus = "Music"
 	else:
 		print("[MusicPlayer] Could not load music: ", path)
 		loaded = false
