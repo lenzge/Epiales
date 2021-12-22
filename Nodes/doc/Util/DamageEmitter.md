@@ -16,6 +16,7 @@ Emits damage to overlaping DamageReceiver objects. Contains data about dealt dam
 The force of the commited hit.
 
 - Vector2 **direction**
+
 Where the force is directed. If it is zero the direction is calculate from the center of the Area.
 
 ### private
