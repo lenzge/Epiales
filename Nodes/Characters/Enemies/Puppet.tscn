@@ -417,7 +417,12 @@ tracks/2/keys = {
 collision_layer = 2
 collision_mask = 36
 script = ExtResource( 2 )
-attack_cooldown_time = 4.0
+health_points = 1700
+walk_speed = 100
+running_speed = 500
+attack_time = 0.15
+attack_cooldown_time = 3.0
+dying_time = 2.0
 attack_force = [ 600, 400, 600 ]
 
 [node name="StateMachine" type="Node" parent="."]

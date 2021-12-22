@@ -1765,9 +1765,20 @@ tracks/3/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 40
 script = ExtResource( 2 )
-gravity = 2000
-jump_impulse = 800
-friction_ground_on_crouch = 15.0
+speed = 450
+air_attack_fall_speed = 0.05
+wall_hang_gravity = 400
+wall_hang_max_gravity = 700
+jump_impulse = 700
+attack_air_down_knockback_impulse = 1000
+acceleration = 0.135
+friction_ground = 20.0
+friction_ground_on_crouch = 8.0
+friction_knockback = 15.0
+friction_air = 30.0
+windup_time = 0.1
+jump_gravity_damper = 0.5
+wall_jump_time = 5.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
