@@ -2,12 +2,10 @@ extends Node
 
 ###### New verision ######
 
-#######   Notices   ######
+#######   Notes   ######
 #### Every music is stored in the same folder -> therefore when loading a clip
 #### we only need the name of the music clip
-####
-#### The BPM is controlled in this class
-####### END NOTICES ######
+####### END NOTES ######
 
 export var SAMPLE_RATE : int = 44_100
 export var BPM : int = 120
@@ -98,7 +96,7 @@ func _thread_loop(userdata):
 				beat_timer = start_time - (start_time - (beat_timer + (seconds_per_beat * USECS_PER_SECOND)))
 				beats += 1
 				for music_name in music_playing:
-					get_node(music_name.replace(".", "")).count_beat()
+					get_node(get_node_name(music_name)).count_beat()
 				if print_beats:
 					print(beats)
 			
@@ -116,7 +114,7 @@ func get_time_to_next_beat_usec() -> int:
 
 
 func start_music(music_name: String, start_time: int) -> void:
-	var clip = self.get_node(music_name.replace(".", ""))
+	var clip = self.get_node(get_node_name(music_name))
 	var schedule_data = music_scheduled[music_name]
 	var start_playing_in = ((clip.empty_ms / MSECS_PER_SECOND) - ((schedule_data.get_time_in_usec() - start_time) / USECS_PER_SECOND)) + (AudioServer.get_time_to_next_mix() + AudioServer.get_output_latency())
 	if start_playing_in > 0:
@@ -183,8 +181,17 @@ func load_music(music_name: String) -> bool:
 
 
 func unload_music(music_name: String) -> void:
-	# test if music can be unloaded (is it playing, is it scheduled)
-	pass
+	#
+	# TODO: test if music can be unloaded (is it playing, is it scheduled)
+	#
+	if music_name in music_loaded:
+		var node = get_node(get_node_name(music_name))
+		if node.unload():
+			self.remove_child(node)
+
+
+func get_node_name(music_name: String) -> String:
+	return music_name.replace(".", "")
 
 
 func _exit_tree():

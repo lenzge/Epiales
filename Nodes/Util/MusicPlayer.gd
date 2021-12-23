@@ -93,6 +93,7 @@ func set_fade_to(fading_to_value: float):
 
 func unload() -> bool:
 	if can_unloaded:
+		self.queue_free()
 		return true
 	else:
 		return false
