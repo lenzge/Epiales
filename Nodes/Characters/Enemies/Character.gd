@@ -5,8 +5,10 @@ extends KinematicBody2D
 export var gravity : float = 100
 export var air_drag : float = 0.5
 
-export var health : float 
+export var health : float
 export var max_health : float
+
+signal died()
 
 var state_machine
 var hitbox : DamageReceiver
@@ -32,6 +34,10 @@ func _process(delta):
 
 func move(value : Vector2):
 	_move_input = value
+
+
+func get_move() -> Vector2:
+	return _move_input
 
 
 func consume_move() -> Vector2:
@@ -67,6 +73,7 @@ func apply_air_drag_on_y(delta):
 
 
 func on_hit(emitter : DamageEmitter):
+	health -= emitter.damage_amount
 	var direction_x
 	if is_equal_approx(emitter.direction.x, 0.0):
 		direction_x = (hitbox.global_position - emitter.global_position).x 

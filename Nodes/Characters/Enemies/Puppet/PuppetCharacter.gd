@@ -1,3 +1,4 @@
+class_name PuppetCharacter
 extends Character
 
 #Attack State
@@ -15,6 +16,7 @@ func _ready():
 func flip():
 	.flip()
 	_attack_area.direction = Vector2(1, 0) if is_facing_right else Vector2(-1, 0)
+	$HealthBar.rect_scale.x *= -1
 
 
 func attack():
@@ -26,4 +28,9 @@ func _set_up():
 	for child in $StateMachine.get_children():
 		if "character" in child:
 			child.character = self
-	
+	$HealthBar.set_max_health(max_health)
+
+
+func on_hit(emitter : DamageEmitter):
+	.on_hit(emitter)
+	$HealthBar.get_damage(emitter.damage_amount)

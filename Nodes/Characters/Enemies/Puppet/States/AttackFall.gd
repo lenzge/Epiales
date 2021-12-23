@@ -1,4 +1,4 @@
-extends CharacterState
+extends "res://Nodes/Characters/Enemies/States/Fall.gd"
 
 
 func _ready():

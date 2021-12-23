@@ -1,8 +1,6 @@
- extends CharacterState
+extends CharacterState
 
-func enter(_msg := {}):
-	.enter(_msg)
-	assert("air_move_speed" in character)
+export var move_accel : float 
 
 
 func start_animation():
@@ -11,7 +9,7 @@ func start_animation():
 
 func physics_update(delta):
 	#Logic
-	character.velocity.x += character.consume_move().x * character.air_move_speed * delta
+	character.velocity.x += character.consume_move().x * move_accel * delta
 	character.velocity.y += character.gravity * delta
 	character.apply_air_drag(delta)
 	
@@ -19,8 +17,8 @@ func physics_update(delta):
 
 
 func update_animation(delta):
-	if not is_equal_approx(character.consume_move().x, 0.0):
-		if character.is_facing_right && character.move_input.x < 0.0 || !character.is_facing_right && character.move_input.x  > 0.0:
+	if not is_equal_approx(character.get_move().x, 0.0):
+		if character.is_facing_right && character.get_move().x < 0.0 || !character.is_facing_right && character.get_move().x  > 0.0:
 			character.flip()
 	.physics_update(delta)
 

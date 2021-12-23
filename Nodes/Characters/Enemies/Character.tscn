@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Nodes/Characters/Enemies/Character.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Util/DamageReceiver.gd" type="Script" id=3]
-[ext_resource path="res://Nodes/Util/StateMachine.gd" type="Script" id=9]
+[ext_resource path="res://Nodes/Util/StateMachine/StateMachine.gd" type="Script" id=9]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 20.0

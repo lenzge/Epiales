@@ -1,35 +1,43 @@
 extends CharacterState
 
 export var flinch_intensity : float = 100
+export (float, 0, 1) var air_factor : float = 0
+export var can_flinch_over_edge : bool = false 
+export var floor_detection_raycast_path : NodePath
 
-var direction_x : float
+var floor_detection_raycast : RayCast2D
+
+var _direction_x : float
 
 func _ready():
 	yield(owner, "ready")
+	floor_detection_raycast = get_node(floor_detection_raycast_path)
 
 
 func enter(_msg := {}):
 	.enter(_msg)
-	character.can_die = false
 	character.velocity = Vector2.ZERO
-	direction_x = _msg.direction_x
+	_direction_x = _msg.direction_x
 
 
 func start_animation():
 	.start_animation()
 	character.animation.play("Flinch")
-	if character.is_facing_right && direction_x > 0.0 || !character.is_facing_right && direction_x < 0.0:
+	if character.is_facing_right && _direction_x > 0.0 || !character.is_facing_right && _direction_x < 0.0:
 		character.flip()
 
 
-func update(delta):
+func physics_update(delta):
 	.update(delta)
-	character.move_and_slide(Vector2(flinch_intensity * direction_x, 0.0), Vector2.UP)
+	if not character.is_on_floor():
+		character.move_and_slide(Vector2(flinch_intensity * _direction_x, 0.0) * air_factor, Vector2.UP)
+	else:
+		if floor_detection_raycast.is_colliding() or can_flinch_over_edge:
+			character.move_and_slide(Vector2(flinch_intensity * _direction_x, 1.0), Vector2.UP)
 
 
 func exit():
 	.exit()
-	character.can_die = true
 
 
 func _on_timeout():

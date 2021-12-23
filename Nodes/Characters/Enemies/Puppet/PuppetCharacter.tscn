@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Nodes/Characters/Enemies/States/Attack.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Characters/Enemies/States/Flinch.gd" type="Script" id=2]
@@ -17,52 +17,12 @@
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack_recovery.png" type="Texture" id=15]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_idle.png" type="Texture" id=16]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack.png" type="Texture" id=17]
+[ext_resource path="res://Nodes/Characters/HealthBar.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/PuppetRun.gd" type="Script" id=19]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/Recoil.gd" type="Script" id=20]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 39.4651, 45.2828 )
-
-[sub_resource type="GDScript" id=2]
-script/source = "extends CharacterState
-
-export(int, \"GRAVITY\", \"CONSTANT\") var fall_mode : int = 1
-export var constant_fall_speed : float = 0
-export var should_reset_y_velocity : bool = false
-
-func enter(_msg := {}):
-	.enter(_msg)
-	character.velocity.x = 0.0
-	if should_reset_y_velocity:
-		character.velocity.y = 0.0
-	if fall_mode == 1:
-		character.velocity.y = constant_fall_speed
-
-
-func physics_update(delta):
-	.physics_update(delta)
-	if fall_mode == 0:
-		character.velocity.y += character.gravity * delta
-		character.apply_air_drag(delta)
-	else:
-		character.apply_air_drag_x(delta)
-	character.velocity = character.move_and_slide(character.velocity, Vector2.UP)
-
-
-func start_animation():
-	.start_animation()
-	character.animation.play(\"Recoil\") 
-
-
-func _on_timeout():
-	state_machine.transition_to(\"Run\")
-"
-
-[sub_resource type="GDScript" id=3]
-script/source = "extends \"res://Nodes/Characters/Enemies/States/Run.gd\"
-
-
-func _on_attack():
-	state_machine.transition_to(\"AttackWindUp\")
-"
 
 [sub_resource type="Animation" id=4]
 resource_name = "Attack0"
@@ -118,7 +78,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 resource_name = "Attack1"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -171,7 +131,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=6]
 resource_name = "AttackFall"
 loop = true
 tracks/0/type = "value"
@@ -211,7 +171,7 @@ tracks/2/keys = {
 "values": [ Vector2( -3.55271e-15, -0.26487 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 resource_name = "AttackRecovery"
 length = 0.2
 tracks/0/type = "value"
@@ -265,7 +225,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 resource_name = "AttackRun"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
@@ -304,7 +264,7 @@ tracks/2/keys = {
 "values": [ Vector2( -3.55271e-15, -0.26487 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 resource_name = "AttackWindUp0"
 length = 0.3
 tracks/0/type = "value"
@@ -358,7 +318,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 resource_name = "AttackWindUp1"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
@@ -411,8 +371,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "Die"
+[sub_resource type="Animation" id=11]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -452,8 +411,22 @@ tracks/2/keys = {
 "method": "_on_timeout"
 } ]
 }
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "died" ],
+"method": "emit_signal"
+} ]
+}
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=12]
 resource_name = "Fall"
 loop = true
 tracks/0/type = "value"
@@ -469,7 +442,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 16 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=13]
 resource_name = "Flinch"
 length = 0.4
 tracks/0/type = "value"
@@ -511,8 +484,7 @@ tracks/2/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=12]
-resource_name = "Recoil"
+[sub_resource type="Animation" id=14]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -598,17 +570,32 @@ tracks/2/keys = {
 collision_layer = 2
 collision_mask = 4
 script = ExtResource( 5 )
-air_drag = 0.01
+gravity = 1000.0
+air_drag = 2.5
 health = 100.0
 max_health = 100.0
 _attack_area_path = NodePath("AttackArea")
 
 [node name="Sprite" parent="." index="0"]
+modulate = Color( 0.956863, 0.109804, 0.109804, 0.811765 )
 scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 16 )
+texture = ExtResource( 15 )
 flip_h = true
 
-[node name="AttackArea" type="Area2D" parent="." index="2"]
+[node name="HealthBar" parent="." index="1" instance=ExtResource( 18 )]
+margin_left = -90.1384
+margin_top = -70.7709
+margin_right = -90.1384
+margin_bottom = -70.7709
+rect_scale = Vector2( 0.3, 0.3 )
+
+[node name="Shape" parent="." index="2"]
+position = Vector2( -5.96046e-08, -2.98023e-08 )
+
+[node name="HitBox" parent="." index="3"]
+collision_layer = 2
+
+[node name="AttackArea" type="Area2D" parent="." index="4"]
 collision_layer = 2
 script = ExtResource( 3 )
 emitter_path = NodePath("..")
@@ -618,10 +605,13 @@ position = Vector2( 60, 0 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="HitBox" parent="." index="3"]
-collision_layer = 2
+[node name="BackFloorDetectionRay" type="RayCast2D" parent="." index="5"]
+position = Vector2( -20, 45 )
+enabled = true
+cast_to = Vector2( 0, 5 )
+collision_mask = 4
 
-[node name="StateMachine" parent="." index="4"]
+[node name="StateMachine" parent="." index="6"]
 initial_state = NodePath("Run")
 
 [node name="AttackWindUp" type="Node" parent="StateMachine" index="0"]
@@ -639,10 +629,11 @@ processing_mode = 1
 [node name="Attack" type="Node" parent="StateMachine" index="3"]
 script = ExtResource( 1 )
 processing_mode = 1
+max_attack_combo = 3
 attack_area_path = NodePath("../../AttackArea")
 
 [node name="Recoil" type="Node" parent="StateMachine" index="4"]
-script = SubResource( 2 )
+script = ExtResource( 20 )
 processing_mode = 1
 
 [node name="AttackRecovery" type="Node" parent="StateMachine" index="5"]
@@ -650,9 +641,10 @@ script = ExtResource( 8 )
 processing_mode = 1
 
 [node name="Run" type="Node" parent="StateMachine" index="6"]
-script = SubResource( 3 )
+script = ExtResource( 19 )
 processing_mode = 1
-walk_move_accel = 200.0
+walk_move_accel = 2000.0
+run_move_accel = 5000.0
 
 [node name="Fall" type="Node" parent="StateMachine" index="7"]
 script = ExtResource( 7 )
@@ -661,21 +653,23 @@ processing_mode = 1
 [node name="Flinch" type="Node" parent="StateMachine" index="8"]
 script = ExtResource( 2 )
 processing_mode = 1
+air_factor = 1.0
+floor_detection_raycast_path = NodePath("../../BackFloorDetectionRay")
 
 [node name="Die" type="Node" parent="StateMachine" index="9"]
 script = ExtResource( 6 )
 processing_mode = 1
 
-[node name="AnimationPlayer" parent="." index="5"]
+[node name="AnimationPlayer" parent="." index="7"]
 anims/Attack0 = SubResource( 4 )
-anims/Attack1 = SubResource( 6 )
-anims/AttackFall = SubResource( 16 )
-anims/AttackRecovery = SubResource( 8 )
-anims/AttackRun = SubResource( 9 )
-anims/AttackWindUp0 = SubResource( 10 )
-anims/AttackWindUp1 = SubResource( 11 )
-anims/Die = SubResource( 5 )
-anims/Fall = SubResource( 13 )
-anims/Flinch = SubResource( 14 )
-anims/Recoil = SubResource( 12 )
+anims/Attack1 = SubResource( 5 )
+anims/AttackFall = SubResource( 6 )
+anims/AttackRecovery = SubResource( 7 )
+anims/AttackRun = SubResource( 8 )
+anims/AttackWindUp0 = SubResource( 9 )
+anims/AttackWindUp1 = SubResource( 10 )
+anims/Die = SubResource( 11 )
+anims/Fall = SubResource( 12 )
+anims/Flinch = SubResource( 13 )
+anims/Recoil = SubResource( 14 )
 anims/Run = SubResource( 15 )
