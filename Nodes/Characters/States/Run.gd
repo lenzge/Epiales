@@ -42,7 +42,7 @@ func physics_update(delta):
 	elif player.last_movement_buttons.empty():
 		player.last_movement_buttons.clear()
 		state_machine.transition_to("Idle")
-	elif Input.is_action_just_pressed("dash")  and player.can_dash:
+	elif Input.is_action_just_pressed("dash") and player.can_dash:
 		state_machine.transition_to("Dash")
 	elif Input.is_action_pressed("move_down"):
 		state_machine.transition_to("Crouch")

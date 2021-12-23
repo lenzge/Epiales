@@ -6,6 +6,7 @@ extends Node
 signal transitioned(state_name)
 
 var last_state
+var new_state
 # Initial state 
 export var initial_state := NodePath()
 onready var state: State = get_node(initial_state)
@@ -41,6 +42,7 @@ func transition_to(target_state_name, msg: Dictionary = {}):
 	# Dying can't be cancelled
 	if not state.name == "Die":
 		last_state = state
+		new_state = target_state_name
 		state.exit()
 		state = get_node(target_state_name)
 		state.enter(msg)
