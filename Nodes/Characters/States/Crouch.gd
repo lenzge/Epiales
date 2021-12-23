@@ -21,7 +21,7 @@ func update(delta):
 	elif !Input.is_action_pressed("move_down"):
 		state_machine.transition_to("Idle")
 	elif Input.is_action_just_pressed("jump"):
-		state_machine.transition_to("Jump")
+		crouch_jump();
 	elif Input.is_action_just_pressed("dash"):
 		state_machine.transition_to("Dash")
 	elif Input.is_action_just_pressed("block"):
@@ -31,4 +31,17 @@ func update(delta):
 func physics_update(delta):
 	player.crouch_move(delta)
 
+func crouch_jump(): 
+	player.set_collision_mask_bit(2,false)
+	state_machine.transition_to("Fall")
+
+
+
+func _on_GroundDetection_body_shape_exited(body_id, body, body_shape, local_shape):
+	if body is TileMap and state_machine.last_state.name == "Crouch" and state_machine.new_state == "Fall":
+		print(OS.get_time(),"  :"," body_id: ",body_id, " body: ",body, " body_shape: ", " local_shape: ",local_shape)
+		print(OS.get_time(),"  :"," tilesetIDs: ",body.get_tileset().tile_get_name(0))
+		player.set_collision_mask_bit(2,true)
+#	TileMap
+	
 	
