@@ -19,8 +19,14 @@ func _ready():
 	timer.connect("timeout", self, "_on_timeout")
 	self.add_child(timer)
 
+	
 func enter(_msg := {}):
 	animationPlayer.play(self.name)
 	
+func animation_to_timer():
+	timer.set_wait_time(animationPlayer.current_animation_length)
+	timer.start()
+	
 func exit():
 	timer.stop()
+	

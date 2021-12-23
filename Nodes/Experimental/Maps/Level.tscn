@@ -482,7 +482,7 @@ dealt_damage = 5
 dealt_fear = 4
 
 [node name="Puppet" parent="." instance=ExtResource( 8 )]
-position = Vector2( 2258.71, 208.917 )
+position = Vector2( 2042, 148.441 )
 
 [node name="Puppet2" parent="." instance=ExtResource( 8 )]
 position = Vector2( 2913.74, 523.897 )

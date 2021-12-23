@@ -2,7 +2,11 @@ extends PlayerState
 
 
 func enter(_msg := {}):
-	.enter(_msg)
+	if state_machine.last_state.name == "Dash":
+		animationPlayer.play("Run_Turn")
+	else:
+		.enter(_msg)
+	
 
 
 func update(delta):

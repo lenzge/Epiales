@@ -1,14 +1,9 @@
 extends PlayerState
 
-func _ready():
-	._ready()
-	yield(owner, "ready")
-
 
 func enter(msg :={}):
 	.enter(msg)
-	timer.set_wait_time(player.recovery_time)
-	timer.start()
+	.animation_to_timer()
 
 
 func physics_update(delta):
