@@ -20,8 +20,11 @@ func play_sound(sound: String, loop: bool) -> void:
 			node.stream.loop = loop
 		# WAV
 		else:
-			node.stream.loop_mode = AudioStreamSample.LOOP_FORWARD
-			node.stream.loop_end = node.stream.get_length() * node.stream.mix_rate
+			if loop:
+				node.stream.loop_mode = AudioStreamSample.LOOP_FORWARD
+				node.stream.loop_end = node.stream.get_length() * node.stream.mix_rate
+			else:
+				node.stream.loop_mode = AudioStreamSample.LOOP_DISABLED
 		
 		node.play()
 		
@@ -52,6 +55,10 @@ func randomize_pitch(sound, min_pitch, max_pitch):
 		node.pitch_scale = rng.randf_range(min_pitch, max_pitch)
 	else:
 		print("[SoundMachine] Could not randomize pitch of '", sound, "': Sound not found")
+
+
+func get_random(min_num: int, max_num: int) -> int:
+	return rng.randi_range(min_num, max_num)
 
 
 func is_sound_available(sound: String) -> bool:
