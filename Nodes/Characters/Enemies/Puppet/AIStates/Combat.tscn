@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Nodes/Util/StateMachine/SubStateMachineState.gd" type="Script" id=1]
+[ext_resource path="res://Nodes/Util/StateMachine/State.gd" type="Script" id=2]
+[ext_resource path="res://Nodes/Util/StateMachine/StateMachine.gd" type="Script" id=3]
+
+[node name="Combat" type="Node"]
+process_priority = 1
+script = ExtResource( 1 )
+sub_state_machine_path = NodePath("StateMachine")
+
+[node name="StateMachine" type="Node" parent="."]
+process_priority = 1
+script = ExtResource( 3 )
+start_on_ready = false
+initial_state = NodePath("StayAndLookAtPlayer")
+
+[node name="StayAndLookAtPlayer" type="Node" parent="StateMachine"]
+process_priority = 1
+script = ExtResource( 2 )
+
+[node name="RunAway" type="Node" parent="StateMachine"]
+script = ExtResource( 2 )
+
+[node name="RunAttack" type="Node" parent="StateMachine"]
+script = ExtResource( 2 )
+
+[node name="Node" type="Node" parent="StateMachine"]
+script = ExtResource( 2 )

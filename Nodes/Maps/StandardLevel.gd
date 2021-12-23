@@ -1,5 +1,5 @@
-class_name Standard_Level
-extends Node
+class_name StandardLevel
+extends BaseLevel
 
 export(NodePath) var player_spawn_path
 var player_instance
@@ -14,6 +14,7 @@ func _ready():
 	if not player_spawn:
 		player_spawn = get_node(player_spawn_path).position
 		current_spawnpoint = player_spawn
+	propagate_call("set_level_instance", [self])
 
 
 func set_player_spawn(_player_spawn : Vector2) -> void:
@@ -38,6 +39,7 @@ func _on_Checkoint_checkpoint_entered(new_spawnpoint: Vector2, prio: int) -> voi
 	if new_spawnpoint.x > current_spawnpoint.x or prio > current_spawnpoint_prio:
 		current_spawnpoint = new_spawnpoint
 		current_spawnpoint_prio = prio
+
 
 func _on_player_entered_deadzone(dmg, fear):
 	print("[DEBUG] @class",name ," dealt_dmg: ",dmg," dealt_fear: ",fear)

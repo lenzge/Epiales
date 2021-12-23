@@ -1,6 +1,6 @@
 class_name BaseLevel
-extends Node
+extends Node2D
 
-var game: Ingame
+var game
 var hud: CanvasLayer
 

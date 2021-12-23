@@ -8,8 +8,7 @@ signal transitioned(state_name)
 var last_state
 # Initial state 
 export var initial_state := NodePath()
-onready var state: State = get_node(initial_state)
-#onready var animationPlayer = $"../AnimationPlayer"
+onready var state = get_node(initial_state)
 
 # Assigns itself to an object
 func _ready():
@@ -29,6 +28,11 @@ func _unhandled_input(event):
 func _process(delta):
 	if state.processing_mode == 0:
 		state.check_transitions(delta)
+		for transition in state.transitions:
+			if transition.enabled:
+				var result : Dictionary = transition._check(delta)
+				if result.has("transition_to"):
+					transition_to(result.get("transition_to"), result.get("parameters", {}))
 	state.update_animation(delta)
 	state.update(delta)
 
@@ -36,6 +40,11 @@ func _process(delta):
 func _physics_process(delta):
 	if state.processing_mode == 0:
 		state.check_transitions(delta)
+		for transition in state.transitions:
+			if transition.enabled:
+				var result : Dictionary = transition._check(delta)
+				if result.has("transition_to"):
+					transition_to(result.get("transition_to"), result.get("parameters", {}))
 	state.physics_update(delta)
 
 
@@ -47,10 +56,16 @@ func transition_to(target_state_name, msg: Dictionary = {}):
 	# Dying can't be cancelled
 	if not state.name == "Die":
 		last_state = state
+		for transition in state.transitions:
+			if transition.enabled:
+				transition._clean_up()
 		state.exit()
 		state = get_node(target_state_name)
 		state.enter(msg)
 		state.start_animation()
+		for transition in state.transitions:
+			if transition.enabled:
+				transition._prepare()
 		emit_signal("transitioned", state.name)
 
 

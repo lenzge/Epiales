@@ -3,8 +3,17 @@ extends Node
 
 export(int, "UPDATE", "PHYSICS_UPDATE") var processing_mode : int
 
+var transitions : Array
+
 # Reference to the state machine
 var state_machine = null
+
+
+func _ready():
+	for child in get_children():
+		if child is Transition:
+			transitions.append(child)
+
 
 # Receives events from the `_unhandled_input()` callback
 func handle_input(_event):
