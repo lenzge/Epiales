@@ -3,12 +3,12 @@ class_name SubStateMachineState
 extends State
 
 export var sub_state_machine_path : NodePath
-export var should_start_at_initial_state : bool = true
+export var start_at_initial_state : bool = true
 
 onready var sub_state_machine = get_node(sub_state_machine_path)
 
 func enter(_msg = {}):
-	if should_start_at_initial_state:
+	if start_at_initial_state:
 		sub_state_machine.state = sub_state_machine.get_node(sub_state_machine.initial_state)
 	sub_state_machine.start(false)
 

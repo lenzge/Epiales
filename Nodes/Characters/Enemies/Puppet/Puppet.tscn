@@ -55,6 +55,8 @@ transition_to = "Alarmed"
 max_sight_range = 600.0
 
 [node name="Alarmed" parent="StateMachine" instance=ExtResource( 6 )]
+floor_detection_ray_path = NodePath("../../PuppetCharacter/FloorDetectionRaycast")
+wall_detection_ray_path = NodePath("../../PuppetCharacter/WallDetectionRaycast")
 
 [node name="ToPatrolOnTimeout" type="Node" parent="StateMachine/Alarmed"]
 script = ExtResource( 7 )

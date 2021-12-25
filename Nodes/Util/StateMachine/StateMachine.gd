@@ -5,10 +5,13 @@ extends Node
 # Emitted when transitioning to a new state.
 signal transitioned(state_name)
 
-var last_state
+
+
+export var auto_start : bool = true
 # Initial state 
 export var initial_state := NodePath()
 onready var state = get_node(initial_state)
+var last_state
 
 # Assigns itself to an object
 func _ready():
@@ -16,8 +19,14 @@ func _ready():
 	for child in get_children():
 		child.state_machine = self
 	print("STATEMACHINE: Init. complete.")
-	state.start_animation()
-	state.enter()
+	if auto_start:
+		state.start_animation()
+		state.enter()
+	else:
+		set_process(false)
+		set_physics_process(false)
+		set_process_input(false)
+		set_process_unhandled_input(false)
 
 
 # Delegates Input and all functionality to the current state
@@ -38,7 +47,7 @@ func _process(delta):
 
 
 func _physics_process(delta):
-	if state.processing_mode == 0:
+	if state.processing_mode == 1:
 		state.check_transitions(delta)
 		for transition in state.transitions:
 			if transition.enabled:
@@ -46,6 +55,29 @@ func _physics_process(delta):
 				if result.has("transition_to"):
 					transition_to(result.get("transition_to"), result.get("parameters", {}))
 	state.physics_update(delta)
+
+
+func start(should_tick := true):
+	set_process(should_tick)
+	set_physics_process(should_tick)
+	set_process_input(should_tick)
+	set_process_unhandled_input(should_tick)
+	state.start_animation()
+	state.enter()
+	for transition in state.transitions:
+			if transition.enabled:
+				transition._prepare()
+
+
+func stop():
+	set_process(false)
+	set_physics_process(false)
+	set_process_input(false)
+	set_process_unhandled_input(false)
+	for transition in state.transitions:
+		if transition.enabled:
+			transition._clean_up()
+	state.exit()
 
 
 # Calls the current state's exit() function, then changes the active state, and calls its enter function

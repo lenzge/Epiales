@@ -415,7 +415,7 @@ resource_local_to_scene = true
 } ]
 0/z_index = 0
 
-[node name="Level" type="Node"]
+[node name="Level" type="Node2D"]
 pause_mode = 1
 script = ExtResource( 3 )
 player_spawn_path = NodePath("PlayerSpawn")

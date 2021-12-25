@@ -15,12 +15,13 @@ sub_state_machine_path = NodePath("StateMachine")
 [node name="StateMachine" type="Node" parent="."]
 process_priority = 1
 script = ExtResource( 6 )
-start_on_ready = false
+auto_start = false
 initial_state = NodePath("MoveForward")
 
 [node name="MoveForward" type="Node" parent="StateMachine"]
 process_priority = 1
 script = ExtResource( 3 )
+processing_mode = 1
 move_speed = 0.5
 
 [node name="ToWaitOnTimeout" type="Node" parent="StateMachine/MoveForward"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Nodes/Util/StateMachine/SubStateMachineState.gd" type="Script" id=1]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet/AIStates/Alarmed.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Characters/Enemies/Transitions/TimerTransition.gd" type="Script" id=2]
 [ext_resource path="res://Nodes/Characters/Enemies/AI/States/MoveForward.gd" type="Script" id=3]
 [ext_resource path="res://Nodes/Characters/Enemies/AI/States/LookAround.gd" type="Script" id=4]
@@ -16,7 +16,7 @@ sub_state_machine_path = NodePath("StateMachine")
 [node name="StateMachine" type="Node" parent="."]
 process_priority = 1
 script = ExtResource( 6 )
-start_on_ready = false
+auto_start = false
 initial_state = NodePath("Wait")
 
 [node name="Wait" type="Node" parent="StateMachine"]
@@ -36,8 +36,6 @@ process_priority = 1
 script = ExtResource( 3 )
 processing_mode = 1
 move_speed = 1.0
-floor_detection_ray_path = NodePath("../../../../PuppetCharacter/FloorDetectionRaycast")
-wall_detection_ray_path = NodePath("../../../../PuppetCharacter/WallDetectionRaycast")
 
 [node name="ToLookAroundOnTimeout" type="Node" parent="StateMachine/MoveForward"]
 script = ExtResource( 2 )
