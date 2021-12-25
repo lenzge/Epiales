@@ -1,14 +1,14 @@
 class_name Character
 extends KinematicBody2D
 
+signal died()
+
 #Character Physics
 export var gravity : float = 100
 export var air_drag : float = 0.5
 
 export var health : float
 export var max_health : float
-
-signal died()
 
 var state_machine
 var hitbox : DamageReceiver
@@ -22,12 +22,10 @@ var can_die : bool = true
 var _move_input : Vector2
 
 func _ready():
-	state_machine = $StateMachine
-	hitbox = $HitBox
-	animation = $AnimationPlayer
+	_set_up()
 
 
-func _process(delta):
+func _physics_process(delta):
 	if can_die && health <= 0.0:
 			state_machine.transition_to("Die")
 
@@ -46,8 +44,8 @@ func consume_move() -> Vector2:
 	return val
 
 
-func set_invincable(invincable : bool):
-	hitbox.set_disabled(!invincable)
+func set_invincable(value : bool):
+	hitbox.monitorable(!value)
 
 
 func set_is_facing_right(value : bool):
@@ -80,3 +78,9 @@ func on_hit(emitter : DamageEmitter):
 	else:
 		direction_x = emitter.direction.x
 	state_machine.transition_to("Flinch", {"direction_x": -1.0 if direction_x < 0.0 else 1.0, "force": emitter.knockback_force})
+
+
+func _set_up():
+	state_machine = $StateMachine
+	hitbox = $HitBox
+	animation = $AnimationPlayer
