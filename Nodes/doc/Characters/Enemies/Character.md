@@ -148,5 +148,5 @@ A base for 2D Character. Can receive damage, implements basic movement, basic an
 
  ```mermaid
  graph LR
-hitbox["Hitbox (Node) : on_hit_start()"] --> chracter["Character (Node) : on_hit()"]
+hitbox["Hitbox (Node) : on_hit_start( DamageEmitter emitter )"] --> chracter["Character (Node) : on_hit( DamageEmitter emitter )"]
 ```
