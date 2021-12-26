@@ -61,10 +61,10 @@ func _on_timeout():
 		state_machine.transition_to("AttackRecovery")
 
 
-func _on_attack():
+func on_attack():
 	should_attack_again = true
 
 
-func _on_attack_has_been_blocked(receiver):
+func on_attack_has_been_blocked(receiver):
 	if state_machine.state == self:
 		state_machine.transition_to("Stunned")

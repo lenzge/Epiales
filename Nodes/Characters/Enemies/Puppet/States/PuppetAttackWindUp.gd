@@ -9,7 +9,7 @@ func _ready():
 func enter(_msg := {}):
 	should_attack = false
 
-func _on_attack():
+func on_attack():
 	should_attack = true
 
 func _on_timeout():

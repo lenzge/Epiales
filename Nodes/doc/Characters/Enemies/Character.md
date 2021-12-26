@@ -66,7 +66,7 @@ A base for 2D Character. Can receive damage, implements basic movement, basic an
 
 ### private
 
-- Vector2 _move_input
+- Vector2 **_move_input**
 
   The current pending move input.
 
