@@ -24,7 +24,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 39.4651, 45.2828 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "Attack0"
 length = 0.5
 tracks/0/type = "value"
@@ -78,7 +78,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "Attack1"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -131,7 +131,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 resource_name = "AttackFall"
 loop = true
 tracks/0/type = "value"
@@ -171,7 +171,7 @@ tracks/2/keys = {
 "values": [ Vector2( -3.55271e-15, -0.26487 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=5]
 resource_name = "AttackRecovery"
 length = 0.2
 tracks/0/type = "value"
@@ -225,7 +225,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=6]
 resource_name = "AttackRun"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
@@ -264,7 +264,7 @@ tracks/2/keys = {
 "values": [ Vector2( -3.55271e-15, -0.26487 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=7]
 resource_name = "AttackWindUp0"
 length = 0.3
 tracks/0/type = "value"
@@ -318,7 +318,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=8]
 resource_name = "AttackWindUp1"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
@@ -371,7 +371,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=9]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -426,7 +426,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=10]
 resource_name = "Fall"
 loop = true
 tracks/0/type = "value"
@@ -442,7 +442,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 16 ) ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=11]
 resource_name = "Flinch"
 length = 0.4
 tracks/0/type = "value"
@@ -484,7 +484,7 @@ tracks/2/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=12]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -525,7 +525,7 @@ tracks/2/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=13]
 resource_name = "Run"
 length = 3.0
 loop = true
@@ -574,7 +574,6 @@ gravity = 1000.0
 air_drag = 2.5
 health = 100.0
 max_health = 100.0
-_attack_area_path = NodePath("AttackArea")
 
 [node name="Sprite" parent="." index="0"]
 modulate = Color( 0.956863, 0.109804, 0.109804, 0.811765 )
@@ -661,15 +660,17 @@ script = ExtResource( 6 )
 processing_mode = 1
 
 [node name="AnimationPlayer" parent="." index="7"]
-anims/Attack0 = SubResource( 4 )
-anims/Attack1 = SubResource( 5 )
-anims/AttackFall = SubResource( 6 )
-anims/AttackRecovery = SubResource( 7 )
-anims/AttackRun = SubResource( 8 )
-anims/AttackWindUp0 = SubResource( 9 )
-anims/AttackWindUp1 = SubResource( 10 )
-anims/Die = SubResource( 11 )
-anims/Fall = SubResource( 12 )
-anims/Flinch = SubResource( 13 )
-anims/Recoil = SubResource( 14 )
-anims/Run = SubResource( 15 )
+anims/Attack0 = SubResource( 2 )
+anims/Attack1 = SubResource( 3 )
+anims/AttackFall = SubResource( 4 )
+anims/AttackRecovery = SubResource( 5 )
+anims/AttackRun = SubResource( 6 )
+anims/AttackWindUp0 = SubResource( 7 )
+anims/AttackWindUp1 = SubResource( 8 )
+anims/Die = SubResource( 9 )
+anims/Fall = SubResource( 10 )
+anims/Flinch = SubResource( 11 )
+anims/Recoil = SubResource( 12 )
+anims/Run = SubResource( 13 )
+
+[connection signal="blocked" from="AttackArea" to="StateMachine/Attack" method="on_attack_has_been_blocked"]

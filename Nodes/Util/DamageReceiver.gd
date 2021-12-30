@@ -26,12 +26,3 @@ func _on_hit_start(body : Node):
 func _on_hit_stop(body : Node):
 	if body is DamageEmitter:
 		emit_signal("on_hit_stop", body)
-
-
-func set_disabled(disabled : bool ):
-	if disabled:
-		for collision_shape in collision_shapes:
-			collision_shape.disabled = true
-	else:
-		for collision_shape in collision_shapes:
-			collision_shape.disabled = false
