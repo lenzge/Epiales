@@ -67,8 +67,8 @@ A Puppet is a Walking Enemy. It can execute a normal and a run attack.
 
     Runs this logic:
 
-    ```mermaid
-        flowchart RL
+```mermaid
+        flowchart LR
             subgraph alive[Alive:]
                 Atk[Attack]
                 AtkRun[Attack Run]
@@ -92,10 +92,11 @@ A Puppet is a Walking Enemy. It can execute a normal and a run attack.
         alive --> Flinch
         Flinch --> Run
         alive ---> Die
-    ```
+```
 
 ## Signal Connections
 
-    ```mermaid
-        atkAres[AttackArea (Node) : blocked(DamageReceiver receiver)] --> atk[Attack [Node] : on_attack_has_been_blocke(DamageReceiver receiver)]
-    ```
+```mermaid
+        flowchart LR
+            atkArea["AttackArea (Node) : blocked(DamageReceiver receiver)"] --> atk["Attack (Node) : on_attack_has_been_blocked(DamageReceiver receiver)"]
+```
