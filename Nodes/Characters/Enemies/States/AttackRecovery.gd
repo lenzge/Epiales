@@ -22,7 +22,7 @@ func physics_update(delta):
 		character.velocity.y += character.gravity * delta
 		character.apply_air_drag(delta)
 	else:
-		character.apply_air_drag_x(delta)
+		character.apply_air_drag_on_x(delta)
 	character.velocity = character.move_and_slide(character.velocity, Vector2.UP)
 
 

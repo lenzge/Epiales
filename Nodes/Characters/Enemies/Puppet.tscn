@@ -541,6 +541,7 @@ shape = SubResource( 4 )
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
+visible = false
 position = Vector2( 0, -49 )
 shape = SubResource( 5 )
 

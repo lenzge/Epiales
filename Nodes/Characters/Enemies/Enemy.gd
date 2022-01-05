@@ -100,7 +100,7 @@ func is_moving_in_player_direction() -> bool:
 		return true
 
 func is_player_on_other_plattform() -> bool:
-	if chased_player.global_position.y < global_position.y and chased_player.is_on_floor():
+	if chased_player.global_position.y + chased_player._position.y < global_position.y and chased_player.is_on_floor():
 		return true
 	else:
 		return false
@@ -151,7 +151,10 @@ func on_hit(emitter : DamageEmitter):
 		direction_x = (hitbox.global_position - emitter.global_position).x 
 	else:
 		direction_x = emitter.direction.x
+	emitter.hit(hitbox)
+	health_bar.get_damage(emitter.knockback_force)
 	state_machine.transition_to("Stunned", {"force": emitter.knockback_force, "time": emitter.knockback_time, "direction": (-1.0 if direction_x < 0.0 else 1.0)})
+
 
 func _on_zero_hp():
 	state_machine.transition_to("Die")

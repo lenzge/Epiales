@@ -38,7 +38,7 @@ monitorable = false
 collision_layer = 2
 
 [node name="Shape" type="CollisionShape2D" parent="PuppetCharacter/PlayerDetectionArea"]
-position = Vector2( 320, 0 )
+position = Vector2( 320, -0.667419 )
 shape = SubResource( 1 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -52,7 +52,7 @@ processing_mode = 1
 [node name="ToAlarmedOnPlayerOutOfSight" type="Node" parent="StateMachine/Combat"]
 script = ExtResource( 9 )
 transition_to = "Alarmed"
-max_sight_range = 600.0
+max_sight_range = 800.0
 
 [node name="Alarmed" parent="StateMachine" instance=ExtResource( 6 )]
 floor_detection_ray_path = NodePath("../../PuppetCharacter/FloorDetectionRaycast")

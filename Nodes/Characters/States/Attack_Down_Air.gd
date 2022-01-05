@@ -1,16 +1,18 @@
 extends PlayerState
 
-func _ready():
-	._ready()
-	yield(owner, "ready")
-
 
 func enter(msg :={}):
 	.enter(msg)
-	timer.set_wait_time(player.attack_time)
-	timer.start()
+	.animation_to_timer()
 	# enable the attack hitboxes
 	player.get_node("Attack_Down_Air/HitboxAttack").disabled = false
+	
+	player.hitbox_down_attack_air.knockback_force = player.attack_force[0]
+	player.hitbox_down_attack_air.knockback_time = player.attack_knockback[0]
+	#player.hitbox_up_attack_air.is_directed = true
+	#player.hitbox_up_attack_air.direction = Vector2(0, -1)
+	
+	player.sound_machine.play_sound("Sword Swing " + str(player.sound_machine.get_random(1, 2)), false)
 
 
 func exit():
@@ -24,10 +26,6 @@ func _on_timeout():
 	if input == player.PossibleInput.BLOCK:
 		state_machine.transition_to("Block_Windup")
 	else:
-		player.hitbox_down_attack_air.knockback_force = player.attack_force[0]
-		player.hitbox_down_attack_air.knockback_time = player.attack_knockback[0]
-		#player.hitbox_up_attack_air.is_directed = true
-		#player.hitbox_up_attack_air.direction = Vector2(0, -1)
 		state_machine.transition_to("Attack_Down_Air_Recovery")
 
 

@@ -4,6 +4,9 @@ extends KinematicBody2D
 # Movement
 enum MovementDir {LEFT, RIGHT}
 enum PossibleInput {ATTACK_BASIC, ATTACK_AIR, BLOCK, JUMP}
+# needed for running turn
+var direction : int = 1
+var prev_direction : int = 1
 
 const last_movement_buttons = []
 const last_input = []
@@ -14,6 +17,7 @@ var can_dash := true
 var can_reset_dash := true
 var started_dash_in_air := false
 var in_charged_attack := false
+var attack_count := 1 # Needs to be 1 because increment happens after the attack
 
 var can_hang_on_wall := true
 var hang_on_wall_velocity_save := 0.0
@@ -22,10 +26,16 @@ var add_jump_gravity_damper : bool = false
 
 var dash_cooldown_timer
 
+var transition_to_stunned : bool = false
+var stunned_knockback_force : float = 0.0
+var stunned_knockback_time : float = 0.0
+var stunned_direction_x : float = 0.0
+
+onready var sound_machine : SoundMachine = $SoundMachine
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
-export(float) var air_attack_fall_speed :float = 0.2
+export(float) var air_attack_fall_speed :float = 0.1
 export(float) var dash_speed :float = 1000
 export(int) var gravity :int = 3000
 export(int) var wall_hang_gravity : int = 300
@@ -45,15 +55,11 @@ export(float) var friction_ground_on_crouch : float = 20
 export(float) var friction_knockback : float = 30
 export(float) var friction_air : float = 20
 export(float) var friction_dash: float = 5
+export(float) var friction_leap_jump: float = 10
 
-export(float) var windup_time : float = 0.2
-export(float) var charged_windup_time : float = 0.7
-export(float) var block_time : float = 0.2
-export(float) var attack_time : float = 0.2
-export(float) var charged_attack_time : float = 0.4
-export(float) var recovery_time : float = 0.2
 export(float) var dash_time : float = 0.2
 export(float) var dash_cooldown_time : float = 1.0
+export(float) var leap_jump_time : float = 0.8
 export(float) var jump_gravity_damper : float = 0.75
 
 export(float) var wall_jump_deceleration : float = 0.1
@@ -71,11 +77,9 @@ onready var hitbox : Area2D = $Hitbox
 onready var collision_shape : CollisionShape2D = $CollisionShape2D
 onready var charge_controller = $ChargeController
 
-# For changing hitbox while crouching
-onready var original_height_hitbox = collision_shape.shape.height
+# Enemy needs to know
+onready var _position = collision_shape.position
 	
-var direction : int = 1
-
 signal blocked
 
 
@@ -130,7 +134,6 @@ func _process(delta):
 		last_input.push_front(PossibleInput.BLOCK)
 	elif Input.is_action_just_pressed("jump"):
 		last_input.clear()
-		last_input.push_front(PossibleInput.JUMP)
 	
 	# Fill movement Array
 	if Input.is_action_just_pressed("move_left"):
@@ -145,6 +148,10 @@ func _process(delta):
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.LEFT))
 	if not Input.is_action_pressed("move_right") and last_movement_buttons.find(MovementDir.RIGHT) != -1:
 		last_movement_buttons.remove(last_movement_buttons.find(MovementDir.RIGHT))
+	
+	if transition_to_stunned:
+		transition_to_stunned = false
+		$StateMachine.transition_to("Stunned", {"force" :stunned_knockback_force, "time": stunned_knockback_time, "direction": stunned_direction_x})
 
 
 func move(delta):
@@ -214,9 +221,17 @@ func attack_updown_air_move(delta):
 	if velocity.y < 0:
 		velocity.y += gravity * delta
 	else:
-		velocity.y += air_attack_fall_speed * delta * gravity
+#		velocity.y += air_attack_fall_speed * delta * gravity
+		velocity.y = 20
 		
 	velocity = move_and_slide(velocity, Vector2.UP)
+
+
+## Called if jumping while dashing
+## Only adds gravity to dash movement
+func move_leap_jump(delta:float, dir:Vector2, friction:float):
+	_fall(delta)
+	dash_move(delta, dir, friction)
 
 
 ## Slows the player down slowly in any direction whithout gravity.
@@ -224,12 +239,12 @@ func attack_updown_air_move(delta):
 ## Call 'dash_move' in '_physics_process' while the player is dashing.
 func dash_move(delta:float, dir:Vector2, friction:float):
 	_flip_sprite_in_movement_dir() #change this in dash dir
-	
 	# slowly slowing down
-	if velocity.length() + 1 < friction:
+	velocity -= dir.normalized() * friction
+	# Check for wrap around effect 
+	# (friction overpowers velocity --> change of velocity sign)
+	if velocity.x * dir.x <= 0:
 		velocity.x = 0
-	else:
-		velocity -= dir.normalized() * friction
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -266,26 +281,22 @@ func move_knockback(delta):
 
 # Flip Sprite and Hitbox
 func _flip_sprite_in_movement_dir() -> void:
+	prev_direction = direction
 	if velocity.x < 0:
 		direction = -1
 		sprite.flip_h = true
-		hitbox_attack.scale.x = -abs(hitbox_attack.scale.x)
-		hitbox_up_attack.scale.x = -abs(scale.x)
-		hitbox_down_attack.scale.x = -abs(scale.x)
-		hitbox_up_attack_air.scale.x = -abs(hitbox_up_attack_air.scale.x)
-		hitbox_down_attack_air.scale.x = -abs(hitbox_down_attack_air.scale.x)
-		hitbox_attack.direction = Vector2(-1, 0)
 	elif velocity.x > 0:
-		hitbox_attack.direction = Vector2(1, 0)
 		direction = 1
 		sprite.flip_h = false
-		hitbox_attack.scale.x = abs(hitbox_attack.scale.x)
-		hitbox_up_attack.scale.x = abs(scale.x)
-		hitbox_down_attack.scale.x = abs(scale.x)
-		hitbox_up_attack_air.scale.x = abs(hitbox_up_attack_air.scale.x)
-		hitbox_down_attack_air.scale.x = abs(hitbox_down_attack_air.scale.x)
+	
+	hitbox_attack.direction = Vector2(direction, 0)
+	hitbox_attack.scale.x = abs(hitbox_attack.scale.x) * direction
+	hitbox_up_attack.scale.x = abs(scale.x) * direction
+	hitbox_down_attack.scale.x = abs(scale.x) * direction
+	hitbox_up_attack_air.scale.x = abs(hitbox_up_attack_air.scale.x) * direction
+	hitbox_down_attack_air.scale.x = abs(hitbox_down_attack_air.scale.x) * direction
 
-
+	
 func set_knockback(force, direction):
 	#if sprite.flip_h == true:
 	velocity.x = force * direction
@@ -330,28 +341,12 @@ func _slow_with_friction(friction : float) -> void:
 			velocity.x -= friction
 
 
-## Change the players collisionshape when in entering crouch
-## Called on entering the crouch state
-func _enter_crouch():
-	if collision_shape.shape.height == original_height_hitbox:
-		hitbox.get_child(0).shape.height = original_height_hitbox/2
-		hitbox.get_child(0).position.y = hitbox.get_child(0).position.y + collision_shape.shape.height/4
-		collision_shape.shape.height = original_height_hitbox/2
-		collision_shape.position.y = collision_shape.position.y + collision_shape.shape.height/2
-
-
-## Reset the players collisionshape when exiting crouch
-## Called whenever the player leaves the crouch states
-func _exit_crouch():
-	collision_shape.position.y = collision_shape.position.y - collision_shape.shape.height/2
-	collision_shape.shape.height = collision_shape.shape.height * 2
-	hitbox.get_child(0).shape.height = collision_shape.shape.height
-	hitbox.get_child(0).position.y = hitbox.get_child(0).position.y - collision_shape.shape.height/4
-	
-
 
 func _physics_process(delta):
 	$Label.text = $StateMachine.state.name
+	# hitbox equals collisionshape
+	hitbox.get_child(0).scale = collision_shape.scale
+	hitbox.get_child(0).position = collision_shape.position
 
 
 func on_hit(emitter : DamageEmitter):
@@ -368,9 +363,14 @@ func on_hit(emitter : DamageEmitter):
 		if $StateMachine.state.name == "Block" and not direction_x == self.direction:
 			emit_signal("blocked")
 			emitter.was_blocked($"Hitbox")
+			sound_machine.play_sound("Blocking", false)
 		else:
-			$StateMachine.transition_to("Stunned", {"force" :emitter.knockback_force, "time": emitter.knockback_time, "direction": direction_x})
+			transition_to_stunned = true
+			stunned_knockback_force = emitter.knockback_force
+			stunned_knockback_time = emitter.knockback_time
+			stunned_direction_x = direction_x
 			emitter.hit($"Hitbox")
+			sound_machine.play_sound("Hit", false)
 
 
 # Timer

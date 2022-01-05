@@ -12,6 +12,7 @@ export var auto_start : bool = true
 export var initial_state := NodePath()
 onready var state = get_node(initial_state)
 var last_state
+var new_state : String
 
 # Assigns itself to an object
 func _ready():
@@ -87,6 +88,7 @@ func transition_to(target_state_name, msg: Dictionary = {}):
 	
 	# Dying can't be cancelled
 	if not state.name == "Die":
+		new_state = target_state_name
 		last_state = state
 		for transition in state.transitions:
 			if transition.enabled:

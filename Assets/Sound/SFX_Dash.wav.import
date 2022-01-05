@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SFX_Dash.wav-de8776dd2ff2f11487dcce7b56adc734.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX_Dash.wav"
+dest_files=[ "res://.import/SFX_Dash.wav-de8776dd2ff2f11487dcce7b56adc734.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -574,6 +574,7 @@ gravity = 1000.0
 air_drag = 2.5
 health = 100.0
 max_health = 100.0
+attack_area_path = NodePath("AttackArea")
 
 [node name="Sprite" parent="." index="0"]
 modulate = Color( 0.956863, 0.109804, 0.109804, 0.811765 )

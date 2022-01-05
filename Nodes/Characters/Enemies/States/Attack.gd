@@ -9,7 +9,7 @@ export(int, "GRAVITY", "CONSTANT") var fall_mode : int = 1
 export var constant_fall_speed : float = 0
 export var should_reset_y_velocity : bool = false
 export(Array, float) var attack_force = [100.0]
-export(Array, float) var attack_damage = [20.0]
+export(Array, int) var attack_damage = [20]
 
 onready var attack_area : DamageEmitter = get_node(attack_area_path)
 
@@ -25,8 +25,8 @@ func enter(_msg := {}):
 	.enter(_msg)
 	should_attack_again = false
 	attack_count = _msg.attack_count if _msg.has("attack_count") else 0
-	character.attack_area.knockback_force = attack_force[attack_count % attack_force.count()]
-	character.attack_area.damage = attack_damage[attack_count % attack_force.count()]
+	character.attack_area.knockback_force = attack_force[attack_count % attack_force.size()]
+	character.attack_area.damage_amount = attack_damage[attack_count % attack_force.size()]
 	if should_reset_y_velocity:
 		character.velocity.y = 0.0
 	if fall_mode == 1:
@@ -40,7 +40,7 @@ func physics_update(delta):
 		character.velocity.y += character.gravity * delta
 		character.apply_air_drag(delta)
 	else:
-		character.apply_air_drag_x(delta)
+		character.apply_air_drag_on_x(delta)
 	character.velocity = character.move_and_slide(character.velocity, Vector2.UP)
 
 
