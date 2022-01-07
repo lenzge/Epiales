@@ -4,7 +4,7 @@
 [ext_resource path="res://Nodes/Game Objects/Checkpoint.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Nodes/Game Objects/Deadzone.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Nodes/Maps/StandardLevel.gd" type="Script" id=5]
+[ext_resource path="res://Nodes/Maps/HackNSlashLevel.gd" type="Script" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
@@ -414,7 +414,7 @@ resource_local_to_scene = true
 [sub_resource type="RectangleShape2D" id=44]
 extents = Vector2( 22.6794, 59.7717 )
 
-[node name="Level" type="Node"]
+[node name="Level2" type="Node"]
 pause_mode = 1
 script = ExtResource( 5 )
 player_spawn_path = NodePath("PlayerSpawn")
