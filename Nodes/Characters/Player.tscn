@@ -862,6 +862,7 @@ air_attack_fall_speed = 0.05
 wall_hang_gravity = 400
 wall_hang_max_gravity = 700
 jump_impulse = 700
+wall_jump_speed = 1150
 attack_air_down_knockback_impulse = 1000
 acceleration = 0.135
 friction_ground = 20.0
