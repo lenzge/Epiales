@@ -3,10 +3,6 @@ extends PlayerState
 var direction := Vector2()
 var jumped := false
 
-func _ready():
-	._ready()
-	yield(owner, "ready")
-
 
 func enter(_msg := {}):
 	.enter(_msg)

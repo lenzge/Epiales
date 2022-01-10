@@ -9,9 +9,11 @@ signal on_hit_stop(emitter)
 var receiver : Node
 
 func _ready():
+	monitorable = false
 	self.connect("area_entered", self, "_on_hit_start")
 	self.connect("area_exited", self, "_on_hit_stop")
 	receiver = get_node(receiver_path)
+
 
 func _on_hit_start(body : Node):
 	if body is DamageEmitter:
