@@ -9,7 +9,6 @@
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Nodes/Game Objects/DashResetter.tscn" type="PackedScene" id=9]
 
-
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 
