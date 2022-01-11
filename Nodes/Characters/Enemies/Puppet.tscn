@@ -19,7 +19,7 @@
 [ext_resource path="res://Nodes/Characters/EnemyStates/Chase_Windup.gd" type="Script" id=17]
 [ext_resource path="res://Nodes/Characters/EnemyStates/Freeze.gd" type="Script" id=18]
 [ext_resource path="res://Nodes/Characters/EnemyStates/Die.gd" type="Script" id=19]
-[ext_resource path="res://Nodes/Characters/Enemies/HealthBar.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Nodes/Characters/HealthBar.tscn" type="PackedScene" id=20]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 25.1569
