@@ -12,7 +12,7 @@ func animation_transition():
 	.animation_transition()
 
 func update(delta):
-	if player.velocity.x > 100:
+	if abs(player.velocity.x) > 100:
 		animationPlayer.play("Slide")
 	elif animationPlayer.current_animation == "Slide":
 		animationPlayer.play("Slide_Crouch")
