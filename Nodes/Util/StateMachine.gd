@@ -48,4 +48,3 @@ func transition_to(target_state_name, msg: Dictionary = {}):
 		state.enter(msg)
 		emit_signal("transitioned", state.name)
 
-

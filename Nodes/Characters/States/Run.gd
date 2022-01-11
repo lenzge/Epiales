@@ -1,12 +1,15 @@
 extends PlayerState
 
-var update_count = 0
+var is_running : bool
 
 func enter(msg := {}):
-	.enter(msg)
-	#animationPlayer.play("Walk")
+	if state_machine.last_state.name == "Crouch":
+		animationPlayer.play("Crouch_Run")
+		is_running = true
+	else:
+		animationPlayer.play("Walk")
+		is_running = false
 	player.sound_machine.play_sound("Running", true)
-	update_count = 0
 	
 
 func exit():
@@ -19,16 +22,26 @@ func update(delta):
 
 
 func physics_update(delta):
-	update_count += 1
 	if not player.is_on_floor():
 		state_machine.transition_to("Fall")
 		return
 		
+	# Walk or Run? Which Speed?
+	if abs(player.velocity.x) > 200:
+		animationPlayer.set_speed_scale(animationPlayer.run_speed_fast)
+	elif abs(player.velocity.x) > 100:
+		animationPlayer.set_speed_scale(animationPlayer.run_speed_slow)
+	elif not animationPlayer.current_animation == "Crouch_Run":
+		animationPlayer.set_speed_scale(animationPlayer.walk_speed)
+		is_running = false
+		animationPlayer.play("Walk")
+		
+	if not is_running and abs(player.velocity.x) > 100:
+		is_running = true
+		animationPlayer.play("Run")
+		
 	player.move(delta)
-	# turn?
-	#if update_count > 1 and not player.direction == player.prev_direction and abs(player.velocity.x) > 60 :
-		#player.animation_tree.travel("Run_Turn")
-		#animationPlayer.play("Run_Turn")
+	
 
 	if Input.is_action_just_pressed("attack"):
 		if Input.is_action_pressed("move_up"):

@@ -1,7 +1,7 @@
 class_name PlayerState
 extends State
 
-
+signal transition
 var player : Player
 var timer : Timer
 onready var animationPlayer : AnimationPlayer = $"../../AnimationPlayer"
@@ -22,6 +22,7 @@ func _ready():
 	
 func enter(_msg := {}):
 	animationPlayer.play(self.name)
+	animationPlayer.set_speed_scale(1)
 	
 func animation_to_timer():
 	timer.set_wait_time(animationPlayer.current_animation_length)
