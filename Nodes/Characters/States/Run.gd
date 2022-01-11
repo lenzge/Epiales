@@ -31,7 +31,7 @@ func physics_update(delta):
 		animationPlayer.set_speed_scale(animationPlayer.run_speed_fast)
 	elif abs(player.velocity.x) > 100:
 		animationPlayer.set_speed_scale(animationPlayer.run_speed_slow)
-	elif not animationPlayer.current_animation == "Crouch_Run":
+	elif not animationPlayer.current_animation == "Crouch_Run" and not player.is_on_wall():
 		animationPlayer.set_speed_scale(animationPlayer.walk_speed)
 		is_running = false
 		animationPlayer.play("Walk")
