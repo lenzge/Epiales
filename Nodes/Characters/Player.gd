@@ -81,7 +81,7 @@ onready var charge_controller = $ChargeController
 onready var _position = collision_shape.position
 	
 signal blocked
-signal charged_action
+
 
 func _ready():
 	_init_timer()
@@ -340,11 +340,6 @@ func _slow_with_friction(friction : float) -> void:
 		else:
 			velocity.x -= friction
 
-
-func charge():
-	in_charged_attack = true
-	attack_count = 4
-	emit_signal("charged_action")
 
 
 func _physics_process(delta):
