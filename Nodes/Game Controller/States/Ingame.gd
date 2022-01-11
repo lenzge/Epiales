@@ -2,7 +2,7 @@ class_name Ingame
 extends GameState
 
 
-const PLAYER = preload("res://Nodes/Characters/Player.tscn")
+const PLAYER = preload("res://Nodes/Characters/Player/Player.tscn")
 const LEVEL = preload("res://Nodes/Experimental/Maps/Level.tscn")
 
 var player_instance 
