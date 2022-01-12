@@ -1,6 +1,6 @@
 extends PlayerState
 
-
+# Play short animations depending on the last state before playing idle animation
 func enter(_msg := {}):
 	if state_machine.last_state.name == "Jump" or state_machine.last_state.name == "Fall":
 		animationPlayer.play("Jump_landing")
@@ -13,11 +13,8 @@ func enter(_msg := {}):
 		animationPlayer.set_speed_scale(animationPlayer.idle_speed)
 	
 
-
 func update(delta):
 	 
-	player.move(delta)
-	
 	if not player.is_on_floor():
 		state_machine.transition_to("Fall")
 		return
