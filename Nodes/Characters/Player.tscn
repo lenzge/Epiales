@@ -3548,4 +3548,3 @@ hframes = 10
 [connection signal="charged_action" from="." to="ChargeController" method="_on_charged_action"]
 [connection signal="on_hit_start" from="Hitbox" to="." method="on_hit"]
 [connection signal="hit" from="Attack_Down_Air" to="." method="_on_Attack_Down_Air_hit"]
-[connection signal="animation_finished" from="AnimationPlayer" to="AnimationPlayer" method="_on_AnimationPlayer_animation_finished"]

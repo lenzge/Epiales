@@ -1,13 +1,13 @@
 class_name PlayerState
 extends State
 
-signal transition
 var player : Player
 var timer : Timer
+
 onready var animationPlayer : AnimationPlayer = $"../../AnimationPlayer"
 
 
-# Owner of the statemachine is a player
+# Set Owner as player. Init timer.
 func _ready():
 	yield(owner, "ready")
 	player = owner as KinematicBody2D
@@ -19,7 +19,6 @@ func _ready():
 	timer.connect("timeout", self, "_on_timeout")
 	self.add_child(timer)
 
-	
 func enter(_msg := {}):
 	animationPlayer.play(self.name)
 	animationPlayer.set_speed_scale(1)

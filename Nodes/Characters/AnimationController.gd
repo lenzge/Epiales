@@ -16,7 +16,4 @@ func _ready():
 	animation_set_next("Jump_landing", "Idle")
 	
 	
-	
-func _on_AnimationPlayer_animation_finished(anim_name):
-	pass
 
