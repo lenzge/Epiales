@@ -31,6 +31,9 @@ func enter(_msg := {}):
 		player.started_dash_in_air = true
 	player.sound_machine.play_sound("Dash", false)
 	# todo: change player hitbox so player can deal damage while dashing
+	
+	
+	player.sprite.set_rotation_degrees(45*direction.y*player.direction) 
 
 
 func exit():
@@ -38,6 +41,7 @@ func exit():
 	jumped = false
 	player.hitbox.get_child(0).disabled = false
 	player.start_dash_cooldown()
+	player.sprite.set_rotation_degrees(0)
 
 
 func physics_update(delta):
