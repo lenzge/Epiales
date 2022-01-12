@@ -454,7 +454,7 @@ position = Vector2( 12064, -80 )
 position = Vector2( 12552, -80 )
 
 [node name="PlayerSpawn" type="Position2D" parent="."]
-position = Vector2( -440, 400 )
+position = Vector2( -448, 424 )
 
 [node name="Checkpoint2" parent="." instance=ExtResource( 7 )]
 position = Vector2( 2790.81, -507.211 )
