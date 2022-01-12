@@ -3243,10 +3243,10 @@ jump_impulse = 800
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -50 )
-texture = ExtResource( 16 )
-hframes = 3
-vframes = 3
-frame = 4
+texture = ExtResource( 46 )
+hframes = 2
+vframes = 2
+frame = 1
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -3259,7 +3259,6 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2( 2.4, 1 )
 shape = SubResource( 1 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -3364,7 +3363,7 @@ damage_amount = 20
 direction = Vector2( 1, 0 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
-position = Vector2( 40.044, -3.27136 )
+position = Vector2( 40.334, -53.106 )
 shape = SubResource( 2 )
 disabled = true
 
@@ -3543,6 +3542,14 @@ visible = false
 position = Vector2( 0, -48 )
 texture = ExtResource( 77 )
 hframes = 10
+
+[node name="RayLeft" type="RayCast2D" parent="."]
+cast_to = Vector2( -30, 0 )
+collision_mask = 4
+
+[node name="RayRight" type="RayCast2D" parent="."]
+cast_to = Vector2( 30, 0 )
+collision_mask = 4
 
 [connection signal="blocked" from="." to="ChargeController" method="_on_blocked"]
 [connection signal="charged_action" from="." to="ChargeController" method="_on_charged_action"]

@@ -4,6 +4,10 @@ extends KinematicBody2D
 # Movement
 enum MovementDir {LEFT, RIGHT}
 enum PossibleInput {ATTACK_BASIC, ATTACK_AIR, BLOCK, JUMP}
+
+# Wall hang/jump
+enum Walls {NONE, LEFT, RIGHT}
+
 # needed for running turn
 var direction : int = 1
 var prev_direction : int = 1
@@ -20,7 +24,8 @@ var in_charged_attack := false
 var attack_count := 1 # Needs to be 1 because increment happens after the attack
 
 var can_hang_on_wall := true
-var hang_on_wall_velocity_save := 0.0
+var raycasts_enabled := false
+var on_wall = Walls.NONE
 
 var add_jump_gravity_damper : bool = false
 
@@ -77,6 +82,12 @@ onready var hitbox : Area2D = $Hitbox
 onready var collision_shape : CollisionShape2D = $CollisionShape2D
 onready var charge_controller = $ChargeController
 
+onready var ray_left : RayCast2D = $RayLeft
+onready var ray_right : RayCast2D = $RayRight
+
+# Needed for the wall hang
+onready var player_size_x = collision_shape.shape.extents.x
+
 # Enemy needs to know
 onready var _position = collision_shape.position
 	
@@ -109,13 +120,17 @@ func pop_combat_queue():
 func _process(delta):
 	# Check if player can dash and hang on wall
 	if is_on_floor():
+		if raycasts_enabled:
+			enable_Raycasts(false)
 		if started_dash_in_air:
 			can_reset_dash = true
 			started_dash_in_air = false
+	else:
+		if !raycasts_enabled:
+			enable_Raycasts(true)
 	if can_reset_dash and !started_dash_in_air:
 		can_dash = true
 		can_hang_on_wall = true
-		hang_on_wall_velocity_save = 0.0
 	# todo: add other conditions (i.e. player hits dash resetter obj)
 	
 	# Queue Attack in Array
@@ -249,17 +264,40 @@ func dash_move(delta:float, dir:Vector2, friction:float):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
+## Test if the player is on a wall
+func can_change_to_wallhang() -> bool:
+	var ret_value = false
+	on_wall = Walls.NONE
+	
+	if raycasts_enabled:
+		if ray_right.is_colliding():
+			var tile_pos = ray_right.get_collider().world_to_map(ray_right.get_collision_point())
+			tile_pos -= ray_right.get_collision_normal()
+			var tile_tex_coords = ray_right.get_collider().get_cell_autotile_coord(tile_pos.x, tile_pos.y)
+			var tile_id = (tile_tex_coords.y * 8) + tile_tex_coords.x
+			
+			if !ray_right.get_collider().tile_set.tile_get_shape_one_way(ray_right.get_collider().get_cellv(tile_pos), tile_id):
+				ret_value = true
+				on_wall = Walls.RIGHT
+
+		elif ray_left.is_colliding():
+			
+			var tile_pos = ray_left.get_collider().world_to_map(ray_left.get_collision_point())
+			tile_pos -= ray_left.get_collision_normal()
+			var tile_tex_coords = ray_left.get_collider().get_cell_autotile_coord(tile_pos.x, tile_pos.y)
+			var tile_id = (tile_tex_coords.y * 8) + tile_tex_coords.x
+			
+			if !ray_left.get_collider().tile_set.tile_get_shape_one_way(ray_left.get_collider().get_cellv(tile_pos), tile_id):			
+				ret_value = true
+				on_wall = Walls.LEFT
+	
+	return ret_value
+
+
 ## Moves the player with a special gravitational force for the wall_hang
 ## Call when player is in wall hang
 func move_wall_hang(delta):
 	_flip_sprite_in_movement_dir()
-	
-	if not last_movement_buttons.empty():
-		if last_movement_buttons[0] == MovementDir.LEFT:
-			_accelerate(-speed, acceleration)
-		elif last_movement_buttons[0] == MovementDir.RIGHT:
-			_accelerate(speed, acceleration)
-	
 	velocity.y += wall_hang_gravity * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -396,6 +434,12 @@ func _on_dash_cooldown_timeout():
 func start_dash_cooldown():
 	dash_cooldown_timer.set_wait_time(dash_cooldown_time)
 	dash_cooldown_timer.start()
+
+
+func enable_Raycasts(value : bool):
+	ray_left.enabled = value
+	ray_right.enabled = value
+	raycasts_enabled = value
 
 
 func _on_Attack_Down_Air_hit(receiver):

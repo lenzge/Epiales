@@ -10,7 +10,7 @@ func physics_update(delta):
 		else:
 			state_machine.transition_to("Run")
 		player.sound_machine.play_sound("Landing", false)
-	elif player.can_hang_on_wall and player.is_on_wall():
+	elif player.can_hang_on_wall and player.can_change_to_wallhang():
 		if Input.is_action_pressed("hang_on_wall"):
 			state_machine.transition_to("Wall_Hang")
 		if Input.is_action_just_pressed("jump"):

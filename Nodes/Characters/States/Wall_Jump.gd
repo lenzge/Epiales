@@ -10,10 +10,17 @@ func enter(_msg := {}):
 	.enter(_msg)
 	# Setup player velocities for wall jump
 	player.velocity.y = -player.jump_impulse
-	if player.get_slide_collision(0).get_position().x > player.position.x:
+	
+	# Determine the position of the wall
+	if player.on_wall == player.Walls.RIGHT:
 		player.velocity.x = -player.wall_jump_speed
-	else:
+	elif player.on_wall == player.Walls.LEFT:
 		player.velocity.x = player.wall_jump_speed
+	
+#	if player.get_slide_collision(0).get_position().x > player.position.x:
+#		player.velocity.x = -player.wall_jump_speed
+#	else:
+#		player.velocity.x = player.wall_jump_speed
 	
 	timer.set_wait_time(player.wall_jump_time)
 	timer.start()
