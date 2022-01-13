@@ -265,33 +265,43 @@ func dash_move(delta:float, dir:Vector2, friction:float):
 
 
 ## Test if the player is on a wall
+## Used for wall detection in wall hang and wall jump
 func can_change_to_wallhang() -> bool:
 	var ret_value = false
 	on_wall = Walls.NONE
 	
+	# test if one of the rays collides with a wall (right-ray dominant)
 	if raycasts_enabled:
 		if ray_right.is_colliding():
-			var tile_pos = ray_right.get_collider().world_to_map(ray_right.get_collision_point())
-			tile_pos -= ray_right.get_collision_normal()
-			var tile_tex_coords = ray_right.get_collider().get_cell_autotile_coord(tile_pos.x, tile_pos.y)
-			var tile_id = (tile_tex_coords.y * 8) + tile_tex_coords.x
-			
-			if !ray_right.get_collider().tile_set.tile_get_shape_one_way(ray_right.get_collider().get_cellv(tile_pos), tile_id):
+			if is_tile_wall(ray_right):
 				ret_value = true
 				on_wall = Walls.RIGHT
 
 		elif ray_left.is_colliding():
-			
-			var tile_pos = ray_left.get_collider().world_to_map(ray_left.get_collision_point())
-			tile_pos -= ray_left.get_collision_normal()
-			var tile_tex_coords = ray_left.get_collider().get_cell_autotile_coord(tile_pos.x, tile_pos.y)
-			var tile_id = (tile_tex_coords.y * 8) + tile_tex_coords.x
-			
-			if !ray_left.get_collider().tile_set.tile_get_shape_one_way(ray_left.get_collider().get_cellv(tile_pos), tile_id):			
+			if is_tile_wall(ray_left):
 				ret_value = true
 				on_wall = Walls.LEFT
 	
 	return ret_value
+
+
+## Test if a tile that collides with a raycast is a tile without one-way collision
+## Used for the raycasts of the wall hang (in the method "can_change_to_wallhang()"
+func is_tile_wall(ray: RayCast2D) -> bool:
+	
+	var collider = ray.get_collider()
+	
+	# get tile of tileset
+	var tile_pos = collider.world_to_map(ray.get_collision_point())
+	tile_pos -= ray.get_collision_normal()
+	var tile_tex_coords = collider.get_cell_autotile_coord(tile_pos.x, tile_pos.y)
+	var tile_id = (tile_tex_coords.y * 8) + tile_tex_coords.x
+	
+	# get tileset
+	var tile_map_id = collider.get_cellv(tile_pos)
+	
+	# test if the tile has a one_way collision and return the negated value
+	return !ray.get_collider().tile_set.tile_get_shape_one_way(ray.get_collider().get_cellv(tile_pos), tile_id) and tile_map_id != TileMap.INVALID_CELL
 
 
 ## Moves the player with a special gravitational force for the wall_hang
