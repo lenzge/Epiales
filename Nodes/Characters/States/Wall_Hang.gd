@@ -39,7 +39,20 @@ func physics_update(delta):
 	
 	else:
 		if Input.is_action_just_pressed("jump"):
-				state_machine.transition_to("Wall_Jump")
+			
+			# The velocity of the wall jump should depend on the player speed of the wall hang
+			var l = player.velocity.length()
+			var additional_vector_value_y = sqrt(pow(l, 2) * player.wall_jump_additional_y)
+			var additional_vector_value_x = sqrt(pow(l, 2) * (1 - player.wall_jump_additional_y))
+			
+			player.wall_jump_vector.y = -(player.jump_impulse + additional_vector_value_y)
+			
+			if player.on_wall == player.Walls.RIGHT:
+				player.wall_jump_vector.x = -(player.wall_jump_speed + additional_vector_value_x)
+			elif player.on_wall == player.Walls.LEFT:
+				player.wall_jump_vector.x = (player.wall_jump_speed + additional_vector_value_x)
+			
+			state_machine.transition_to("Wall_Jump")
 		elif Input.is_action_pressed("hang_on_wall"):
 			# if there is no wall anymore transition to fall, else stay in wall hang
 			if player.on_wall == player.Walls.NONE:

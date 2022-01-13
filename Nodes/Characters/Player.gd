@@ -26,6 +26,7 @@ var attack_count := 1 # Needs to be 1 because increment happens after the attack
 var can_hang_on_wall := true
 var raycasts_enabled := false
 var on_wall = Walls.NONE
+var wall_jump_vector := Vector2(0, 0)
 
 var add_jump_gravity_damper : bool = false
 
@@ -69,6 +70,7 @@ export(float) var jump_gravity_damper : float = 0.75
 
 export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
+export(float, 0, 1) var wall_jump_additional_y : float = 0.5
 export(Array, int) var attack_force = [200, 300, 400, 600]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
