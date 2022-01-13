@@ -2,10 +2,8 @@ extends PlayerState
 
 
 func enter(_msg := {}):
-	if Input.is_action_pressed("charge") and player.charge_controller.charge_points > 0:
-		player.in_charged_attack = true
-		player.attack_count = 4
-		player.charge_controller._on_charged_action()
+	if Input.is_action_pressed("charge") and player.charge_controller.has_charge():
+		player.charge()
 		player.sound_machine.play_sound("Charged Attack", false)
 	else:
 		player.in_charged_attack = false
