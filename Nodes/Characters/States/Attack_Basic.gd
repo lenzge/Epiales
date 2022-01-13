@@ -15,9 +15,9 @@ func enter(_msg := {}):
 
 func physics_update(delta):
 	if player.is_on_floor():
-		player.attack_move(delta)
+		player.basic_attack_move(delta)
 	else:
-		player.attack_updown_air_move(delta)
+		player.air_attack_move(delta)
 
 
 func exit():
@@ -34,8 +34,5 @@ func _on_timeout():
 	if player.attack_count < player.max_attack_combo and (input == player.PossibleInput.ATTACK_BASIC or input == player.PossibleInput.ATTACK_AIR):
 		player.attack_count += 1
 		state_machine.transition_to("Attack_Basic_Windup")
-#	elif input == player.PossibleInput.BLOCK:
-#		player.pop_combat_queue()
-#		state_machine.transition_to("Block_Windup")
 	else:
 		state_machine.transition_to("Attack_Basic_Recovery")

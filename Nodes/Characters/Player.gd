@@ -153,11 +153,11 @@ func _process(delta):
 		transition_to_stunned = false
 		$StateMachine.transition_to("Stunned", {"force" :stunned_knockback_force, "time": stunned_knockback_time, "direction": stunned_direction_x})
 
-
+# Normal movement on ground
 func move(delta):
 	_flip_sprite_in_movement_dir()
 	
-	# Actual movement
+	# Actual movement with acceleration and friction
 	if abs(velocity.x) <= speed and not last_movement_buttons.empty():
 		if last_movement_buttons[0] == MovementDir.LEFT:
 			_accelerate(-speed, acceleration)
@@ -166,53 +166,48 @@ func move(delta):
 	else:
 		_slow_with_friction(friction_ground)
 		
-	_fall(delta)
-	
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
-# Lets the player step forward.
-# Call while attacking
-func attack_move(delta) -> void:
+# Movement while basic attacking on ground (step forward)
+func basic_attack_move(delta) -> void:
 	_flip_sprite_in_movement_dir()
 	
-	if not last_movement_buttons.empty(): # If running
+	# If running use normal speed
+	if not last_movement_buttons.empty(): 
 		if last_movement_buttons[0] == MovementDir.LEFT:
 			_accelerate(-speed, acceleration)
 		elif last_movement_buttons[0] == MovementDir.RIGHT:
 			_accelerate(speed, acceleration)
-	else: # If not running: slow step foreward
+	# If not running: slow step foreward
+	else: 
 		if sprite.flip_h == true:
 			velocity.x += ((-attack_step_speed - velocity.x) * acceleration)
 		else:
 			velocity.x += ((attack_step_speed - velocity.x) * acceleration)
 
+	# Why? Wird doch nie in der luft aufgerufen?
 	if velocity.y < 0:
 		velocity.y = 0;
 	velocity.y += gravity * delta * air_attack_fall_speed
+	
 	velocity = move_and_slide(velocity,Vector2.UP)
 
-
-## Deccelerates the player when in up or down Attack on ground or in crouch
-## Call in _physics_process when player attacks up or down on ground
-func attack_up_ground_move(delta) -> void:
+# Decelerated movement when the player can't move actively, but physics should be applied
+# Friction is set to ground_friction by default, in crouch state the second arg has to be set to true
+func decelerate_move_ground(delta, crouch:bool = false):
 	_flip_sprite_in_movement_dir()
-	_slow_with_friction(friction_ground)
-	_fall(delta)
+	if not crouch:
+		_slow_with_friction(friction_ground)
+	else:
+		_slow_with_friction(friction_ground_on_crouch)
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
+	
 
-
-## Basically the same as "attack_up_ground_move()" but with another friction
-func crouch_move(delta) -> void:
-	_flip_sprite_in_movement_dir()
-	_slow_with_friction(friction_ground_on_crouch)
-	_fall(delta)
-	velocity = move_and_slide(velocity, Vector2.UP)
-
-
-## Deccelerate the player when inup or down attack in air and fall slower
-## Call in _physics_process when player attacks up or down in air
-func attack_updown_air_move(delta):
+# Decelerate the player when in any air attack to fall slower
+func air_attack_move(delta):
 	_flip_sprite_in_movement_dir()
 	_slow_with_friction(friction_air)
 	
@@ -226,11 +221,17 @@ func attack_updown_air_move(delta):
 		
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+# Applies falling physics in air while the player can't move actively 
+func fall_straight(delta):
+	_flip_sprite_in_movement_dir()
+	_slow_with_friction(friction_air)
+	_apply_gravity(delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
 
 ## Called if jumping while dashing
 ## Only adds gravity to dash movement
 func move_leap_jump(delta:float, dir:Vector2, friction:float):
-	_fall(delta)
+	_apply_gravity(delta)
 	dash_move(delta, dir, friction)
 
 
@@ -269,13 +270,13 @@ func move_wall_hang(delta):
 func move_wall_jump(delta):
 	_flip_sprite_in_movement_dir()
 	_accelerate(0, wall_jump_deceleration)
-	_fall(delta)
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
 func move_knockback(delta):
 	_slow_with_friction(friction_knockback)
-	_fall(delta)
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
@@ -298,20 +299,17 @@ func _flip_sprite_in_movement_dir() -> void:
 
 	
 func set_knockback(force, direction):
-	#if sprite.flip_h == true:
 	velocity.x = force * direction
-	#else:
-		#velocity.x = -force
 
 
 func knockback(delta, force, direction):
 	velocity.x = force * direction
-	_fall(delta)
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
 ## Applies gravity to the player
-func _fall(delta):
+func _apply_gravity(delta):
 	if add_jump_gravity_damper:
 		velocity.y += gravity * delta * jump_gravity_damper
 	else:
@@ -340,7 +338,7 @@ func _slow_with_friction(friction : float) -> void:
 		else:
 			velocity.x -= friction
 
-
+# Is called when the player makes a charged attack
 func charge():
 	in_charged_attack = true
 	attack_count = 4

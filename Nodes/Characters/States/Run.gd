@@ -45,7 +45,7 @@ func physics_update(delta):
 
 	if Input.is_action_just_pressed("attack"):
 		if Input.is_action_pressed("move_up"):
-			state_machine.transition_to("Attack_Up_Ground_Windup")
+			state_machine.transition_to("Attack_Up_Windup")
 		else:
 			state_machine.transition_to("Attack_Basic_Windup")
 	elif Input.is_action_just_pressed("jump"):

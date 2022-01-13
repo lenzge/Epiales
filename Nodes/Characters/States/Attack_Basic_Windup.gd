@@ -2,7 +2,7 @@ extends PlayerState
 
 
 func enter(_msg := {}):
-	if Input.is_action_pressed("charge") and player.charge_controller.has_charge():
+	if Input.is_action_pressed("charge") and player.charge_controller.has_charge() and player.is_on_floor():
 		player.charge()
 		player.sound_machine.play_sound("Charged Attack", false)
 	else:
@@ -14,10 +14,10 @@ func enter(_msg := {}):
 func physics_update(delta):
 	
 	if not player.in_charged_attack:
-		if not player.is_on_floor():
-			player.attack_updown_air_move(delta)
+		if player.is_on_floor():
+			player.move(delta)
 		else:
-			player.move(delta) #attack_move here?
+			player.air_attack_move(delta)
 			
 		# Action can be cancelled (not by moving)
 		if Input.is_action_just_pressed("jump") and player.is_on_floor():

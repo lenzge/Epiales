@@ -32,8 +32,9 @@ func enter(_msg := {}):
 	player.sound_machine.play_sound("Dash", false)
 	# todo: change player hitbox so player can deal damage while dashing
 	
-	# Tilt in _dash_direction
-	player.sprite.set_rotation_degrees(45*_dash_direction.y*player.direction) 
+	# Tilt in _dash_direction (Attention to crouch and dash)
+	if not (_dash_direction.y > 0.5 and player.is_on_floor()):
+		player.sprite.set_rotation_degrees(45*_dash_direction.y*player.direction) 
 
 
 func exit():
@@ -59,7 +60,12 @@ func physics_update(delta):
 	
 	# Check for exit conditions
 	if Input.is_action_just_pressed("attack"):
-		state_machine.transition_to("Attack_Basic_Windup")
+		if Input.is_action_pressed("move_up"):
+			state_machine.transition_to("Attack_Up_Windup")
+		else:
+			 state_machine.transition_to("Attack_Basic_Windup")
+	elif Input.is_action_just_pressed("block") and player.is_on_floor():
+		state_machine.transition_to("Block_windup")
 	elif Input.is_action_just_pressed("jump") and not _jumped and player.is_on_floor():
 		timer.start(player.leap_jump_time)
 		player.hitbox.get_child(0).disabled = false

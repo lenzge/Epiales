@@ -33,9 +33,9 @@ func physics_update(delta):
 		state_machine.transition_to("Dash")
 	elif Input.is_action_just_pressed("attack"):
 		if Input.is_action_pressed("move_up"):
-			state_machine.transition_to("Attack_Up_Air_Windup")
+			state_machine.transition_to("Attack_Up_Windup")
 		elif Input.is_action_pressed("move_down"):
-			state_machine.transition_to("Attack_Down_Air_Windup")
+			state_machine.transition_to("Attack_Down_Windup")
 		else:
 			state_machine.transition_to("Attack_Basic_Windup")
 	elif player.can_hang_on_wall and player.is_on_wall():

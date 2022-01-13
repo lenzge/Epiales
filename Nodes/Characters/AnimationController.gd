@@ -13,6 +13,7 @@ func _ready():
 	animation_set_next("Fall", "Fall_Long")
 	animation_set_next("Crouch_End", "Idle")
 	animation_set_next("Crouch_Run", "Run")
+	animation_set_next("Crouch_Start", "Crouch")
 	animation_set_next("Jump_landing", "Idle")
 	
 	

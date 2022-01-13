@@ -7,11 +7,9 @@ func enter(_msg := {}):
 	
 func physics_update(delta):
 	if player.is_on_floor():
-		player.attack_updown_air_move(delta)
+		player.decelerate_move_ground(delta)
 	else:
-		player._slow_with_friction(player.friction_ground)
-		player._fall(delta)
-		player.velocity = player.move_and_slide(player.velocity, Vector2.UP)
+		player.fall_straight(delta)
 
 func exit():
 	.exit()
