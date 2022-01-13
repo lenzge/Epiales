@@ -7,7 +7,9 @@ var wall_direction_save : int
 func enter(_msg := {}):
 	.enter(_msg)
 	player.velocity.y = 0
-	player.can_dash = true
+	
+	if player.dash_reset_after_wallhang:
+		player.can_dash = true
 	
 	# Save the position of the wall
 	if player.on_wall == player.Walls.RIGHT:

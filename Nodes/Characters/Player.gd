@@ -71,6 +71,7 @@ export(float) var jump_gravity_damper : float = 0.75
 export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
 export(float, 0, 1) var wall_jump_additional_y : float = 0.5
+export(bool) var dash_reset_after_wallhang : bool = true
 export(Array, int) var attack_force = [200, 300, 400, 600]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
@@ -275,12 +276,15 @@ func can_change_to_wallhang() -> bool:
 	# test if one of the rays collides with a wall (right-ray dominant)
 	if raycasts_enabled:
 		if ray_right.is_colliding():
-			if is_tile_wall(ray_right):
+			if is_tile_wall(ray_right, ray_right.get_collision_point()):
 				ret_value = true
 				on_wall = Walls.RIGHT
 
 		elif ray_left.is_colliding():
-			if is_tile_wall(ray_left):
+			var collision_point = ray_left.get_collision_point()
+			# set collision_point inside the tile
+			collision_point.x -= 1
+			if is_tile_wall(ray_left, collision_point):
 				ret_value = true
 				on_wall = Walls.LEFT
 	
@@ -289,15 +293,16 @@ func can_change_to_wallhang() -> bool:
 
 ## Test if a tile that collides with a raycast is a tile without one-way collision
 ## Used for the raycasts of the wall hang (in the method "can_change_to_wallhang()"
-func is_tile_wall(ray: RayCast2D) -> bool:
+func is_tile_wall(ray: RayCast2D, collision_point: Vector2) -> bool:
 	
 	var collider = ray.get_collider()
 	
 	# get tile of tileset
-	var tile_pos = collider.world_to_map(ray.get_collision_point())
-	tile_pos -= ray.get_collision_normal()
+	var tile_pos = collider.world_to_map(collider.to_local(collision_point))
 	var tile_tex_coords = collider.get_cell_autotile_coord(tile_pos.x, tile_pos.y)
 	var tile_id = (tile_tex_coords.y * 8) + tile_tex_coords.x
+	
+	print(ray.get_collision_normal(), " ::: ", tile_pos, " ::: ", ray.get_collision_point())
 	
 	# get tileset
 	var tile_map_id = collider.get_cellv(tile_pos)
