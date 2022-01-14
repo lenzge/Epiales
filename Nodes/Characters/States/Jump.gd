@@ -38,7 +38,7 @@ func physics_update(delta):
 			state_machine.transition_to("Attack_Down_Air_Windup")
 		else:
 			state_machine.transition_to("Attack_Basic_Windup")
-	elif player.can_hang_on_wall and player.is_on_wall():
+	elif player.can_hang_on_wall and player.can_change_to_wallhang():
 		if Input.is_action_pressed("hang_on_wall") and \
 		player.velocity.y > player.wall_hang_min_entrance_y_velocity:
 			state_machine.transition_to("Wall_Hang")

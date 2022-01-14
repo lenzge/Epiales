@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
+"base": "Node2D",
 "class": "BaseLevel",
 "language": "GDScript",
 "path": "res://Nodes/Maps/BaseLevel.gd"
@@ -28,6 +28,11 @@ _global_script_classes=[ {
 "class": "DamageReceiver",
 "language": "GDScript",
 "path": "res://Nodes/Util/DamageReceiver.gd"
+}, {
+"base": "Area2D",
+"class": "Deadzone",
+"language": "GDScript",
+"path": "res://Nodes/Game Objects/Deadzone.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Enemy",
@@ -53,6 +58,11 @@ _global_script_classes=[ {
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://addons/godot-git-plugin/git_api.gdns"
+}, {
+"base": "Node",
+"class": "HackNSlashLevel",
+"language": "GDScript",
+"path": "res://Nodes/Maps/HackNSlashLevel.gd"
 }, {
 "base": "GameState",
 "class": "Ingame",
@@ -85,11 +95,6 @@ _global_script_classes=[ {
 "path": "res://Nodes/Util/SoundMachine.gd"
 }, {
 "base": "Node",
-"class": "Standard_Level",
-"language": "GDScript",
-"path": "res://Nodes/Maps/StandardLevel.gd"
-}, {
-"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://Nodes/Util/State.gd"
@@ -104,18 +109,19 @@ _global_script_class_icons={
 "Checkpoint": "",
 "DamageEmitter": "",
 "DamageReceiver": "",
+"Deadzone": "",
 "Enemy": "",
 "EnemyState": "",
 "Game": "",
 "GameState": "",
 "GitAPI": "",
+"HackNSlashLevel": "",
 "Ingame": "",
 "MusicTransitionArea": "",
 "Player": "",
 "PlayerState": "",
 "Puppet": "",
 "SoundMachine": "",
-"Standard_Level": "",
 "State": "",
 "StateMachine": ""
 }

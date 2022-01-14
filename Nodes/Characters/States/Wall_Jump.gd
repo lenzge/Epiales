@@ -8,17 +8,30 @@ func _ready():
 
 func enter(_msg := {}):
 	.enter(_msg)
-	# Setup player velocities for wall jump
-	player.velocity.y = -player.jump_impulse
-	if player.get_slide_collision(0).get_position().x > player.position.x:
-		player.velocity.x = -player.wall_jump_speed
-	else:
-		player.velocity.x = player.wall_jump_speed
+	
+	# Setup wall jump vector if the player was not in wall hang
+	if player.wall_jump_vector.length() == 0:
+		player.wall_jump_vector.y = -player.jump_impulse
+		
+		if player.on_wall == player.Walls.RIGHT:
+			player.wall_jump_vector.x = -player.wall_jump_speed
+		elif player.on_wall == player.Walls.LEFT:
+			player.wall_jump_vector.x = player.wall_jump_speed
+	
+	# set the players velocity
+	player.velocity = player.wall_jump_vector
 	
 	timer.set_wait_time(player.wall_jump_time)
 	timer.start()
 	
 	player.sound_machine.play_sound("Jump", false)
+
+
+func exit():
+	.exit()
+	# reset the wall_jump_vector
+	player.wall_jump_vector.x = 0
+	player.wall_jump_vector.y = 0
 
 
 func physics_update(delta):

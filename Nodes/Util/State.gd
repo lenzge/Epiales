@@ -1,6 +1,7 @@
 class_name State
 extends Node
 
+
 # Reference to the state machine
 var state_machine = null
 
