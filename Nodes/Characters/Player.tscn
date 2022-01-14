@@ -1,4 +1,4 @@
-[gd_scene load_steps=132 format=2]
+[gd_scene load_steps=134 format=2]
 
 [ext_resource path="res://Assets/Art/Luci/Luci_Idle_11.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -3220,6 +3220,10 @@ tracks/6/keys = {
 "values": [ 0 ]
 }
 
+[sub_resource type="RectangleShape2D" id=55]
+
+[sub_resource type="RectangleShape2D" id=56]
+
 [sub_resource type="Animation" id=54]
 resource_name = "Block"
 tracks/0/type = "value"
@@ -3234,10 +3238,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [ ExtResource( 77 ) ]
 }
-
-[sub_resource type="RectangleShape2D" id=50]
-
-[sub_resource type="RectangleShape2D" id=51]
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 44
@@ -3536,6 +3536,7 @@ stream = ExtResource( 71 )
 bus = "Sounds"
 
 [node name="FallthroughDetection" type="Area2D" parent="."]
+position = Vector2( 0, -53.106 )
 rotation = 1.5708
 scale = Vector2( 0.248849, 0.992839 )
 collision_layer = 0
@@ -3543,18 +3544,19 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FallthroughDetection"]
 position = Vector2( 309.425, -0.220825 )
-shape = SubResource( 50 )
+shape = SubResource( 55 )
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2( 0, 8.97945 )
-scale = Vector2( 1.13158, 0.975668 )
+[node name="GroundDetector" type="Area2D" parent="."]
+position = Vector2( 0, -40 )
+scale = Vector2( 0.695525, 0.975668 )
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundDetector"]
 position = Vector2( 0.219231, 93.2818 )
 scale = Vector2( 0.957821, 0.26493 )
-shape = SubResource( 51 )
+shape = SubResource( 56 )
+
 [node name="ParcticleSystemPlayer" type="AnimationPlayer" parent="."]
 anims/Block = SubResource( 54 )
 
@@ -3576,7 +3578,7 @@ collision_mask = 4
 [connection signal="charged_action" from="." to="ChargeController" method="_on_charged_action"]
 [connection signal="on_hit_start" from="Hitbox" to="." method="on_hit"]
 [connection signal="hit" from="Attack_Down_Air" to="." method="_on_Attack_Down_Air_hit"]
-[connection signal="body_shape_exited" from="FallthroughDetection" to="StateMachine/Crouch" method="_on_GroundDetection_body_shape_exited"]
-[connection signal="body_shape_entered" from="Area2D" to="StateMachine/Crouch" method="_on_Area2D_body_shape_entered"]
-[connection signal="body_shape_exited" from="Area2D" to="StateMachine/Crouch" method="_on_Area2D_body_shape_exited"]
 [connection signal="animation_finished" from="AnimationPlayer" to="AnimationPlayer" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="body_shape_exited" from="FallthroughDetection" to="StateMachine/Crouch" method="_on_GroundDetection_body_shape_exited"]
+[connection signal="body_shape_entered" from="GroundDetector" to="StateMachine/Crouch" method="_on_Area2D_body_shape_entered"]
+[connection signal="body_shape_exited" from="GroundDetector" to="StateMachine/Crouch" method="_on_Area2D_body_shape_exited"]

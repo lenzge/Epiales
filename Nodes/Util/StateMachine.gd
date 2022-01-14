@@ -5,11 +5,12 @@ extends Node
 # Emitted when transitioning to a new state.
 signal transitioned(state_name)
 
-var last_state
 var new_state
 # Initial state 
 export var initial_state := NodePath()
 onready var state: State = get_node(initial_state)
+onready var last_state = state
+
 #onready var animationPlayer = $"../AnimationPlayer"
 
 # Assigns itself to an object

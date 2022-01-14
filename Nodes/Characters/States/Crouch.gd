@@ -48,8 +48,6 @@ func crouch_jump():
 
 func _on_GroundDetection_body_shape_exited(body_id, body, body_shape, local_shape):
 	if body is TileMap and state_machine.last_state.name == "Crouch" and state_machine.new_state == "Fall":
-		print(OS.get_time(),"  :"," body_id: ",body_id, " body: ",body, " body_shape: ", " local_shape: ",local_shape)
-		print(OS.get_time(),"  :"," tilesetIDs: ",body.get_tileset().tile_get_name(0))
 		player.set_collision_mask_bit(2,true)
 
 # Checks if Player is on Platform or on solid ground. Only true if Player is on Platform
