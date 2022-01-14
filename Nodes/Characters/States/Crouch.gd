@@ -1,5 +1,10 @@
 extends PlayerState
 
+onready var player_collision = get_node("../../CollisionShape2D")
+export (int) var COLLISION_LAYER_BIT = 3
+onready var collision_bit
+var can_crouch_jump = true
+
 func enter(msg :={}):
 	.enter(msg)
 
@@ -26,7 +31,7 @@ func update(delta):
 	elif !Input.is_action_pressed("move_down"):
 		state_machine.transition_to("Idle")
 	elif Input.is_action_just_pressed("jump"):
-		state_machine.transition_to("Jump")
+		crouch_jump();
 	elif Input.is_action_just_pressed("dash"):
 		state_machine.transition_to("Dash")
 	elif Input.is_action_just_pressed("block"):
@@ -36,4 +41,21 @@ func update(delta):
 func physics_update(delta):
 	player.crouch_move(delta)
 
-	
+func crouch_jump():
+	if can_crouch_jump:
+		player.set_collision_mask_bit(2,false)
+		state_machine.transition_to("Fall")
+
+func _on_GroundDetection_body_shape_exited(body_id, body, body_shape, local_shape):
+	if body is TileMap and state_machine.last_state.name == "Crouch" and state_machine.new_state == "Fall":
+		player.set_collision_mask_bit(2,true)
+
+# Checks if Player is on Platform or on solid ground. Only true if Player is on Platform
+func _on_Area2D_body_shape_entered(body_id, body, body_shape, local_shape):
+	if body is TileMap:
+		can_crouch_jump = false
+
+# Checks if Player is on Platform or on solid ground. Set true when Player leaves solid ground.
+func _on_Area2D_body_shape_exited(body_id, body, body_shape, local_shape):
+	if body is TileMap:
+		can_crouch_jump = true
