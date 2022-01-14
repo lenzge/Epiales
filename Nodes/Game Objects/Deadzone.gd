@@ -2,7 +2,8 @@ extends Area2D
 
 signal _player_entered_deadzone(dmg, fear)
 
-export (int) var dealt_damage = 0
+#:symbolizes damage dealt do player \n alkndwa:
+export (int, FLAGS) var dealt_damage = 0
 export (int) var dealt_fear = 0 
 
 func _ready():
