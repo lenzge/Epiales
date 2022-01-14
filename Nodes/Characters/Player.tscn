@@ -71,6 +71,14 @@
 [ext_resource path="res://Assets/Art/Luci/ChargeDash Final/luci_chargeDash.png" type="Texture" id=75]
 [ext_resource path="res://Assets/Art/Luci/ChargeDash Final/luci_chargeDashWindup.png" type="Texture" id=76]
 [ext_resource path="res://Assets/Art/Luci/Block Final/luci_blockImpact.png" type="Texture" id=77]
+[ext_resource path="res://Assets/Sound/Grunt_4.wav" type="AudioStream" id=78]
+[ext_resource path="res://Assets/Sound/Grunt_7.wav" type="AudioStream" id=79]
+[ext_resource path="res://Assets/Sound/Grunt_6.wav" type="AudioStream" id=80]
+[ext_resource path="res://Assets/Sound/Grunt_1.wav" type="AudioStream" id=81]
+[ext_resource path="res://Assets/Sound/Grunt_8.wav" type="AudioStream" id=82]
+[ext_resource path="res://Assets/Sound/Grunt_3.wav" type="AudioStream" id=83]
+[ext_resource path="res://Assets/Sound/Grunt_5.wav" type="AudioStream" id=84]
+[ext_resource path="res://Assets/Sound/Grunt_2.wav" type="AudioStream" id=85]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11.4178, 27.2546 )
@@ -3099,7 +3107,11 @@ tracks/6/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=49]
+[sub_resource type="RectangleShape2D" id=54]
+
+[sub_resource type="RectangleShape2D" id=55]
+
+[sub_resource type="Animation" id=56]
 tracks/0/type = "value"
 tracks/0/path = NodePath("ParticleSystem:texture")
 tracks/0/interp = 1
@@ -3114,7 +3126,7 @@ tracks/0/keys = {
 }
 
 [node name="Player" type="KinematicBody2D"]
-collision_mask = 40
+collision_mask = 44
 script = ExtResource( 2 )
 gravity = 2000
 jump_impulse = 800
@@ -3345,6 +3357,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="FallthroughDetection" type="Area2D" parent="."]
+position = Vector2( 0, -53.106 )
+rotation = 1.5708
+scale = Vector2( 0.248849, 0.992839 )
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FallthroughDetection"]
+position = Vector2( 309.425, -0.220825 )
+shape = SubResource( 54 )
+
+[node name="GroundDetector" type="Area2D" parent="."]
+position = Vector2( 0, -40 )
+scale = Vector2( 0.695525, 0.975668 )
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundDetector"]
+position = Vector2( 0.219231, 93.2818 )
+scale = Vector2( 0.957821, 0.26493 )
+shape = SubResource( 55 )
+
 [node name="SoundMachine" type="Node2D" parent="."]
 script = ExtResource( 52 )
 
@@ -3391,6 +3425,30 @@ bus = "Sounds"
 stream = ExtResource( 71 )
 bus = "Sounds"
 
+[node name="Attack Grunt 1" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 81 )
+
+[node name="Attack Grunt 2" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 85 )
+
+[node name="Attack Grunt 3" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 83 )
+
+[node name="Attack Grunt 4" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 78 )
+
+[node name="Attack Grunt 5" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 84 )
+
+[node name="Attack Grunt 6" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 80 )
+
+[node name="Attack Grunt 7" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 79 )
+
+[node name="Attack Grunt 8" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 82 )
+
 [node name="ParcticleSystemPlayer" type="AnimationPlayer" parent="."]
 anims/Block = SubResource( 49 )
 
@@ -3400,7 +3458,19 @@ position = Vector2( 0, -48 )
 texture = ExtResource( 77 )
 hframes = 10
 
+[node name="RayLeft" type="RayCast2D" parent="."]
+cast_to = Vector2( -30, 0 )
+collision_mask = 4
+
+[node name="RayRight" type="RayCast2D" parent="."]
+cast_to = Vector2( 30, 0 )
+collision_mask = 4
+
 [connection signal="blocked" from="." to="ChargeController" method="_on_blocked"]
 [connection signal="charged_action" from="." to="ChargeController" method="_on_charged_action"]
 [connection signal="on_hit_start" from="Hitbox" to="." method="on_hit"]
 [connection signal="hit" from="Attack_Down_Air" to="." method="_on_Attack_Down_Air_hit"]
+[connection signal="animation_finished" from="AnimationPlayer" to="AnimationPlayer" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="body_shape_exited" from="FallthroughDetection" to="StateMachine/Crouch" method="_on_GroundDetection_body_shape_exited"]
+[connection signal="body_shape_entered" from="GroundDetector" to="StateMachine/Crouch" method="_on_Area2D_body_shape_entered"]
+[connection signal="body_shape_exited" from="GroundDetector" to="StateMachine/Crouch" method="_on_Area2D_body_shape_exited"]
