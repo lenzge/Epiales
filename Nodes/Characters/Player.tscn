@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=2]
+[gd_scene load_steps=131 format=2]
 
 [ext_resource path="res://Assets/Art/Luci/Luci_Idle_11.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -3107,11 +3107,11 @@ tracks/6/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=54]
+[sub_resource type="RectangleShape2D" id=49]
 
-[sub_resource type="RectangleShape2D" id=55]
+[sub_resource type="RectangleShape2D" id=50]
 
-[sub_resource type="Animation" id=56]
+[sub_resource type="Animation" id=51]
 tracks/0/type = "value"
 tracks/0/path = NodePath("ParticleSystem:texture")
 tracks/0/interp = 1
@@ -3366,7 +3366,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FallthroughDetection"]
 position = Vector2( 309.425, -0.220825 )
-shape = SubResource( 54 )
+shape = SubResource( 49 )
 
 [node name="GroundDetector" type="Area2D" parent="."]
 position = Vector2( 0, -40 )
@@ -3377,7 +3377,7 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundDetector"]
 position = Vector2( 0.219231, 93.2818 )
 scale = Vector2( 0.957821, 0.26493 )
-shape = SubResource( 55 )
+shape = SubResource( 50 )
 
 [node name="SoundMachine" type="Node2D" parent="."]
 script = ExtResource( 52 )
@@ -3450,7 +3450,7 @@ stream = ExtResource( 79 )
 stream = ExtResource( 82 )
 
 [node name="ParcticleSystemPlayer" type="AnimationPlayer" parent="."]
-anims/Block = SubResource( 49 )
+anims/Block = SubResource( 51 )
 
 [node name="ParticleSystem" type="Sprite" parent="."]
 visible = false
