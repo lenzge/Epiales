@@ -188,11 +188,7 @@ func basic_attack_move(delta) -> void:
 		velocity.x += ((attack_step_speed*attack_direction - velocity.x) * acceleration)
 	
 
-	# Why? Wird doch nie in der luft aufgerufen?
-	if velocity.y < 0:
-		velocity.y = 0;
-	velocity.y += gravity * delta * air_attack_fall_speed
-	
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity,Vector2.UP)
 
 # Decelerated movement when the player can't move actively, but physics should be applied
