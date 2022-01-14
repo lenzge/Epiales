@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=2]
+[gd_scene load_steps=121 format=2]
 
 [ext_resource path="res://Assets/Art/Luci/Luci_Idle_11.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -38,9 +38,6 @@
 [ext_resource path="res://Nodes/Characters/ChargeController.gd" type="Script" id=36]
 [ext_resource path="res://Nodes/Experimental/Placeholder/progress_charge.png" type="Texture" id=37]
 [ext_resource path="res://Nodes/Experimental/Placeholder/Over_charge.png" type="Texture" id=38]
-[ext_resource path="res://Nodes/Characters/States/Attack_Down_Air_Windup.gd" type="Script" id=42]
-[ext_resource path="res://Nodes/Characters/States/Attack_Down_Air.gd" type="Script" id=43]
-[ext_resource path="res://Nodes/Characters/States/Attack_Down_Recovery.gd" type="Script" id=44]
 [ext_resource path="res://Assets/Art/Luci/Luci_LightAttack1_Windup_11.png" type="Texture" id=45]
 [ext_resource path="res://Assets/Art/Luci/Light Attacks Final/luci_pxanimation_lightattack1_0.1.png" type="Texture" id=46]
 [ext_resource path="res://Assets/Art/Luci/Luci_Damage_12.png" type="Texture" id=47]
@@ -1303,7 +1300,7 @@ tracks/6/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=49]
+[sub_resource type="Animation" id=29]
 resource_name = "Crouch"
 length = 0.5
 loop = true
@@ -1593,8 +1590,7 @@ tracks/6/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=29]
-resource_name = "Crouch_Start"
+[sub_resource type="Animation" id=32]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1693,7 +1689,7 @@ tracks/7/keys = {
 "values": [ 0, 1, 2, 3, 4 ]
 }
 
-[sub_resource type="Animation" id=32]
+[sub_resource type="Animation" id=33]
 loop = true
 step = 0.05
 tracks/0/type = "value"
@@ -1781,8 +1777,7 @@ tracks/6/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=33]
-resource_name = "Dash_Charged"
+[sub_resource type="Animation" id=34]
 length = 2.0
 step = 0.05
 tracks/0/type = "value"
@@ -1882,7 +1877,7 @@ tracks/7/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
 }
 
-[sub_resource type="Animation" id=34]
+[sub_resource type="Animation" id=35]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1957,7 +1952,7 @@ tracks/5/keys = {
 "values": [ 4 ]
 }
 
-[sub_resource type="Animation" id=35]
+[sub_resource type="Animation" id=36]
 length = 0.5
 loop = true
 tracks/0/type = "value"
@@ -2033,7 +2028,7 @@ tracks/5/keys = {
 "values": [ 0, 1, 2, 3, 4 ]
 }
 
-[sub_resource type="Animation" id=36]
+[sub_resource type="Animation" id=37]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -2133,7 +2128,7 @@ tracks/7/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="Animation" id=37]
+[sub_resource type="Animation" id=38]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -2232,7 +2227,7 @@ tracks/7/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="Animation" id=38]
+[sub_resource type="Animation" id=39]
 length = 0.15
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -2331,7 +2326,7 @@ tracks/7/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=39]
+[sub_resource type="Animation" id=40]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -2430,7 +2425,7 @@ tracks/7/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=40]
+[sub_resource type="Animation" id=41]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -2493,7 +2488,7 @@ tracks/4/keys = {
 "values": [ Vector2( 0, 7 ) ]
 }
 
-[sub_resource type="Animation" id=41]
+[sub_resource type="Animation" id=42]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -2593,7 +2588,7 @@ tracks/7/keys = {
 "values": [ 1, 2, 3, 4, 5, 6 ]
 }
 
-[sub_resource type="Animation" id=42]
+[sub_resource type="Animation" id=43]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -2680,7 +2675,7 @@ tracks/6/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=43]
+[sub_resource type="Animation" id=44]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -2778,7 +2773,7 @@ tracks/7/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=44]
+[sub_resource type="Animation" id=45]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -2854,7 +2849,7 @@ tracks/5/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=45]
+[sub_resource type="Animation" id=46]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -2930,7 +2925,7 @@ tracks/5/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=46]
+[sub_resource type="Animation" id=47]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -3017,7 +3012,7 @@ tracks/6/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=47]
+[sub_resource type="Animation" id=48]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -3104,8 +3099,7 @@ tracks/6/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=48]
-resource_name = "Block"
+[sub_resource type="Animation" id=49]
 tracks/0/type = "value"
 tracks/0/path = NodePath("ParticleSystem:texture")
 tracks/0/interp = 1
@@ -3214,15 +3208,6 @@ script = ExtResource( 34 )
 [node name="Wall_Jump" type="Node" parent="StateMachine"]
 script = ExtResource( 35 )
 
-[node name="Attack_Down_Air_Windup" type="Node" parent="StateMachine"]
-script = ExtResource( 42 )
-
-[node name="Attack_Down_Air" type="Node" parent="StateMachine"]
-script = ExtResource( 43 )
-
-[node name="Attack_Down_Air_Recovery" type="Node" parent="StateMachine"]
-script = ExtResource( 44 )
-
 [node name="Hitbox" type="Area2D" parent="."]
 collision_mask = 10
 script = ExtResource( 33 )
@@ -3315,26 +3300,26 @@ anims/Attack_Up_Windup = SubResource( 25 )
 anims/Block = SubResource( 26 )
 anims/Block_Recovery = SubResource( 27 )
 anims/Block_Windup = SubResource( 28 )
-anims/Crouch = SubResource( 49 )
+anims/Crouch = SubResource( 29 )
 anims/Crouch_End = SubResource( 30 )
 anims/Crouch_Run = SubResource( 31 )
-anims/Crouch_Start = SubResource( 29 )
-anims/Dash = SubResource( 32 )
-anims/Dash_Charged = SubResource( 33 )
-anims/Fall = SubResource( 34 )
-anims/Fall_Long = SubResource( 35 )
-anims/Idle = SubResource( 36 )
-anims/Jump = SubResource( 37 )
-anims/Jump_landing = SubResource( 38 )
-anims/Run = SubResource( 39 )
-anims/Run_Turn = SubResource( 40 )
-anims/Run_loop = SubResource( 41 )
-anims/Slide = SubResource( 42 )
-anims/Slide_Crouch = SubResource( 43 )
-anims/Stunned = SubResource( 44 )
-anims/Walk = SubResource( 45 )
-anims/Wall_Hang = SubResource( 46 )
-anims/Wall_Jump = SubResource( 47 )
+anims/Crouch_Start = SubResource( 32 )
+anims/Dash = SubResource( 33 )
+anims/Dash_Charged = SubResource( 34 )
+anims/Fall = SubResource( 35 )
+anims/Fall_Long = SubResource( 36 )
+anims/Idle = SubResource( 37 )
+anims/Jump = SubResource( 38 )
+anims/Jump_landing = SubResource( 39 )
+anims/Run = SubResource( 40 )
+anims/Run_Turn = SubResource( 41 )
+anims/Run_loop = SubResource( 42 )
+anims/Slide = SubResource( 43 )
+anims/Slide_Crouch = SubResource( 44 )
+anims/Stunned = SubResource( 45 )
+anims/Walk = SubResource( 46 )
+anims/Wall_Hang = SubResource( 47 )
+anims/Wall_Jump = SubResource( 48 )
 script = ExtResource( 63 )
 
 [node name="ChargeController" type="Control" parent="."]
@@ -3407,7 +3392,7 @@ stream = ExtResource( 71 )
 bus = "Sounds"
 
 [node name="ParcticleSystemPlayer" type="AnimationPlayer" parent="."]
-anims/Block = SubResource( 48 )
+anims/Block = SubResource( 49 )
 
 [node name="ParticleSystem" type="Sprite" parent="."]
 visible = false

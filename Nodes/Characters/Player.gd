@@ -18,6 +18,7 @@ var can_reset_dash := true
 var started_dash_in_air := false
 var in_charged_attack := false
 var attack_count := 1 # Needs to be 1 because increment happens after the attack
+var attack_direction := 0 # Set to 1 or -1 when in attack, so the player can't turn
 
 var can_hang_on_wall := true
 var hang_on_wall_velocity_save := 0.0
@@ -154,14 +155,15 @@ func _process(delta):
 		$StateMachine.transition_to("Stunned", {"force" :stunned_knockback_force, "time": stunned_knockback_time, "direction": stunned_direction_x})
 
 # Normal movement on ground
+# Player is not allowed to turn around while attack windup
 func move(delta):
 	_flip_sprite_in_movement_dir()
 	
 	# Actual movement with acceleration and friction
 	if abs(velocity.x) <= speed and not last_movement_buttons.empty():
-		if last_movement_buttons[0] == MovementDir.LEFT:
+		if last_movement_buttons[0] == MovementDir.LEFT and not attack_direction == 1:
 			_accelerate(-speed, acceleration)
-		elif last_movement_buttons[0] == MovementDir.RIGHT:
+		elif last_movement_buttons[0] == MovementDir.RIGHT and not attack_direction == -1:
 			_accelerate(speed, acceleration)
 	else:
 		_slow_with_friction(friction_ground)
@@ -171,21 +173,20 @@ func move(delta):
 
 
 # Movement while basic attacking on ground (step forward)
+# Player is not allowed to turn around while attacking
 func basic_attack_move(delta) -> void:
 	_flip_sprite_in_movement_dir()
 	
 	# If running use normal speed
 	if not last_movement_buttons.empty(): 
-		if last_movement_buttons[0] == MovementDir.LEFT:
+		if last_movement_buttons[0] == MovementDir.LEFT and not attack_direction == 1:
 			_accelerate(-speed, acceleration)
-		elif last_movement_buttons[0] == MovementDir.RIGHT:
+		elif last_movement_buttons[0] == MovementDir.RIGHT and not attack_direction == -1:
 			_accelerate(speed, acceleration)
 	# If not running: slow step foreward
 	else: 
-		if sprite.flip_h == true:
-			velocity.x += ((-attack_step_speed - velocity.x) * acceleration)
-		else:
-			velocity.x += ((attack_step_speed - velocity.x) * acceleration)
+		velocity.x += ((attack_step_speed*attack_direction - velocity.x) * acceleration)
+	
 
 	# Why? Wird doch nie in der luft aufgerufen?
 	if velocity.y < 0:

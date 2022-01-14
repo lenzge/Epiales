@@ -9,6 +9,7 @@ func enter(_msg := {}):
 		player.in_charged_attack = false
 	animationPlayer.play("Attack_Basic" + str(player.attack_count)+"_Windup")
 	.animation_to_timer()
+	player.attack_direction = player.direction
 
 
 func physics_update(delta):
@@ -24,9 +25,6 @@ func physics_update(delta):
 			state_machine.transition_to("Jump")
 		elif Input.is_action_pressed("block"):
 			state_machine.transition_to("Block_Windup")
-		## Should the Windup also be cancelled by Dashing?
-		elif Input.is_action_pressed("dash") and player.can_dash:
-			state_machine.transition_to("Dash")
 
 
 func exit():

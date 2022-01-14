@@ -29,11 +29,11 @@ func update(delta):
 			state_machine.transition_to("Attack_Basic_Windup")
 	elif Input.is_action_just_pressed("jump"):
 		state_machine.transition_to("Jump")
-	elif not player.last_movement_buttons.empty():
-		state_machine.transition_to("Run")
 	elif Input.is_action_just_pressed("block"):
 		state_machine.transition_to("Block_Windup")
 	elif Input.is_action_just_pressed("dash") and player.can_dash:
 		state_machine.transition_to("Dash")
 	elif Input.is_action_pressed("move_down"):
 		state_machine.transition_to("Crouch")
+	elif not player.last_movement_buttons.empty():
+		state_machine.transition_to("Run")

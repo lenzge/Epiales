@@ -18,8 +18,7 @@ func physics_update(delta):
 		state_machine.transition_to("Jump")
 	elif Input.is_action_just_pressed("block") and player.is_on_floor():
 		state_machine.transition_to("Block_Windup")
-	elif Input.is_action_just_pressed("dash") and player.can_dash:
-		state_machine.transition_to("Dash")
+	
 
 
 func _on_timeout():

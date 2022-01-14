@@ -12,7 +12,7 @@ func physics_update(delta):
 		player.decelerate_move_ground(delta)
 	else:
 		player.fall_straight(delta)
-		# Exception wanted by Evgin
+		# Exception for better gameplay
 		if Input.is_action_just_pressed("dash") and player.can_dash:
 			state_machine.transition_to("Dash")
 
