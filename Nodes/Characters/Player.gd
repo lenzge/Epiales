@@ -302,8 +302,6 @@ func is_tile_wall(ray: RayCast2D, collision_point: Vector2) -> bool:
 	var tile_tex_coords = collider.get_cell_autotile_coord(tile_pos.x, tile_pos.y)
 	var tile_id = (tile_tex_coords.y * 8) + tile_tex_coords.x
 	
-	print(ray.get_collision_normal(), " ::: ", tile_pos, " ::: ", ray.get_collision_point())
-	
 	# get tileset
 	var tile_map_id = collider.get_cellv(tile_pos)
 	
