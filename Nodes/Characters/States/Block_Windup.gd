@@ -1,14 +1,14 @@
 extends PlayerState
 
+# Windup before blocking. Only available on ground
 
 func enter(_msg := {}):
 	.enter(_msg)
 	.animation_to_timer()
-	player.velocity = Vector2.ZERO
 
-
-
+# 'Movement' and checking for escape conditions
 func physics_update(delta):
+	# For smooth deceleration after moving
 	player.decelerate_move_ground(delta)
 	
 	if not player.is_on_floor():
@@ -22,7 +22,6 @@ func physics_update(delta):
 			state_machine.transition_to("Attack_Basic_Windup")
 	elif Input.is_action_just_pressed("dash") and player.can_dash:
 		state_machine.transition_to("Dash")
-
 
 
 func _on_timeout():

@@ -1,11 +1,12 @@
 extends PlayerState
 
+# Player is in Jump state, when he is jumping, till escape conditions
+
 func enter(_msg := {}):
 	.enter(_msg)
 	player.velocity.y = -player.jump_impulse
 	player.sound_machine.play_sound("Jump", false)
 	
-
 
 func exit():
 	player.add_jump_gravity_damper = false
@@ -14,15 +15,17 @@ func exit():
 		player.sound_machine.play_sound("Landing", false)
 
 
-func update(delta):
+# Movement and checking for escape conditions
+func physics_update(delta):
+	
+	# Can move left and right
+	player.move(delta)
+	
+	# What is this doing? please comment
 	if Input.is_action_pressed("jump") and player.velocity.y < 0:
 		player.add_jump_gravity_damper = true
 	else:
 		player.add_jump_gravity_damper = false
-
-
-func physics_update(delta):
-	player.move(delta)
 
 	if player.is_on_floor():
 		if is_equal_approx(player.velocity.x, 0.0):

@@ -1,7 +1,11 @@
 extends PlayerState
 
+# Player is in Fall state, when he is in air and doesn't do more then moving
 
+# Movement and checking for escape conditions
 func physics_update(delta):
+	
+	# Can move left and right
 	player.move(delta)
 	
 	if player.is_on_floor():

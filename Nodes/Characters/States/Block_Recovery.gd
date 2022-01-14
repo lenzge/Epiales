@@ -1,13 +1,13 @@
 extends PlayerState
 
-
+# Recovery after blocking. Can't be cancelled. Only available on ground
 
 func enter(_msg := {}):
 	.enter(_msg)
 	.animation_to_timer()
-	player.velocity = Vector2.ZERO
 
 func physics_update(delta):
+	# For smooth deceleration after moving
 	player.decelerate_move_ground(delta)
 	
 func _on_timeout():
