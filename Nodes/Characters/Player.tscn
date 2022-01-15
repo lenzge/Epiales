@@ -81,7 +81,6 @@
 [ext_resource path="res://Assets/Sound/Grunt_5.wav" type="AudioStream" id=84]
 [ext_resource path="res://Assets/Sound/Grunt_2.wav" type="AudioStream" id=85]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11.4178, 27.2546 )
 
@@ -92,16 +91,16 @@ extents = Vector2( 28.7588, 31.1231 )
 extents = Vector2( 14.2614, 27.2775 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 39.7587, 16.0556 )
+extents = Vector2( 39.7587, 33.7006 )
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 62.4037, 12.4479 )
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 41.0107, 29.7721 )
+extents = Vector2( 41.0107, 34.2337 )
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 40.5356, 36.1726 )
+extents = Vector2( 48.7796, 26.0027 )
 
 [sub_resource type="Animation" id=8]
 resource_name = "Attack_Basic1"
@@ -140,7 +139,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 40.334, -53.106 ) ]
+"values": [ Vector2( 40.334, -3.106 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Attack/HitboxAttack:scale")
@@ -603,7 +602,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 58.044, -67.271 ) ]
+"values": [ Vector2( 58.044, -13.271 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Attack/HitboxAttack:scale")
@@ -3392,11 +3391,11 @@ gravity = 2000
 jump_impulse = 800
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -50 )
-texture = ExtResource( 30 )
+position = Vector2( 0, -14 )
+texture = ExtResource( 39 )
 hframes = 3
-vframes = 2
-frame = 4
+vframes = 3
+frame = 3
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -3497,7 +3496,7 @@ damage_amount = 20
 direction = Vector2( 1, 0 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
-position = Vector2( 40.334, -53.106 )
+position = Vector2( 40.334, -3.106 )
 shape = SubResource( 2 )
 disabled = true
 
@@ -3513,7 +3512,7 @@ shape = SubResource( 3 )
 disabled = true
 
 [node name="HitboxAttack_Top" type="CollisionShape2D" parent="Attack_Up_Ground"]
-position = Vector2( 0, -43.562 )
+position = Vector2( 0, -57.562 )
 shape = SubResource( 4 )
 disabled = true
 
@@ -3535,7 +3534,7 @@ damage_amount = 20
 direction = Vector2( 0, 1 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Up_Air"]
-position = Vector2( 0.0534821, -49.7712 )
+position = Vector2( 0.0534821, -57.7712 )
 shape = SubResource( 6 )
 disabled = true
 
@@ -3546,7 +3545,7 @@ damage_amount = 20
 direction = Vector2( 0, -1 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Air"]
-position = Vector2( 0.180381, 51.0199 )
+position = Vector2( 0.180381, 43.0199 )
 shape = SubResource( 7 )
 disabled = true
 

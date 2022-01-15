@@ -7,7 +7,7 @@ func enter(msg :={}):
 
 func physics_update(delta):
 	# Movement depending on ground or air
-	if animationPlayer.current_animation == "Down_Attack_Recovery":
+	if animationPlayer.current_animation == "Attack_Down_Recovery":
 		player.decelerate_move_ground(delta, true)
 	else:
 		player.fall_straight(delta)

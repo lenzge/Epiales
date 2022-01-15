@@ -6,9 +6,9 @@ extends PlayerState
 func enter(msg :={}):
 	# Animation set in animationController, depending on last animation
 	.animation_to_timer()
-	
+	print(animationPlayer.current_animation)
 	# Enable the attack hitboxes
-	if animationPlayer.current_animation == "Down_Attack":
+	if animationPlayer.current_animation == "Attack_Down":
 		player.get_node("Attack_Down_Ground/HitboxAttack").disabled = false
 		#TODO: knockback_force should be 0, but then the enemy gets no damage...
 		player.hitbox_down_attack.knockback_force = player.attack_force[0]
@@ -24,7 +24,7 @@ func enter(msg :={}):
 
 func physics_update(delta):
 	# Movement depending on ground or air
-	if animationPlayer.current_animation == "Down_Attack":
+	if animationPlayer.current_animation == "Attack_Down":
 		player.decelerate_move_ground(delta, true)
 	else:
 		player.air_attack_move(delta)
