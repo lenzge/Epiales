@@ -21,7 +21,7 @@ func enter(_msg := {}):
 		var wall_pos_x = player.ray_left.get_collision_point().x + (player.player_size_x / 2)
 		player.position.x = wall_pos_x
 	
-	player.sound_machine.play_sound("Slide", true)
+	player.sound_machine.play_sound("Wall Slide", true)
 
 
 func physics_update(delta):
@@ -64,4 +64,4 @@ func physics_update(delta):
 
 
 func exit():
-	player.sound_machine.stop_sound("Slide")
+	player.sound_machine.stop_sound("Wall Slide")

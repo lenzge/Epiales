@@ -24,6 +24,8 @@ func enter(_msg := {}):
 	timer.set_wait_time(player.wall_jump_time)
 	timer.start()
 	
+	if state_machine.last_state.name != "Wall_Hang":
+		player.sound_machine.play_sound("Wall Touch", false)
 	player.sound_machine.play_sound("Jump", false)
 
 

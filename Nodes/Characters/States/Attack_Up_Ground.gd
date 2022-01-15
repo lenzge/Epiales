@@ -17,7 +17,7 @@ func enter(msg :={}):
 		player.hitbox_up_attack_air.knockback_time = player.attack_knockback[0]
 	
 	player.sound_machine.play_sound("Sword Swing " + str(player.sound_machine.get_random(1, 2)), false)
-	player.sound_machine.play_sound("Attack Grunt " + str(player.sound_machine.get_random(1, 8)), false)
+	player.sound_machine.play_sound("Attack Grunt " + str(player.sound_machine.get_random(1, 7)), false)
 
 
 func physics_update(delta):

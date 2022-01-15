@@ -1,4 +1,4 @@
-[gd_scene load_steps=131 format=2]
+[gd_scene load_steps=136 format=2]
 
 [ext_resource path="res://Assets/Art/Luci/Luci_Idle_11.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -38,6 +38,12 @@
 [ext_resource path="res://Nodes/Characters/ChargeController.gd" type="Script" id=36]
 [ext_resource path="res://Nodes/Experimental/Placeholder/progress_charge.png" type="Texture" id=37]
 [ext_resource path="res://Nodes/Experimental/Placeholder/Over_charge.png" type="Texture" id=38]
+[ext_resource path="res://Assets/Sound/SFX_Puppet_attack_impact.wav" type="AudioStream" id=39]
+[ext_resource path="res://Assets/Sound/SFX_Jump.wav" type="AudioStream" id=40]
+[ext_resource path="res://Assets/Sound/SFX_BlockingStance.wav" type="AudioStream" id=41]
+[ext_resource path="res://Assets/Sound/SFX_ChargedAttack.wav" type="AudioStream" id=42]
+[ext_resource path="res://Assets/Sound/SFX_crouchUp.wav" type="AudioStream" id=43]
+[ext_resource path="res://Assets/Sound/SFX_crouchDown.wav" type="AudioStream" id=44]
 [ext_resource path="res://Assets/Art/Luci/Luci_LightAttack1_Windup_11.png" type="Texture" id=45]
 [ext_resource path="res://Assets/Art/Luci/Light Attacks Final/luci_pxanimation_lightattack1_0.1.png" type="Texture" id=46]
 [ext_resource path="res://Assets/Art/Luci/Luci_Damage_12.png" type="Texture" id=47]
@@ -48,7 +54,7 @@
 [ext_resource path="res://Nodes/Util/SoundMachine.gd" type="Script" id=52]
 [ext_resource path="res://Assets/Sound/One_Footstep.wav" type="AudioStream" id=53]
 [ext_resource path="res://Assets/Sound/SFX_Jump_Landing.wav" type="AudioStream" id=54]
-[ext_resource path="res://Assets/Sound/SFX_Lucy_s_attack_impact.wav" type="AudioStream" id=55]
+[ext_resource path="res://Assets/Sound/SFX_Wall_touch.wav" type="AudioStream" id=55]
 [ext_resource path="res://Assets/Sound/SFX_Blocking.wav" type="AudioStream" id=56]
 [ext_resource path="res://Assets/Sound/SFX_slide.wav" type="AudioStream" id=57]
 [ext_resource path="res://Assets/Sound/SFX_Dash.wav" type="AudioStream" id=58]
@@ -61,10 +67,9 @@
 [ext_resource path="res://Assets/Art/Luci/Luci_HeavyAttack_13.png" type="Texture" id=65]
 [ext_resource path="res://Assets/Art/Luci/Walk.png" type="Texture" id=66]
 [ext_resource path="res://Assets/Art/Luci/Slide Final/luci_slide.png" type="Texture" id=67]
-[ext_resource path="res://Assets/Sound/SFX_Jump_without_landing.wav" type="AudioStream" id=68]
+[ext_resource path="res://Assets/Sound/SFX_wall_slide.wav" type="AudioStream" id=68]
 [ext_resource path="res://Assets/Sound/SFX_Sword_swing_2.wav" type="AudioStream" id=69]
 [ext_resource path="res://Assets/Sound/SFX_Sword_swing_1.wav" type="AudioStream" id=70]
-[ext_resource path="res://Assets/Sound/SFX_charged_attack.wav" type="AudioStream" id=71]
 [ext_resource path="res://Assets/Art/Luci/Crouch Final/luci_crouchToIdle.png" type="Texture" id=72]
 [ext_resource path="res://Assets/Art/Luci/Slide Final/luci_slideCrouchTransition.png" type="Texture" id=73]
 [ext_resource path="res://Assets/Art/Luci/Slide Final/luci_slideRunTransition.png" type="Texture" id=74]
@@ -79,7 +84,6 @@
 [ext_resource path="res://Assets/Sound/Grunt_3.wav" type="AudioStream" id=83]
 [ext_resource path="res://Assets/Sound/Grunt_5.wav" type="AudioStream" id=84]
 [ext_resource path="res://Assets/Sound/Grunt_2.wav" type="AudioStream" id=85]
-
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11.4178, 27.2546 )
@@ -3398,11 +3402,11 @@ volume_db = -6.0
 bus = "Sounds"
 
 [node name="Jump" type="AudioStreamPlayer2D" parent="SoundMachine"]
-stream = ExtResource( 68 )
+stream = ExtResource( 40 )
 bus = "Sounds"
 
 [node name="Hit" type="AudioStreamPlayer2D" parent="SoundMachine"]
-stream = ExtResource( 55 )
+stream = ExtResource( 39 )
 volume_db = -3.0
 bus = "Sounds"
 
@@ -3423,7 +3427,7 @@ stream = ExtResource( 69 )
 bus = "Sounds"
 
 [node name="Charged Attack" type="AudioStreamPlayer2D" parent="SoundMachine"]
-stream = ExtResource( 71 )
+stream = ExtResource( 42 )
 bus = "Sounds"
 
 [node name="Attack Grunt 1" type="AudioStreamPlayer2D" parent="SoundMachine"]
@@ -3435,20 +3439,39 @@ stream = ExtResource( 85 )
 [node name="Attack Grunt 3" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 83 )
 
-[node name="Attack Grunt 4" type="AudioStreamPlayer2D" parent="SoundMachine"]
+[node name="Attack Grunt 40" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 78 )
 
-[node name="Attack Grunt 5" type="AudioStreamPlayer2D" parent="SoundMachine"]
+[node name="Attack Grunt 4" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 84 )
 
-[node name="Attack Grunt 6" type="AudioStreamPlayer2D" parent="SoundMachine"]
+[node name="Attack Grunt 5" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 80 )
 
-[node name="Attack Grunt 7" type="AudioStreamPlayer2D" parent="SoundMachine"]
+[node name="Attack Grunt 6" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 79 )
 
-[node name="Attack Grunt 8" type="AudioStreamPlayer2D" parent="SoundMachine"]
+[node name="Attack Grunt 7" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 82 )
+
+[node name="Blocking Stance" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 41 )
+bus = "Sounds"
+
+[node name="Crouch Down" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 44 )
+
+[node name="Crouch Up" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 43 )
+
+[node name="Wall Touch" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 55 )
+volume_db = 3.0
+bus = "Sounds"
+
+[node name="Wall Slide" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 68 )
+bus = "Sounds"
 
 [node name="ParcticleSystemPlayer" type="AnimationPlayer" parent="."]
 anims/Block = SubResource( 51 )

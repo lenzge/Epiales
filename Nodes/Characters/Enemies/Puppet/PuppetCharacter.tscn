@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://Nodes/Characters/Enemies/States/Attack.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Characters/Enemies/States/Flinch.gd" type="Script" id=2]
@@ -22,6 +22,9 @@
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/PuppetFocusedRun.gd" type="Script" id=20]
 [ext_resource path="res://Nodes/Characters/Enemies/States/Recoil.gd" type="Script" id=21]
 [ext_resource path="res://Nodes/Util/StateMachine/StateMachine.gd" type="Script" id=22]
+[ext_resource path="res://Nodes/Util/SoundMachine.gd" type="Script" id=23]
+[ext_resource path="res://Assets/Sound/SFX_Lucy_s_attack_impact.wav" type="AudioStream" id=24]
+[ext_resource path="res://Assets/Sound/SFX_Puppet_Blade.wav" type="AudioStream" id=25]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 20.0
@@ -997,6 +1000,17 @@ anims/Idle = SubResource( 19 )
 anims/Recoil = SubResource( 20 )
 anims/Run = SubResource( 21 )
 anims/Walk = SubResource( 22 )
+
+[node name="SoundMachine" type="Node2D" parent="."]
+script = ExtResource( 23 )
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 24 )
+bus = "Sounds"
+
+[node name="Attack" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 25 )
+bus = "Sounds"
 
 [connection signal="on_hit_start" from="HitBox" to="." method="on_hit"]
 [connection signal="blocked" from="AttackArea" to="StateMachine/Attack" method="on_attack_has_been_blocked"]
