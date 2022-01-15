@@ -84,6 +84,7 @@ onready var hitbox_up_attack_air : Area2D = $Attack_Up_Air
 onready var hitbox_down_attack_air : Area2D = $Attack_Down_Air
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
+onready var hitbox_charged_dash : Area2D = $Charged_Dash
 onready var collision_shape : CollisionShape2D = $CollisionShape2D
 onready var charge_controller = $ChargeController
 
@@ -347,6 +348,7 @@ func _flip_sprite_in_movement_dir() -> void:
 	hitbox_down_attack.scale.x = abs(scale.x) * direction
 	hitbox_up_attack_air.scale.x = abs(hitbox_up_attack_air.scale.x) * direction
 	hitbox_down_attack_air.scale.x = abs(hitbox_down_attack_air.scale.x) * direction
+	hitbox_charged_dash.scale.x = abs(hitbox_down_attack_air.scale.x) * direction
 
 	
 func set_knockback(force, direction):
@@ -391,7 +393,6 @@ func _slow_with_friction(friction : float) -> void:
 
 # Is called when the player makes a charged attack
 func charge():
-	print("charged")
 	in_charged_attack = true
 	#attack_count = 4 # deleted this to use this method for charged dash
 	emit_signal("charged_action")

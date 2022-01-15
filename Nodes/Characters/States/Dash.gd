@@ -45,7 +45,8 @@ func enter(_msg := {}):
 	
 	# Tilt in _dash_direction (Attention to crouch and dash)
 	if not (_dash_direction.y > 0.5 and player.is_on_floor()):
-		player.sprite.set_rotation_degrees(45*_dash_direction.y*player.direction) 
+		player.sprite.set_rotation_degrees(45*_dash_direction.y*player.direction)
+		player.hitbox_charged_dash.set_rotation_degrees(45*_dash_direction.y*player.direction)
 
 
 func exit():
@@ -56,6 +57,7 @@ func exit():
 	player.hitbox.get_child(0).disabled = false
 	player.start_dash_cooldown()
 	player.sprite.set_rotation_degrees(0)
+	player.hitbox_charged_dash.set_rotation_degrees(0)
 
 
 func physics_update(delta):
