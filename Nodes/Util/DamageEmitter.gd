@@ -16,6 +16,7 @@ var collision_shapes : Array = []
 
 func _ready():
 	emitter = get_node(emitter_path)
+	monitoring = false
 	for node in get_children():
 		if node is CollisionPolygon2D or node is CollisionShape2D:
 			collision_shapes.append(node)
@@ -33,7 +34,7 @@ func was_blocked(receiver):
 
 func hit(receiver):
 	if not is_consumed:
-		is_consumed = false
+		is_consumed = true
 		emit_signal("hit", receiver)
 
 

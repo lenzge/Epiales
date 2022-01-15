@@ -1,44 +1,63 @@
 extends PlayerState
 
+onready var player_collision = get_node("../../CollisionShape2D")
+export (int) var COLLISION_LAYER_BIT = 3
+onready var collision_bit
+var can_crouch_jump = true
+
 func enter(msg :={}):
-	.enter(msg)
-	player._enter_crouch()
+	if abs(player.velocity.x) > 100:
+		animationPlayer.play("Slide")
+	elif state_machine.last_state.name == "Attack_Down_Recovery":
+		animationPlayer.play("Crouch")
+	else:
+		animationPlayer.play("Crouch_Start")
 
 
-func update(delta):
-	if not player.is_on_floor():
-		player._exit_crouch()
-		state_machine.transition_to("Fall")
-	elif Input.is_action_just_pressed("attack"):
-		state_machine.transition_to("Attack_Down_Ground_Windup")
-	elif !Input.is_action_pressed("move_down"):
-		player._exit_crouch()
-		state_machine.transition_to("Idle")
-	elif Input.is_action_just_pressed("jump"):
-		player._exit_crouch()
-		state_machine.transition_to("Jump")
-	elif Input.is_action_just_pressed("dash"):
-		player._exit_crouch()
-		state_machine.transition_to("Dash")
-	elif Input.is_action_just_pressed("block"):
-		state_machine.transition_to("Crouch_Block_Windup")
+func exit():
+	.exit()
 
 
 func physics_update(delta):
-	player.crouch_move(delta)
+	
+	if abs(player.velocity.x) > 100:
+		animationPlayer.play("Slide")
+	elif animationPlayer.current_animation == "Slide":
+		animationPlayer.play("Slide_Crouch")
+	
+	player.decelerate_move_ground(delta, true)
+	
+	if not player.is_on_floor():
+		state_machine.transition_to("Fall")
+	elif Input.is_action_just_pressed("attack"):
+		state_machine.transition_to("Attack_Down_Windup")
+	elif !Input.is_action_pressed("move_down") and not player.last_movement_buttons.empty():
+		state_machine.transition_to("Run")
+	elif !Input.is_action_pressed("move_down"):
+		state_machine.transition_to("Idle")
+	elif Input.is_action_just_pressed("jump"):
+		crouch_jump();
+	elif Input.is_action_just_pressed("dash"):
+		state_machine.transition_to("Dash")
+	elif Input.is_action_just_pressed("block"):
+		state_machine.transition_to("Block_Windup")
 
-# maybe need later
-func _set_hitbox(to_crouch):
-	if to_crouch == 1:
-		player.hitbox.get_child(0).shape.height = player.collision_shape.shape.height/2
-		player.hitbox.get_child(0).position.y = player.hitbox.get_child(0).position.y + player.collision_shape.shape.height/4
-		player.collision_shape.shape.height = player.collision_shape.shape.height/2
-		player.collision_shape.position.y = player.collision_shape.position.y + player.collision_shape.shape.height/2
-	else:
-		player.collision_shape.position.y = player.collision_shape.position.y - player.collision_shape.shape.height/2
-		player.collision_shape.shape.height = player.collision_shape.shape.height * 2
-		player.hitbox.get_child(0).shape.height = player.collision_shape.shape.height
-		player.hitbox.get_child(0).position.y = player.hitbox.get_child(0).position.y - player.collision_shape.shape.height/4
-	
-	
-	
+
+func crouch_jump():
+	if can_crouch_jump:
+		player.set_collision_mask_bit(2,false)
+		state_machine.transition_to("Fall")
+
+func _on_GroundDetection_body_shape_exited(body_id, body, body_shape, local_shape):
+	if body is TileMap and state_machine.last_state.name == "Crouch" and state_machine.new_state == "Fall":
+		player.set_collision_mask_bit(2,true)
+
+# Checks if Player is on Platform or on solid ground. Only true if Player is on Platform
+func _on_Area2D_body_shape_entered(body_id, body, body_shape, local_shape):
+	if body is TileMap:
+		can_crouch_jump = false
+
+# Checks if Player is on Platform or on solid ground. Set true when Player leaves solid ground.
+func _on_Area2D_body_shape_exited(body_id, body, body_shape, local_shape):
+	if body is TileMap:
+		can_crouch_jump = true

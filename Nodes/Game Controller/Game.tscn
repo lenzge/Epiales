@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Nodes/Game Controller/Game.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Game Controller/States/Start.gd" type="Script" id=2]
-[ext_resource path="res://Nodes/Util/StateMachine.gd" type="Script" id=3]
+[ext_resource path="res://Nodes/Util/StateMachine/StateMachine.gd" type="Script" id=3]
 [ext_resource path="res://Nodes/Game Controller/States/Ingame.gd" type="Script" id=4]
 [ext_resource path="res://Nodes/Game Controller/States/Pause.gd" type="Script" id=5]
 

@@ -8,14 +8,21 @@
 [node name="HealthBar" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -4.0
+margin_top = -5.0
+margin_right = -848.0
+margin_bottom = -575.0
+rect_pivot_offset = Vector2( 90, 15 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HealthUnder" type="TextureProgress" parent="."]
-margin_right = 176.0
-margin_bottom = 40.0
+margin_left = 4.56721
+margin_top = 4.7247
+margin_right = 180.567
+margin_bottom = 44.7247
 value = 70.0
 texture_under = ExtResource( 3 )
 texture_over = ExtResource( 2 )
@@ -26,8 +33,11 @@ __meta__ = {
 }
 
 [node name="HealthOver" type="TextureProgress" parent="."]
-margin_right = 176.0
-margin_bottom = 40.0
+margin_left = 4.0
+margin_top = 5.0
+margin_right = 180.0
+margin_bottom = 29.0
+rect_pivot_offset = Vector2( 88, 12 )
 value = 50.0
 texture_over = ExtResource( 2 )
 texture_progress = ExtResource( 4 )
