@@ -3,15 +3,16 @@ extends CharacterState
 export var flinch_intensity : float = 100
 export (float, 0, 1) var air_factor : float = 0
 export var can_flinch_over_edge : bool = false 
-export var floor_detection_raycast_path : NodePath
+export var _floor_detection_raycast_path : NodePath
 
-var floor_detection_raycast : RayCast2D
+var _floor_detection_raycast : RayCast2D
 
 var _direction_x : float
 
 func _ready():
+	processing_mode = 1
 	yield(owner, "ready")
-	floor_detection_raycast = get_node(floor_detection_raycast_path)
+	_floor_detection_raycast = get_node(_floor_detection_raycast_path)
 
 
 func enter(_msg := {}):
@@ -32,7 +33,7 @@ func physics_update(delta):
 	if not character.is_on_floor():
 		character.move_and_slide(Vector2(flinch_intensity * _direction_x, 0.0) * air_factor, Vector2.UP)
 	else:
-		if floor_detection_raycast.is_colliding() or can_flinch_over_edge:
+		if _floor_detection_raycast.is_colliding() or can_flinch_over_edge:
 			character.move_and_slide(Vector2(flinch_intensity * _direction_x, 1.0), Vector2.UP)
 
 

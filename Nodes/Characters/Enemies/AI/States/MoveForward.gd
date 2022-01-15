@@ -4,12 +4,12 @@ export var floor_detection_ray_path : NodePath
 export var wall_detection_ray_path : NodePath
 export (float, 0, 1) var move_speed : float
 
-onready var floor_detection_ray : RayCast2D = get_node(floor_detection_ray_path)
-onready var wall_detection_ray : RayCast2D = get_node(floor_detection_ray_path)
+onready var _floor_detection_ray : RayCast2D = get_node(floor_detection_ray_path)
+onready var _wall_detection_ray : RayCast2D = get_node(wall_detection_ray_path)
 var _controlled_character : Character
 
 func physics_update(delta):
-	if !floor_detection_ray.is_colliding() || wall_detection_ray.is_colliding():
+	if !_floor_detection_ray.is_colliding() || _wall_detection_ray.is_colliding():
 		_controlled_character.flip()
 	
 	var direction_x = 1 if _controlled_character.is_facing_right else -1

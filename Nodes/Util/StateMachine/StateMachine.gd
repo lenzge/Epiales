@@ -1,10 +1,9 @@
 # Initializes states and delegates engine callbacks
-class_name StateMachine
+class_name StateMachine, "res://Assets/icons/state_machine_icon.svg"
 extends Node
 
 # Emitted when transitioning to a new state.
 signal transitioned(state_name)
-
 
 
 export var auto_start : bool = true
@@ -35,27 +34,27 @@ func _unhandled_input(event):
 	state.handle_input(event)
 
 
-func _process(delta):
+func _process(_delta):
+	state.update_animation(_delta)
+	state.update(_delta)
 	if state.processing_mode == 0:
-		state.check_transitions(delta)
+		state.check_transitions(_delta)
 		for transition in state.transitions:
 			if transition.enabled:
-				var result : Dictionary = transition._check(delta)
+				var result : Dictionary = transition._check(_delta)
 				if result.has("transition_to"):
 					transition_to(result.get("transition_to"), result.get("parameters", {}))
-	state.update_animation(delta)
-	state.update(delta)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
+	state.physics_update(_delta)
 	if state.processing_mode == 1:
-		state.check_transitions(delta)
+		state.check_transitions(_delta)
 		for transition in state.transitions:
 			if transition.enabled:
-				var result : Dictionary = transition._check(delta)
+				var result : Dictionary = transition._check(_delta)
 				if result.has("transition_to"):
 					transition_to(result.get("transition_to"), result.get("parameters", {}))
-	state.physics_update(delta)
 
 
 func start(should_tick := true):
@@ -103,3 +102,5 @@ func transition_to(target_state_name, msg: Dictionary = {}):
 		emit_signal("transitioned", state.name)
 
 
+func is_in_state(list_of_states : Array) -> bool:
+	return list_of_states.has(state.name)

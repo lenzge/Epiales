@@ -6,6 +6,7 @@ signal died()
 #Character Physics
 export var gravity : float = 100
 export var air_drag : float = 0.5
+export var air_drag_threshold : float
 
 export var health : float
 export var max_health : float
@@ -15,11 +16,12 @@ var hitbox : DamageReceiver
 var animation : AnimationPlayer
 
 var velocity : Vector2
-var is_running : bool
-var is_facing_right : bool = true setget set_is_facing_right
+var is_running : bool = false
+var is_facing_right : bool = true setget set_facing_right
 var can_die : bool = true
 
 var _move_input : Vector2
+
 
 func _ready():
 	_set_up()
@@ -48,7 +50,7 @@ func set_invincable(value : bool):
 	hitbox.monitorable(!value)
 
 
-func set_is_facing_right(value : bool):
+func set_facing_right(value : bool):
 	if value != is_facing_right:
 		flip()
 
@@ -59,15 +61,24 @@ func flip():
 
 
 func apply_air_drag(delta):
-	velocity += velocity.normalized() * velocity.length_squared() * -air_drag * 0.01 * delta
+	if velocity.length() < air_drag_threshold:
+		velocity = Vector2.ZERO
+	else:
+		velocity += velocity.normalized() * velocity.length_squared() * -air_drag * delta
 
 
 func apply_air_drag_on_x(delta):
-	velocity.x += velocity.x * velocity.x * -air_drag * 0.01 * delta
+	if velocity.x < air_drag_threshold:
+		velocity.x = 0.0
+	else:
+		velocity.x += velocity.x * velocity.x * -air_drag * delta
 
 
 func apply_air_drag_on_y(delta):
-	velocity.y += velocity.y * velocity.y * -air_drag * 0.01 * delta
+	if velocity.y < air_drag_threshold:
+		velocity.y = 0.0
+	else:
+		velocity.y += velocity.y * velocity.y * -air_drag * delta
 
 
 func on_hit(emitter : DamageEmitter):

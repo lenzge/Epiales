@@ -1,5 +1,5 @@
-class_name State
-extends Node
+class_name State, "res://Assets/icons/state_icon.svg"
+extends Node 
 
 export(int, "UPDATE", "PHYSICS_UPDATE") var processing_mode : int
 

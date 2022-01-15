@@ -137,7 +137,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://Nodes/Characters/Enemies/Enemy.gd"
+"path": "res://Nodes/Characters/Enemies/Bird/Enemy.gd"
 }, {
 "base": "State",
 "class": "EnemyState",
@@ -179,11 +179,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Characters/PlayerState.gd"
 }, {
-"base": "Enemy",
-"class": "Puppet",
-"language": "GDScript",
-"path": "res://Nodes/Characters/Enemies/Puppet.gd"
-}, {
 "base": "Character",
 "class": "PuppetCharacter",
 "language": "GDScript",
@@ -208,6 +203,11 @@ _global_script_classes=[ {
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://Nodes/Util/StateMachine/StateMachine.gd"
+}, {
+"base": "State",
+"class": "StayAndLookAtPlayer",
+"language": "GDScript",
+"path": "res://Nodes/Characters/Enemies/Puppet/AIStates/StayAndLookAtPlayer.gd"
 }, {
 "base": "State",
 "class": "SubStateMachineState",
@@ -254,14 +254,14 @@ _global_script_class_icons={
 "MusicTransitionArea": "",
 "Player": "",
 "PlayerState": "",
-"Puppet": "",
 "PuppetCharacter": "",
 "SoundMachine": "",
 "StandardLevel": "",
-"State": "",
-"StateMachine": "",
-"SubStateMachineState": "",
-"Transition": ""
+"State": "res://Assets/icons/state_icon.svg",
+"StateMachine": "res://Assets/icons/state_machine_icon.svg",
+"StayAndLookAtPlayer": "",
+"SubStateMachineState": "res://Assets/icons/state_icon.svg",
+"Transition": "res://Assets/icons/transition_icon.svg"
 }
 
 [application]

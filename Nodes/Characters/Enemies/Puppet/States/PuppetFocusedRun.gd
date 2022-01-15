@@ -1,4 +1,4 @@
-extends "res://Nodes/Characters/Enemies/States/Run.gd"
+extends "res://Nodes/Characters/Enemies/States/FocusedRun.gd"
 
 func _ready():
 	yield(owner, "ready")

@@ -1,5 +1,5 @@
 # Initializes states and delegates engine callbacks
-class_name SubStateMachineState
+class_name SubStateMachineState, "res://Assets/icons/state_icon.svg"
 extends State
 
 export var sub_state_machine_path : NodePath

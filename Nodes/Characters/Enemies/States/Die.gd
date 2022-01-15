@@ -1,9 +1,13 @@
 extends CharacterState
 
+func _ready():
+	processing_mode = 1
+
+
 func enter(_msg := {}):
 	.enter(_msg)
 	character.velocity = Vector2.ZERO
-	character.hitbox.set_disabled(true)
+	character.hitbox.monitorable = false
 
 
 func start_animation():

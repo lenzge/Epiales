@@ -1,4 +1,4 @@
-class_name Transition
+class_name Transition, "res://Assets/icons/transition_icon.svg"
 extends Node
 
 export var enabled : bool = true

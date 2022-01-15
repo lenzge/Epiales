@@ -3,17 +3,22 @@ extends CharacterState
 export var move_accel : float 
 
 
+func _ready():
+	processing_mode = 1
+
+
 func start_animation():
 	character.animation.play("Fall")
 
 
 func physics_update(delta):
 	#Logic
-	character.velocity.x += character.consume_move().x * move_accel * delta
-	character.velocity.y += character.gravity * delta
 	character.apply_air_drag(delta)
 	
-	character.move_and_slide(character.velocity, Vector2.UP)
+	character.velocity.x += character.consume_move().x * move_accel * delta
+	character.velocity.y += character.gravity * delta
+	
+	character.velocity = character.move_and_slide(character.velocity, Vector2.UP)
 
 
 func update_animation(delta):
