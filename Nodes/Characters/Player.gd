@@ -65,6 +65,7 @@ export(float) var friction_dash: float = 5
 export(float) var friction_leap_jump: float = 10
 
 export(float) var dash_time : float = 0.2
+export(float) var charged_dash_time : float = 0.7
 export(float) var dash_cooldown_time : float = 1.0
 export(float) var leap_jump_time : float = 0.8
 export(float) var jump_gravity_damper : float = 0.75
@@ -390,8 +391,9 @@ func _slow_with_friction(friction : float) -> void:
 
 # Is called when the player makes a charged attack
 func charge():
+	print("charged")
 	in_charged_attack = true
-	attack_count = 4
+	#attack_count = 4 # deleted this to use this method for charged dash
 	emit_signal("charged_action")
 
 

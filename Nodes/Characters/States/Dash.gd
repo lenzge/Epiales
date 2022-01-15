@@ -5,8 +5,7 @@ var _jumped := false
 
 
 func enter(_msg := {}):
-	.enter(_msg)
-	timer.start(player.dash_time)
+	#.enter(_msg)
 	player.can_dash = false
 	player.can_reset_dash = false
 	player.hitbox.get_child(0).disabled = true
@@ -14,7 +13,6 @@ func enter(_msg := {}):
 	_dash_direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
 	_dash_direction.y = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
 	# Test edge case when crouching dash in direction the player is looking
-	
 	if player.is_on_floor() and is_equal_approx(_dash_direction.x, 0) and _dash_direction.y > 0:
 		# Edge case: Dash while crouching --> still dash foreward
 		_dash_direction = Vector2.ZERO
@@ -23,12 +21,25 @@ func enter(_msg := {}):
 			_dash_direction.x = -1
 		else:
 			_dash_direction.x = 1
-	
 	_dash_direction = _dash_direction.normalized()
-	player.velocity = _dash_direction * player.dash_speed
+	
+	# Charged Dash or normal Dash
+	if Input.is_action_pressed("charge"):# and player.charge_controller.has_charge():
+		player.charge()
+		timer.start(player.charged_dash_time)
+		animationPlayer.play("Dash_Charged")
+		animationPlayer.set_speed_scale(animationPlayer.current_animation_length/player.charged_dash_time) # Animation takes as long as charged_dash_time
+		player.velocity = _dash_direction * player.dash_speed * 0.9 # Make Charged Dash a little slower but longer
+	else:
+		timer.start(player.dash_time)
+		animationPlayer.play("Dash")
+		animationPlayer.set_speed_scale(animationPlayer.current_animation_length/player.dash_time) # Animation takes as long as dash_time
+		player.velocity = _dash_direction * player.dash_speed
+
 	
 	if !player.is_on_floor():
 		player.started_dash_in_air = true
+	
 	player.sound_machine.play_sound("Dash", false)
 	# todo: change player hitbox so player can deal damage while dashing
 	
@@ -39,6 +50,8 @@ func enter(_msg := {}):
 
 func exit():
 	.exit()
+	animationPlayer.set_speed_scale(1)
+	player.in_charged_attack = false
 	_jumped = false
 	player.hitbox.get_child(0).disabled = false
 	player.start_dash_cooldown()
@@ -52,10 +65,9 @@ func physics_update(delta):
 		player.move_leap_jump(delta, _dash_direction, player.friction_leap_jump)
 		if player.is_on_floor():
 			_on_timeout() # get out of dash state. Timer was stopped at jump begin
-		#return 
 	else:
 		if is_equal_approx(player.velocity.y, 0):
-			player.velocity.y = 0.5
+			player.velocity.y = 0.5 # player.is_on_floor only works with this
 		player.dash_move(delta, _dash_direction, player.friction_dash)
 	
 	# Check for exit conditions

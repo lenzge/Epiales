@@ -29,7 +29,7 @@ func physics_update(delta):
 
 func exit():
 	.exit()
-	# Diable hitbox
+	# Disable hitbox
 	player.hitbox_attack.get_child(0).disabled = true
 	player.in_charged_attack = false
 	# If it's cancelled, reset attack_count

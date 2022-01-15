@@ -3133,10 +3133,7 @@ jump_impulse = 800
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -50 )
-texture = ExtResource( 30 )
-hframes = 3
-vframes = 2
-frame = 4
+texture = ExtResource( 20 )
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -3149,8 +3146,6 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 7 )
-scale = Vector2( 2.22902, 0.732301 )
 shape = SubResource( 1 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -3237,7 +3232,7 @@ damage_amount = 20
 direction = Vector2( 1, 0 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
-position = Vector2( 40.334, -53.106 )
+position = Vector2( 40.044, -3.27136 )
 shape = SubResource( 2 )
 disabled = true
 
