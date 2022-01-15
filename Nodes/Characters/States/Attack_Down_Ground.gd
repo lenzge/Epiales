@@ -2,7 +2,12 @@ extends PlayerState
 
 
 func enter(msg :={}):
-	.enter(msg)
+	
+	if player.is_on_floor():
+		animationPlayer.play("Attack_Down")
+	else:
+		animationPlayer.play("Attack_Down_Air")
+		
 	.animation_to_timer()
 	
 	# Enable the attack hitboxes
