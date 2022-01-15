@@ -13,6 +13,7 @@ func enter(msg :={}):
 	#player.hitbox_up_attack_air.direction = Vector2(0, 1)
 	
 	player.sound_machine.play_sound("Sword Swing " + str(player.sound_machine.get_random(1, 2)), false)
+	player.sound_machine.play_sound("Attack Grunt " + str(player.sound_machine.get_random(1, 8)), false)
 
 
 func exit():

@@ -1,4 +1,4 @@
-class_name StandardLevel
+class_name HackNSlashLevel
 extends BaseLevel
 
 export(NodePath) var player_spawn_path
@@ -10,7 +10,9 @@ var current_spawnpoint_prio = -1
 # Enemy can connect to spawned player
 signal player_spawned
 
+
 func _ready():
+	propagate_call("set_level_instance", [self])
 	if not player_spawn:
 		player_spawn = get_node(player_spawn_path).position
 		current_spawnpoint = player_spawn
@@ -40,7 +42,5 @@ func _on_Checkoint_checkpoint_entered(new_spawnpoint: Vector2, prio: int) -> voi
 		current_spawnpoint = new_spawnpoint
 		current_spawnpoint_prio = prio
 
-
-func _on_player_entered_deadzone(dmg, fear):
-	print("[DEBUG] @class",name ," dealt_dmg: ",dmg," dealt_fear: ",fear)
+func reset():
 	player_instance.position = current_spawnpoint

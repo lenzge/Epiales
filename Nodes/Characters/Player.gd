@@ -4,6 +4,10 @@ extends KinematicBody2D
 # Movement
 enum MovementDir {LEFT, RIGHT}
 enum PossibleInput {ATTACK_BASIC, ATTACK_AIR, BLOCK, JUMP}
+
+# Wall hang/jump
+enum Walls {NONE, LEFT, RIGHT}
+
 # needed for running turn
 var direction : int = 1
 var prev_direction : int = 1
@@ -18,9 +22,12 @@ var can_reset_dash := true
 var started_dash_in_air := false
 var in_charged_attack := false
 var attack_count := 1 # Needs to be 1 because increment happens after the attack
+var attack_direction := 0 # Set to 1 or -1 when in attack, so the player can't turn
 
 var can_hang_on_wall := true
-var hang_on_wall_velocity_save := 0.0
+var raycasts_enabled := false
+var on_wall = Walls.NONE
+var wall_jump_vector := Vector2(0, 0)
 
 var add_jump_gravity_damper : bool = false
 
@@ -64,6 +71,8 @@ export(float) var jump_gravity_damper : float = 0.75
 
 export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
+export(float, 0, 1) var wall_jump_additional_y : float = 0.5
+export(bool) var dash_reset_after_wallhang : bool = true
 export(Array, int) var attack_force = [200, 300, 400, 600]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
@@ -77,11 +86,17 @@ onready var hitbox : Area2D = $Hitbox
 onready var collision_shape : CollisionShape2D = $CollisionShape2D
 onready var charge_controller = $ChargeController
 
+onready var ray_left : RayCast2D = $RayLeft
+onready var ray_right : RayCast2D = $RayRight
+
+# Needed for the wall hang
+onready var player_size_x = collision_shape.shape.extents.x
+
 # Enemy needs to know
 onready var _position = collision_shape.position
 	
 signal blocked
-
+signal charged_action
 
 func _ready():
 	_init_timer()
@@ -109,13 +124,17 @@ func pop_combat_queue():
 func _process(delta):
 	# Check if player can dash and hang on wall
 	if is_on_floor():
+		if raycasts_enabled:
+			enable_Raycasts(false)
 		if started_dash_in_air:
 			can_reset_dash = true
 			started_dash_in_air = false
+	else:
+		if !raycasts_enabled:
+			enable_Raycasts(true)
 	if can_reset_dash and !started_dash_in_air:
 		can_dash = true
 		can_hang_on_wall = true
-		hang_on_wall_velocity_save = 0.0
 	# todo: add other conditions (i.e. player hits dash resetter obj)
 	
 	# Queue Attack in Array
@@ -153,66 +172,57 @@ func _process(delta):
 		transition_to_stunned = false
 		$StateMachine.transition_to("Stunned", {"force" :stunned_knockback_force, "time": stunned_knockback_time, "direction": stunned_direction_x})
 
-
+# Normal movement on ground
+# Player is not allowed to turn around while attack windup
 func move(delta):
 	_flip_sprite_in_movement_dir()
 	
-	# Actual movement
+	# Actual movement with acceleration and friction
 	if abs(velocity.x) <= speed and not last_movement_buttons.empty():
-		if last_movement_buttons[0] == MovementDir.LEFT:
+		if last_movement_buttons[0] == MovementDir.LEFT and not attack_direction == 1:
 			_accelerate(-speed, acceleration)
-		elif last_movement_buttons[0] == MovementDir.RIGHT:
+		elif last_movement_buttons[0] == MovementDir.RIGHT and not attack_direction == -1:
 			_accelerate(speed, acceleration)
 	else:
 		_slow_with_friction(friction_ground)
 		
-	_fall(delta)
-	
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
-# Lets the player step forward.
-# Call while attacking
-func attack_move(delta) -> void:
+# Movement while basic attacking on ground (step forward)
+# Player is not allowed to turn around while attacking
+func basic_attack_move(delta) -> void:
 	_flip_sprite_in_movement_dir()
 	
-	if not last_movement_buttons.empty(): # If running
-		if last_movement_buttons[0] == MovementDir.LEFT:
+	# If running use normal speed
+	if not last_movement_buttons.empty(): 
+		if last_movement_buttons[0] == MovementDir.LEFT and not attack_direction == 1:
 			_accelerate(-speed, acceleration)
-		elif last_movement_buttons[0] == MovementDir.RIGHT:
+		elif last_movement_buttons[0] == MovementDir.RIGHT and not attack_direction == -1:
 			_accelerate(speed, acceleration)
-	else: # If not running: slow step foreward
-		if sprite.flip_h == true:
-			velocity.x += ((-attack_step_speed - velocity.x) * acceleration)
-		else:
-			velocity.x += ((attack_step_speed - velocity.x) * acceleration)
+	# If not running: slow step foreward
+	else: 
+		velocity.x += ((attack_step_speed*attack_direction - velocity.x) * acceleration)
+	
 
-	if velocity.y < 0:
-		velocity.y = 0;
-	velocity.y += gravity * delta * air_attack_fall_speed
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity,Vector2.UP)
 
-
-## Deccelerates the player when in up or down Attack on ground or in crouch
-## Call in _physics_process when player attacks up or down on ground
-func attack_up_ground_move(delta) -> void:
+# Decelerated movement when the player can't move actively, but physics should be applied
+# Friction is set to ground_friction by default, in crouch state the second arg has to be set to true
+func decelerate_move_ground(delta, crouch:bool = false):
 	_flip_sprite_in_movement_dir()
-	_slow_with_friction(friction_ground)
-	_fall(delta)
+	if not crouch:
+		_slow_with_friction(friction_ground)
+	else:
+		_slow_with_friction(friction_ground_on_crouch)
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
+	
 
-
-## Basically the same as "attack_up_ground_move()" but with another friction
-func crouch_move(delta) -> void:
-	_flip_sprite_in_movement_dir()
-	_slow_with_friction(friction_ground_on_crouch)
-	_fall(delta)
-	velocity = move_and_slide(velocity, Vector2.UP)
-
-
-## Deccelerate the player when inup or down attack in air and fall slower
-## Call in _physics_process when player attacks up or down in air
-func attack_updown_air_move(delta):
+# Decelerate the player when in any air attack to fall slower
+func air_attack_move(delta):
 	_flip_sprite_in_movement_dir()
 	_slow_with_friction(friction_air)
 	
@@ -226,11 +236,17 @@ func attack_updown_air_move(delta):
 		
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+# Applies falling physics in air while the player can't move actively 
+func fall_straight(delta):
+	_flip_sprite_in_movement_dir()
+	_slow_with_friction(friction_air)
+	_apply_gravity(delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
 
 ## Called if jumping while dashing
 ## Only adds gravity to dash movement
 func move_leap_jump(delta:float, dir:Vector2, friction:float):
-	_fall(delta)
+	_apply_gravity(delta)
 	dash_move(delta, dir, friction)
 
 
@@ -249,17 +265,52 @@ func dash_move(delta:float, dir:Vector2, friction:float):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
+## Test if the player is on a wall
+## Used for wall detection in wall hang and wall jump
+func can_change_to_wallhang() -> bool:
+	var ret_value = false
+	on_wall = Walls.NONE
+	
+	# test if one of the rays collides with a wall (right-ray dominant)
+	if raycasts_enabled:
+		if ray_right.is_colliding():
+			if is_tile_wall(ray_right, ray_right.get_collision_point()):
+				ret_value = true
+				on_wall = Walls.RIGHT
+
+		elif ray_left.is_colliding():
+			var collision_point = ray_left.get_collision_point()
+			# set collision_point inside the tile
+			collision_point.x -= 1
+			if is_tile_wall(ray_left, collision_point):
+				ret_value = true
+				on_wall = Walls.LEFT
+	
+	return ret_value
+
+
+## Test if a tile that collides with a raycast is a tile without one-way collision
+## Used for the raycasts of the wall hang (in the method "can_change_to_wallhang()"
+func is_tile_wall(ray: RayCast2D, collision_point: Vector2) -> bool:
+	
+	var collider = ray.get_collider()
+	
+	# get tile of tileset
+	var tile_pos = collider.world_to_map(collider.to_local(collision_point))
+	var tile_tex_coords = collider.get_cell_autotile_coord(tile_pos.x, tile_pos.y)
+	var tile_id = (tile_tex_coords.y * 8) + tile_tex_coords.x
+	
+	# get tileset
+	var tile_map_id = collider.get_cellv(tile_pos)
+	
+	# test if the tile has a one_way collision and return the negated value
+	return !ray.get_collider().tile_set.tile_get_shape_one_way(ray.get_collider().get_cellv(tile_pos), tile_id) and tile_map_id != TileMap.INVALID_CELL
+
+
 ## Moves the player with a special gravitational force for the wall_hang
 ## Call when player is in wall hang
 func move_wall_hang(delta):
 	_flip_sprite_in_movement_dir()
-	
-	if not last_movement_buttons.empty():
-		if last_movement_buttons[0] == MovementDir.LEFT:
-			_accelerate(-speed, acceleration)
-		elif last_movement_buttons[0] == MovementDir.RIGHT:
-			_accelerate(speed, acceleration)
-	
 	velocity.y += wall_hang_gravity * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -269,13 +320,13 @@ func move_wall_hang(delta):
 func move_wall_jump(delta):
 	_flip_sprite_in_movement_dir()
 	_accelerate(0, wall_jump_deceleration)
-	_fall(delta)
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
 func move_knockback(delta):
 	_slow_with_friction(friction_knockback)
-	_fall(delta)
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
@@ -298,20 +349,17 @@ func _flip_sprite_in_movement_dir() -> void:
 
 	
 func set_knockback(force, direction):
-	#if sprite.flip_h == true:
 	velocity.x = force * direction
-	#else:
-		#velocity.x = -force
 
 
 func knockback(delta, force, direction):
 	velocity.x = force * direction
-	_fall(delta)
+	_apply_gravity(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
 ## Applies gravity to the player
-func _fall(delta):
+func _apply_gravity(delta):
 	if add_jump_gravity_damper:
 		velocity.y += gravity * delta * jump_gravity_damper
 	else:
@@ -340,6 +388,11 @@ func _slow_with_friction(friction : float) -> void:
 		else:
 			velocity.x -= friction
 
+# Is called when the player makes a charged attack
+func charge():
+	in_charged_attack = true
+	attack_count = 4
+	emit_signal("charged_action")
 
 
 func _physics_process(delta):
@@ -391,6 +444,12 @@ func _on_dash_cooldown_timeout():
 func start_dash_cooldown():
 	dash_cooldown_timer.set_wait_time(dash_cooldown_time)
 	dash_cooldown_timer.start()
+
+
+func enable_Raycasts(value : bool):
+	ray_left.enabled = value
+	ray_right.enabled = value
+	raycasts_enabled = value
 
 
 func _on_Attack_Down_Air_hit(receiver):

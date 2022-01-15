@@ -2,41 +2,32 @@ extends PlayerState
 
 enum wall_direction {WALL_LEFT, WALL_RIGHT}
 
-var player_gravity_save : int
 var wall_direction_save : int
-var player_pos_x_save : float
-var player_pos_y_save : float
-var checking_for_wall : float = 10.0
 
 func enter(_msg := {}):
 	.enter(_msg)
-	player.velocity.y = player.hang_on_wall_velocity_save
-	player.can_dash = true;
+	player.velocity.y = 0
+	
+	if player.dash_reset_after_wallhang:
+		player.can_dash = true
 	
 	# Save the position of the wall
-	if player.get_slide_collision(0).get_position().x > player.position.x:
+	if player.on_wall == player.Walls.RIGHT:
 		wall_direction_save = wall_direction.WALL_RIGHT
-	else:
+		var wall_pos_x = player.ray_right.get_collision_point().x - (player.player_size_x / 2)
+		player.position.x = wall_pos_x
+	elif player.on_wall == player.Walls.LEFT:
 		wall_direction_save = wall_direction.WALL_LEFT
-	
-	# Save the position of the player
-	player_pos_x_save = player.position.x
-	player_pos_y_save = player.position.y
+		var wall_pos_x = player.ray_left.get_collision_point().x + (player.player_size_x / 2)
+		player.position.x = wall_pos_x
 	
 	player.sound_machine.play_sound("Slide", true)
 
 
 func physics_update(delta):
 	
-	# Only check for a wall (move the player in x-direction) if the player 
-	# has moved a bit or wants to jump
-	if player.position.y > (player_pos_y_save + checking_for_wall) \
-	or Input.is_action_just_pressed("jump"):
-		if wall_direction_save == wall_direction.WALL_RIGHT:
-			player.velocity.x = 10
-		else:
-			player.velocity.x = -10
-		player_pos_y_save = player.position.y
+	# Check if player should still hang on wall (check for wall)
+	player.can_change_to_wallhang()
 	
 	# Update player position
 	player.move_wall_hang(delta)
@@ -48,22 +39,29 @@ func physics_update(delta):
 		else:
 			state_machine.transition_to("Run")
 	
-	elif is_equal_approx(player_pos_x_save, player.position.x):
-		if Input.is_action_just_pressed("jump"):
-				state_machine.transition_to("Wall_Jump")
-		elif Input.is_action_pressed("hang_on_wall"):
-			if player.velocity.y > player.wall_hang_max_gravity:
-				state_machine.transition_to("Fall")
 	else:
-		state_machine.transition_to("Fall")
+		if Input.is_action_just_pressed("jump"):
+			
+			# The velocity of the wall jump should depend on the player speed of the wall hang
+			var l = player.velocity.length()
+			var additional_vector_value_y = sqrt(pow(l, 2) * player.wall_jump_additional_y)
+			var additional_vector_value_x = sqrt(pow(l, 2) * (1 - player.wall_jump_additional_y))
+			
+			player.wall_jump_vector.y = -(player.jump_impulse + additional_vector_value_y)
+			
+			if player.on_wall == player.Walls.RIGHT:
+				player.wall_jump_vector.x = -(player.wall_jump_speed + additional_vector_value_x)
+			elif player.on_wall == player.Walls.LEFT:
+				player.wall_jump_vector.x = (player.wall_jump_speed + additional_vector_value_x)
+			
+			state_machine.transition_to("Wall_Jump")
+		elif Input.is_action_pressed("hang_on_wall"):
+			# if there is no wall anymore transition to fall, else stay in wall hang
+			if player.on_wall == player.Walls.NONE:
+				state_machine.transition_to("Fall")
+		else:
+			state_machine.transition_to("Fall")
 
 
 func exit():
-	# Save the current gravitational velocity of the wall hang
-	if player.velocity.y > player.wall_hang_max_gravity:
-		player.hang_on_wall_velocity_save = 0.0
-		player.can_hang_on_wall = false
-	else:
-		player.hang_on_wall_velocity_save = player.velocity.y
-	
 	player.sound_machine.stop_sound("Slide")
