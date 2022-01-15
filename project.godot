@@ -59,7 +59,7 @@ _global_script_classes=[ {
 "language": "NativeScript",
 "path": "res://addons/godot-git-plugin/git_api.gdns"
 }, {
-"base": "Node",
+"base": "BaseLevel",
 "class": "HackNSlashLevel",
 "language": "GDScript",
 "path": "res://Nodes/Maps/HackNSlashLevel.gd"
