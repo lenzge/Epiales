@@ -2,18 +2,12 @@ extends PlayerState
 
 
 func enter(msg :={}):
-	
-	if player.is_on_floor():
-		animationPlayer.play("Attack_Down_Recovery")
-	else:
-		animationPlayer.play("Attack_Down_Recovery_Air")
-		
 	.animation_to_timer()
 
 
 func physics_update(delta):
 	# Movement depending on ground or air
-	if player.is_on_floor():
+	if animationPlayer.current_animation == "Down_Attack_Recovery":
 		player.decelerate_move_ground(delta, true)
 	else:
 		player.fall_straight(delta)
@@ -22,7 +16,8 @@ func physics_update(delta):
 			state_machine.transition_to("Dash")
 
 func _on_timeout():
-	if player.is_on_floor():
+	# Attention! Otherwise Crocuh_Start animation would be played
+	if animationPlayer.current_animation == "Crouch":
 		state_machine.transition_to("Crouch")
 	else:
 		state_machine.transition_to("Fall")

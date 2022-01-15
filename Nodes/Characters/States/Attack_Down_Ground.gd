@@ -1,17 +1,14 @@
 extends PlayerState
 
+# In air and on ground, depending on where the windup started.
+# Known by the current animation
 
 func enter(msg :={}):
-	
-	if player.is_on_floor():
-		animationPlayer.play("Attack_Down")
-	else:
-		animationPlayer.play("Attack_Down_Air")
-		
+	# Animation set in animationController, depending on last animation
 	.animation_to_timer()
 	
 	# Enable the attack hitboxes
-	if player.is_on_floor():
+	if animationPlayer.current_animation == "Down_Attack":
 		player.get_node("Attack_Down_Ground/HitboxAttack").disabled = false
 		#TODO: knockback_force should be 0, but then the enemy gets no damage...
 		player.hitbox_down_attack.knockback_force = player.attack_force[0]
@@ -27,7 +24,7 @@ func enter(msg :={}):
 
 func physics_update(delta):
 	# Movement depending on ground or air
-	if player.is_on_floor():
+	if animationPlayer.current_animation == "Down_Attack":
 		player.decelerate_move_ground(delta, true)
 	else:
 		player.air_attack_move(delta)

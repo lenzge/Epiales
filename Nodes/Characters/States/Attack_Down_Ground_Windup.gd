@@ -6,7 +6,6 @@ func enter(_msg := {}):
 		animationPlayer.play("Attack_Down_Windup")
 	else:
 		animationPlayer.play("Attack_Down_Windup_Air")
-	
 	.animation_to_timer()
 
 
