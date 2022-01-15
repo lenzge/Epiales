@@ -82,8 +82,10 @@ A Puppet is a Walking Enemy. It can execute a normal and a run attack.
                 Fall --On floor--> Run
                 AtkRun --Not on floor--> AtkFall
                 AtkFall --On floor--> AtkRun
-                Recoil --Attack was blocked--> Run
+                Atk --Attack was blocked--> Recoil
+                Recoil ----> Run
                 AtkWUP ---->  Atk
+                AtkWUP ---->  AtkRun
                 Atk --> AtkRec
                 AtkRec --> Run
                 Run --Attack-->  AtkWUP
