@@ -10,6 +10,7 @@ func _ready():
 
 func _on_close_timeout():
 	emit_signal("close_finished")
+	animationPlayer.stop()
 
 
 

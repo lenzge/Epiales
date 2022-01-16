@@ -2,15 +2,16 @@ extends GameState
 
 var pausescreen
 onready var ingame = $"../../HUD"
+var sprite : Sprite
 
 # Called by the state machine upon changing the active state
 func enter(_msg := {}):
 	get_tree().paused = true
 	if !pausescreen:
 		pausescreen = preload("res://Nodes/GUI/PauseScreen.tscn").instance()
-		pausescreen.get_child(1).set_position(OS.get_window_size() / 2)
+		sprite = pausescreen.get_child(1).get_child(1)
+		sprite.set_position(OS.get_window_size() / 2)
 		game.add_child(pausescreen)
-
 	else:
 		pausescreen.visible = true
 		pausescreen.animationPlayer.play("Idle")
@@ -18,6 +19,8 @@ func enter(_msg := {}):
 
 # Corresponds to the `_physics_process()` callback
 func physics_update(_delta):
+	# Center if window size is changed
+	sprite.set_position(OS.get_window_size() / 2)
 	if Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_cancel"):
 		pausescreen.animationPlayer.play("Close")
 		yield(pausescreen, "close_finished")
