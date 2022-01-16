@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=2]
+[gd_scene load_steps=135 format=2]
 
 [ext_resource path="res://Assets/Art/Luci/Luci_Idle_11.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -54,9 +54,8 @@
 [ext_resource path="res://Nodes/Util/SoundMachine.gd" type="Script" id=52]
 [ext_resource path="res://Assets/Sound/One_Footstep.wav" type="AudioStream" id=53]
 [ext_resource path="res://Assets/Sound/SFX_Jump_Landing.wav" type="AudioStream" id=54]
-[ext_resource path="res://Assets/Sound/SFX_Wall_touch.wav" type="AudioStream" id=55]
 [ext_resource path="res://Assets/Sound/SFX_Blocking.wav" type="AudioStream" id=56]
-[ext_resource path="res://Assets/Sound/SFX_slide.wav" type="AudioStream" id=57]
+[ext_resource path="res://Assets/Sound/SFX_luci_longer_slide.wav" type="AudioStream" id=57]
 [ext_resource path="res://Assets/Sound/SFX_Dash.wav" type="AudioStream" id=58]
 [ext_resource path="res://Assets/Art/Luci/Luci_RunningTurn_11.png" type="Texture" id=59]
 [ext_resource path="res://Assets/Art/Luci/Luci_LightAttack3_11.png" type="Texture" id=60]
@@ -3463,11 +3462,6 @@ stream = ExtResource( 44 )
 
 [node name="Crouch Up" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 43 )
-
-[node name="Wall Touch" type="AudioStreamPlayer2D" parent="SoundMachine"]
-stream = ExtResource( 55 )
-volume_db = 3.0
-bus = "Sounds"
 
 [node name="Wall Slide" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 68 )

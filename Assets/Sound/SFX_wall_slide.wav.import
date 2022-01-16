@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/SFX_wall_slide.wav-bbf08f7fb113e385ad9b936dc7bf59da.sample"
+path="res://.import/SFX_Wall_slide.wav-1f27e015d2df6d35b03c0e0bfe50b1c4.sample"
 
 [deps]
 
-source_file="res://Assets/Sound/SFX_wall_slide.wav"
-dest_files=[ "res://.import/SFX_wall_slide.wav-bbf08f7fb113e385ad9b936dc7bf59da.sample" ]
+source_file="res://Assets/Sound/SFX_Wall_slide.wav"
+dest_files=[ "res://.import/SFX_Wall_slide.wav-1f27e015d2df6d35b03c0e0bfe50b1c4.sample" ]
 
 [params]
 
