@@ -3,7 +3,7 @@
 [ext_resource path="res://Nodes/GUI/PauseScreen.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Art/UI/Continue_Button.png" type="Texture" id=2]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "Close"
 length = 0.4
 step = 0.05
@@ -18,7 +18,7 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "update"
+"method": "_on_close_timeout"
 } ]
 }
 tracks/1/type = "value"
@@ -58,7 +58,7 @@ tracks/3/keys = {
 "values": [ Color( 0, 0, 0, 0.192157 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "Idle"
 length = 0.5
 loop = true
@@ -120,10 +120,10 @@ __meta__ = {
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 547.028, 300.095 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 2 )
 hframes = 2
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Close = SubResource( 2 )
-anims/Idle = SubResource( 3 )
+anims/Close = SubResource( 1 )
+anims/Idle = SubResource( 2 )

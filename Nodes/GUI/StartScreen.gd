@@ -12,9 +12,6 @@ func _ready():
 func _on_close_timeout():
 	emit_signal("close_finished")
 
-func update():
-	emit_signal("close_finished")
-
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	var _animation = _rng.randi_range(1,3)

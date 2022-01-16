@@ -194,7 +194,7 @@ tracks/6/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "update"
+"method": "_on_close_timeout"
 } ]
 }
 tracks/7/type = "value"
@@ -445,8 +445,9 @@ position = Vector2( 500, 380 )
 
 [node name="Sprite" type="Sprite" parent="Node"]
 scale = Vector2( 2, 2 )
-texture = ExtResource( 3 )
+texture = ExtResource( 7 )
 hframes = 3
+vframes = 15
 
 [node name="Sprite2" type="Sprite" parent="Node"]
 position = Vector2( 0, -81.4484 )
@@ -457,6 +458,7 @@ texture = ExtResource( 1 )
 position = Vector2( 0, 86.102 )
 texture = ExtResource( 4 )
 hframes = 2
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Blink = SubResource( 1 )
