@@ -38,6 +38,9 @@ var stunned_knockback_force : float = 0.0
 var stunned_knockback_time : float = 0.0
 var stunned_direction_x : float = 0.0
 
+# The current "health"
+var nightmare : int = 0
+
 onready var sound_machine : SoundMachine = $SoundMachine
 
 export(int) var speed :int = 300
@@ -75,6 +78,9 @@ export(float, 0, 1) var wall_jump_additional_y : float = 0.5
 export(bool) var dash_reset_after_wallhang : bool = true
 export(Array, int) var attack_force = [200, 300, 400, 600]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
+
+export(int) var max_nightmare : int = 60
+export(int) var nightmare_on_hit_reduction : int = 10
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
@@ -424,6 +430,12 @@ func on_hit(emitter : DamageEmitter):
 			stunned_direction_x = direction_x
 			emitter.hit($"Hitbox")
 			sound_machine.play_sound("Hit", false)
+			
+			nightmare += emitter.damage_amount
+			print(nightmare)
+			if nightmare >= max_nightmare:
+				#$StateMachine.transition_to("Die")
+				print("Game over!")
 
 
 # Timer
@@ -452,5 +464,30 @@ func enable_Raycasts(value : bool):
 	raycasts_enabled = value
 
 
+func reduce_nightmare(reduction: int) -> void:
+	if nightmare > (0 + reduction):
+		nightmare -= reduction
+	else:
+		nightmare = 0
+	print(nightmare)
+
+
 func _on_Attack_Down_Air_hit(receiver):
 	velocity.y = -attack_air_down_knockback_impulse
+	reduce_nightmare(nightmare_on_hit_reduction)
+
+
+func _on_Attack_Up_Air_hit(receiver):
+	reduce_nightmare(nightmare_on_hit_reduction)
+
+
+func _on_Attack_Down_Ground_hit(receiver):
+	reduce_nightmare(nightmare_on_hit_reduction)
+
+
+func _on_Attack_Up_Ground_hit(receiver):
+	reduce_nightmare(nightmare_on_hit_reduction)
+
+
+func _on_Attack_hit(receiver):
+	reduce_nightmare(nightmare_on_hit_reduction)
