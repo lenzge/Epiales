@@ -83,6 +83,7 @@ export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 export(float) var max_nightmare : float = 60.0
 export(float) var nightmare_on_hit_reduction : float = 10.0
 export(float) var nightmare_enemy_surronding_increment : float = 0.1
+export(float) var nightmare_spikes_increment : float = 10.0
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
