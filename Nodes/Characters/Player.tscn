@@ -3391,11 +3391,10 @@ gravity = 2000
 jump_impulse = 800
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -14 )
-texture = ExtResource( 39 )
+position = Vector2( 0, -50 )
+texture = ExtResource( 30 )
 hframes = 3
-vframes = 3
-frame = 3
+vframes = 2
 
 [node name="Label" type="Label" parent="."]
 visible = false
