@@ -13,7 +13,6 @@ func _on_close_timeout():
 	emit_signal("close_finished")
 
 func update():
-	print("signal")
 	emit_signal("close_finished")
 
 

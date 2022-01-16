@@ -6,6 +6,7 @@ var startscreen
 func enter(_msg := {}):
 	startscreen = preload("res://Nodes/GUI/StartScreen.tscn").instance()
 	startscreen.get_child(1).set_position(OS.get_real_window_size() / 2)
+	print(startscreen.get_child(1).get_position())
 	game.add_child(startscreen)
 
 # Corresponds to the `_physics_process()` callback

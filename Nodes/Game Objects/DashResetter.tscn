@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Nodes/Experimental/Placeholder/tile_0010.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Art/Tiles/dash_resetter_idle/1.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Game Objects/DashResetter.gd" type="Script" id=2]
 [ext_resource path="res://Nodes/Util/SoundMachine.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Sound/SFX_orb.wav" type="AudioStream" id=4]
