@@ -103,6 +103,7 @@ onready var _position = collision_shape.position
 	
 signal blocked
 signal charged_action
+signal nightmare_changed
 
 func _ready():
 	_init_timer()
@@ -432,7 +433,7 @@ func on_hit(emitter : DamageEmitter):
 			sound_machine.play_sound("Hit", false)
 			
 			nightmare += emitter.damage_amount
-			print(nightmare)
+			emit_signal("nightmare_changed")
 			if nightmare >= max_nightmare:
 				#$StateMachine.transition_to("Die")
 				print("Game over!")
@@ -469,7 +470,7 @@ func reduce_nightmare(reduction: int) -> void:
 		nightmare -= reduction
 	else:
 		nightmare = 0
-	print(nightmare)
+	emit_signal("nightmare_changed")
 
 
 func _on_Attack_Down_Air_hit(receiver):
