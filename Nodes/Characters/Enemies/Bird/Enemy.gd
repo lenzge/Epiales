@@ -60,6 +60,9 @@ var attack_count : int
 var velocity : Vector2
 var chased_player : Player
 
+var is_registered_by_player : bool = false
+var deal_nightmare : bool = false
+
 # Timer for overall cooldown
 var is_attack_recovering : bool
 var is_chase_recovering : bool
