@@ -10,6 +10,9 @@ func check_transitions(_delta):
 	if character.is_winding_up:
 		state_machine.transition_to("AttackWindUp")
 
-
+func start_animation():
+	.start_animation()
+	character.animation.play("Run_Start")
+	
 func on_attack():
 	state_machine.transition_to("AttackWindUp")
