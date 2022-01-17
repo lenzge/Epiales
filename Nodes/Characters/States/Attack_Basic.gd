@@ -36,6 +36,7 @@ func exit():
 	if not state_machine.new_state == "Attack_Basic_Windup" or state_machine.new_state == "Attack_Basic_Recovery":
 		player.attack_count = 1
 		player.last_input.clear()
+		player.attack_direction = 0
 
 # Decide between recover and next attack, depending on input and attack_count
 func _on_timeout():

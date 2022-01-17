@@ -91,6 +91,8 @@ func on_hit(emitter : DamageEmitter):
 	else:
 		direction_x = emitter.direction.x
 	state_machine.transition_to("Flinch", {"direction_x": -1.0 if direction_x < 0.0 else 1.0, "force": emitter.knockback_force})
+	emitter.hit($"HitBox")
+	
 	sound_machine.play_sound("Hit", false)
 
 

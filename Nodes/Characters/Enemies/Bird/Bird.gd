@@ -7,7 +7,17 @@ var position_cache
 func _ready():
 	# For detecting Patrol Points
 	wall_detection_raycast.collide_with_areas = true
-	
+
+
+func _process(delta):
+	# Deal damage when not in dying state and when in range of player
+	if deal_nightmare and !is_registered_by_player:
+		chased_player.add_enemy_in_range()
+		is_registered_by_player = true
+	elif !deal_nightmare and is_registered_by_player:
+		chased_player.remove_enemy_in_range()
+		is_registered_by_player = false
+
 
 func windup_move(delta):
 	move(windup_speed)
@@ -45,5 +55,4 @@ func drop_move(delta, target_position):
 func knockback(delta, force, direction):
 	velocity.x = force/2 * direction
 	velocity = move_and_slide(velocity, Vector2.UP)
-	
 

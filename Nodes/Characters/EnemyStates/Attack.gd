@@ -19,6 +19,7 @@ func enter(_msg := {}):
 	timer.set_wait_time(enemy.attack_time)
 	timer.start()
 	enemy.attack_area.knockback_force = enemy.attack_force[enemy.attack_count]
+	enemy.attack_area.damage_amount = enemy.attack_damage[enemy.attack_count % enemy.attack_damage.size()]
 
 
 

@@ -38,6 +38,10 @@ var stunned_knockback_force : float = 0.0
 var stunned_knockback_time : float = 0.0
 var stunned_direction_x : float = 0.0
 
+# The current "health"
+var nightmare : float = 0
+var enemies_in_range : int = 0
+
 onready var sound_machine : SoundMachine = $SoundMachine
 
 export(int) var speed :int = 300
@@ -76,6 +80,11 @@ export(bool) var dash_reset_after_wallhang : bool = true
 export(Array, int) var attack_force = [200, 300, 400, 600]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
+export(float) var max_nightmare : float = 60.0
+export(float) var nightmare_on_hit_reduction : float = 10.0
+export(float) var nightmare_enemy_surronding_increment : float = 0.1
+export(float) var nightmare_spikes_increment : float = 10.0
+
 onready var sprite : Sprite = $Sprite
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
@@ -97,6 +106,7 @@ onready var _position = collision_shape.position
 	
 signal blocked
 signal charged_action
+signal nightmare_changed
 
 func _ready():
 	_init_timer()
@@ -171,6 +181,10 @@ func _process(delta):
 	if transition_to_stunned:
 		transition_to_stunned = false
 		$StateMachine.transition_to("Stunned", {"force" :stunned_knockback_force, "time": stunned_knockback_time, "direction": stunned_direction_x})
+	
+	# If enemies are nearby increase the nightmare
+	if enemies_in_range > 0:
+		increment_nightmare(nightmare_enemy_surronding_increment)
 
 # Normal movement on ground
 # Player is not allowed to turn around while attack windup
@@ -424,6 +438,8 @@ func on_hit(emitter : DamageEmitter):
 			stunned_direction_x = direction_x
 			emitter.hit($"Hitbox")
 			sound_machine.play_sound("Hit", false)
+			
+			increment_nightmare(emitter.damage_amount)
 
 
 # Timer
@@ -452,5 +468,50 @@ func enable_Raycasts(value : bool):
 	raycasts_enabled = value
 
 
+func reduce_nightmare(reduction: float) -> void:
+	if nightmare > (0 + reduction):
+		nightmare -= reduction
+	else:
+		nightmare = 0
+	emit_signal("nightmare_changed")
+
+
+func increment_nightmare(increment: float) -> void:
+	if (nightmare + increment) < max_nightmare:
+		nightmare += increment
+	else:
+		nightmare = max_nightmare
+	emit_signal("nightmare_changed")
+	
+	if nightmare >= max_nightmare:
+		$StateMachine.transition_to("Die")
+
+
+func add_enemy_in_range():
+	enemies_in_range += 1
+
+
+func remove_enemy_in_range():
+	if enemies_in_range > 0:
+		enemies_in_range -= 1
+
+
 func _on_Attack_Down_Air_hit(receiver):
 	velocity.y = -attack_air_down_knockback_impulse
+	reduce_nightmare(nightmare_on_hit_reduction)
+
+
+func _on_Attack_Up_Air_hit(receiver):
+	reduce_nightmare(nightmare_on_hit_reduction)
+
+
+func _on_Attack_Down_Ground_hit(receiver):
+	reduce_nightmare(nightmare_on_hit_reduction)
+
+
+func _on_Attack_Up_Ground_hit(receiver):
+	reduce_nightmare(nightmare_on_hit_reduction)
+
+
+func _on_Attack_hit(receiver):
+	reduce_nightmare(nightmare_on_hit_reduction)

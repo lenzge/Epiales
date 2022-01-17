@@ -2,7 +2,8 @@ extends PlayerState
 
 
 func enter(msg :={}):
-	.enter(msg)
+	.enter()
+		
 	.animation_to_timer()
 
 

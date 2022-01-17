@@ -8,6 +8,8 @@ func enter(_msg := {}):
 	.enter(_msg)
 	player.velocity = Vector2.ZERO
 	player.set_knockback(_msg.force, _msg.direction)
+	# Reset
+	player.attack_direction = 0
 	
 
 func physics_update(delta):
