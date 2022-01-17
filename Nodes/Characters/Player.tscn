@@ -3391,20 +3391,22 @@ tracks/0/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 44
 script = ExtResource( 2 )
+speed = 270
 gravity = 2000
 jump_impulse = 800
+friction_ground_on_crouch = 2.0
+max_nightmare = 1000.0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="Background" type="Sprite" parent="ParallaxBackground"]
-position = Vector2( 0, -3.106 )
-scale = Vector2( 2.4504, 2.4504 )
+scale = Vector2( 1, 0.7 )
 texture = ExtResource( 41 )
 centered = false
 
 [node name="City" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2( 0.219231, -552.74 )
-motion_scale = Vector2( 0.5, 0 )
+position = Vector2( 0.219, -450 )
+motion_scale = Vector2( 0.5, 0.1 )
 
 [node name="City" type="TextureRect" parent="ParallaxBackground/City"]
 margin_left = -4264.0
@@ -3420,7 +3422,7 @@ __meta__ = {
 [node name="Rollecoaster" type="ParallaxLayer" parent="ParallaxBackground"]
 use_parent_material = true
 position = Vector2( 0.219231, -557.931 )
-motion_scale = Vector2( 0.7, 0 )
+motion_scale = Vector2( 0.7, 0.3 )
 
 [node name="Rollecoaster" type="TextureRect" parent="ParallaxBackground/Rollecoaster"]
 margin_left = -4265.0
