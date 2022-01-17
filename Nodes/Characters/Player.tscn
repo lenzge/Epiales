@@ -80,7 +80,6 @@
 [ext_resource path="res://Assets/Sound/Grunt_5.wav" type="AudioStream" id=84]
 [ext_resource path="res://Assets/Sound/Grunt_2.wav" type="AudioStream" id=85]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11.4178, 27.2546 )
 
