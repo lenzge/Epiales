@@ -29,6 +29,7 @@ export var dying_time = 3.0
 
 # Attack combo with different force
 export(Array, int) var attack_force = [600, 400, 800]
+export(Array, int) var attack_damage = [20]
 export var max_attack_combo = 2
 
 onready var state_machine : StateMachine = $StateMachine
