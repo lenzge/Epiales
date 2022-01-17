@@ -9,6 +9,8 @@ func _ready():
 
 
 func player_touched(body):
+	if body is Player:
+		body.increment_nightmare(body.nightmare_spikes_increment)
 	level.reset()
 
 

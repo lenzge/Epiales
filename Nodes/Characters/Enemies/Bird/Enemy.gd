@@ -29,6 +29,7 @@ export var dying_time = 3.0
 
 # Attack combo with different force
 export(Array, int) var attack_force = [600, 400, 800]
+export(Array, int) var attack_damage = [20]
 export var max_attack_combo = 2
 
 onready var state_machine : StateMachine = $StateMachine
@@ -59,6 +60,9 @@ onready var hitbox : Area2D = $Hitbox
 var attack_count : int
 var velocity : Vector2
 var chased_player : Player
+
+var is_registered_by_player : bool = false
+var deal_nightmare : bool = false
 
 # Timer for overall cooldown
 var is_attack_recovering : bool

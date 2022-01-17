@@ -9,6 +9,9 @@ func physics_update(delta):
 	enemy.patrol(delta)
 	
 	if enemy.attack_windup_detection.is_colliding() and not enemy.is_attack_recovering:
+		if enemy.attack_windup_detection.get_collider() is Player:
+			enemy.chased_player = enemy.attack_windup_detection.get_collider()
+			enemy.deal_nightmare = true
 		state_machine.transition_to("Attack_Windup")
 
 	if enemy.enemy_detection_raycast.is_colliding():
