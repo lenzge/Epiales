@@ -2,7 +2,9 @@ extends PlayerState
 
 
 func enter(msg :={}):
-	.enter(msg)
+	
+	.enter()
+		
 	.animation_to_timer()
 	
 	# Enable the attack hitboxes depending on ground or air

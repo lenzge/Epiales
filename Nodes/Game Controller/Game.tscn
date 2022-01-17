@@ -55,7 +55,6 @@ margin_right = 1626.72
 margin_bottom = 562.417
 custom_fonts/font = SubResource( 1 )
 text = "Thank you for playing the demo of Epiales"
-percent_visible = -0.0294118
 __meta__ = {
 "_edit_use_anchors_": false
 }
