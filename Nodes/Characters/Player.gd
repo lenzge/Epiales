@@ -85,6 +85,12 @@ export(float) var nightmare_on_hit_reduction : float = 10.0
 export(float) var nightmare_enemy_surronding_increment : float = 0.1
 export(float) var nightmare_spikes_increment : float = 10.0
 
+# Experimental Nightmaremeter
+export(bool) var nightmare_multiple_enemies_increment : bool = false
+enum MultipleEnemiesIncrementTypes {STANDARD, DAMPED}
+export(MultipleEnemiesIncrementTypes) var nightmare_type = MultipleEnemiesIncrementTypes.STANDARD
+export(int, 0, 10) var nightmare_multiple_enemies_damper : int = 2
+
 onready var sprite : Sprite = $Sprite
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
@@ -184,7 +190,16 @@ func _process(delta):
 	
 	# If enemies are nearby increase the nightmare
 	if enemies_in_range > 0:
-		increment_nightmare(nightmare_enemy_surronding_increment)
+		var increment_value = 0
+		if nightmare_multiple_enemies_increment:
+			if nightmare_type == MultipleEnemiesIncrementTypes.STANDARD:
+				increment_value = enemies_in_range * nightmare_enemy_surronding_increment
+			elif nightmare_type == MultipleEnemiesIncrementTypes.DAMPED:
+				increment_value = pow(enemies_in_range, 1/nightmare_multiple_enemies_damper) * nightmare_enemy_surronding_increment
+		else:
+			increment_value = nightmare_enemy_surronding_increment
+			
+		increment_nightmare(increment_value)
 
 # Normal movement on ground
 # Player is not allowed to turn around while attack windup
