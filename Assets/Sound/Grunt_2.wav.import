@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Grunt_2.wav-d5afd992a0c770e2c2f3f664950a6378.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/Grunt_2.wav"
+dest_files=[ "res://.import/Grunt_2.wav-d5afd992a0c770e2c2f3f664950a6378.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

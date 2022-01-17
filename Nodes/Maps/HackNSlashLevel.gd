@@ -1,5 +1,5 @@
 class_name HackNSlashLevel
-extends Node
+extends BaseLevel
 
 export(NodePath) var player_spawn_path
 var player_instance
@@ -10,10 +10,13 @@ var current_spawnpoint_prio = -1
 # Enemy can connect to spawned player
 signal player_spawned
 
+
 func _ready():
+	propagate_call("set_level_instance", [self])
 	if not player_spawn:
 		player_spawn = get_node(player_spawn_path).position
 		current_spawnpoint = player_spawn
+	propagate_call("set_level_instance", [self])
 
 
 func set_player_spawn(_player_spawn : Vector2) -> void:
