@@ -38,8 +38,8 @@
 [ext_resource path="res://Nodes/Characters/ChargeController.gd" type="Script" id=36]
 [ext_resource path="res://Nodes/Experimental/Placeholder/progress_charge.png" type="Texture" id=37]
 [ext_resource path="res://Nodes/Experimental/Placeholder/Over_charge.png" type="Texture" id=38]
-[ext_resource path="res://Nodes/Characters/States/Die.gd" type="Script" id=39]
-[ext_resource path="res://Assets/Art/Luci/Down Air Attack Final/luci_pxanimation_downAttackFalling_0.1.png" type="Texture" id=40]
+[ext_resource path="res://Assets/Art/Luci/Down Air Attack Final/luci_pxanimation_downAttackFalling_0.1.png" type="Texture" id=39]
+[ext_resource path="res://Nodes/Characters/States/Die.gd" type="Script" id=40]
 [ext_resource path="res://Assets/Art/Luci/Luci_LightAttack1_Windup_11.png" type="Texture" id=45]
 [ext_resource path="res://Assets/Art/Luci/Light Attacks Final/luci_pxanimation_lightattack1_0.1.png" type="Texture" id=46]
 [ext_resource path="res://Assets/Art/Luci/Luci_Damage_12.png" type="Texture" id=47]
@@ -872,7 +872,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 40 ) ]
+"values": [ ExtResource( 39 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("CollisionShape2D:scale")
@@ -3480,7 +3480,7 @@ script = ExtResource( 34 )
 script = ExtResource( 35 )
 
 [node name="Die" type="Node" parent="StateMachine"]
-script = ExtResource( 39 )
+script = ExtResource( 40 )
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_mask = 10
