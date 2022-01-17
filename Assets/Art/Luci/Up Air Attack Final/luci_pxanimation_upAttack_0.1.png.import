@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Luci_Dash_11_big.png-a22a1c2c5c76de4a72e5e739d9fbffc7.stex"
+path="res://.import/luci_pxanimation_upAttack_0.1.png-f30a9c9e38e63595df1ea794c5a31d59.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Luci/Dash Final/Luci_Dash_11_big.png"
-dest_files=[ "res://.import/Luci_Dash_11_big.png-a22a1c2c5c76de4a72e5e739d9fbffc7.stex" ]
+source_file="res://Assets/Art/Luci/Up Air Attack Final/luci_pxanimation_upAttack_0.1.png"
+dest_files=[ "res://.import/luci_pxanimation_upAttack_0.1.png-f30a9c9e38e63595df1ea794c5a31d59.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/luci_dashEffect.png-96f1d8eea6fc7bc6b020d7c5ab63abcc.stex"
+path="res://.import/Luci_Dash_11.png-90b36d9be4050c10937cb15e013df4bf.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Luci/Dash Final/luci_dashEffect.png"
-dest_files=[ "res://.import/luci_dashEffect.png-96f1d8eea6fc7bc6b020d7c5ab63abcc.stex" ]
+source_file="res://Assets/Art/Luci/Dash/Luci_Dash_11.png"
+dest_files=[ "res://.import/Luci_Dash_11.png-90b36d9be4050c10937cb15e013df4bf.stex" ]
 
 [params]
 
