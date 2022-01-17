@@ -89,7 +89,7 @@ export(float) var nightmare_spikes_increment : float = 10.0
 export(bool) var nightmare_multiple_enemies_increment : bool = false
 enum MultipleEnemiesIncrementTypes {STANDARD, DAMPED}
 export(MultipleEnemiesIncrementTypes) var nightmare_type = MultipleEnemiesIncrementTypes.STANDARD
-export(int, 0, 10) var nightmare_multiple_enemies_damper : int = 2
+export(float, 0.1, 10) var nightmare_multiple_enemies_damper : float = 2.0
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
