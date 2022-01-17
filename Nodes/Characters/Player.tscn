@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=2]
+[gd_scene load_steps=139 format=2]
 
 [ext_resource path="res://Assets/Art/Luci/Luci_Idle_11.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -40,6 +40,9 @@
 [ext_resource path="res://Nodes/Experimental/Placeholder/Over_charge.png" type="Texture" id=38]
 [ext_resource path="res://Assets/Art/Luci/Down Air Attack Final/luci_pxanimation_downAttackFalling_0.1.png" type="Texture" id=39]
 [ext_resource path="res://Nodes/Characters/States/Die.gd" type="Script" id=40]
+[ext_resource path="res://Assets/Art/Background/PNG/background_pxart_sky_0.1.png" type="Texture" id=41]
+[ext_resource path="res://Assets/Art/Background/PNG/background_pxart_furtherParallaxBackground_0.1.png" type="Texture" id=42]
+[ext_resource path="res://Assets/Art/Background/PNG/background_pxart_closerParallaxBackground_0.1.png" type="Texture" id=43]
 [ext_resource path="res://Assets/Art/Luci/Luci_LightAttack1_Windup_11.png" type="Texture" id=45]
 [ext_resource path="res://Assets/Art/Luci/Light Attacks Final/luci_pxanimation_lightattack1_0.1.png" type="Texture" id=46]
 [ext_resource path="res://Assets/Art/Luci/Luci_Damage_12.png" type="Texture" id=47]
@@ -3391,11 +3394,51 @@ script = ExtResource( 2 )
 gravity = 2000
 jump_impulse = 800
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Background" type="Sprite" parent="ParallaxBackground"]
+position = Vector2( 0, -3.106 )
+scale = Vector2( 2.4504, 2.4504 )
+texture = ExtResource( 41 )
+centered = false
+
+[node name="City" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2( 0.219231, -552.74 )
+motion_scale = Vector2( 0.5, 0 )
+
+[node name="City" type="TextureRect" parent="ParallaxBackground/City"]
+margin_left = -4264.0
+margin_top = 309.0
+margin_right = 8530.0
+margin_bottom = 581.0
+texture = ExtResource( 42 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rollecoaster" type="ParallaxLayer" parent="ParallaxBackground"]
+use_parent_material = true
+position = Vector2( 0.219231, -557.931 )
+motion_scale = Vector2( 0.7, 0 )
+
+[node name="Rollecoaster" type="TextureRect" parent="ParallaxBackground/Rollecoaster"]
+margin_left = -4265.0
+margin_top = 248.0
+margin_right = 8281.0
+margin_bottom = 586.0
+texture = ExtResource( 43 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -14 )
-hframes = 3
-vframes = 3
-frame = 3
+position = Vector2( 0, -50 )
+texture = ExtResource( 46 )
+hframes = 2
+vframes = 2
+frame = 1
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -3548,7 +3591,7 @@ damage_amount = 20
 direction = Vector2( 0, -1 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Air"]
-position = Vector2( 0.180381, 43.0199 )
+position = Vector2( 0.152481, 43.0199 )
 shape = SubResource( 7 )
 disabled = true
 
