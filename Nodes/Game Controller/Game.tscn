@@ -1,10 +1,18 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Nodes/Game Controller/Game.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Game Controller/States/Start.gd" type="Script" id=2]
 [ext_resource path="res://Nodes/Util/StateMachine/StateMachine.gd" type="Script" id=3]
 [ext_resource path="res://Nodes/Game Controller/States/Ingame.gd" type="Script" id=4]
 [ext_resource path="res://Nodes/Game Controller/States/Pause.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Other/white_square.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Other/logo.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Other/CaesarDressing-Regular.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Nodes/Game Objects/FadeOut.gd" type="Script" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+size = 64
+font_data = ExtResource( 8 )
 
 [node name="Game" type="Node"]
 pause_mode = 2
@@ -24,3 +32,30 @@ script = ExtResource( 4 )
 script = ExtResource( 5 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="fade_out" type="Node2D" parent="HUD"]
+modulate = Color( 1, 1, 1, 0 )
+script = ExtResource( 9 )
+
+[node name="black_texture" type="Sprite" parent="HUD/fade_out"]
+modulate = Color( 0, 0, 0, 1 )
+texture = ExtResource( 6 )
+centered = false
+
+[node name="Logo" type="Sprite" parent="HUD/fade_out"]
+position = Vector2( 859.848, 350.725 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 7 )
+centered = false
+
+[node name="Label" type="Label" parent="HUD/fade_out"]
+margin_left = 430.718
+margin_top = 471.417
+margin_right = 1626.72
+margin_bottom = 562.417
+custom_fonts/font = SubResource( 1 )
+text = "Thank you for playing the demo of Epiales"
+percent_visible = -0.0294118
+__meta__ = {
+"_edit_use_anchors_": false
+}
