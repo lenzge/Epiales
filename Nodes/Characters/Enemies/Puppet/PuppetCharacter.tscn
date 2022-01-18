@@ -1171,25 +1171,13 @@ tracks/0/keys = {
 "update": 1,
 "values": [ ExtResource( 14 ) ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/type = "method"
+tracks/1/path = NodePath("StateMachine/Flinch")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.226341, 0.3, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 0.917647, 0.180392, 0.180392, 0.392157 ), Color( 0.933333, 0.32549, 0.32549, 1 ), Color( 0.92549, 0.627451, 0.627451, 1 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/2/type = "method"
-tracks/2/path = NodePath("StateMachine/Flinch")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
 "times": PoolRealArray( 0.4 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -1197,8 +1185,20 @@ tracks/2/keys = {
 "method": "_on_timeout"
 } ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:hframes")
+tracks/3/path = NodePath("Sprite:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1206,32 +1206,32 @@ tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 6 ]
+"update": 0,
+"values": [ Vector2( -0.612068, -16.2649 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite:position")
+tracks/4/path = NodePath("Sprite:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -0.612068, -16.2649 ) ]
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite:frame")
+tracks/5/path = NodePath("Sprite:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 1, 2, 3, 4 ]
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.92549, 0.270588, 0.270588, 0.741176 ), Color( 0.92549, 0.270588, 0.270588, 0.741176 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -1708,25 +1708,13 @@ tracks/0/keys = {
 "update": 1,
 "values": [ ExtResource( 14 ) ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:modulate")
-tracks/1/interp = 2
+tracks/1/type = "method"
+tracks/1/path = NodePath("StateMachine/Recoil")
+tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.4, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 0.756863, 0, 1, 0.392157 ), Color( 0.756863, 0, 1, 0.392157 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/2/type = "method"
-tracks/2/path = NodePath("StateMachine/Recoil")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
 "times": PoolRealArray( 1 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -1734,8 +1722,20 @@ tracks/2/keys = {
 "method": "_on_timeout"
 } ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5, 0.7, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 3, 2, 1, 2, 3, 4, 5 ]
+}
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:position")
+tracks/3/path = NodePath("Sprite:hframes")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1743,32 +1743,20 @@ tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -0.612068, -16.2649 ) ]
+"update": 1,
+"values": [ 6 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite:frame")
+tracks/4/path = NodePath("Sprite:vframes")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5, 0.7, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 4, 3, 2, 1, 2, 3, 4, 5 ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite:hframes")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 6 ]
+"values": [ 1 ]
 }
 
 [sub_resource type="Animation" id=24]
@@ -2242,10 +2230,10 @@ flinch_intesity = 100.0
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -0.612068, -19.2649 )
 scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 27 )
+texture = ExtResource( 23 )
 flip_h = true
 hframes = 10
-frame = 5
+frame = 2
 
 [node name="HealthBar" parent="." instance=ExtResource( 18 )]
 margin_left = -90.1384
@@ -2277,7 +2265,7 @@ knockback_force = 200.0
 knockback_time = 0.5
 
 [node name="Shape" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2( 46.6107, -9.89435 )
+position = Vector2( 36.8055, -0.550476 )
 shape = SubResource( 3 )
 
 [node name="BackFloorDetectionRay" type="RayCast2D" parent="."]
@@ -2395,16 +2383,6 @@ anims/Walk_End = SubResource( 27 )
 anims/Walk_Loop = SubResource( 28 )
 anims/Walk_Start = SubResource( 29 )
 script = ExtResource( 24 )
-
-[node name="Label" type="Label" parent="."]
-pause_mode = 2
-margin_left = -19.0
-margin_top = -86.0
-margin_right = 21.0
-margin_bottom = -65.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [connection signal="on_hit_start" from="HitBox" to="." method="on_hit"]
 [connection signal="blocked" from="AttackArea" to="StateMachine/AttackRun" method="on_attack_has_been_blocked"]

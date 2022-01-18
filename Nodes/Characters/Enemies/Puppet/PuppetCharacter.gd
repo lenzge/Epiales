@@ -28,13 +28,10 @@ onready var attack_area : DamageEmitter = get_node(attack_area_path)
 var is_winding_up : bool
 var is_focused : bool
 
-onready var label = $Label
 
 func _ready():
 	._ready()
 
-func _process(delta):
-	label.text = state_machine.state.name + "\n" + animation.current_animation
 
 func flip():
 	.flip()
