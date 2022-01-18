@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/background_pxart_sky_0.1.png-ad1ca39356119b75c468ac0ff7628974.stex"
+path="res://.import/barriere_besteht.png-06c6acc8df426eabf4e700f50ae13fd1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Background/PNG/background_pxart_sky_0.1.png"
-dest_files=[ "res://.import/background_pxart_sky_0.1.png-ad1ca39356119b75c468ac0ff7628974.stex" ]
+source_file="res://Assets/Art/Tiles/barriere_besteht.png"
+dest_files=[ "res://.import/barriere_besteht.png-06c6acc8df426eabf4e700f50ae13fd1.stex" ]
 
 [params]
 
