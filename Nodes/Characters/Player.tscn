@@ -3391,11 +3391,6 @@ tracks/0/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 44
 script = ExtResource( 2 )
-speed = 270
-gravity = 2000
-jump_impulse = 800
-friction_ground_on_crouch = 2.0
-max_nightmare = 1000.0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -3434,7 +3429,6 @@ stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-attack_force = [ 20, 25, 30, 60 ]
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -50 )
