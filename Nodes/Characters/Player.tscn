@@ -3391,6 +3391,8 @@ tracks/0/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 44
 script = ExtResource( 2 )
+gravity = 2000
+jump_impulse = 800
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
