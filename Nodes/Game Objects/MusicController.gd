@@ -40,10 +40,12 @@ var beats = 0
 class ScheduleData:
 	var scheduled_in : int
 	var scheduled_at : int
+	var fading_in : bool
 	
-	func _init(schedule_in: int, schedule_at: int):
+	func _init(schedule_in: int, schedule_at: int, fade_in: bool):
 		scheduled_in = schedule_in
 		scheduled_at = schedule_at
+		fading_in = fade_in
 	
 	func get_time_in_usec() -> int:
 		return scheduled_at + scheduled_in
@@ -113,36 +115,63 @@ func get_time_to_next_beat_usec() -> int:
 	return int((beat_timer + (seconds_per_beat * USECS_PER_SECOND)) - last_update)
 
 
+## used to really start a music clip (from this file)
 func start_music(music_name: String, start_time: int) -> void:
 	var clip = self.get_node(get_node_name(music_name))
 	var schedule_data = music_scheduled[music_name]
 	var start_playing_in = ((clip.empty_ms / MSECS_PER_SECOND) - ((schedule_data.get_time_in_usec() - start_time) / USECS_PER_SECOND)) + (AudioServer.get_time_to_next_mix() + AudioServer.get_output_latency())
 	if start_playing_in > 0:
+		var fade = schedule_data.fading_in
+		if fade:
+			clip_fade_in(music_name, -80.0, 2.0)
 		clip.play(start_playing_in)
 		music_playing.append(music_name)
 		music_scheduled.erase(music_name)
 
 
-func play_music(music_name: String) -> bool:
+func clip_fade_in(music_name: String, fade_from: float = -80.0, fade_step: float = 1.0):
+	var clip = self.get_node(get_node_name(music_name))
+	clip.volume_db = fade_from
+	clip.fade_in = true
+	clip.fade_step = fade_step
+
+
+func clip_fade_out(music_name: String, fade_step: float = 1.0):
+	var clip = self.get_node(get_node_name(music_name))
+	clip.fade_out = true
+	clip.fade_step = fade_step
+
+
+func clip_fade_to(music_name: String, fade_to_value: float, fade_step: float = 1.0):
+	var clip = self.get_node(get_node_name(music_name))
+	clip.fade_to = true
+	clip.fade_to_value = fade_to_value
+	clip.fade_step = fade_step
+
+
+## used to tell the music controller to start a music clip
+func play_music(music_name: String, fade_in: bool = false) -> bool:
 	# Test if the music is loaded, if not try to load it
 	if music_name in music_loaded or load_music(music_name):
-		if schedule_music(music_name, 1): # 1 means play at next beat
+		if schedule_music(music_name, 1, fade_in): # 1 means play at next beat
 			return true
 	
 	return false
 
 
-func schedule_music(music_name: String, beats: int) -> bool:
+## used to tell the music controller to schedule a music clip
+func schedule_music(music_name: String, beats: int, fade_in: bool = false) -> bool:
 	# Test if the music is loaded, if not try to load it
 	var time_in_usec = (((beats - 1) * seconds_per_beat) * USECS_PER_SECOND) + get_time_to_next_beat_usec()
 	if music_name in music_loaded or load_music(music_name):
-		var schedule_data = ScheduleData.new(time_in_usec, OS.get_ticks_usec())
+		var schedule_data = ScheduleData.new(time_in_usec, OS.get_ticks_usec(), fade_in)
 		music_scheduled[music_name] = schedule_data
 		return true
 	
 	return false
 
 
+## used to tell the music controller to stop a music clip
 func stop_music(music_name: String) -> bool:
 	if music_name in music_playing:
 		get_node(music_name).stop()
@@ -155,6 +184,7 @@ func stop_music(music_name: String) -> bool:
 	return false
 
 
+## load a music clip
 func load_music(music_name: String) -> bool:
 	
 	# Test if music is already loaded
@@ -180,6 +210,7 @@ func load_music(music_name: String) -> bool:
 	return true
 
 
+## unload a music clip
 func unload_music(music_name: String) -> void:
 	#
 	# TODO: test if music can be unloaded (is it playing, is it scheduled)
@@ -190,6 +221,7 @@ func unload_music(music_name: String) -> void:
 			self.remove_child(node)
 
 
+## strip the . of the music name (to get the node name)
 func get_node_name(music_name: String) -> String:
 	return music_name.replace(".", "")
 

@@ -5,6 +5,9 @@
 [node name="MusicController" type="Node"]
 script = ExtResource( 1 )
 BPM = 90
+print_beats = true
+print_updates = true
+is_active = true
 calm_music_path = "res://Nodes/Experimental/Placeholder/Fairgroundroom1_Demo1.mp3"
 hectic_music_path = "res://Nodes/Experimental/Placeholder/Sea_levelhectic_Demo_1.mp3"
 starting_track = 1

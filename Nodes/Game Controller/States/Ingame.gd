@@ -28,7 +28,7 @@ func enter(_msg := {}):
 		nightmare_instance = NIGHTMARE_BAR.instance()
 		nightmare_instance.init(player_instance)
 		game.get_node("HUD").add_child(nightmare_instance)
-
+	
 	music_controller.play_music("Boss_alternative.mp3")
 
 func update(_delta):

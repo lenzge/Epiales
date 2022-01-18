@@ -32,6 +32,8 @@ func enter(_msg := {}):
 	
 	if game.get_node("HUD/fade_out").modulate.a > 0:
 		timer.start(wait_time)
+	
+	music_controller.play_music("OST_MENU.mp3")
 
 
 func update(_delta):
