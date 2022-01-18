@@ -6,6 +6,7 @@ var player : Player
 var timer : Timer
 
 onready var animationPlayer : AnimationPlayer = $"../../AnimationPlayer"
+onready var particleSystemPlayer : AnimationPlayer = $"../../ParticleSystemPlayer"
 
 
 # Set Owner as player. Init timer
