@@ -2,7 +2,10 @@ extends PlayerState
 
 
 func enter(msg :={}):
-	.enter(msg)
+	if player.is_on_floor():
+		animationPlayer.play("Attack_Up_Windup")
+	else:
+		animationPlayer.play("Attack_Up_Windup_Air")
 	.animation_to_timer()
 
 
