@@ -1141,6 +1141,18 @@ tracks/6/keys = {
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5, 6 ]
 }
+tracks/7/type = "value"
+tracks/7/path = NodePath("HealthBar:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.6, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [sub_resource type="Animation" id=15]
 loop = true
@@ -2233,14 +2245,12 @@ scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 23 )
 flip_h = true
 hframes = 10
-frame = 2
 
 [node name="HealthBar" parent="." instance=ExtResource( 18 )]
-margin_left = -90.1384
-margin_top = -70.7709
-margin_right = -90.1384
-margin_bottom = -70.7709
-rect_scale = Vector2( 0.3, 0.3 )
+margin_left = -18.6297
+margin_top = -70.859
+margin_right = -18.6297
+margin_bottom = -70.859
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 position = Vector2( -5.96046e-08, -2.98023e-08 )
