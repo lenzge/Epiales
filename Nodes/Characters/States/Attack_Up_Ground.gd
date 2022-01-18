@@ -2,13 +2,11 @@ extends PlayerState
 
 
 func enter(msg :={}):
-	
-	.enter()
-		
+	# Animation set in animationController, depending on last animation
 	.animation_to_timer()
 	
 	# Enable the attack hitboxes depending on ground or air
-	if player.is_on_floor():
+	if animationPlayer.current_animation == "Attack_Up":
 		player.get_node("Attack_Up_Ground/HitboxAttack_Front").disabled = false
 		player.get_node("Attack_Up_Ground/HitboxAttack_Top").disabled = false
 		player.hitbox_up_attack.damage_amount = player.attack_force_up
@@ -26,7 +24,7 @@ func enter(msg :={}):
 
 func physics_update(delta):
 	# Movement depending on ground or air
-	if player.is_on_floor():
+	if animationPlayer.current_animation == "Attack_Up":
 		player.decelerate_move_ground(delta)
 	else:
 		player.air_attack_move(delta)

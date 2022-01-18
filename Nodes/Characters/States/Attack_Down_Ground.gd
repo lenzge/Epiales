@@ -6,7 +6,6 @@ extends PlayerState
 func enter(msg :={}):
 	# Animation set in animationController, depending on last animation
 	.animation_to_timer()
-	print(animationPlayer.current_animation)
 	# Enable the attack hitboxes
 	if animationPlayer.current_animation == "Attack_Down":
 		player.get_node("Attack_Down_Ground/HitboxAttack").disabled = false
