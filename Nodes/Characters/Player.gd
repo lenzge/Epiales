@@ -403,6 +403,7 @@ func _physics_process(delta):
 
 
 func on_hit(emitter : DamageEmitter):
+	print("hitted")
 	if in_charged_attack:
 		# only damage
 		pass

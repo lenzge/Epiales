@@ -83,6 +83,7 @@ cast_to = Vector2( -20, 0 )
 collision_mask = 7
 
 [node name="PlayerDetectionArea" type="Area2D" parent="PuppetCharacter"]
+visible = false
 monitorable = false
 collision_layer = 2
 
