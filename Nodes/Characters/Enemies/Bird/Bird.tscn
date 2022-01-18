@@ -380,6 +380,7 @@ collision_layer = 2
 collision_mask = 36
 script = ExtResource( 2 )
 gravity = 10
+health_points = 60
 max_attack_combo = 1
 
 [node name="StateMachine" type="Node" parent="."]
@@ -506,21 +507,11 @@ anims/Die = SubResource( 9 )
 anims/Patrol = SubResource( 10 )
 anims/Stunned = SubResource( 11 )
 
-[node name="Label" type="Label" parent="."]
-margin_left = -19.8438
-margin_top = -69.8219
-margin_right = 20.1563
-margin_bottom = -53.8219
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="HealthBar" parent="." instance=ExtResource( 18 )]
-margin_left = -43.1335
-margin_top = -52.3259
-margin_right = -43.1335
-margin_bottom = -52.3259
-rect_scale = Vector2( 0.498358, 0.568754 )
+margin_left = -18.5288
+margin_top = -61.0566
+margin_right = -18.5288
+margin_bottom = -61.0566
 
 [connection signal="hit" from="AttackArea" to="StateMachine/Attack" method="on_attack_hit"]
 [connection signal="on_hit_start" from="DamageReceiver" to="." method="on_hit"]

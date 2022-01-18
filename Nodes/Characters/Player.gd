@@ -77,7 +77,9 @@ export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
 export(float, 0, 1) var wall_jump_additional_y : float = 0.5
 export(bool) var dash_reset_after_wallhang : bool = true
-export(Array, int) var attack_force = [200, 300, 400, 600]
+export(Array, int) var attack_force = [20, 30, 40, 60] # attack chain + charged attack
+export(int) var attack_force_up = 10
+export(int) var attack_force_down = 10
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
 export(float) var max_nightmare : float = 60.0
@@ -86,6 +88,7 @@ export(float) var nightmare_enemy_surronding_increment : float = 0.1
 export(float) var nightmare_spikes_increment : float = 10.0
 
 onready var sprite : Sprite = $Sprite
+onready var particles : Sprite = $ParticleSystem
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground
 onready var hitbox_up_attack : Area2D = $Attack_Up_Ground
 onready var hitbox_up_attack_air : Area2D = $Attack_Up_Air
@@ -350,9 +353,11 @@ func _flip_sprite_in_movement_dir() -> void:
 	if velocity.x < 0:
 		direction = -1
 		sprite.flip_h = true
+		particles.flip_h = true
 	elif velocity.x > 0:
 		direction = 1
 		sprite.flip_h = false
+		particles.flip_h = false
 	
 	hitbox_attack.direction = Vector2(direction, 0)
 	hitbox_attack.scale.x = abs(hitbox_attack.scale.x) * direction
@@ -419,7 +424,7 @@ func _physics_process(delta):
 func on_hit(emitter : DamageEmitter):
 	if in_charged_attack:
 		# only damage
-		pass
+		increment_nightmare(emitter.damage_amount)
 	else:
 		var direction_x
 		if is_equal_approx(emitter.direction.x, 0.0):
@@ -483,8 +488,8 @@ func increment_nightmare(increment: float) -> void:
 		nightmare = max_nightmare
 	emit_signal("nightmare_changed")
 	
-	if nightmare >= max_nightmare:
-		$StateMachine.transition_to("Die")
+	#if nightmare >= max_nightmare:
+	#	$StateMachine.transition_to("Die")
 
 
 func add_enemy_in_range():

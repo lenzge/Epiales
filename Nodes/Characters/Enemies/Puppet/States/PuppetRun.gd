@@ -11,7 +11,7 @@ func _ready():
 func check_transitions(_delta):
 	.check_transitions(_delta)
 	if character.is_winding_up:
-		state_machine.transition_to("AttackWindUp")
+		state_machine.transition_to("AttacRunWindUp")
 
 
 func update_animation(delta):
@@ -31,6 +31,7 @@ func update_animation(delta):
 		elif character.animation.current_animation == "Run_Loop":
 			loop = false
 			character.animation.play("Run_End")
+
 
 func start_animation():
 	.start_animation()

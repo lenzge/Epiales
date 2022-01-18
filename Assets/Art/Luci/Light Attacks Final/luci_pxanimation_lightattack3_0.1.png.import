@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/background_pxart_sky_0.1.png-ad1ca39356119b75c468ac0ff7628974.stex"
+path="res://.import/luci_pxanimation_lightattack3_0.1.png-e6f3a5bddb95f7d7b74f90fe59d2b44a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Background/PNG/background_pxart_sky_0.1.png"
-dest_files=[ "res://.import/background_pxart_sky_0.1.png-ad1ca39356119b75c468ac0ff7628974.stex" ]
+source_file="res://Assets/Art/Luci/Light Attacks Final/luci_pxanimation_lightattack3_0.1.png"
+dest_files=[ "res://.import/luci_pxanimation_lightattack3_0.1.png-e6f3a5bddb95f7d7b74f90fe59d2b44a.stex" ]
 
 [params]
 
