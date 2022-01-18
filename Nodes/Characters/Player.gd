@@ -76,6 +76,7 @@ export(float, 0, 1) var wall_jump_additional_y : float = 0.5
 export(bool) var dash_reset_after_wallhang : bool = true
 export(Array, int) var attack_force = [200, 300, 400, 600]
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
+export(int) var charged_dash_damage = 40
 
 onready var sprite : Sprite = $Sprite
 onready var hitbox_down_attack : Area2D = $Attack_Down_Ground

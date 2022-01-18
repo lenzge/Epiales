@@ -1,5 +1,6 @@
 extends PlayerState
 
+onready var charged_hitbox : DamageEmitter = $"../../Charged_Dash"
 var _dash_direction := Vector2()
 var _jumped := false
 
@@ -9,6 +10,8 @@ func enter(_msg := {}):
 	player.can_dash = false
 	player.can_reset_dash = false
 	player.hitbox.get_child(0).disabled = true
+	charged_hitbox.knockback_force = player.charged_dash_damage
+	
 	
 	_dash_direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
 	_dash_direction.y = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
