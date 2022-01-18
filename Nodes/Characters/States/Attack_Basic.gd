@@ -15,6 +15,7 @@ func enter(_msg := {}):
 	
 	# Enable hitbox and set it's force and knockdown depending on attack_count
 	player.hitbox_attack.get_child(0).disabled = false
+	player.hitbox_attack.damage_amount = player.attack_force[player.attack_count -1]
 	player.hitbox_attack.knockback_force = player.attack_force[player.attack_count -1]
 	player.hitbox_attack.knockback_time = player.attack_knockback[player.attack_count -1]
 

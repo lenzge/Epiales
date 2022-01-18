@@ -13,3 +13,6 @@ func physics_update(delta):
 
 func _on_timeout():
 	state_machine.transition_to("Block_Recovery")
+ 
+func _on_blocked():
+	particleSystemPlayer.play("Block")

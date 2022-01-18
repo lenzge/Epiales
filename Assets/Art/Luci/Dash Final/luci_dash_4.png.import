@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/background_pxart_sky_0.1.png-ad1ca39356119b75c468ac0ff7628974.stex"
+path="res://.import/luci_dash_4.png-7d6a172de98d9177bba4139d5790e6bc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Background/PNG/background_pxart_sky_0.1.png"
-dest_files=[ "res://.import/background_pxart_sky_0.1.png-ad1ca39356119b75c468ac0ff7628974.stex" ]
+source_file="res://Assets/Art/Luci/Dash Final/luci_dash_4.png"
+dest_files=[ "res://.import/luci_dash_4.png-7d6a172de98d9177bba4139d5790e6bc.stex" ]
 
 [params]
 
