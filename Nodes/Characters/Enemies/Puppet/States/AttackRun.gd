@@ -1,22 +1,8 @@
-extends "res://Nodes/Characters/Enemies/States/Run.gd"
+extends "res://Nodes/Characters/Enemies/States/Attack.gd"
 
 
-func _ready():
-	._ready()
-	yield(owner, "ready")
-	assert("is_winding_up" in character)
-
-
-func start_animation():
-	character.animation.play("AttackRun")
-
-
-func check_transitions(delta):
-	if character.is_winding_up == false:
-		state_machine.transition_to("Attack")
-	if !character.is_on_floor():
-		state_machine.transition_to("AttackFall")
-
-
-func _on_attack():
-	state_machine.transition_to("Attack")
+func _on_timeout():
+	if _should_attack_again and _attack_count < max_attack_combo:
+		state_machine.transition_to("AttackRunWindUp", {"_attack_count": _attack_count + 1})
+	else:
+		state_machine.transition_to("AttackRunRecovery", {"_attack_count": _attack_count})

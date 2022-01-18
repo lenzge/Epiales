@@ -8,7 +8,7 @@ func _ready():
 func check_transitions(_delta):
 	.check_transitions(_delta)
 	if character.is_winding_up:
-		state_machine.transition_to("AttackWindUp")
+		state_machine.transition_to("AttackRunWindUp")
 
 
 func on_attack():

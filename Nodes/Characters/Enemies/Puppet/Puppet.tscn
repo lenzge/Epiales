@@ -15,7 +15,7 @@
 [ext_resource path="res://Nodes/Util/StateMachine/StateMachine.gd" type="Script" id=13]
 [ext_resource path="res://Nodes/Characters/Enemies/AI/States/MoveForward.gd" type="Script" id=14]
 [ext_resource path="res://Nodes/Util/StateMachine/State.gd" type="Script" id=15]
-[ext_resource path="res://Nodes/Characters/Enemies/Puppet/SwitchSide.gd" type="Script" id=16]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet/AIStates/SwitchSide.gd" type="Script" id=16]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack.png" type="Texture" id=17]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -54,7 +54,7 @@ shape = SubResource( 2 )
 [node name="FrontFloorDetectionRay" parent="PuppetCharacter" index="6"]
 collision_mask = 4
 
-[node name="FocusedRun" parent="PuppetCharacter/StateMachine" index="7"]
+[node name="FocusedRun" parent="PuppetCharacter/StateMachine" index="10"]
 process_priority = 1
 
 [node name="BackFloorDetectionRaycast" type="RayCast2D" parent="PuppetCharacter"]

@@ -139,7 +139,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Game Objects/Deadzone.gd"
 }, {
-"base": "Reference",
+"base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://Nodes/Characters/Enemies/Bird/Enemy.gd"
@@ -164,7 +164,7 @@ _global_script_classes=[ {
 "language": "NativeScript",
 "path": "res://addons/godot-git-plugin/git_api.gdns"
 }, {
-"base": "Node",
+"base": "BaseLevel",
 "class": "HackNSlashLevel",
 "language": "GDScript",
 "path": "res://Nodes/Maps/HackNSlashLevel.gd"
@@ -199,12 +199,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Util/SoundMachine.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://Nodes/Util/StateMachine/State.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://Nodes/Util/StateMachine/StateMachine.gd"
@@ -263,8 +263,8 @@ _global_script_class_icons={
 "PlayerState": "",
 "PuppetCharacter": "",
 "SoundMachine": "",
-"State": "",
-"StateMachine": "",
+"State": "res://Assets/icons/state_icon.svg",
+"StateMachine": "res://Assets/icons/state_machine_icon.svg",
 "StayAndLookAtPlayer": "",
 "SubStateMachineState": "res://Assets/icons/state_icon.svg",
 "Transition": "res://Assets/icons/transition_icon.svg"

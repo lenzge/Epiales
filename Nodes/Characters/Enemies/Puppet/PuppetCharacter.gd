@@ -74,8 +74,8 @@ func _set_up():
 			$StateMachine/Attack.should_reset_y_velocity = true
 		2:
 			$StateMachine/AttackRecovery.should_reset_y_velocity = true
-	$StateMachine/AttackRun.walk_move_accel = walk_move_accel * attack_run_move_factor
-	$StateMachine/AttackRun.run_move_accel = run_move_accel * attack_run_move_factor
+	$StateMachine/AttackRunRun.walk_move_accel = walk_move_accel * attack_run_move_factor
+	$StateMachine/AttackRunRun.run_move_accel = run_move_accel * attack_run_move_factor
 	$StateMachine/AttackFall.move_accel = walk_move_accel * attack_run_move_factor * air_move_factor
 	$StateMachine/Attack.attack_damage = attack_damage
 	$StateMachine/Attack.attack_force = attack_force
