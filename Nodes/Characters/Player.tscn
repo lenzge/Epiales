@@ -3434,6 +3434,7 @@ stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+attack_force = [ 20, 25, 30, 60 ]
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -50 )

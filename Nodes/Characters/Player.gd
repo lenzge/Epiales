@@ -77,7 +77,9 @@ export(float) var wall_jump_deceleration : float = 0.1
 export(float) var wall_jump_time : float = 0.5
 export(float, 0, 1) var wall_jump_additional_y : float = 0.5
 export(bool) var dash_reset_after_wallhang : bool = true
-export(Array, int) var attack_force = [200, 300, 400, 600]
+export(Array, int) var attack_force = [20, 30, 40, 60] # attack chain + charged attack
+export(int) var attack_force_up = 10
+export(int) var attack_force_down = 10
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
 export(float) var max_nightmare : float = 60.0
