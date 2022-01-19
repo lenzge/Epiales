@@ -1891,7 +1891,7 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0, 1.45 ),
+"times": PoolRealArray( 0, 1.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
@@ -3148,7 +3148,7 @@ position = Vector2( 41, -25 )
 texture = ExtResource( 75 )
 hframes = 3
 vframes = 4
-frame = 10
+frame = 5
 
 [node name="Label" type="Label" parent="."]
 visible = false

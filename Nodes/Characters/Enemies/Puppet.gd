@@ -55,6 +55,6 @@ func on_hit(emitter : DamageEmitter):
 func on_hit_stop(emitter : DamageEmitter):
 	if(emitter.name == "Charged_Dash"):
 		var time = emitter.knockback_time
-		var direction = emitter.direction
+		var direction = emitter.direction.x
 		var force = emitter.knockback_force
 		state_machine.transition_to("Stunned", {"time": time, "direction":direction, "force":force})

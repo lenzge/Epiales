@@ -11,6 +11,7 @@ func enter(_msg := {}):
 	player.can_reset_dash = false
 	player.hitbox.get_child(0).disabled = true
 	charged_hitbox.knockback_force = player.charged_dash_damage
+	charged_hitbox.emitter_path = player.get_path()
 	
 	
 	_dash_direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
