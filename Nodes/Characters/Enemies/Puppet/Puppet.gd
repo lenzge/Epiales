@@ -39,7 +39,7 @@ func get_focused_player() -> Player:
 
 
 func switched_state(state_name):
-	if state_name == "Attack":
+	if ["Attack",  "AttackRun"].has(state_name):
 		can_attack = false
 		_rng.randomize()
 		$AttackTimer.start(_rng.randf_range(attack_interval_min, attack_interval_max))

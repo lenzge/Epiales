@@ -1,5 +1,6 @@
 extends CharacterState
 
+export(Array, String) var animations : Array
 export var floor_detection_ray_path : NodePath
 export var move_accel : float
 export(int, "GRAVITY", "CONSTANT") var fall_mode : int = 1
@@ -7,7 +8,6 @@ export var constant_fall_speed : float = 0
 export var should_reset_y_velocity : bool = false
 
 onready var _floor_detection_ray : RayCast2D = get_node(floor_detection_ray_path)
-
 var _attack_count : int
 
 func _ready():
@@ -16,6 +16,7 @@ func _ready():
 
 func enter(_msg := {}):
 	.enter(_msg)
+	_attack_count = _msg.attack_count if _msg.has("attack_count") else 0
 	_floor_detection_ray.set_enabled(true)
 	if should_reset_y_velocity:
 		character.velocity.y = 0.0
@@ -38,7 +39,7 @@ func physics_update(_delta):
 
 func start_animation():
 	.start_animation()
-	character.animation.play("AttackRecovery")
+	character.animation.play(animations[(_attack_count % animations.size())])
 
 
 func _on_timeout():

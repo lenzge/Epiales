@@ -12,6 +12,7 @@ func start_animation():
 	character.animation.play("Idle")
 
 
+
 func physics_update(delta):
 	.physics_update(delta)
 	

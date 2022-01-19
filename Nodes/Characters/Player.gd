@@ -424,7 +424,7 @@ func _physics_process(delta):
 func on_hit(emitter : DamageEmitter):
 	if in_charged_attack:
 		# only damage
-		pass
+		increment_nightmare(emitter.damage_amount)
 	else:
 		var direction_x
 		if is_equal_approx(emitter.direction.x, 0.0):

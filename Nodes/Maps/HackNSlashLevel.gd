@@ -9,7 +9,7 @@ var current_spawnpoint_prio = -1
 
 # Enemy can connect to spawned player
 signal player_spawned
-
+signal level_reset
 
 func _ready():
 	propagate_call("set_level_instance", [self])
@@ -37,10 +37,11 @@ func spawn_player(player) -> void:
 	emit_signal("player_spawned")
 	
 
-func _on_Checkoint_checkpoint_entered(new_spawnpoint: Vector2, prio: int) -> void:
+func _on_Checkpoint_checkpoint_entered(new_spawnpoint: Vector2, prio: int) -> void:
 	if new_spawnpoint.x > current_spawnpoint.x or prio > current_spawnpoint_prio:
 		current_spawnpoint = new_spawnpoint
 		current_spawnpoint_prio = prio
 
 func reset():
 	player_instance.position = current_spawnpoint
+	emit_signal("level_reset")
