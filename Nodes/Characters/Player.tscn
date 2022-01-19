@@ -628,7 +628,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
+"times": PoolRealArray( 0, 0.25 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ ExtResource( 61 ), ExtResource( 28 ) ]
@@ -652,7 +652,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.3 ),
+"times": PoolRealArray( 0, 0.25 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 3, 3 ]
@@ -664,7 +664,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.3 ),
+"times": PoolRealArray( 0, 0.25 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 3, 2 ]
@@ -676,7 +676,7 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.05, 0.15, 0.3 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.25 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 5, 6, 7, 5 ]
@@ -3953,8 +3953,10 @@ __meta__ = {
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -50 )
-texture = ExtResource( 90 )
-hframes = 2
+texture = ExtResource( 28 )
+hframes = 3
+vframes = 2
+frame = 5
 
 [node name="Label" type="Label" parent="."]
 visible = false
