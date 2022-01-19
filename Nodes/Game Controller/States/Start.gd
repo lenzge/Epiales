@@ -3,8 +3,9 @@ extends GameState
 export(float, 0.01, 0.2) var modulation_change : float = 0.01
 export(float) var wait_time : float = 2
 
+var startscreen_scene = preload("res://Nodes/GUI/StartScreen.tscn")
 var startscreen
-var sprite : Sprite
+var sprite : Node2D
 
 var return_to_menu : bool = false
 var timer : Timer
@@ -22,10 +23,13 @@ func _ready():
 
 # Called by the state machine upon changing the active state
 func enter(_msg := {}):
-	startscreen = preload("res://Nodes/GUI/StartScreen.tscn").instance()
-	sprite = startscreen.get_child(1)
-	sprite.set_position(OS.get_real_window_size() / 2)
+	startscreen = startscreen_scene.instance()
+	startscreen.center()
+#	sprite = startscreen.get_child(1)
+#	sprite.set_position(OS.get_real_window_size() / 2)
 	game.add_child(startscreen)
+	
+	startscreen.connect("start_game", self, "start_game")
 	
 	if game.get_node("HUD/fade_out").modulate.a > 0:
 		timer.start(wait_time)
@@ -42,16 +46,21 @@ func update(_delta):
 
 # Corresponds to the `_physics_process()` callback
 func physics_update(_delta):
-	# Center if window size is changed
-	sprite.set_position(OS.get_window_size() / 2)
-	if Input.is_action_just_pressed("ui_accept"):
-		startscreen.animationPlayer.play("Close")
-		yield(startscreen, "close_finished")
-		state_machine.transition_to("Ingame")
 	
-	if game.get_node("HUD/fade_out").modulate.a <= 0:
-		if Input.is_action_just_pressed("ui_accept"):
-			state_machine.transition_to("Ingame")
+#	if Input.is_action_just_pressed("ui_accept"):
+#		startscreen.animationPlayer.play("Close")
+#		yield(startscreen, "close_finished")
+#		state_machine.transition_to("Ingame")
+	
+#	if game.get_node("HUD/fade_out").modulate.a <= 0:
+#		if Input.is_action_just_pressed("ui_accept"):
+#			state_machine.transition_to("Ingame")
+	pass
+
+func start_game():
+	startscreen.animationPlayer.play("Close")
+	yield(startscreen, "close_finished")
+	state_machine.transition_to("Ingame")
 
 # Called by the state machine before changing the active state (clean up)
 func exit():
