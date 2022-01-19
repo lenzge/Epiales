@@ -39,3 +39,22 @@ func attack_move(delta, attack_chain) -> void:
 func knockback(delta, force, direction):
 	velocity.x = force * direction
 	fall()
+
+
+func on_hit(emitter : DamageEmitter):
+	if(emitter.name == "Charged_Dash"):
+		var node_path = emitter.emitter_path
+		var player = get_node(node_path)
+		var velocity : Vector2 = player.velocity
+		state_machine.transition_to("Hit_by_charged_dash", {"velocity": velocity})
+	else:
+		# call supermethod on_hit
+		.on_hit(emitter) 
+
+
+func on_hit_stop(emitter : DamageEmitter):
+	if(emitter.name == "Charged_Dash"):
+		var time = emitter.knockback_time
+		var direction = emitter.direction
+		var force = emitter.knockback_force
+		state_machine.transition_to("Stunned", {"time": time, "direction":direction, "force":force})

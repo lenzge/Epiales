@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_attack.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet.gd" type="Script" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://Nodes/Characters/EnemyStates/Freeze.gd" type="Script" id=18]
 [ext_resource path="res://Nodes/Characters/EnemyStates/Die.gd" type="Script" id=19]
 [ext_resource path="res://Nodes/Characters/HealthBar.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Nodes/Characters/EnemyStates/Hit_by_charged_dash.gd" type="Script" id=21]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 25.1569
@@ -453,6 +454,9 @@ script = ExtResource( 18 )
 
 [node name="Die" type="Node" parent="StateMachine"]
 script = ExtResource( 19 )
+
+[node name="Hit_by_charged_dash" type="Node" parent="StateMachine"]
+script = ExtResource( 21 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -0.612068, -0.26487 )

@@ -78,6 +78,7 @@ func _ready() -> void:
 	
 	# Connect Signals
 	hitbox.connect("on_hit_start", self, "on_hit")
+	hitbox.connect("on_hit_stop", self, "on_hit_stop")
 	attack_area.connect("blocked", self, "on_blocked")
 	owner.connect("player_spawned", self, "_on_player_spawned")
 	health_bar.connect("zero_hp", self, "_on_zero_hp")
@@ -154,6 +155,10 @@ func on_hit(emitter : DamageEmitter):
 	emitter.hit(hitbox)
 	health_bar.get_damage(emitter.knockback_force)
 	state_machine.transition_to("Stunned", {"force": emitter.knockback_force, "time": emitter.knockback_time, "direction": (-1.0 if direction_x < 0.0 else 1.0)})
+
+
+func on_hit_stop(emitter : DamageEmitter):
+	pass
 
 
 func _on_zero_hp():
