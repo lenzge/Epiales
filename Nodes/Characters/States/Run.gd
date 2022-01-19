@@ -23,14 +23,13 @@ func exit():
 # Movement and checking for escape conditions
 func physics_update(delta):
 		
-		
 	# Checking which animation in which speed is playing, depending on the players speed
 	if abs(player.velocity.x) > 200:
 		animationPlayer.set_speed_scale(animationPlayer.run_speed_fast)
 	elif abs(player.velocity.x) > 100:
 		animationPlayer.set_speed_scale(animationPlayer.run_speed_slow)
 	# Attention to edge case when running against a wall! speed < 100 but Run animation
-	elif not animationPlayer.current_animation == "Crouch_Run" and not animationPlayer.current_animation == "Run_Turn" and not player.is_on_wall():
+	elif not animationPlayer.current_animation == "Crouch_Run" and not player.is_on_wall():
 		animationPlayer.set_speed_scale(animationPlayer.walk_speed)
 		is_running = false
 		animationPlayer.play("Walk")
@@ -41,13 +40,6 @@ func physics_update(delta):
 	# Actual movement
 	player.move(delta)
 	
-	
-	# Checking for running turn around
-	if not player.direction == player.prev_direction and abs(player.velocity.x) > 90:
-		is_running = true
-		animationPlayer.play("Run_Turn")
-		
-		
 	# Play varying running sound
 	player.sound_machine.randomize_level("Running", -6.0, 3.0)
 	player.sound_machine.randomize_pitch("Running", 0.7, 1.5)

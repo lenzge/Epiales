@@ -8,7 +8,7 @@ func enter(_msg := {}):
 	if state_machine.last_state.name == "Jump" or state_machine.last_state.name == "Fall":
 		animationPlayer.play("Jump_landing")
 	elif state_machine.last_state.name == "Dash" and player.is_on_floor():
-		animationPlayer.play("Decelerate")
+		animationPlayer.play("Run_Turn")
 	elif state_machine.last_state.name == "Crouch":
 		animationPlayer.play("Crouch_End")
 	else:
