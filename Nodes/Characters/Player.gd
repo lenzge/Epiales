@@ -488,8 +488,8 @@ func increment_nightmare(increment: float) -> void:
 		nightmare = max_nightmare
 	emit_signal("nightmare_changed")
 	
-	#if nightmare >= max_nightmare:
-	#	$StateMachine.transition_to("Die")
+	if nightmare >= max_nightmare:
+		$StateMachine.transition_to("Die")
 
 
 func add_enemy_in_range():
