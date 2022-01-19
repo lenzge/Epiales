@@ -2,13 +2,12 @@ extends PlayerState
 
 
 func enter(msg :={}):
-	.enter(msg)
 	.animation_to_timer()
 
 
 func physics_update(delta):
 	# Movement depending on ground or air
-	if player.is_on_floor():
+	if animationPlayer.current_animation == "Attack_Up_Recovery":
 		player.decelerate_move_ground(delta)
 	else:
 		player.fall_straight(delta)

@@ -51,6 +51,9 @@ func enter(_msg := {}):
 	if not (_dash_direction.y > 0.5 and player.is_on_floor()):
 		player.sprite.set_rotation_degrees(45*_dash_direction.y*player.direction)
 		player.hitbox_charged_dash.set_rotation_degrees(45*_dash_direction.y*player.direction)
+		#player.particles.set_rotation_degrees(45*_dash_direction.y*player.direction)
+	
+	#particleSystemPlayer.play("Dash")
 
 
 func exit():
@@ -62,6 +65,7 @@ func exit():
 	player.start_dash_cooldown()
 	player.sprite.set_rotation_degrees(0)
 	player.hitbox_charged_dash.set_rotation_degrees(0)
+	#player.particles.set_rotation_degrees(0)
 
 
 func physics_update(delta):
@@ -83,7 +87,7 @@ func physics_update(delta):
 		else:
 			 state_machine.transition_to("Attack_Basic_Windup")
 	elif Input.is_action_just_pressed("block") and player.is_on_floor():
-		state_machine.transition_to("Block_windup")
+		state_machine.transition_to("Block_Windup")
 	elif Input.is_action_just_pressed("jump") and not _jumped and player.is_on_floor():
 		timer.start(player.leap_jump_time)
 		player.hitbox.get_child(0).disabled = false

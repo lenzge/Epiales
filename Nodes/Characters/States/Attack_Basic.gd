@@ -15,6 +15,7 @@ func enter(_msg := {}):
 	
 	# Enable hitbox and set it's force and knockdown depending on attack_count
 	player.hitbox_attack.get_child(0).disabled = false
+	player.hitbox_attack.damage_amount = player.attack_force[player.attack_count -1]
 	player.hitbox_attack.knockback_force = player.attack_force[player.attack_count -1]
 	player.hitbox_attack.knockback_time = player.attack_knockback[player.attack_count -1]
 
@@ -36,6 +37,7 @@ func exit():
 	if not state_machine.new_state == "Attack_Basic_Windup" or state_machine.new_state == "Attack_Basic_Recovery":
 		player.attack_count = 1
 		player.last_input.clear()
+		player.attack_direction = 0
 
 # Decide between recover and next attack, depending on input and attack_count
 func _on_timeout():

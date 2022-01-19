@@ -21,7 +21,7 @@ func physics_update(delta):
 	# Movemnt depending on air or ground (charged attack doesn't have moevemnt at all)
 	if not player.in_charged_attack:
 		if player.is_on_floor():
-			player.move(delta)
+			player.decelerate_move_ground(delta)
 		else:
 			player.air_attack_move(delta)
 			

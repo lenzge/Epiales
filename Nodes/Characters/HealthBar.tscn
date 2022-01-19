@@ -1,37 +1,44 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Nodes/Characters/HealthBar.gd" type="Script" id=1]
-[ext_resource path="res://Nodes/Experimental/Sprites/Over.png" type="Texture" id=2]
-[ext_resource path="res://Nodes/Experimental/Sprites/Under.png" type="Texture" id=3]
-[ext_resource path="res://Nodes/Experimental/Sprites/Progress.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Art/Enemies/Healthbar/healthbar_over.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Art/Enemies/Healthbar/healthbar_progress.png" type="Texture" id=3]
 
 [node name="HealthBar" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -987.0
+margin_bottom = -590.0
+rect_pivot_offset = Vector2( 18.5, 0 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HealthUnder" type="TextureProgress" parent="."]
-margin_right = 176.0
-margin_bottom = 40.0
-value = 70.0
+margin_right = 37.0
+margin_bottom = 10.0
+min_value = -5.0
+value = 60.0
 texture_under = ExtResource( 3 )
 texture_over = ExtResource( 2 )
-texture_progress = ExtResource( 4 )
-tint_progress = Color( 0.92549, 0.192157, 0.192157, 1 )
+texture_progress = ExtResource( 3 )
+tint_under = Color( 0.0588235, 0.0588235, 0.0588235, 0.576471 )
+tint_over = Color( 0.121569, 0.121569, 0.121569, 1 )
+tint_progress = Color( 0.57, 0.30324, 0.1254, 0.85098 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HealthOver" type="TextureProgress" parent="."]
-margin_right = 176.0
-margin_bottom = 40.0
+margin_right = 37.0
+margin_bottom = 10.0
+min_value = -5.0
 value = 50.0
 texture_over = ExtResource( 2 )
-texture_progress = ExtResource( 4 )
-tint_progress = Color( 0.0313726, 0.678431, 0.0392157, 1 )
+texture_progress = ExtResource( 3 )
+tint_over = Color( 0.0588235, 0.0588235, 0.0588235, 1 )
+tint_progress = Color( 0.69, 0.51037, 0.2001, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

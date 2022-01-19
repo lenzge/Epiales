@@ -37,7 +37,7 @@ func physics_update(delta):
 		state_machine.transition_to("Idle")
 	elif Input.is_action_just_pressed("jump"):
 		crouch_jump();
-	elif Input.is_action_just_pressed("dash"):
+	elif Input.is_action_just_pressed("dash") and player.can_dash:
 		state_machine.transition_to("Dash")
 	elif Input.is_action_just_pressed("block"):
 		state_machine.transition_to("Block_Windup")

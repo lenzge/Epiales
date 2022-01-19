@@ -1,15 +1,20 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Nodes/Experimental/Placeholder/new_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Nodes/Characters/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Nodes/Characters/Enemies/Bird.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Nodes/Characters/Enemies/Puppet.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Nodes/Characters/Enemies/Bird/Bird.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet/Puppet.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 17.0956, 66.6313 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 14.9766, 69.5912 )
+
+[sub_resource type="Curve2D" id=3]
+_data = {
+"points": PoolVector2Array( -101.885, -40.4543, 101.885, 40.4543, -949.3, -207.15, -2.99661, -65.9255, 2.99661, 65.9255, -920.832, -112.757, 0, 0, 0, 0, -818.948, -55.8214, 0, 0, 0, 0, -478.832, -141.225, 0, 0, 0, 0, -856.405, 147.948, 0, 0, 0, 0, -1030.21, -42.3366, 0, 0, 0, 0, -1001.74, -132.235 )
+}
 
 [node name="Level" type="Node"]
 pause_mode = 2
@@ -63,11 +68,10 @@ attack_cooldown_time = 3.0
 
 [node name="Puppet2" parent="." instance=ExtResource( 4 )]
 position = Vector2( -465.365, 532.523 )
-direction = 1
-recovery_speed = 50
 
 [node name="Puppet" parent="." instance=ExtResource( 4 )]
 position = Vector2( 340.867, 527.592 )
-windup_speed = 0
-recovery_speed = 50
-freeze_time = 1.0
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2( -16.4813, 2.99661 )
+curve = SubResource( 3 )
