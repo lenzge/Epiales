@@ -3,9 +3,9 @@ extends Node2D
 
 onready var animationPlayer = $AnimationPlayer
 onready var menu_change_player = $Menu_change
+onready var sound_machine : SoundMachine = $SoundMachine
 
 var _rng = RandomNumberGenerator.new()
-
 var in_options : bool = false
 
 signal start_game
@@ -98,6 +98,7 @@ func disable_buttons(value: bool):
 
 func _on_Play_Button_pressed():
 	MusicController.fade_out_music("OST_MENU", 0.2)
+	sound_machine.play_sound("UI_enter", false)
 	emit_signal("start_game")
 
 
@@ -145,3 +146,7 @@ func _on_Menu_change_animation_finished(anim_name):
 func _on_Slider_Music_value_changed(value):
 	var new_value = -Globals.VOLUME_DB_RANGE + ((value / $Control/Controls_Options/Slider_Music.max_value) * Globals.VOLUME_DB_RANGE)
 	MusicController.set_music_volume(new_value)
+
+
+func _on_focus_sound():
+	sound_machine.play_sound("UI_click", false)

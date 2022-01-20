@@ -8,7 +8,7 @@ func enter(_msg := {}):
 		player.attack_count = 4
 	else:
 		player.sound_machine.play_sound("Sword Swing " + str(player.sound_machine.get_random(1, 2)), false)
-		player.sound_machine.play_sound("Attack Grunt " + str(player.sound_machine.get_random(1, 8)), false)
+		player.sound_machine.play_sound("Attack Grunt " + str(player.sound_machine.get_random(1, 7)), false)
 	
 	animationPlayer.play("Attack_Basic" + str(player.attack_count))
 	.animation_to_timer()

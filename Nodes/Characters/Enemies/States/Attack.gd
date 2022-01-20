@@ -34,6 +34,8 @@ func enter(_msg := {}):
 		character.velocity.y = 0.0
 	if fall_mode == 1:
 		character.velocity.y = constant_fall_speed
+	
+	character.sound_machine.play_sound("Attack", false)
 
 
 func physics_update(_delta):

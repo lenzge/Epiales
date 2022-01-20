@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SFX_crouchDown.wav-1f1769bd546112f514da184eb84d1478.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX_crouchDown.wav"
+dest_files=[ "res://.import/SFX_crouchDown.wav-1f1769bd546112f514da184eb84d1478.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -8,14 +8,22 @@ var can_crouch_jump = true
 func enter(msg :={}):
 	if abs(player.velocity.x) > 100:
 		animationPlayer.play("Slide")
+		player.sound_machine.play_sound("Slide", false)
 	elif state_machine.last_state.name == "Attack_Down_Recovery":
 		animationPlayer.play("Crouch")
 	else:
 		animationPlayer.play("Crouch_Start")
+	
+	# Play sound only when player gets into crouch
+	if state_machine.last_state.name != "Attack_Down_Recovery":
+		player.sound_machine.play_sound("Crouch Down", false)
 
 
 func exit():
 	.exit()
+	# Play sound only when player leaves crouch
+	if state_machine.new_state != "Attack_Down_Windup":
+		player.sound_machine.play_sound("Crouch Up", false)
 
 
 func physics_update(delta):

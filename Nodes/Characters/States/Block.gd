@@ -5,6 +5,7 @@ extends PlayerState
 func enter(_msg := {}):
 	.enter(_msg)
 	.animation_to_timer()
+	player.sound_machine.play_sound("Blocking Stance", false)
 
 func physics_update(delta):
 	# For smooth deceleration after moving

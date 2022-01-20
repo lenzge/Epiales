@@ -20,6 +20,11 @@ func _on_level_reset():
 func _set_active():
 	is_active = true
 
+
+func _play_sound_reappear():
+	sound_machine.play_sound("Orb_Reappearing", false)
+
+
 func _on_Self_hit(body):
 	if (body.name =="Attack" or body.name == "Attack_Up_Ground" or \
 	body.name == "Attack_Down_Ground" or body.name == "Attack_Up_Air" or \

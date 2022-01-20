@@ -3,6 +3,7 @@ extends CanvasLayer
 
 onready var animationPlayer = $AnimationPlayer
 onready var control_elements : int = $Control.get_child_count()
+onready var sound_machine : SoundMachine = $SoundMachine
 
 var visible : bool = false setget set_visible, is_visible
 var in_pause_screen : bool = false
@@ -69,6 +70,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 func _on_Button_Continue_pressed():
 	in_pause_screen = false
+	sound_machine.play_sound("UI_enter", false)
 	emit_signal("resume_game")
 
 
@@ -91,3 +93,7 @@ func _on_Slider_SFX_focus_exited():
 func _on_Slider_Music_value_changed(value):
 	var new_value = -Globals.VOLUME_DB_RANGE + ((value / $Control/Music/Slider_Music.max_value) * Globals.VOLUME_DB_RANGE)
 	MusicController.set_music_volume(new_value)
+
+
+func _on_focus_sound():
+	sound_machine.play_sound("UI_click", false)
