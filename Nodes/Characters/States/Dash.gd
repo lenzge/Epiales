@@ -2,6 +2,7 @@ extends PlayerState
 
 var _dash_direction := Vector2()
 var _jumped := false
+onready var charged_hitbox : DamageEmitter = $"../../Charged_Dash"
 
 
 func enter(_msg := {}):
@@ -23,9 +24,22 @@ func enter(_msg := {}):
 			_dash_direction.x = -1
 		else:
 			_dash_direction.x = 1
-	
 	_dash_direction = _dash_direction.normalized()
-	player.velocity = _dash_direction * player.dash_speed
+	
+	if Input.is_action_pressed("charge"):# and player.charge_controller.has_charge():
+		player.charge()
+		timer.start(player.charged_dash_time)
+		animationPlayer.play("Dash_Charged")
+		animationPlayer.set_speed_scale(animationPlayer.current_animation_length/player.charged_dash_time) # Animation takes as long as charged_dash_time
+		player.velocity = _dash_direction * player.dash_speed * 0.9 # Make Charged Dash a little slower but longer
+		charged_hitbox.knockback_force = player.charged_dash_damage
+		charged_hitbox.emitter_path = player.get_path() # todo change this to velocity?
+		charged_hitbox.direction = _dash_direction
+	else:
+		timer.start(player.dash_time)
+		animationPlayer.play("Dash")
+		animationPlayer.set_speed_scale(animationPlayer.current_animation_length/player.dash_time) # Animation takes as long as dash_time
+		player.velocity = _dash_direction * player.dash_speed
 	
 	if !player.is_on_floor():
 		player.started_dash_in_air = true
@@ -35,6 +49,7 @@ func enter(_msg := {}):
 	# Tilt in _dash_direction (Attention to crouch and dash)
 	if not (_dash_direction.y > 0.5 and player.is_on_floor()):
 		player.sprite.set_rotation_degrees(45*_dash_direction.y*player.direction) 
+		charged_hitbox.set_rotation_degrees(45*_dash_direction.y*player.direction)
 		#player.particles.set_rotation_degrees(45*_dash_direction.y*player.direction)
 	
 	#particleSystemPlayer.play("Dash")
@@ -42,10 +57,13 @@ func enter(_msg := {}):
 
 func exit():
 	.exit()
+	animationPlayer.set_speed_scale(1)
+	player.in_charged_attack = false
 	_jumped = false
 	player.hitbox.get_child(0).disabled = false
 	player.start_dash_cooldown()
 	player.sprite.set_rotation_degrees(0)
+	charged_hitbox.set_rotation_degrees(0)
 	#player.particles.set_rotation_degrees(0)
 
 

@@ -47,8 +47,28 @@ func attack():
 
 
 func on_hit(emitter : DamageEmitter):
-	.on_hit(emitter)
-	healthbar.get_damage(emitter.damage_amount)
+	if(emitter.name == "Charged_Dash"):
+		emitter.hit($"HitBox")
+		var player = get_node(emitter.emitter_path)
+		var velocity : Vector2 = player.velocity
+		var direction = emitter.direction
+		var force = emitter.knockback_force
+		$StateMachine.transition_to("Hit_by_charged_dash", {"velocity": velocity, "direction":direction, "knockback_force":force})
+	else:
+		# call supermethod on_hit
+		.on_hit(emitter) 
+		healthbar.get_damage(emitter.damage_amount)
+
+
+func on_hit_stop(emitter : DamageEmitter):
+# zeit zählen und dann abhängig von zeit am Ende Schaden machen
+	print("puppetcharacter: hit stop first")
+	if(emitter.name == "Charged_Dash"):
+		print("puppetcharacter: hit stop")
+		var time = emitter.knockback_time
+		var direction = emitter.direction.x
+		var force = emitter.knockback_force
+		$StateMachine.transition_to("Flinch", {"direction_x":direction})
 
 
 func _set_up():
@@ -88,3 +108,4 @@ func _set_up():
 	$StateMachine/FocusedRun.run_move_accel = run_move_accel * focused_move_factor
 	$StateMachine/FocusedRun.walk_move_accel = walk_move_accel * focused_move_factor
 	$StateMachine/FocusedRun.backwards_factor = backwards_focused_move_factor
+
