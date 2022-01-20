@@ -1,5 +1,6 @@
 extends CharacterState
 
+export(Array, String) var animations : Array
 export var floor_detection_ray_path : NodePath
 export var move_accel : float
 export(int, "GRAVITY", "CONSTANT") var fall_mode : int = 1
@@ -35,11 +36,11 @@ func physics_update(_delta):
 
 func start_animation():
 	.start_animation()
-	character.animation.play("AttackWindUp"  + str(_attack_count))
+	character.animation.play(animations[(_attack_count % animations.size())])
 
 
 func _on_timeout():
-	state_machine.transition_to("Attack", _attack_count)
+	state_machine.transition_to("Attack", {"attack_count":_attack_count})
 
 
 func exit():

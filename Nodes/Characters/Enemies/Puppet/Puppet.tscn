@@ -15,7 +15,7 @@
 [ext_resource path="res://Nodes/Util/StateMachine/StateMachine.gd" type="Script" id=13]
 [ext_resource path="res://Nodes/Characters/Enemies/AI/States/MoveForward.gd" type="Script" id=14]
 [ext_resource path="res://Nodes/Util/StateMachine/State.gd" type="Script" id=15]
-[ext_resource path="res://Nodes/Characters/Enemies/Puppet/SwitchSide.gd" type="Script" id=16]
+[ext_resource path="res://Nodes/Characters/Enemies/Puppet/AIStates/SwitchSide.gd" type="Script" id=16]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 20.0
@@ -40,6 +40,9 @@ one_shot = true
 
 [node name="PuppetCharacter" parent="." instance=ExtResource( 12 )]
 
+[node name="Sprite" parent="PuppetCharacter" index="0"]
+position = Vector2( -3.55271e-15, -0.26487 )
+
 [node name="Shape" parent="PuppetCharacter" index="2"]
 shape = SubResource( 1 )
 
@@ -49,7 +52,7 @@ shape = SubResource( 2 )
 [node name="FrontFloorDetectionRay" parent="PuppetCharacter" index="6"]
 collision_mask = 4
 
-[node name="FocusedRun" parent="PuppetCharacter/StateMachine" index="7"]
+[node name="FocusedRun" parent="PuppetCharacter/StateMachine" index="10"]
 process_priority = 1
 
 [node name="BackFloorDetectionRaycast" type="RayCast2D" parent="PuppetCharacter"]
@@ -78,6 +81,7 @@ cast_to = Vector2( -20, 0 )
 collision_mask = 7
 
 [node name="PlayerDetectionArea" type="Area2D" parent="PuppetCharacter"]
+visible = false
 monitorable = false
 collision_layer = 2
 
@@ -242,7 +246,7 @@ max_distance = 150.0
 [node name="RunAttack" type="Node" parent="StateMachine/Combat/StateMachine"]
 script = ExtResource( 11 )
 move_speed = 1.0
-attack_range = 80.0
+attack_range = 40.0
 max_attack_combo = 2
 floor_detection_ray_path = NodePath("../../../../PuppetCharacter/FrontFloorDetectionRaycast")
 wall_detection_ray_path = NodePath("../../../../PuppetCharacter/FrontWallDetectionRaycast")

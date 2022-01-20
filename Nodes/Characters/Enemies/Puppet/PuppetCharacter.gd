@@ -24,18 +24,21 @@ export var flinch_air_factor : float
 export var can_flinch_over_edge : bool
 
 onready var attack_area : DamageEmitter = get_node(attack_area_path)
+onready var healthbar = $HealthBar
 
 var is_winding_up : bool
 var is_focused : bool
 
+
 func _ready():
 	._ready()
+	#healthbar.set_max_health(health)
 
 
 func flip():
 	.flip()
 	attack_area.direction = Vector2(1, 0) if is_facing_right else Vector2(-1, 0)
-	$HealthBar.rect_scale.x *= -1
+	healthbar.rect_scale.x *= -1
 
 
 func attack():
@@ -45,7 +48,7 @@ func attack():
 
 func on_hit(emitter : DamageEmitter):
 	.on_hit(emitter)
-	$HealthBar.get_damage(emitter.damage_amount)
+	healthbar.get_damage(emitter.damage_amount)
 
 
 func _set_up():
@@ -70,8 +73,8 @@ func _set_up():
 			$StateMachine/Attack.should_reset_y_velocity = true
 		2:
 			$StateMachine/AttackRecovery.should_reset_y_velocity = true
-	$StateMachine/AttackRun.walk_move_accel = walk_move_accel * attack_run_move_factor
-	$StateMachine/AttackRun.run_move_accel = run_move_accel * attack_run_move_factor
+	$StateMachine/AttackRunRun.walk_move_accel = walk_move_accel * attack_run_move_factor
+	$StateMachine/AttackRunRun.run_move_accel = run_move_accel * attack_run_move_factor
 	$StateMachine/AttackFall.move_accel = walk_move_accel * attack_run_move_factor * air_move_factor
 	$StateMachine/Attack.attack_damage = attack_damage
 	$StateMachine/Attack.attack_force = attack_force

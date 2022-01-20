@@ -89,9 +89,7 @@ func _ready() -> void:
 	_init_timer()
 	health_bar.set_max_health(health_points)
 	
-# Debugging action
-func _physics_process(delta):
-	$Label.text = state_machine.state.name
+
 
 func follow_player():
 	if not is_moving_in_player_direction():

@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Art/UI/controller_xbox_A.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Art/UI/controller_xbox_dpad.png" type="Texture" id=2]
+[ext_resource path="res://Nodes/GUI/ControllerInputs.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Art/UI/VCR_OSD_MONO_1.001.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Assets/Art/UI/Keyboard_Enter.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Art/UI/Keyboard_arrows.png" type="Texture" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+font_data = ExtResource( 4 )
+
+[node name="ControllerInputs" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 3 )
+
+[node name="XBox" type="Node2D" parent="."]
+visible = false
+
+[node name="Button_A" type="Sprite" parent="XBox"]
+position = Vector2( 0, -80 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="DPad" type="Sprite" parent="XBox"]
+position = Vector2( 0, -180 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Keyboard" type="Node2D" parent="."]
+
+[node name="Arrows" type="Sprite" parent="Keyboard"]
+position = Vector2( 0, -200 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 6 )
+centered = false
+
+[node name="Enter" type="Sprite" parent="Keyboard"]
+position = Vector2( 0, -80 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="Change_selection_Label" type="Label" parent="."]
+margin_left = 117.233
+margin_top = -154.873
+margin_right = 405.233
+margin_bottom = -127.873
+custom_fonts/font = SubResource( 1 )
+text = "Change selection"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Select_Label" type="Label" parent="."]
+margin_left = 117.233
+margin_top = -52.3609
+margin_right = 225.233
+margin_bottom = -25.3609
+custom_fonts/font = SubResource( 1 )
+text = "Select"
+__meta__ = {
+"_edit_use_anchors_": false
+}
