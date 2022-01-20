@@ -20,15 +20,6 @@ func _ready():
 	$Control/Controls_Menu/Play_Button.grab_focus()
 
 
-func _process(delta):
-	if Input.is_action_pressed("ui_accept"):
-		var pressed = false
-		for btn in $Control/Controls_Menu.get_children():
-			if btn.has_focus() and !pressed:
-				btn.pressed = true
-				pressed = true
-
-
 func _on_close_timeout():
 	emit_signal("close_finished")
 
@@ -52,20 +43,21 @@ func center():
 	var controls_options = $Control/Controls_Options
 	
 	#self.scale = Vector2(OS.get_real_window_size().x / eyes.texture.get_width(), OS.get_real_window_size().x / eyes.texture.get_width())
+	self.scale = OS.get_real_window_size() / OS.get_screen_size()
 	self.position = OS.get_real_window_size() / 2
 	
-	back.scale = (OS.get_real_window_size() / back.texture.get_width()) #/ self.scale
+	back.scale = (OS.get_screen_size() / back.texture.get_width()) #/ self.scale
 	back.set_position(Vector2.ZERO)
 	
-	controls_menu.rect_size = OS.get_real_window_size()
+	controls_menu.rect_size = OS.get_screen_size()
 	controls_menu.rect_position = Vector2.ZERO
 	if in_options:
-		controls_menu.rect_position.x = -(OS.get_real_window_size().x + controls_menu.rect_size.x)
+		controls_menu.rect_position.x = -(OS.get_screen_size().x + controls_menu.rect_size.x)
 	
-	controls_options.rect_size = OS.get_real_window_size()
+	controls_options.rect_size = OS.get_screen_size()
 	controls_options.rect_position = Vector2.ZERO
 	if !in_options:
-		controls_options.rect_position.x = OS.get_real_window_size().x + controls_options.rect_size.x
+		controls_options.rect_position.x = OS.get_screen_size().x + controls_options.rect_size.x
 	
 	# change the values in the AnimationPlayer
 	if menu_change_player:
@@ -73,14 +65,14 @@ func center():
 		var to_menu_animation = menu_change_player.get_animation("to_Menu")
 		var credits_animation = menu_change_player.get_animation("credits")
 		
-		to_options_animation.track_set_key_value(to_options_animation.find_track("Control/Controls_Menu:rect_position"), 1, Vector2(-OS.get_real_window_size().x * controls_menu.rect_size.x, controls_menu.rect_position.y))
-		to_options_animation.track_set_key_value(to_options_animation.find_track("Control/Controls_Options:rect_position"), 0, Vector2(OS.get_real_window_size().x * controls_options.rect_size.x, controls_options.rect_position.y))
+		to_options_animation.track_set_key_value(to_options_animation.find_track("Control/Controls_Menu:rect_position"), 1, Vector2(-OS.get_screen_size().x * controls_menu.rect_size.x, controls_menu.rect_position.y))
+		to_options_animation.track_set_key_value(to_options_animation.find_track("Control/Controls_Options:rect_position"), 0, Vector2(OS.get_screen_size().x * controls_options.rect_size.x, controls_options.rect_position.y))
 		
-		to_menu_animation.track_set_key_value(to_menu_animation.find_track("Control/Controls_Menu:rect_position"), 0, Vector2(-OS.get_real_window_size().x * controls_menu.rect_size.x, controls_menu.rect_position.y))
-		to_menu_animation.track_set_key_value(to_menu_animation.find_track("Control/Controls_Options:rect_position"), 1, Vector2(OS.get_real_window_size().x * controls_options.rect_size.x, controls_options.rect_position.y))
+		to_menu_animation.track_set_key_value(to_menu_animation.find_track("Control/Controls_Menu:rect_position"), 0, Vector2(-OS.get_screen_size().x * controls_menu.rect_size.x, controls_menu.rect_position.y))
+		to_menu_animation.track_set_key_value(to_menu_animation.find_track("Control/Controls_Options:rect_position"), 1, Vector2(OS.get_screen_size().x * controls_options.rect_size.x, controls_options.rect_position.y))
 		
-		credits_animation.track_set_key_value(credits_animation.find_track("Credits:rect_position"), 0, Vector2(-OS.get_real_window_size().x / 2, OS.get_real_window_size().y))
-		credits_animation.track_set_key_value(credits_animation.find_track("Credits:rect_position"), 1, Vector2(-OS.get_real_window_size().x / 2, -(OS.get_real_window_size().y + $Credits.rect_size.y)))
+		credits_animation.track_set_key_value(credits_animation.find_track("Credits:rect_position"), 0, Vector2(-OS.get_screen_size().x / 2, OS.get_screen_size().y))
+		credits_animation.track_set_key_value(credits_animation.find_track("Credits:rect_position"), 1, Vector2(-OS.get_screen_size().x / 2, -(OS.get_screen_size().y + $Credits.rect_size.y)))
 
 
 func disable_buttons(value: bool):
