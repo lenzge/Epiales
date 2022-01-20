@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://Assets/Art/UI/ui_titlescreen_title_0.2.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Art/UI/ui_titlescreen_eyesBlinking_0.1.png" type="Texture" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://Assets/Art/UI/ui_titlescreen_eyesShutting_0.1.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Art/UI/VCR_OSD_MONO_1.001.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://Nodes/GUI/Credits.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Nodes/Util/SoundMachine.gd" type="Script" id=10]
+[ext_resource path="res://Assets/Sound/SFX_UI_click.wav" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Sound/SFX_Enter.wav" type="AudioStream" id=12]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
@@ -1069,14 +1072,34 @@ anims/fade_in = SubResource( 27 )
 anims/to_Menu = SubResource( 28 )
 anims/to_Options = SubResource( 29 )
 
+[node name="SoundMachine" type="Node2D" parent="."]
+script = ExtResource( 10 )
+
+[node name="UI_click" type="AudioStreamPlayer" parent="SoundMachine"]
+stream = ExtResource( 11 )
+volume_db = 3.0
+bus = "Sounds"
+
+[node name="UI_enter" type="AudioStreamPlayer" parent="SoundMachine"]
+stream = ExtResource( 12 )
+volume_db = -3.0
+bus = "Sounds"
+
+[connection signal="focus_entered" from="Control/Controls_Menu/Play_Button" to="." method="_on_focus_sound"]
 [connection signal="pressed" from="Control/Controls_Menu/Play_Button" to="." method="_on_Play_Button_pressed"]
+[connection signal="focus_entered" from="Control/Controls_Menu/Options_Button" to="." method="_on_focus_sound"]
 [connection signal="pressed" from="Control/Controls_Menu/Options_Button" to="." method="_on_Options_Button_pressed"]
+[connection signal="focus_entered" from="Control/Controls_Menu/Exit_Button" to="." method="_on_focus_sound"]
 [connection signal="pressed" from="Control/Controls_Menu/Exit_Button" to="." method="_on_Exit_Button_pressed"]
 [connection signal="focus_entered" from="Control/Controls_Options/Slider_Music" to="." method="_on_Slider_Music_focus_entered"]
+[connection signal="focus_entered" from="Control/Controls_Options/Slider_Music" to="." method="_on_focus_sound"]
 [connection signal="focus_exited" from="Control/Controls_Options/Slider_Music" to="." method="_on_Slider_Music_focus_exited"]
 [connection signal="focus_entered" from="Control/Controls_Options/Slider_SFX" to="." method="_on_Slider_SFX_focus_entered"]
+[connection signal="focus_entered" from="Control/Controls_Options/Slider_SFX" to="." method="_on_focus_sound"]
 [connection signal="focus_exited" from="Control/Controls_Options/Slider_SFX" to="." method="_on_Slider_SFX_focus_exited"]
+[connection signal="focus_entered" from="Control/Controls_Options/Credits_Button" to="." method="_on_focus_sound"]
 [connection signal="pressed" from="Control/Controls_Options/Credits_Button" to="." method="_on_Credits_Button_pressed"]
+[connection signal="focus_entered" from="Control/Controls_Options/Back_Button" to="." method="_on_focus_sound"]
 [connection signal="pressed" from="Control/Controls_Options/Back_Button" to="." method="_on_Back_Button_pressed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="Menu_change" to="." method="_on_Menu_change_animation_finished"]

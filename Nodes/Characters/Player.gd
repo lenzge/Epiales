@@ -520,3 +520,7 @@ func _on_Attack_Up_Ground_hit(receiver):
 
 func _on_Attack_hit(receiver):
 	reduce_nightmare(nightmare_on_hit_reduction)
+
+
+func _on_AnimationPlayer_animation_finished():
+	pass

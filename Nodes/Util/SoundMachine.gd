@@ -12,7 +12,7 @@ func _ready():
 # Start a sound and loop it if needed
 func play_sound(sound: String, loop: bool) -> void:
 	if is_sound_available(sound):
-		var node : AudioStreamPlayer2D = get_node(sound)
+		var node = get_node(sound)
 		var st = node.stream
 		
 		# MP3 and OGG

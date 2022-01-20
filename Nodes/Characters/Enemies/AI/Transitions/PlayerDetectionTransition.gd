@@ -22,6 +22,7 @@ func _check(delta):
 		if result.empty():
 			if _ai_controller.has_method("set_focused_player"):
 				_ai_controller.set_focused_player(_player)
+			_controlled_character.sound_machine.play_sound("Alert", false)
 			return {"transition_to": transition_to,"parameters": parameters}
 	return {}
 
