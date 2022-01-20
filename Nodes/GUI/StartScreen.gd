@@ -39,6 +39,10 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		animationPlayer.play("Look_Around")
 
 
+func load_sliders():
+	$Control/Controls_Options/Slider_Music.value = ((MusicController.get_music_volume() + Globals.VOLUME_DB_RANGE) / Globals.VOLUME_DB_RANGE) * $Control/Controls_Options/Slider_Music.max_value
+
+
 # center ui on resize event
 func center():
 	var back = $Black_background
@@ -136,3 +140,8 @@ func _on_Menu_change_animation_finished(anim_name):
 		$Control/Controls_Options/Slider_Music.grab_focus()
 	elif anim_name == "to_Menu":
 		$Control/Controls_Menu/Play_Button.grab_focus()
+
+
+func _on_Slider_Music_value_changed(value):
+	var new_value = -Globals.VOLUME_DB_RANGE + ((value / $Control/Controls_Options/Slider_Music.max_value) * Globals.VOLUME_DB_RANGE)
+	MusicController.set_music_volume(new_value)

@@ -575,6 +575,7 @@ anims/Open = SubResource( 17 )
 
 [connection signal="focus_entered" from="Control/Music/Slider_Music" to="." method="_on_Slider_Music_focus_entered"]
 [connection signal="focus_exited" from="Control/Music/Slider_Music" to="." method="_on_Slider_Music_focus_exited"]
+[connection signal="value_changed" from="Control/Music/Slider_Music" to="." method="_on_Slider_Music_value_changed"]
 [connection signal="focus_entered" from="Control/SFX/Slider_SFX" to="." method="_on_Slider_SFX_focus_entered"]
 [connection signal="focus_exited" from="Control/SFX/Slider_SFX" to="." method="_on_Slider_SFX_focus_exited"]
 [connection signal="pressed" from="Control/Button_Continue" to="." method="_on_Button_Continue_pressed"]

@@ -25,6 +25,7 @@ func _ready():
 func enter(_msg := {}):
 	startscreen = startscreen_scene.instance()
 	startscreen.center()
+	startscreen.load_sliders()
 #	sprite = startscreen.get_child(1)
 #	sprite.set_position(OS.get_real_window_size() / 2)
 	

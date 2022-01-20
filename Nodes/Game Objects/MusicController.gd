@@ -84,3 +84,16 @@ func fade_in_music(music_name: String, rate = 1.0):
 func fade_in_at_random(music_name: String, rate = 1.0):
 	if not music_name in music_playing:
 		music_fade_in_at_random[music_name] = rate
+
+
+func set_music_volume(value: float) -> void:
+	var bus_idx = AudioServer.get_bus_index("Music")
+	var eased_value = -Globals.VOLUME_DB_RANGE * pow(abs(value) / Globals.VOLUME_DB_RANGE, 4)
+	AudioServer.set_bus_volume_db(bus_idx, eased_value)
+
+
+func get_music_volume() -> float:
+	var bus_idx = AudioServer.get_bus_index("Music")
+	var eased_value = AudioServer.get_bus_volume_db(bus_idx)
+	return -Globals.VOLUME_DB_RANGE * pow(abs(eased_value) / Globals.VOLUME_DB_RANGE, 0.25)
+

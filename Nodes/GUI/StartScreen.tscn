@@ -968,7 +968,7 @@ custom_icons/grabber = SubResource( 16 )
 custom_styles/slider = SubResource( 17 )
 custom_styles/grabber_area_highlight = SubResource( 18 )
 custom_styles/grabber_area = SubResource( 19 )
-value = 50.0
+value = 100.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1074,6 +1074,7 @@ anims/to_Options = SubResource( 29 )
 [connection signal="pressed" from="Control/Controls_Menu/Exit_Button" to="." method="_on_Exit_Button_pressed"]
 [connection signal="focus_entered" from="Control/Controls_Options/Slider_Music" to="." method="_on_Slider_Music_focus_entered"]
 [connection signal="focus_exited" from="Control/Controls_Options/Slider_Music" to="." method="_on_Slider_Music_focus_exited"]
+[connection signal="value_changed" from="Control/Controls_Options/Slider_Music" to="." method="_on_Slider_Music_value_changed"]
 [connection signal="focus_entered" from="Control/Controls_Options/Slider_SFX" to="." method="_on_Slider_SFX_focus_entered"]
 [connection signal="focus_exited" from="Control/Controls_Options/Slider_SFX" to="." method="_on_Slider_SFX_focus_exited"]
 [connection signal="pressed" from="Control/Controls_Options/Credits_Button" to="." method="_on_Credits_Button_pressed"]
