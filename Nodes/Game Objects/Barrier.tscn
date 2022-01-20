@@ -137,11 +137,19 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
+texture = ExtResource( 4 )
 hframes = 9
-frame = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Despawn = SubResource( 2 )
 anims/Idle = SubResource( 3 )
 anims/Spawn = SubResource( 4 )
+
+[node name="Border" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border"]
+scale = Vector2( 0.513297, 1.04436 )
+shape = SubResource( 1 )
+disabled = true

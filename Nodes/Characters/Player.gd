@@ -312,17 +312,18 @@ func is_tile_wall(ray: RayCast2D, collision_point: Vector2) -> bool:
 	
 	var collider = ray.get_collider()
 	
-	# get tile of tileset
-	var tile_pos = collider.world_to_map(collider.to_local(collision_point))
-	var tile_tex_coords = collider.get_cell_autotile_coord(tile_pos.x, tile_pos.y)
-	var tile_id = (tile_tex_coords.y * 8) + tile_tex_coords.x
-	
-	# get tileset
-	var tile_map_id = collider.get_cellv(tile_pos)
-	
-	# test if the tile has a one_way collision and return the negated value
-	return !ray.get_collider().tile_set.tile_get_shape_one_way(ray.get_collider().get_cellv(tile_pos), tile_id) and tile_map_id != TileMap.INVALID_CELL
-
+	if collider is TileSet:
+		# get tile of tileset
+		var tile_pos = collider.world_to_map(collider.to_local(collision_point))
+		var tile_tex_coords = collider.get_cell_autotile_coord(tile_pos.x, tile_pos.y)
+		var tile_id = (tile_tex_coords.y * 8) + tile_tex_coords.x
+		
+		# get tileset
+		var tile_map_id = collider.get_cellv(tile_pos)
+		
+		# test if the tile has a one_way collision and return the negated value
+		return !ray.get_collider().tile_set.tile_get_shape_one_way(ray.get_collider().get_cellv(tile_pos), tile_id) and tile_map_id != TileMap.INVALID_CELL
+	return false
 
 ## Moves the player with a special gravitational force for the wall_hang
 ## Call when player is in wall hang
