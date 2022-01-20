@@ -93,6 +93,7 @@ func disable_buttons(value: bool):
 
 
 func _on_Play_Button_pressed():
+	MusicController.fade_out_music("OST_MENU", 0.2)
 	emit_signal("start_game")
 
 

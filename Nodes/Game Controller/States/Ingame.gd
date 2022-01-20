@@ -29,14 +29,17 @@ func enter(_msg := {}):
 		nightmare_instance.init(player_instance)
 		game.get_node("HUD").add_child(nightmare_instance)
 	
-	music_controller.play_music("Boss_alternative.mp3")
+	MusicController.fade_in_music("Ambience_Atmosphere")
+	MusicController.fade_in_at_random("OST_Ominous")
 
 func update(_delta):
 	if player_instance:
 		if player_instance.get_node("StateMachine").state.name == "Die":
 			set_invisible_on_reset()
+			get_tree().paused = true
 			var modulate_sprite = game.get_node("HUD/fade_out")
 			modulate_sprite.modulate.a += modulation_change
+			MusicController.fade_out_everything(0.2)
 			if modulate_sprite.modulate.a >= 1:
 				modulate_sprite.modulate.a = 1
 				reset_game()
@@ -64,6 +67,8 @@ func reset_game():
 	
 	nightmare_instance.queue_free()
 	nightmare_instance = null
+	
+	get_tree().paused = false
 	
 	state_machine.transition_to("Start")
 

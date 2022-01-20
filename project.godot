@@ -174,16 +174,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Nodes/Game Controller/States/Ingame.gd"
 }, {
-"base": "AudioStreamPlayer",
-"class": "MusicPlayer",
-"language": "GDScript",
-"path": "res://Nodes/Util/MusicPlayer.gd"
-}, {
-"base": "Area2D",
-"class": "MusicTransitionArea",
-"language": "GDScript",
-"path": "res://Nodes/Game Objects/MusicTransitionArea.gd"
-}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -263,8 +253,6 @@ _global_script_class_icons={
 "GitAPI": "",
 "HackNSlashLevel": "",
 "Ingame": "",
-"MusicPlayer": "",
-"MusicTransitionArea": "",
 "Player": "",
 "PlayerState": "",
 "PuppetCharacter": "",

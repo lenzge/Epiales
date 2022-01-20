@@ -33,7 +33,7 @@ func enter(_msg := {}):
 	else:
 		show_startscreen()
 	
-	music_controller.play_music("OST_MENU.mp3")
+	MusicController.play_music("OST_MENU")
 
 
 func update(_delta):

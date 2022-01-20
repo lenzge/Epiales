@@ -1,17 +1,25 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Nodes/Game Objects/MusicController.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Music/Ambience_Atmosphere.mp3" type="AudioStream" id=2]
+[ext_resource path="res://Assets/Music/OST_Ominous.mp3" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Music/OST_MENU.mp3" type="AudioStream" id=4]
 
 [node name="MusicController" type="Node"]
+pause_mode = 2
 script = ExtResource( 1 )
-BPM = 90
-print_beats = true
-print_updates = true
-is_active = true
-calm_music_path = "res://Nodes/Experimental/Placeholder/Fairgroundroom1_Demo1.mp3"
-hectic_music_path = "res://Nodes/Experimental/Placeholder/Sea_levelhectic_Demo_1.mp3"
-starting_track = 1
 
-[node name="Calm_music" type="AudioStreamPlayer" parent="."]
+[node name="OST_MENU" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -15.0
+bus = "Music"
 
-[node name="Hectic_music" type="AudioStreamPlayer" parent="."]
+[node name="OST_Ominous" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -15.0
+bus = "Music"
+
+[node name="Ambience_Atmosphere" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -15.0
+bus = "Music"
