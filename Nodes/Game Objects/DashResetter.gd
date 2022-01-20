@@ -9,6 +9,7 @@ func _ready():
 	self.connect("on_hit_start", self, "_on_Self_hit")
 	owner.connect("level_reset", self, "_on_level_reset")
 	animationPlayer.animation_set_next("Spawn", "Idle")
+	animationPlayer.animation_set_next("Destroy", "Spawn")
 	animationPlayer.play("Spawn")
 	
 
@@ -16,6 +17,8 @@ func _on_level_reset():
 	animationPlayer.play("Spawn")
 	is_active = true
 
+func _set_active():
+	is_active = true
 
 func _on_Self_hit(body):
 	if (body.name =="Attack" or body.name == "Attack_Up_Ground" or \
