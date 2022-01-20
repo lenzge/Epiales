@@ -54,7 +54,7 @@ func center():
 	#self.scale = Vector2(OS.get_real_window_size().x / eyes.texture.get_width(), OS.get_real_window_size().x / eyes.texture.get_width())
 	self.position = OS.get_real_window_size() / 2
 	
-	back.scale = (OS.get_real_window_size() / back.texture.get_width()) / self.scale
+	back.scale = (OS.get_real_window_size() / back.texture.get_width()) #/ self.scale
 	back.set_position(Vector2.ZERO)
 	
 	controls_menu.rect_size = OS.get_real_window_size()
