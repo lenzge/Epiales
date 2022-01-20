@@ -424,7 +424,7 @@ func _physics_process(delta):
 func on_hit(emitter : DamageEmitter):
 	if in_charged_attack:
 		# only damage
-		pass
+		increment_nightmare(emitter.damage_amount)
 	else:
 		var direction_x
 		if is_equal_approx(emitter.direction.x, 0.0):
@@ -488,8 +488,8 @@ func increment_nightmare(increment: float) -> void:
 		nightmare = max_nightmare
 	emit_signal("nightmare_changed")
 	
-	#if nightmare >= max_nightmare:
-	#	$StateMachine.transition_to("Die")
+	if nightmare >= max_nightmare:
+		$StateMachine.transition_to("Die")
 
 
 func add_enemy_in_range():

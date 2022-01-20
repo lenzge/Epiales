@@ -7,15 +7,15 @@ func _ready():
 
 
 func start_animation():
-	character.animation.play("AttackFall")
+	character.animation.play("Attack_Fall")
 
 
 func check_transitions(delta):
 	if character.is_winding_up == false:
-		state_machine.transition_to("Attack")
-	if character.is_on_floor():
 		state_machine.transition_to("AttackRun")
+	if character.is_on_floor():
+		state_machine.transition_to("AttackRunRun")
 
 
 func _on_attack():
-	state_machine.transition_to("Attack")
+	state_machine.transition_to("AttackRun")

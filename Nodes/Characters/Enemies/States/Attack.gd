@@ -2,6 +2,7 @@ extends CharacterState
 
 # depending on last state (windup or chase) attack chain is possible
 
+export(Array, String) var animations : Array
 export var floor_detection_ray_path : NodePath
 export var max_attack_combo : int = 1
 export var move_accel : float = 0.0
@@ -52,7 +53,7 @@ func physics_update(_delta):
 
 func start_animation():
 	.start_animation()
-	character.animation.play("Attack" + str(_attack_count))
+	character.animation.play(animations[(_attack_count % animations.size())])
 
 
 func exit():

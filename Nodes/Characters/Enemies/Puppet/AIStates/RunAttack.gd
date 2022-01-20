@@ -50,7 +50,7 @@ func exit():
 
 
 func on_swichted_state(state_name):
-	if not ["AttackRun", "AttackFall", "AttackWindUp", "Attack", "AttackRecovery"].has(state_name):
+	if not ["AttackRunRun", "AttackFall", "AttackRunWindUp", "AttackRun", "AttackRunRecovery"].has(state_name):
 		state_machine.transition_to("StayAndLookAtPlayer")
 
 

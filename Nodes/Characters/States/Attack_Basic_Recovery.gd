@@ -4,6 +4,7 @@ extends PlayerState
 # Can't be cancelled (except by getting damage and dashing in air)
 
 func enter(_msg := {}):
+	
 	animationPlayer.play("Attack_Basic" + str(player.attack_count)+"_Recovery")
 	.animation_to_timer()
 
