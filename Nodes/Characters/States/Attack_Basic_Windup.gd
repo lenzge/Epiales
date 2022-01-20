@@ -9,8 +9,18 @@ func enter(_msg := {}):
 		player.sound_machine.play_sound("Charged Attack", false)
 	else:
 		player.in_charged_attack = false
-	animationPlayer.play("Attack_Basic" + str(player.attack_count)+"_Windup")
+		# Check for Air or ground
+		if player.is_on_floor() and player.attack_count == 1:
+			player.in_air_attack = false
+		elif not player.is_on_floor() and player.attack_count == 1:
+			player.in_air_attack = true
+			
+	if player.in_air_attack:
+		animationPlayer.play("Attack_Basic" + str(player.attack_count)+"_Windup_Air")
+	else:
+		animationPlayer.play("Attack_Basic" + str(player.attack_count)+"_Windup")
 	.animation_to_timer()
+	
 	# Set direction in which the attack starts. Player can't change direction while attacking
 	player.attack_direction = player.direction
 
@@ -29,6 +39,10 @@ func physics_update(delta):
 			state_machine.transition_to("Jump")
 		elif Input.is_action_pressed("block"):
 			state_machine.transition_to("Block_Windup")
+			
+		# Can fall in ground attack
+		if not player.in_air_attack and not player.is_on_floor():
+			state_machine.transition_to("Fall")
 
 
 func exit():
