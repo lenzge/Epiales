@@ -4,42 +4,30 @@
 [ext_resource path="res://Assets/Art/UI/VCR_OSD_MONO_1.001.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Assets/Other/white_square.png" type="Texture" id=4]
 
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=1]
 size = 80
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 50
 font_data = ExtResource( 3 )
-
-[sub_resource type="CameraTexture" id=2]
 
 [sub_resource type="CameraTexture" id=3]
 
 [sub_resource type="CameraTexture" id=4]
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="CameraTexture" id=5]
+
+[sub_resource type="StyleBoxFlat" id=6]
 border_width_top = 16
 border_width_bottom = 16
 border_color = Color( 0.109804, 0.109804, 0.109804, 1 )
-
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 1, 1, 1, 1 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color( 1, 1, 1, 1 )
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 1, 1, 1, 1 )
@@ -67,15 +55,27 @@ corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 1, 1, 1, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="DynamicFont" id=14]
 size = 50
 font_data = ExtResource( 3 )
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=15]
 length = 0.4
 step = 0.05
 tracks/0/type = "method"
@@ -201,7 +201,7 @@ tracks/9/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=16]
 length = 0.5
 loop = true
 tracks/0/type = "value"
@@ -337,7 +337,7 @@ tracks/10/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=17]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Background:modulate")
@@ -465,7 +465,7 @@ __meta__ = {
 margin_top = 230.791
 margin_right = 235.0
 margin_bottom = 301.791
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 1 )
 text = "PAUSE"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -481,7 +481,7 @@ margin_left = -222.897
 margin_top = 473.499
 margin_right = -77.8969
 margin_bottom = 517.499
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Music"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -492,12 +492,16 @@ margin_left = -33.9087
 margin_top = 484.755
 margin_right = 252.091
 margin_bottom = 516.755
-custom_icons/grabber_disabled = SubResource( 2 )
-custom_icons/grabber_highlight = SubResource( 3 )
-custom_icons/grabber = SubResource( 4 )
-custom_styles/slider = SubResource( 5 )
-custom_styles/grabber_area_highlight = SubResource( 6 )
-custom_styles/grabber_area = SubResource( 7 )
+focus_neighbour_top = NodePath("../../Button_Continue")
+focus_neighbour_bottom = NodePath("../../SFX/Slider_SFX")
+focus_next = NodePath("../../SFX/Slider_SFX")
+focus_previous = NodePath("../../Button_Continue")
+custom_icons/grabber_disabled = SubResource( 3 )
+custom_icons/grabber_highlight = SubResource( 4 )
+custom_icons/grabber = SubResource( 5 )
+custom_styles/slider = SubResource( 6 )
+custom_styles/grabber_area_highlight = SubResource( 7 )
+custom_styles/grabber_area = SubResource( 8 )
 value = 50.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -510,7 +514,7 @@ margin_left = -222.897
 margin_top = 575.957
 margin_right = -77.8969
 margin_bottom = 619.957
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "SFX"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -521,12 +525,16 @@ margin_left = -33.9087
 margin_top = 582.333
 margin_right = 252.091
 margin_bottom = 614.333
-custom_icons/grabber_disabled = SubResource( 2 )
-custom_icons/grabber_highlight = SubResource( 3 )
-custom_icons/grabber = SubResource( 4 )
-custom_styles/slider = SubResource( 5 )
-custom_styles/grabber_area_highlight = SubResource( 6 )
-custom_styles/grabber_area = SubResource( 7 )
+focus_neighbour_top = NodePath("../../Music/Slider_Music")
+focus_neighbour_bottom = NodePath("../../Button_Continue")
+focus_next = NodePath("../../Button_Continue")
+focus_previous = NodePath("../../Music/Slider_Music")
+custom_icons/grabber_disabled = SubResource( 3 )
+custom_icons/grabber_highlight = SubResource( 4 )
+custom_icons/grabber = SubResource( 5 )
+custom_styles/slider = SubResource( 6 )
+custom_styles/grabber_area_highlight = SubResource( 7 )
+custom_styles/grabber_area = SubResource( 8 )
 value = 50.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -536,12 +544,18 @@ __meta__ = {
 margin_top = 679.286
 margin_right = 418.0
 margin_bottom = 763.286
-custom_styles/hover = SubResource( 8 )
-custom_styles/pressed = SubResource( 9 )
-custom_styles/focus = SubResource( 10 )
-custom_styles/disabled = SubResource( 11 )
-custom_styles/normal = SubResource( 12 )
-custom_fonts/font = SubResource( 13 )
+focus_neighbour_left = NodePath("../SFX/Slider_SFX")
+focus_neighbour_top = NodePath("../SFX/Slider_SFX")
+focus_neighbour_right = NodePath("../Music/Slider_Music")
+focus_neighbour_bottom = NodePath("../Music/Slider_Music")
+focus_next = NodePath("../Music/Slider_Music")
+focus_previous = NodePath("../SFX/Slider_SFX")
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 12 )
+custom_styles/normal = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Continue"
@@ -550,9 +564,9 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Close = SubResource( 14 )
-anims/Idle = SubResource( 15 )
-anims/Open = SubResource( 16 )
+anims/Close = SubResource( 15 )
+anims/Idle = SubResource( 16 )
+anims/Open = SubResource( 17 )
 
 [connection signal="focus_entered" from="Control/Music/Slider_Music" to="." method="_on_Slider_Music_focus_entered"]
 [connection signal="focus_exited" from="Control/Music/Slider_Music" to="." method="_on_Slider_Music_focus_exited"]
