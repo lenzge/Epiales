@@ -27,12 +27,11 @@ func enter(_msg := {}):
 	startscreen.center()
 #	sprite = startscreen.get_child(1)
 #	sprite.set_position(OS.get_real_window_size() / 2)
-	game.add_child(startscreen)
-	
-	startscreen.connect("start_game", self, "start_game")
 	
 	if game.get_node("HUD/fade_out").modulate.a > 0:
 		timer.start(wait_time)
+	else:
+		show_startscreen()
 
 
 func update(_delta):
@@ -42,6 +41,8 @@ func update(_delta):
 		if game.get_node("HUD/fade_out").modulate.a <= 0:
 			game.get_node("HUD/fade_out").modulate.a = 0
 			return_to_menu = false
+			
+			show_startscreen()
 
 
 # Corresponds to the `_physics_process()` callback
@@ -61,6 +62,13 @@ func start_game():
 	startscreen.animationPlayer.play("Close")
 	yield(startscreen, "close_finished")
 	state_machine.transition_to("Ingame")
+
+
+func show_startscreen():
+	game.add_child(startscreen)
+	startscreen.connect("start_game", self, "start_game")
+	startscreen.menu_change_player.play("fade_in")
+
 
 # Called by the state machine before changing the active state (clean up)
 func exit():
