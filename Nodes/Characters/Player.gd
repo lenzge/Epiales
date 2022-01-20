@@ -502,24 +502,29 @@ func remove_enemy_in_range():
 
 
 func _on_Attack_Down_Air_hit(receiver):
-	velocity.y = -attack_air_down_knockback_impulse
-	reduce_nightmare(nightmare_on_hit_reduction)
+	if receiver.receiver.state_machine.state.name != "Die":
+		velocity.y = -attack_air_down_knockback_impulse
+		reduce_nightmare(nightmare_on_hit_reduction)
 
 
 func _on_Attack_Up_Air_hit(receiver):
-	reduce_nightmare(nightmare_on_hit_reduction)
+	if receiver.receiver.state_machine.state.name != "Die":
+		reduce_nightmare(nightmare_on_hit_reduction)
 
 
 func _on_Attack_Down_Ground_hit(receiver):
-	reduce_nightmare(nightmare_on_hit_reduction)
+	if receiver.receiver.state_machine.state.name != "Die":
+		reduce_nightmare(nightmare_on_hit_reduction)
 
 
 func _on_Attack_Up_Ground_hit(receiver):
-	reduce_nightmare(nightmare_on_hit_reduction)
+	if receiver.receiver.state_machine.state.name != "Die":
+		reduce_nightmare(nightmare_on_hit_reduction)
 
 
 func _on_Attack_hit(receiver):
-	reduce_nightmare(nightmare_on_hit_reduction)
+	if receiver.receiver.state_machine.state.name != "Die":
+		reduce_nightmare(nightmare_on_hit_reduction)
 
 
 func _on_AnimationPlayer_animation_finished():

@@ -3917,6 +3917,7 @@ script = ExtResource( 2 )
 gravity = 2000
 jump_impulse = 800
 attack_force = [ 20, 25, 30, 60 ]
+max_nightmare = 1000.0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

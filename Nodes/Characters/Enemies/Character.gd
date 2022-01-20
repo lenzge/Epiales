@@ -93,7 +93,8 @@ func on_hit(emitter : DamageEmitter):
 	state_machine.transition_to("Flinch", {"direction_x": -1.0 if direction_x < 0.0 else 1.0, "force": emitter.knockback_force})
 	emitter.hit($"HitBox")
 	
-	sound_machine.play_sound("Hit", false)
+	if !state_machine.state.name == "Die":
+		sound_machine.play_sound("Hit", false)
 
 
 func _set_up():
