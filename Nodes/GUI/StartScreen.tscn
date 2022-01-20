@@ -12,7 +12,6 @@
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
-draw_center = false
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -28,7 +27,6 @@ draw_center = false
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0, 0, 0, 1 )
-draw_center = false
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -835,8 +833,10 @@ texture = ExtResource( 5 )
 [node name="Eyes" type="Sprite" parent="."]
 position = Vector2( 0, -95.9911 )
 scale = Vector2( 2, 2 )
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 hframes = 3
+vframes = 4
+frame = 5
 
 [node name="Title" type="Sprite" parent="."]
 position = Vector2( 0, -154.725 )
@@ -855,6 +855,8 @@ __meta__ = {
 }
 
 [node name="Controls_Menu" type="Control" parent="Control"]
+margin_left = -0.121577
+margin_right = -0.121577
 grow_horizontal = 2
 grow_vertical = 2
 __meta__ = {
@@ -934,8 +936,8 @@ __meta__ = {
 }
 
 [node name="Controls_Options" type="Control" parent="Control"]
-margin_left = 1.0
-margin_right = 1.0
+margin_left = 0.0001
+margin_right = 0.0001
 __meta__ = {
 "_edit_use_anchors_": false
 }
