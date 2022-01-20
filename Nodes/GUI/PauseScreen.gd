@@ -30,12 +30,15 @@ func _on_close_timeout():
 func center():
 	var background = $Background
 	var controls = $Control
+	var controler_inputs = $ControllerInputs
 	
 	background.scale = (OS.get_real_window_size() / background.texture.get_width())
 	background.set_position(Vector2.ZERO)
 	
 	var controls_scale = OS.get_real_window_size() / OS.get_screen_size()
 	controls.rect_scale = controls_scale
+	
+	controler_inputs.position = Vector2((OS.get_screen_size().x / 16), OS.get_screen_size().y - (OS.get_screen_size().y / 8))
 	
 	for item in controls.get_children():
 		var position = Vector2((OS.get_screen_size().x / 2) - (item.rect_size.x / 2), item.rect_position.y)

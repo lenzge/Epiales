@@ -41,6 +41,7 @@ func center():
 	var controls = $Control
 	var controls_menu = $Control/Controls_Menu
 	var controls_options = $Control/Controls_Options
+	var controler_inputs = $ControllerInputs
 	
 	#self.scale = Vector2(OS.get_real_window_size().x / eyes.texture.get_width(), OS.get_real_window_size().x / eyes.texture.get_width())
 	self.scale = OS.get_real_window_size() / OS.get_screen_size()
@@ -48,6 +49,8 @@ func center():
 	
 	back.scale = (OS.get_screen_size() / back.texture.get_width()) #/ self.scale
 	back.set_position(Vector2.ZERO)
+	
+	controler_inputs.position = Vector2(-(OS.get_screen_size().x / 2) + (OS.get_screen_size().x / 16), (OS.get_screen_size().y / 2) - (OS.get_screen_size().y / 8))
 	
 	controls_menu.rect_size = OS.get_screen_size()
 	controls_menu.rect_position = Vector2.ZERO

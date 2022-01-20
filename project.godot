@@ -279,6 +279,7 @@ config/icon="res://Nodes/Experimental/Placeholder/luci_sprite_own.png"
 [autoload]
 
 MusicController="*res://Nodes/Game Objects/MusicController.tscn"
+Globals="*res://Nodes/Util/Globals.tscn"
 
 [gdnative]
 
