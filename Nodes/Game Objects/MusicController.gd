@@ -88,12 +88,24 @@ func fade_in_at_random(music_name: String, rate = 1.0):
 
 func set_music_volume(value: float) -> void:
 	var bus_idx = AudioServer.get_bus_index("Music")
-	var eased_value = -Globals.VOLUME_DB_RANGE * pow(abs(value) / Globals.VOLUME_DB_RANGE, 4)
+	var eased_value = -Globals.VOLUME_DB_RANGE * pow(abs(value) / Globals.VOLUME_DB_RANGE, Globals.VOLUME_EASE_FACTOR)
 	AudioServer.set_bus_volume_db(bus_idx, eased_value)
 
 
 func get_music_volume() -> float:
 	var bus_idx = AudioServer.get_bus_index("Music")
 	var eased_value = AudioServer.get_bus_volume_db(bus_idx)
-	return -Globals.VOLUME_DB_RANGE * pow(abs(eased_value) / Globals.VOLUME_DB_RANGE, 0.25)
+	return -Globals.VOLUME_DB_RANGE * pow(abs(eased_value) / Globals.VOLUME_DB_RANGE, 1 / Globals.VOLUME_EASE_FACTOR)
+
+
+func set_sound_volume(value: float) -> void:
+	var bus_idx = AudioServer.get_bus_index("Sounds")
+	var eased_value = -Globals.VOLUME_DB_RANGE * pow(abs(value) / Globals.VOLUME_DB_RANGE, Globals.VOLUME_EASE_FACTOR)
+	AudioServer.set_bus_volume_db(bus_idx, eased_value)
+
+
+func get_sound_volume() -> float:
+	var bus_idx = AudioServer.get_bus_index("Sounds")
+	var eased_value = AudioServer.get_bus_volume_db(bus_idx)
+	return -Globals.VOLUME_DB_RANGE * pow(abs(eased_value) / Globals.VOLUME_DB_RANGE, 1 / Globals.VOLUME_EASE_FACTOR)
 

@@ -57,6 +57,7 @@ func set_visible(value: bool):
 			item.get("custom_styles/focus").border_color = Globals.UI_FOCUSED_COLOR
 	
 	$Control/Music/Slider_Music.value = ((MusicController.get_music_volume() + Globals.VOLUME_DB_RANGE) / Globals.VOLUME_DB_RANGE) * $Control/Music/Slider_Music.max_value
+	$Control/SFX/Slider_SFX.value = ((MusicController.get_sound_volume() + Globals.VOLUME_DB_RANGE) / Globals.VOLUME_DB_RANGE) * $Control/SFX/Slider_SFX.max_value
 
 func is_visible() -> bool:
 	return visible
@@ -93,6 +94,11 @@ func _on_Slider_SFX_focus_exited():
 func _on_Slider_Music_value_changed(value):
 	var new_value = -Globals.VOLUME_DB_RANGE + ((value / $Control/Music/Slider_Music.max_value) * Globals.VOLUME_DB_RANGE)
 	MusicController.set_music_volume(new_value)
+
+
+func _on_Slider_SFX_value_changed(value):
+	var new_value = -Globals.VOLUME_DB_RANGE + ((value / $Control/SFX/Slider_SFX.max_value) * Globals.VOLUME_DB_RANGE)
+	MusicController.set_sound_volume(new_value)
 
 
 func _on_focus_sound():
