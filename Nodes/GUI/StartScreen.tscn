@@ -660,6 +660,18 @@ tracks/9/keys = {
 "method": "disable_buttons"
 } ]
 }
+tracks/10/type = "value"
+tracks/10/path = NodePath("ControllerInputs:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 2, 28, 30 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=27]
 resource_name = "fade_in"
@@ -986,6 +998,9 @@ custom_styles/slider = SubResource( 17 )
 custom_styles/grabber_area_highlight = SubResource( 18 )
 custom_styles/grabber_area = SubResource( 19 )
 value = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Credits_Button" type="Button" parent="Control/Controls_Options"]
 margin_left = -211.0
