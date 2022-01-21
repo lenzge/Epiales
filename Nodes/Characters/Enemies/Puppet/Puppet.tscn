@@ -30,6 +30,7 @@ height = 50.0
 extents = Vector2( 300, 45 )
 
 [node name="Puppet" type="Node2D"]
+pause_mode = 1
 process_priority = 1
 script = ExtResource( 1 )
 attack_interval_min = 2.0
@@ -267,6 +268,7 @@ time = 0.5
 
 [connection signal="timeout" from="AttackTimer" to="." method="set_can_attack" binds= [ true ]]
 [connection signal="died" from="PuppetCharacter" to="." method="on_died"]
+[connection signal="on_hit_stop" from="PuppetCharacter/HitBox" to="PuppetCharacter" method="on_hit_stop"]
 [connection signal="hit" from="PuppetCharacter/AttackArea" to="StateMachine/Combat/StateMachine/RunAttack" method="on_hit"]
 [connection signal="transitioned" from="PuppetCharacter/StateMachine" to="." method="switched_state"]
 

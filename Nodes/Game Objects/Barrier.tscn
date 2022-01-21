@@ -131,6 +131,7 @@ tracks/2/keys = {
 }
 
 [node name="Barrier" type="Area2D"]
+pause_mode = 2
 collision_layer = 8
 script = ExtResource( 1 )
 
