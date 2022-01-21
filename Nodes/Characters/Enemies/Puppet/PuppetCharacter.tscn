@@ -11,8 +11,8 @@
 [ext_resource path="res://Nodes/Characters/Enemies/States/AttackWindup.gd" type="Script" id=9]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackRun.gd" type="Script" id=10]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackFall.gd" type="Script" id=11]
-[ext_resource path="res://Nodes/Characters/Enemies/States/Hit_by_charged_dash.gd" type="Script" id=12]
-[ext_resource path="res://Assets/Sound/SFX_enemy_alert.wav" type="AudioStream" id=13]
+[ext_resource path="res://Assets/Sound/SFX_enemy_alert.wav" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sound/SFX_Puppet_slide.wav" type="AudioStream" id=13]
 [ext_resource path="res://Assets/Art/Enemies/Puppet/puppet_flinch.png" type="Texture" id=14]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_idle.png" type="Texture" id=16]
 [ext_resource path="res://Nodes/Characters/HealthBar.tscn" type="PackedScene" id=18]
@@ -33,6 +33,7 @@
 [ext_resource path="res://Nodes/Util/SoundMachine.gd" type="Script" id=33]
 [ext_resource path="res://Assets/Sound/SFX_Lucy_s_attack_impact.wav" type="AudioStream" id=34]
 [ext_resource path="res://Assets/Sound/SFX_Puppet_Blade.wav" type="AudioStream" id=35]
+[ext_resource path="res://Nodes/Characters/Enemies/States/Hit_by_charged_dash.gd" type="Script" id=36]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 20.0
@@ -2371,7 +2372,7 @@ _floor_detection_raycast_path = NodePath("../../BackFloorDetectionRay")
 script = ExtResource( 6 )
 
 [node name="Hit_by_charged_dash" type="Node" parent="StateMachine"]
-script = ExtResource( 12 )
+script = ExtResource( 36 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack_Basic = SubResource( 4 )
@@ -2416,8 +2417,12 @@ volume_db = -6.0
 bus = "Sounds"
 
 [node name="Alert" type="AudioStreamPlayer2D" parent="SoundMachine"]
-stream = ExtResource( 13 )
+stream = ExtResource( 12 )
 volume_db = -6.0
+bus = "Sounds"
+
+[node name="Slide" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 13 )
 bus = "Sounds"
 
 [connection signal="on_hit_start" from="HitBox" to="." method="on_hit"]

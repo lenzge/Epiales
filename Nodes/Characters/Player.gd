@@ -44,6 +44,7 @@ var nightmare : float = 0
 var enemies_in_range : int = 0
 
 onready var sound_machine : SoundMachine = $SoundMachine
+onready var camera = $Camera
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -194,6 +195,7 @@ func _process(delta):
 	# If enemies are nearby increase the nightmare
 	if enemies_in_range > 0:
 		increment_nightmare(nightmare_enemy_surronding_increment)
+	
 
 # Normal movement on ground
 # Player is not allowed to turn around while attack windup

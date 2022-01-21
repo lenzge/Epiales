@@ -27,6 +27,7 @@ func enter(_msg :={}):
 	_direction_x = 1.0 if _focused_player.global_position.x > _controlled_character.global_position.x else -1.0
 	_controlled_character.is_winding_up = true
 	_attack_count = 1
+	_controlled_character.sound_machine.play_sound("Slide", false)
 
 
 func physics_update(_delta):
