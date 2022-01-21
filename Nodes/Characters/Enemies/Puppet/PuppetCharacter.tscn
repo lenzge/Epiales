@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackRunRun.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Characters/Enemies/States/Flinch.gd" type="Script" id=2]
@@ -12,7 +12,7 @@
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackRun.gd" type="Script" id=10]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackFall.gd" type="Script" id=11]
 [ext_resource path="res://Nodes/Characters/Enemies/States/Hit_by_charged_dash.gd" type="Script" id=12]
-[ext_resource path="res://Assets/Sound/SFX_enemy_alert.wav" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sound/SFX_enemy_alert.wav" type="AudioStream" id=13]
 [ext_resource path="res://Assets/Art/Enemies/Puppet/puppet_flinch.png" type="Texture" id=14]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_idle.png" type="Texture" id=16]
 [ext_resource path="res://Nodes/Characters/HealthBar.tscn" type="PackedScene" id=18]
@@ -2416,7 +2416,7 @@ volume_db = -6.0
 bus = "Sounds"
 
 [node name="Alert" type="AudioStreamPlayer2D" parent="SoundMachine"]
-stream = ExtResource( 12 )
+stream = ExtResource( 13 )
 volume_db = -6.0
 bus = "Sounds"
 

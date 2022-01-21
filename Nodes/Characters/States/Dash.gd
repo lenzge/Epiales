@@ -26,11 +26,11 @@ func enter(_msg := {}):
 			_dash_direction.x = 1
 	_dash_direction = _dash_direction.normalized()
 	
-	if Input.is_action_pressed("charge") and player.charge_controller.has_charge():
+	if Input.is_action_pressed("charge"):# and player.charge_controller.has_charge():
 		player.charge()
 		timer.start(player.charged_dash_time)
 		animationPlayer.play("Dash_Charged")
-		animationPlayer.set_speed_scale(animationPlayer.current_animation_length/player.charged_dash_time) # Animation takes as long as charged_dash_time
+		#animationPlayer.set_speed_scale(animationPlayer.current_animation_length/player.charged_dash_time) # Animation takes as long as charged_dash_time
 		player.velocity = _dash_direction * player.dash_speed * 0.9 # Make Charged Dash a little slower but longer
 		charged_hitbox.knockback_force = player.charged_dash_damage
 		charged_hitbox.emitter_path = player.get_path() # todo change this to velocity?

@@ -18,7 +18,6 @@ func update(delta):
 		state_machine.transition_to("Flinch", {"direction_x":direction})
 
 func exit():
-	print("Hit_by_charged_dash: exit")
 	var damage_dealt = int(damage * (OS.get_ticks_msec() - enter_time) / 1000)
 	character.health -= damage_dealt
 	character.healthbar.get_damage(damage_dealt)

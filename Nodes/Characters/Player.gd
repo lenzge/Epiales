@@ -82,7 +82,7 @@ export(bool) var dash_reset_after_wallhang : bool = true
 export(Array, int) var attack_force = [20, 30, 40, 60] # attack chain + charged attack
 export(int) var attack_force_up = 10
 export(int) var attack_force_down = 10
-export(int) var charged_dash_damage = 140
+export(int) var charged_dash_damage = 80
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
 export(float) var max_nightmare : float = 60.0

@@ -62,9 +62,7 @@ func on_hit(emitter : DamageEmitter):
 
 func on_hit_stop(emitter : DamageEmitter):
 # zeit zählen und dann abhängig von zeit am Ende Schaden machen
-	print("puppetcharacter: hit stop first")
 	if(emitter.name == "Charged_Dash"):
-		print("puppetcharacter: hit stop")
 		var time = emitter.knockback_time
 		var direction = emitter.direction.x
 		var force = emitter.knockback_force
