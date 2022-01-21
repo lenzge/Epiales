@@ -100,6 +100,8 @@ func transition_to(target_state_name, msg: Dictionary = {}):
 			if transition.enabled:
 				transition._prepare()
 		emit_signal("transitioned", state.name)
+	
+	
 
 
 func is_in_state(list_of_states : Array) -> bool:

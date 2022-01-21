@@ -1,151 +1,111 @@
 extends Node
 
-enum SoundtrackTypes {MUSIC_CALM, MUSIC_HECTIC}
+const RANDOM_NUMBER : int = 1000
 
-const VOLUME_RANGE : float = 80.0
+var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
-export var calm_music_path : String
-export var hectic_music_path : String
-export(SoundtrackTypes) var starting_track
-export var interpolation_damper : float = 5.0
-export var is_active : bool = false
+var music_playing = []
+var music_fade_out = {}
+var music_fade_in = {}
+var music_fade_in_at_random = {}
 
-var player : Player = null
-var player_last_position : float
-var transition_area_width : float
-var previous_active_music : AudioStreamPlayer
-var volume_change : float = 0.0
+var all_available_music = {}
 
-var switching : bool = false
-
-onready var node_calm_music : AudioStreamPlayer = $Calm_music
-onready var node_hectic_music : AudioStreamPlayer = $Hectic_music
-
+class MusicData:
+	var original_volume : float
+	func _init(p_original_volume: float):
+		original_volume = p_original_volume
 
 func _ready():
-	if is_active:
-		
-		# load soundtracks
-		var calm_audio_stream = load(calm_music_path)
-		var hectic_audio_stream = load(hectic_music_path)
-		
-		node_calm_music.stream = calm_audio_stream
-		node_hectic_music.stream = hectic_audio_stream
-		
-		# initializing the tracks
-		node_calm_music.play()
-		node_hectic_music.play()
-		
-		if starting_track == SoundtrackTypes.MUSIC_CALM:
-			node_hectic_music.stream_paused = true
-			node_hectic_music.volume_db = -VOLUME_RANGE
-		elif starting_track == SoundtrackTypes.MUSIC_HECTIC:
-			node_calm_music.stream_paused = true
-			node_calm_music.volume_db = -VOLUME_RANGE
-
-
-func _process(delta):
-	if is_active:
-		track_player()
-		switch_soundtracks()
-
-
-func track_player() -> void:
+	rng.randomize()
 	
-	# track the players movement and calculate the volume adjustement based on it
-	if player != null:
-		var player_distance = player.position.x - player_last_position
-		player_last_position = player.position.x
-		
-		var volume_adjustement = (player_distance / transition_area_width) * VOLUME_RANGE
-		
-		if previous_active_music == node_calm_music:
-			tracking_adjust_volume(node_calm_music, node_hectic_music, volume_adjustement)
-		elif previous_active_music == node_hectic_music:
-			tracking_adjust_volume(node_hectic_music, node_calm_music, volume_adjustement)
+	for player in self.get_children():
+		var data = MusicData.new(player.volume_db)
+		all_available_music[player.get_name()] = data
 
 
-func start_tracking(body: Player, music_transition_area: MusicTransitionArea) -> void:
-	# init tracking data
-	player = body
-	player_last_position = body.position.x
-	transition_area_width = ((music_transition_area.scale.x * 2))
+func _process(_delta):
+	for music in music_fade_out:
+		if get_node(music).volume_db >= -60:
+			get_node(music).volume_db -= music_fade_out[music]
+		else:
+			get_node(music).volume_db = all_available_music[music].original_volume
+			music_fade_out.erase(music)
+			stop_music(music)
 	
-	# start the paused Soundtrack
-	if node_hectic_music.stream_paused:
-		node_hectic_music.stream_paused = false
-		previous_active_music = node_calm_music
-	elif node_calm_music.stream_paused:
-		node_calm_music.stream_paused = false
-		previous_active_music = node_hectic_music
-
-
-func stop_tracking() -> void:
-	player = null
-	volume_change = 0.0
+	for music in music_fade_in:
+		if get_node(music).volume_db < all_available_music[music].original_volume:
+			get_node(music).volume_db += music_fade_in[music]
+		else:
+			get_node(music).volume_db = all_available_music[music].original_volume
+			music_fade_in.erase(music)
 	
-	# reset the volumes and pause the not wanted soundtrack
-	if node_calm_music.volume_db > node_hectic_music.volume_db:
-		node_calm_music.volume_db = 0
-		node_hectic_music.volume_db = -VOLUME_RANGE
-		node_hectic_music.stream_paused = true
-	elif node_hectic_music.volume_db > node_calm_music.volume_db:
-		node_hectic_music.volume_db = 0
-		node_calm_music.volume_db = -VOLUME_RANGE
-		node_calm_music.stream_paused = true
+	for music in music_fade_in_at_random:
+		if not music in music_playing:
+			var random = rng.randi_range(0, RANDOM_NUMBER)
+			if random == RANDOM_NUMBER:
+				fade_in_music(music, music_fade_in_at_random[music])
+				music_fade_in_at_random.erase(music)
+		else:
+			music_fade_in_at_random.erase(music)
 
 
-func tracking_adjust_volume(music_old: AudioStreamPlayer, music_new: AudioStreamPlayer,
-		volume_adjustement: float) -> void:
-	
-	volume_change += volume_adjustement
-	
-	# adjust the volumes, but with non-linearity
-	music_old.volume_db = - (pow(abs(volume_change) / VOLUME_RANGE,
-			interpolation_damper) * VOLUME_RANGE)
-	music_new.volume_db = - ((pow((VOLUME_RANGE - abs(volume_change)) / VOLUME_RANGE,
-			interpolation_damper) * VOLUME_RANGE))
+func play_music(music_name: String) -> void:
+	if not music_name in music_playing:
+		get_node(music_name).play(0)
+		music_playing.append(music_name)
 
 
-# load another soundtrack
-func change_soundtrack(soundtrack_type, track_path: String) -> void:
-	var audio_stream = load(track_path)
-	
-	if soundtrack_type == SoundtrackTypes.MUSIC_HECTIC:
-		node_hectic_music.stop()
-		node_hectic_music.stream = audio_stream
-		node_hectic_music.play()
-	elif soundtrack_type == SoundtrackTypes.MUSIC_CALM:
-		node_calm_music.stop()
-		node_calm_music.stream = audio_stream
-		node_calm_music.play()
+func stop_music(music_name: String) -> void:
+	if music_name in music_playing:
+		get_node(music_name).stop()
+		music_playing.erase(music_name)
 
 
-func set_switching() -> void:
-	switching = true
-	
-	if node_hectic_music.stream_paused:
-		node_hectic_music.stream_paused = false
-		previous_active_music = node_calm_music
-	elif node_calm_music.stream_paused:
-		node_calm_music.stream_paused = false
-		previous_active_music = node_hectic_music
+func fade_out_music(music_name: String, rate = 1.0):
+	if music_name in music_playing and not music_name in music_fade_out:
+		music_fade_out[music_name] = rate
 
 
-# Switch soundtracks with simple fade in and fade out
-func switch_soundtracks() -> void:
-	if switching:
-		
-		if previous_active_music == node_calm_music:
-			node_calm_music.volume_db -= 2
-			node_hectic_music.volume_db += 2
-			if node_hectic_music.volume_db == 0:
-				switching = false
-				node_calm_music.stream_paused = true
-				
-		elif previous_active_music == node_hectic_music:
-			node_hectic_music.volume_db -= 2
-			node_calm_music.volume_db += 2
-			if node_calm_music.volume_db == 0:
-				switching = false
-				node_hectic_music.stream_paused = true
+func fade_out_everything(rate = 1.0):
+	for music in music_playing:
+		fade_out_music(music, rate)
+	music_fade_in.clear()
+	music_fade_in_at_random.clear()
+
+
+func fade_in_music(music_name: String, rate = 1.0):
+	if not music_name in music_playing:
+		music_fade_in[music_name] = rate
+		get_node(music_name).volume_db = -60
+		play_music(music_name)
+
+
+func fade_in_at_random(music_name: String, rate = 1.0):
+	if not music_name in music_playing:
+		music_fade_in_at_random[music_name] = rate
+
+
+func set_music_volume(value: float) -> void:
+	var bus_idx = AudioServer.get_bus_index("Music")
+	var eased_value = -Globals.VOLUME_DB_RANGE * pow(abs(value) / Globals.VOLUME_DB_RANGE, Globals.VOLUME_EASE_FACTOR)
+	AudioServer.set_bus_volume_db(bus_idx, eased_value)
+
+
+func get_music_volume() -> float:
+	var bus_idx = AudioServer.get_bus_index("Music")
+	var eased_value = AudioServer.get_bus_volume_db(bus_idx)
+	return -Globals.VOLUME_DB_RANGE * pow(abs(eased_value) / Globals.VOLUME_DB_RANGE, 1 / Globals.VOLUME_EASE_FACTOR)
+
+
+func set_sound_volume(value: float) -> void:
+	var bus_idx = AudioServer.get_bus_index("Sounds")
+	var eased_value = -Globals.VOLUME_DB_RANGE * pow(abs(value) / Globals.VOLUME_DB_RANGE, Globals.VOLUME_EASE_FACTOR)
+	AudioServer.set_bus_volume_db(bus_idx, eased_value)
+
+
+func get_sound_volume() -> float:
+	var bus_idx = AudioServer.get_bus_index("Sounds")
+	var eased_value = AudioServer.get_bus_volume_db(bus_idx)
+	return -Globals.VOLUME_DB_RANGE * pow(abs(eased_value) / Globals.VOLUME_DB_RANGE, 1 / Globals.VOLUME_EASE_FACTOR)
+

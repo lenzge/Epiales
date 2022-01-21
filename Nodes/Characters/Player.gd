@@ -23,6 +23,7 @@ var started_dash_in_air := false
 var in_charged_attack := false
 var attack_count := 1 # Needs to be 1 because increment happens after the attack
 var attack_direction := 0 # Set to 1 or -1 when in attack, so the player can't turn
+var in_air_attack
 
 var can_hang_on_wall := true
 var raycasts_enabled := false
@@ -100,6 +101,7 @@ onready var charge_controller = $ChargeController
 
 onready var ray_left : RayCast2D = $RayLeft
 onready var ray_right : RayCast2D = $RayRight
+
 
 # Needed for the wall hang
 onready var player_size_x = collision_shape.shape.extents.x
@@ -489,8 +491,8 @@ func increment_nightmare(increment: float) -> void:
 		nightmare = max_nightmare
 	emit_signal("nightmare_changed")
 	
-	#if nightmare >= max_nightmare:
-	#	$StateMachine.transition_to("Die")
+	if nightmare >= max_nightmare:
+		$StateMachine.transition_to("Die")
 
 
 func add_enemy_in_range():
@@ -503,21 +505,30 @@ func remove_enemy_in_range():
 
 
 func _on_Attack_Down_Air_hit(receiver):
-	velocity.y = -attack_air_down_knockback_impulse
-	reduce_nightmare(nightmare_on_hit_reduction)
+	if receiver.receiver.state_machine.state.name != "Die":
+		velocity.y = -attack_air_down_knockback_impulse
+		reduce_nightmare(nightmare_on_hit_reduction)
 
 
 func _on_Attack_Up_Air_hit(receiver):
-	reduce_nightmare(nightmare_on_hit_reduction)
+	if receiver.receiver.state_machine.state.name != "Die":
+		reduce_nightmare(nightmare_on_hit_reduction)
 
 
 func _on_Attack_Down_Ground_hit(receiver):
-	reduce_nightmare(nightmare_on_hit_reduction)
+	if receiver.receiver.state_machine.state.name != "Die":
+		reduce_nightmare(nightmare_on_hit_reduction)
 
 
 func _on_Attack_Up_Ground_hit(receiver):
-	reduce_nightmare(nightmare_on_hit_reduction)
+	if receiver.receiver.state_machine.state.name != "Die":
+		reduce_nightmare(nightmare_on_hit_reduction)
 
 
 func _on_Attack_hit(receiver):
-	reduce_nightmare(nightmare_on_hit_reduction)
+	if receiver.receiver.state_machine.state.name != "Die":
+		reduce_nightmare(nightmare_on_hit_reduction)
+
+
+func _on_AnimationPlayer_animation_finished():
+	pass

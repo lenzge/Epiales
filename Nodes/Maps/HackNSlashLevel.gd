@@ -44,4 +44,5 @@ func _on_Checkpoint_checkpoint_entered(new_spawnpoint: Vector2, prio: int) -> vo
 
 func reset():
 	player_instance.position = current_spawnpoint
+	player_instance.get_node("SoundMachine").play_sound("respawn", false)
 	emit_signal("level_reset")

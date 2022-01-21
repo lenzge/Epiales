@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/SFX_slide.wav-21ad412325b4ee4c5d769f421438d20b.sample"
+path="res://.import/SFX_Jump.wav-d67a7d2479809ff7a6de32307b3ad82f.sample"
 
 [deps]
 
-source_file="res://Assets/Sound/SFX_slide.wav"
-dest_files=[ "res://.import/SFX_slide.wav-21ad412325b4ee4c5d769f421438d20b.sample" ]
+source_file="res://Assets/Sound/SFX_Jump.wav"
+dest_files=[ "res://.import/SFX_Jump.wav-d67a7d2479809ff7a6de32307b3ad82f.sample" ]
 
 [params]
 

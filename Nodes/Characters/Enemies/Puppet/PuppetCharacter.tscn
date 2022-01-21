@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=62 format=2]
 
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackRunRun.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Characters/Enemies/States/Flinch.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Nodes/Characters/Enemies/States/AttackWindup.gd" type="Script" id=9]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackRun.gd" type="Script" id=10]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackFall.gd" type="Script" id=11]
+[ext_resource path="res://Assets/Sound/SFX_enemy_alert.wav" type="AudioStream" id=12]
 [ext_resource path="res://Assets/Art/Enemies/Puppet/puppet_flinch.png" type="Texture" id=14]
 [ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_idle.png" type="Texture" id=16]
 [ext_resource path="res://Nodes/Characters/HealthBar.tscn" type="PackedScene" id=18]
@@ -28,6 +29,9 @@
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackRunWindUp.gd" type="Script" id=30]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/AttackRunRecovery.gd" type="Script" id=31]
 [ext_resource path="res://Nodes/Characters/Enemies/States/Attack.gd" type="Script" id=32]
+[ext_resource path="res://Nodes/Util/SoundMachine.gd" type="Script" id=33]
+[ext_resource path="res://Assets/Sound/SFX_Lucy_s_attack_impact.wav" type="AudioStream" id=34]
+[ext_resource path="res://Assets/Sound/SFX_Puppet_Blade.wav" type="AudioStream" id=35]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 20.0
@@ -2393,6 +2397,24 @@ anims/Walk_End = SubResource( 27 )
 anims/Walk_Loop = SubResource( 28 )
 anims/Walk_Start = SubResource( 29 )
 script = ExtResource( 24 )
+
+[node name="SoundMachine" type="Node2D" parent="."]
+script = ExtResource( 33 )
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 34 )
+volume_db = -6.0
+bus = "Sounds"
+
+[node name="Attack" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 35 )
+volume_db = -6.0
+bus = "Sounds"
+
+[node name="Alert" type="AudioStreamPlayer2D" parent="SoundMachine"]
+stream = ExtResource( 12 )
+volume_db = -6.0
+bus = "Sounds"
 
 [connection signal="on_hit_start" from="HitBox" to="." method="on_hit"]
 [connection signal="blocked" from="AttackArea" to="StateMachine/AttackRun" method="on_attack_has_been_blocked"]

@@ -22,6 +22,8 @@ var can_die : bool = true
 
 var _move_input : Vector2
 
+var sound_machine
+
 
 func _ready():
 	_set_up()
@@ -90,9 +92,13 @@ func on_hit(emitter : DamageEmitter):
 		direction_x = emitter.direction.x
 	state_machine.transition_to("Flinch", {"direction_x": -1.0 if direction_x < 0.0 else 1.0, "force": emitter.knockback_force})
 	emitter.hit($"HitBox")
+	
+	if !state_machine.state.name == "Die":
+		sound_machine.play_sound("Hit", false)
 
 
 func _set_up():
 	state_machine = $StateMachine
 	hitbox = $HitBox
 	animation = $AnimationPlayer
+	sound_machine = $SoundMachine
