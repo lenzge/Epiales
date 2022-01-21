@@ -1,16 +1,14 @@
 extends Camera2D
 
 enum MoveState {LEFT, RIGHT, UP, DOWN, IDLE}
+enum EaseModes {IN, OUT, IN_OUT}
 
 onready var player : Player = get_parent()
-onready var ray_left : RayCast2D = $Left
-onready var ray_right : RayCast2D = $Right
-onready var ray_up : RayCast2D = $Up
-onready var ray_down : RayCast2D = $Down
 
 export(float) var max_offset : float = 200.0
 export(float) var speed : float = 3.0
 export(float, 0.01, 0.2) var drag: float = 0.03
+export(EaseModes) var ease_mode = EaseModes.IN
 
 var current_state_x = MoveState.IDLE
 var current_state_y = MoveState.IDLE
@@ -31,8 +29,6 @@ func _process(delta):
 	
 	to_point.x = clamp((threshold(player.velocity.x, player.speed / 2) / player.speed) * max_offset, -max_offset, max_offset)
 	to_point.y = clamp((threshold(player.velocity.y, player.speed / 4) / player.speed) * max_offset, -max_offset, max_offset)
-	
-	print(to_point)
 	
 	# x
 	if raw_value.x < to_point.x:
@@ -100,8 +96,16 @@ func _process(delta):
 			raw_value.y = to_point.y
 			current_state_y = MoveState.IDLE
 	
-	self.offset.x = ease_func(abs(raw_value.x / max_offset)) * max_offset * get_sign(raw_value.x)
-	self.offset.y = ease_func(abs(raw_value.y / max_offset)) * max_offset * get_sign(raw_value.y)
+	match(ease_mode):
+		EaseModes.IN:
+			self.position.x = ease_func_in(abs(raw_value.x / max_offset)) * max_offset * get_sign(raw_value.x)
+			self.position.y = ease_func_in(abs(raw_value.y / max_offset)) * max_offset * get_sign(raw_value.y)
+		EaseModes.OUT:
+			self.position.x = ease_func_in(abs(raw_value.x / max_offset)) * max_offset * get_sign(raw_value.x)
+			self.position.y = ease_func_in(abs(raw_value.y / max_offset)) * max_offset * get_sign(raw_value.y)
+		EaseModes.IN_OUT:
+			self.position.x = ease_func_in_out(abs(raw_value.x / max_offset)) * max_offset * get_sign(raw_value.x)
+			self.position.y = ease_func_in_out(abs(raw_value.y / max_offset)) * max_offset * get_sign(raw_value.y)
 
 
 func threshold(value: float, threshold: float):
@@ -119,7 +123,7 @@ func get_sign(value: float) -> int:
 
 
 ## ease_in_out cubic
-func ease_func(value: float) -> float:
+func ease_func_in_out(value: float) -> float:
 	var ret_val: float = 0.0
 	if value < 0.5:
 		ret_val = 4 * value * value * value
@@ -128,9 +132,9 @@ func ease_func(value: float) -> float:
 	return ret_val
 
 
-func check_collision_x():
-	pass
+func ease_func_in(value: float) -> float:
+	return pow(value, 3)
 
 
-func check_collision_y():
-	pass
+func ease_func_out(value: float) -> float:
+	return 1 - pow(1 - value, 3)
