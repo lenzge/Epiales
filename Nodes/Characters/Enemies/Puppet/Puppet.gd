@@ -3,6 +3,9 @@ extends Node2D
 export var attack_interval_min : float
 export var attack_interval_max : float
 
+# the character state machine (not the puppet state_machine)
+onready var state_machine = $PuppetCharacter.state_machine
+
 var focused_player : Player = null setget set_focused_player, get_focused_player
 var can_attack : bool = true
 var is_registered_by_player : bool = false
@@ -17,11 +20,11 @@ func _ready():
 func _process(delta):
 	# Deal damage when not in dying state and when in range of player
 	if $PuppetCharacter.is_focused and focused_player != null and \
-	$PuppetCharacter/StateMachine.state.name != "Die" and !is_registered_by_player:
+	state_machine.state.name != "Die" and !is_registered_by_player:
 		focused_player.add_enemy_in_range()
 		is_registered_by_player = true
 	elif (!$PuppetCharacter.is_focused and is_registered_by_player) or \
-	($PuppetCharacter.is_focused and is_registered_by_player and $PuppetCharacter/StateMachine.state.name == "Die"):
+	($PuppetCharacter.is_focused and is_registered_by_player and state_machine.state.name == "Die"):
 		focused_player.remove_enemy_in_range()
 		is_registered_by_player = false
 

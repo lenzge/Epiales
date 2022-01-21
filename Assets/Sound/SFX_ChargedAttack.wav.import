@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SFX_ChargedAttack.wav-e29f8f4ec4642f097f844b5415c77fb0.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX_ChargedAttack.wav"
+dest_files=[ "res://.import/SFX_ChargedAttack.wav-e29f8f4ec4642f097f844b5415c77fb0.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -2,8 +2,11 @@ extends Node
 
 enum Devices {KEYBOARD, CONTROLER}
 
-const UI_FOCUSED_COLOR : Color = Color(1.0, 0.0, 0.0, 1.0)
+const UI_FOCUSED_COLOR : Color = Color(0.61, 0.45, 0.65, 1.0)
 const UI_UNFOCUSED_COLOR : Color = Color(1.0, 1.0, 1.0, 1.0)
+
+const VOLUME_DB_RANGE : float = 60.0
+const VOLUME_EASE_FACTOR : float = 2.0
 
 var current_device = Devices.KEYBOARD
 

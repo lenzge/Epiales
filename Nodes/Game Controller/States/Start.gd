@@ -25,6 +25,7 @@ func _ready():
 func enter(_msg := {}):
 	startscreen = startscreen_scene.instance()
 	startscreen.center()
+	startscreen.load_sliders()
 #	sprite = startscreen.get_child(1)
 #	sprite.set_position(OS.get_real_window_size() / 2)
 	
@@ -32,6 +33,8 @@ func enter(_msg := {}):
 		timer.start(wait_time)
 	else:
 		show_startscreen()
+	
+	MusicController.play_music("OST_MENU")
 
 
 func update(_delta):

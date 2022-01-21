@@ -3,12 +3,10 @@ extends Node2D
 
 onready var animationPlayer = $AnimationPlayer
 onready var menu_change_player = $Menu_change
+onready var sound_machine : SoundMachine = $SoundMachine
 
 var _rng = RandomNumberGenerator.new()
-
 var in_options : bool = false
-var focus_color : Color = Color(1.0, 0, 0, 1.0)
-var unfocus_color : Color = Color(1.0, 1.0, 1.0, 1.0)
 
 signal start_game
 signal close_finished
@@ -18,6 +16,13 @@ func _ready():
 	animationPlayer.play("Idle")
 	
 	$Control/Controls_Menu/Play_Button.grab_focus()
+	
+	for item in $Control/Controls_Menu.get_children():
+		if item is Button:
+			item.get("custom_styles/focus").border_color = Globals.UI_FOCUSED_COLOR
+	for item in $Control/Controls_Options.get_children():
+		if item is Button:
+			item.get("custom_styles/focus").border_color = Globals.UI_FOCUSED_COLOR
 
 
 func _on_close_timeout():
@@ -33,6 +38,10 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 	elif _animation == 3:
 		animationPlayer.play("Look_Around")
 
+
+func load_sliders():
+	$Control/Controls_Options/Slider_Music.value = ((MusicController.get_music_volume() + Globals.VOLUME_DB_RANGE) / Globals.VOLUME_DB_RANGE) * $Control/Controls_Options/Slider_Music.max_value
+	$Control/Controls_Options/Slider_SFX.value = ((MusicController.get_sound_volume() + Globals.VOLUME_DB_RANGE) / Globals.VOLUME_DB_RANGE) * $Control/Controls_Options/Slider_SFX.max_value
 
 # center ui on resize event
 func center():
@@ -88,6 +97,8 @@ func disable_buttons(value: bool):
 
 
 func _on_Play_Button_pressed():
+	MusicController.fade_out_music("OST_MENU", 0.2)
+	sound_machine.play_sound("UI_enter", false)
 	emit_signal("start_game")
 
 
@@ -110,19 +121,19 @@ func _on_Credits_Button_pressed():
 
 
 func _on_Slider_Music_focus_entered():
-	$Control/Controls_Options/Label_Music.modulate = focus_color
+	$Control/Controls_Options/Label_Music.modulate = Globals.UI_FOCUSED_COLOR
 
 
 func _on_Slider_Music_focus_exited():
-	$Control/Controls_Options/Label_Music.modulate = unfocus_color
+	$Control/Controls_Options/Label_Music.modulate = Globals.UI_UNFOCUSED_COLOR
 
 
 func _on_Slider_SFX_focus_entered():
-	$Control/Controls_Options/Label_SFX.modulate = focus_color
+	$Control/Controls_Options/Label_SFX.modulate = Globals.UI_FOCUSED_COLOR
 
 
 func _on_Slider_SFX_focus_exited():
-	$Control/Controls_Options/Label_SFX.modulate = unfocus_color
+	$Control/Controls_Options/Label_SFX.modulate = Globals.UI_UNFOCUSED_COLOR
 
 
 func _on_Menu_change_animation_finished(anim_name):
@@ -130,3 +141,17 @@ func _on_Menu_change_animation_finished(anim_name):
 		$Control/Controls_Options/Slider_Music.grab_focus()
 	elif anim_name == "to_Menu":
 		$Control/Controls_Menu/Play_Button.grab_focus()
+
+
+func _on_Slider_Music_value_changed(value):
+	var new_value = -Globals.VOLUME_DB_RANGE + ((value / $Control/Controls_Options/Slider_Music.max_value) * Globals.VOLUME_DB_RANGE)
+	MusicController.set_music_volume(new_value)
+
+
+func _on_Slider_SFX_value_changed(value):
+	var new_value = -Globals.VOLUME_DB_RANGE + ((value / $Control/Controls_Options/Slider_Music.max_value) * Globals.VOLUME_DB_RANGE)
+	MusicController.set_sound_volume(new_value)
+
+
+func _on_focus_sound():
+	sound_machine.play_sound("UI_click", false)

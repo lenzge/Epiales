@@ -3,10 +3,9 @@ extends CanvasLayer
 
 onready var animationPlayer = $AnimationPlayer
 onready var control_elements : int = $Control.get_child_count()
+onready var sound_machine : SoundMachine = $SoundMachine
 
 var visible : bool = false setget set_visible, is_visible
-var focus_color : Color = Color(1.0, 0.0, 0.0, 1.0)
-var unfocus_color : Color = Color(1.0, 1.0, 1.0, 1.0)
 var in_pause_screen : bool = false
 
 signal close_finished
@@ -52,6 +51,13 @@ func set_visible(value: bool):
 			item.visible = value
 	center()
 	$Control/Music/Slider_Music.grab_focus()
+	
+	for item in $Control.get_children():
+		if item is Button:
+			item.get("custom_styles/focus").border_color = Globals.UI_FOCUSED_COLOR
+	
+	$Control/Music/Slider_Music.value = ((MusicController.get_music_volume() + Globals.VOLUME_DB_RANGE) / Globals.VOLUME_DB_RANGE) * $Control/Music/Slider_Music.max_value
+	$Control/SFX/Slider_SFX.value = ((MusicController.get_sound_volume() + Globals.VOLUME_DB_RANGE) / Globals.VOLUME_DB_RANGE) * $Control/SFX/Slider_SFX.max_value
 
 func is_visible() -> bool:
 	return visible
@@ -65,20 +71,35 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 func _on_Button_Continue_pressed():
 	in_pause_screen = false
+	sound_machine.play_sound("UI_enter", false)
 	emit_signal("resume_game")
 
 
 func _on_Slider_Music_focus_entered():
-	$Control/Music/Label_Music.modulate = focus_color
+	$Control/Music/Label_Music.modulate = Globals.UI_FOCUSED_COLOR
 
 
 func _on_Slider_Music_focus_exited():
-	$Control/Music/Label_Music.modulate = unfocus_color
+	$Control/Music/Label_Music.modulate = Globals.UI_UNFOCUSED_COLOR
 
 
 func _on_Slider_SFX_focus_entered():
-	$Control/SFX/Label_SFX.modulate = focus_color
+	$Control/SFX/Label_SFX.modulate = Globals.UI_FOCUSED_COLOR
 
 
 func _on_Slider_SFX_focus_exited():
-	$Control/SFX/Label_SFX.modulate = unfocus_color
+	$Control/SFX/Label_SFX.modulate = Globals.UI_UNFOCUSED_COLOR
+
+
+func _on_Slider_Music_value_changed(value):
+	var new_value = -Globals.VOLUME_DB_RANGE + ((value / $Control/Music/Slider_Music.max_value) * Globals.VOLUME_DB_RANGE)
+	MusicController.set_music_volume(new_value)
+
+
+func _on_Slider_SFX_value_changed(value):
+	var new_value = -Globals.VOLUME_DB_RANGE + ((value / $Control/SFX/Slider_SFX.max_value) * Globals.VOLUME_DB_RANGE)
+	MusicController.set_sound_volume(new_value)
+
+
+func _on_focus_sound():
+	sound_machine.play_sound("UI_click", false)
