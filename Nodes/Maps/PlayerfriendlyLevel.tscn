@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Assets/Art/Tiles/amusement_park_env_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Nodes/Game Objects/Checkpoint.tscn" type="PackedScene" id=2]
@@ -10,6 +10,9 @@
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/Puppet.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Nodes/Game Objects/DashResetter.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Assets/Art/Tiles/amusment_park_background_tileset.tres" type="TileSet" id=10]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 12.5195, 53.5058 )
 
 [node name="Level" type="Node2D"]
 pause_mode = 1
@@ -56,9 +59,6 @@ position = Vector2( -4696, 496 )
 [node name="Checkpoint7" parent="." instance=ExtResource( 2 )]
 position = Vector2( -3024, 1168 )
 
-[node name="Puppet" parent="." instance=ExtResource( 8 )]
-position = Vector2( -485.167, 1457.99 )
-
 [node name="Puppet2" parent="." instance=ExtResource( 8 )]
 position = Vector2( -3031.51, 565.746 )
 
@@ -67,36 +67,6 @@ position = Vector2( -2327.7, 423.202 )
 
 [node name="Puppet5" parent="." instance=ExtResource( 8 )]
 position = Vector2( -3067.15, 284.222 )
-
-[node name="Puppet3" parent="." instance=ExtResource( 8 )]
-position = Vector2( -1384.97, 1477.28 )
-
-[node name="BirdPatrolPoints" parent="." instance=ExtResource( 7 )]
-position = Vector2( -2094.21, 1223.73 )
-
-[node name="CollisionShape2D2" parent="BirdPatrolPoints" index="0"]
-position = Vector2( 635.804, 0 )
-
-[node name="Bird" parent="." instance=ExtResource( 6 )]
-position = Vector2( -2038.89, 1232.62 )
-
-[node name="BirdPatrolPoints2" parent="." instance=ExtResource( 7 )]
-position = Vector2( -2094.21, 839.848 )
-
-[node name="CollisionShape2D2" parent="BirdPatrolPoints2" index="0"]
-position = Vector2( 635.804, 0 )
-
-[node name="Bird2" parent="." instance=ExtResource( 6 )]
-position = Vector2( -2038.89, 848.738 )
-
-[node name="BirdPatrolPoints3" parent="." instance=ExtResource( 7 )]
-position = Vector2( -2094.21, 330.217 )
-
-[node name="CollisionShape2D2" parent="BirdPatrolPoints3" index="0"]
-position = Vector2( 635.804, 0 )
-
-[node name="Bird3" parent="." instance=ExtResource( 6 )]
-position = Vector2( -2038.89, 339.107 )
 
 [node name="DashResetter" parent="." instance=ExtResource( 9 )]
 position = Vector2( -4192.62, 212.694 )
@@ -134,7 +104,59 @@ tile_data = PoolIntArray( 65535, 0, 0, 393214, 0, 0, 327681, 0, 0, 1113784, 0, 0
 [node name="Fightzone" parent="." instance=ExtResource( 5 )]
 position = Vector2( -552.067, 1439 )
 
-[editable path="BirdPatrolPoints"]
-[editable path="BirdPatrolPoints2"]
-[editable path="BirdPatrolPoints3"]
+[node name="LeftBarrier" parent="Fightzone" index="0"]
+position = Vector2( -1577.78, -916.879 )
+
+[node name="RightBarrier" parent="Fightzone" index="1"]
+position = Vector2( 744.067, -112 )
+
+[node name="Puppet" parent="Fightzone" instance=ExtResource( 8 )]
+position = Vector2( 66.9, 18.99 )
+
+[node name="Puppet2" parent="Fightzone" instance=ExtResource( 8 )]
+position = Vector2( 66.9, 18.99 )
+
+[node name="Puppet3" parent="Fightzone" instance=ExtResource( 8 )]
+position = Vector2( -832.903, 38.28 )
+
+[node name="BirdPatrolPoints" parent="Fightzone" instance=ExtResource( 7 )]
+position = Vector2( -1542.14, -215.27 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Fightzone/BirdPatrolPoints"]
+position = Vector2( 635.804, 0 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fightzone/BirdPatrolPoints"]
+shape = SubResource( 1 )
+
+[node name="Bird" parent="Fightzone" instance=ExtResource( 6 )]
+position = Vector2( -1486.82, -206.38 )
+
+[node name="BirdPatrolPoints2" parent="Fightzone" instance=ExtResource( 7 )]
+position = Vector2( -1542.14, -599.152 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Fightzone/BirdPatrolPoints2"]
+position = Vector2( 635.804, 0 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fightzone/BirdPatrolPoints2"]
+shape = SubResource( 1 )
+
+[node name="Bird2" parent="Fightzone" instance=ExtResource( 6 )]
+position = Vector2( -1486.82, -590.262 )
+
+[node name="BirdPatrolPoints3" parent="Fightzone" instance=ExtResource( 7 )]
+position = Vector2( -1542.14, -1108.78 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Fightzone/BirdPatrolPoints3"]
+position = Vector2( 635.804, 0 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fightzone/BirdPatrolPoints3"]
+shape = SubResource( 1 )
+
+[node name="Bird3" parent="Fightzone" instance=ExtResource( 6 )]
+position = Vector2( -1486.82, -1099.89 )
+
 [editable path="Deadzone"]
+[editable path="Fightzone"]

@@ -56,3 +56,5 @@ func knockback(delta, force, direction):
 	velocity.x = force/2 * direction
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+func get_health():
+	return health_points

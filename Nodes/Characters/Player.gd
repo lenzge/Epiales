@@ -314,7 +314,7 @@ func is_tile_wall(ray: RayCast2D, collision_point: Vector2) -> bool:
 	
 	var collider = ray.get_collider()
 	
-	if collider is TileSet:
+	if collider is TileMap:
 		# get tile of tileset
 		var tile_pos = collider.world_to_map(collider.to_local(collision_point))
 		var tile_tex_coords = collider.get_cell_autotile_coord(tile_pos.x, tile_pos.y)

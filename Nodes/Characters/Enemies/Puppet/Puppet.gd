@@ -1,5 +1,7 @@
 extends Node2D
 
+signal died()
+
 export var attack_interval_min : float
 export var attack_interval_max : float
 
@@ -40,6 +42,8 @@ func set_focused_player(value):
 func get_focused_player() -> Player:
 	return focused_player
 
+func get_health():
+	return get_node("PuppetCharacter").health
 
 func switched_state(state_name):
 	if ["Attack",  "AttackRun"].has(state_name):
@@ -49,6 +53,7 @@ func switched_state(state_name):
 
 
 func on_died():
+	emit_signal("died")
 	queue_free()
 
 
