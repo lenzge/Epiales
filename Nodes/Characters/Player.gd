@@ -44,6 +44,7 @@ var nightmare : float = 0
 var enemies_in_range : int = 0
 
 onready var sound_machine : SoundMachine = $SoundMachine
+onready var camera = $Camera
 
 export(int) var speed :int = 300
 export(int) var attack_step_speed :int= 150
@@ -70,6 +71,7 @@ export(float) var friction_dash: float = 5
 export(float) var friction_leap_jump: float = 10
 
 export(float) var dash_time : float = 0.2
+export(float) var charged_dash_time : float = 0.7
 export(float) var dash_cooldown_time : float = 1.0
 export(float) var leap_jump_time : float = 0.8
 export(float) var jump_gravity_damper : float = 0.75
@@ -81,6 +83,7 @@ export(bool) var dash_reset_after_wallhang : bool = true
 export(Array, int) var attack_force = [20, 30, 40, 60] # attack chain + charged attack
 export(int) var attack_force_up = 10
 export(int) var attack_force_down = 10
+export(int) var charged_dash_damage = 80
 export(Array, int) var attack_knockback = [0.2, 0.2, 0.5, 0.3]
 
 export(float) var max_nightmare : float = 60.0
@@ -96,8 +99,10 @@ onready var hitbox_up_attack_air : Area2D = $Attack_Up_Air
 onready var hitbox_down_attack_air : Area2D = $Attack_Down_Air
 onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
+onready var hitbox_charged_dash: Area2D = $Charged_Dash
 onready var collision_shape : CollisionShape2D = $CollisionShape2D
 onready var charge_controller = $ChargeController
+
 
 onready var ray_left : RayCast2D = $RayLeft
 onready var ray_right : RayCast2D = $RayRight
@@ -190,6 +195,7 @@ func _process(delta):
 	# If enemies are nearby increase the nightmare
 	if enemies_in_range > 0:
 		increment_nightmare(nightmare_enemy_surronding_increment)
+	
 
 # Normal movement on ground
 # Player is not allowed to turn around while attack windup
@@ -368,6 +374,7 @@ func _flip_sprite_in_movement_dir() -> void:
 	hitbox_down_attack.scale.x = abs(scale.x) * direction
 	hitbox_up_attack_air.scale.x = abs(hitbox_up_attack_air.scale.x) * direction
 	hitbox_down_attack_air.scale.x = abs(hitbox_down_attack_air.scale.x) * direction
+	hitbox_charged_dash.scale.x = abs(hitbox_charged_dash.scale.x) * direction
 
 	
 func set_knockback(force, direction):
@@ -413,7 +420,7 @@ func _slow_with_friction(friction : float) -> void:
 # Is called when the player makes a charged attack
 func charge():
 	in_charged_attack = true
-	attack_count = 4
+	#attack_count = 4 # deleted this to use this method for charged dash
 	emit_signal("charged_action")
 
 
@@ -530,5 +537,11 @@ func _on_Attack_hit(receiver):
 		reduce_nightmare(nightmare_on_hit_reduction)
 
 
+func _on_Charged_Dash_hit(receiver):
+	if receiver.receiver.state_machine.state.name != "Die":
+		reduce_nightmare(nightmare_on_hit_reduction)
+
+
 func _on_AnimationPlayer_animation_finished():
-	pass
+		pass
+

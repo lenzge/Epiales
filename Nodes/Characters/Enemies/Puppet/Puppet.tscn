@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/Puppet.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/AIStates/StayAndLookAtPlayer.gd" type="Script" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://Nodes/Characters/Enemies/AI/States/MoveForward.gd" type="Script" id=14]
 [ext_resource path="res://Nodes/Util/StateMachine/State.gd" type="Script" id=15]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/AIStates/SwitchSide.gd" type="Script" id=16]
+[ext_resource path="res://Assets/Art/Enemies/Puppet/puppet_lightAttack.png" type="Texture" id=17]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 20.0
@@ -41,13 +42,17 @@ one_shot = true
 [node name="PuppetCharacter" parent="." instance=ExtResource( 12 )]
 
 [node name="Sprite" parent="PuppetCharacter" index="0"]
-position = Vector2( -3.55271e-15, -0.26487 )
+texture = ExtResource( 17 )
+frame = 5
 
 [node name="Shape" parent="PuppetCharacter" index="2"]
 shape = SubResource( 1 )
 
 [node name="Shape" parent="PuppetCharacter/HitBox" index="0"]
 shape = SubResource( 2 )
+
+[node name="AttackArea" parent="PuppetCharacter" index="4"]
+monitorable = false
 
 [node name="FrontFloorDetectionRay" parent="PuppetCharacter" index="6"]
 collision_mask = 4

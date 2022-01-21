@@ -1,4 +1,4 @@
-[gd_scene load_steps=167 format=2]
+[gd_scene load_steps=168 format=2]
 
 [ext_resource path="res://Assets/Art/Luci/Luci_Idle_11.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -98,6 +98,7 @@
 [ext_resource path="res://Assets/Art/Luci/Run Final/luci_pxanimation_runningTurn_0.1.png" type="Texture" id=96]
 [ext_resource path="res://Assets/Art/Luci/Air Light Attacks Final/luci_pxanimation_airlightattack2_0.1.png" type="Texture" id=97]
 [ext_resource path="res://Assets/Art/Luci/Air Light Attacks Final/luci_pxanimation_airlightattack3_0.1.png" type="Texture" id=98]
+[ext_resource path="res://Nodes/Game Objects/Camera.tscn" type="PackedScene" id=99]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11.4178, 27.2546 )
@@ -3238,7 +3239,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.9, 0.95 ),
+"times": PoolRealArray( 0, 1, 1.05 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ ExtResource( 76 ), ExtResource( 76 ), ExtResource( 75 ) ]
@@ -3250,10 +3251,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.9, 0.95 ),
+"times": PoolRealArray( 0, 1, 1.05 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, -50 ), Vector2( 0, -50 ), Vector2( 41, -25 ) ]
+"values": [ Vector2( 0, -50 ), Vector2( 0, -50 ), Vector2( 0, -50 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:modulate")
@@ -3274,7 +3275,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.95 ),
+"times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 3, 3 ]
@@ -3286,7 +3287,7 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.95 ),
+"times": PoolRealArray( 0, 1.05 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 7, 4 ]
@@ -3322,10 +3323,22 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55, 1.6, 1.65, 1.7, 1.75, 1.8, 1.85, 1.9, 1.95, 2, 2.05, 2.1, 2.15, 2.2, 2.3, 2.35, 2.4, 2.45, 2.5, 2.55, 2.6, 2.65, 2.7, 2.75, 2.8, 2.85, 2.9, 2.95, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 9 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Charged_Dash/CollisionPolygon2D:disabled")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0.75, 1.95 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=50]
@@ -4760,10 +4773,12 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -37 )
-texture = ExtResource( 71 )
+position = Vector2( 0, -50 )
+texture = ExtResource( 76 )
 hframes = 3
-vframes = 2
+vframes = 7
+frame = 19
+region_rect = Rect2( 659.615, 70.2177, 11.6881, 204.542 )
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -4776,6 +4791,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 2.44, 1 )
 shape = SubResource( 1 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -4916,6 +4932,15 @@ direction = Vector2( 0, -1 )
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack_Down_Air"]
 position = Vector2( 0.152481, 43.0199 )
 shape = SubResource( 7 )
+disabled = true
+
+[node name="Charged_Dash" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource( 32 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Charged_Dash"]
+position = Vector2( -45, -23 )
+polygon = PoolVector2Array( 100, 5, 100, 15, 10, 30, 10, -10 )
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -5159,6 +5184,10 @@ collision_mask = 4
 cast_to = Vector2( 30, 0 )
 collision_mask = 4
 
+[node name="Camera" parent="." instance=ExtResource( 99 )]
+current = true
+smoothing_speed = 3.0
+
 [connection signal="blocked" from="." to="StateMachine/Block" method="_on_blocked"]
 [connection signal="blocked" from="." to="ChargeController" method="_on_blocked"]
 [connection signal="charged_action" from="." to="ChargeController" method="_on_charged_action"]
@@ -5168,6 +5197,7 @@ collision_mask = 4
 [connection signal="hit" from="Attack_Down_Ground" to="." method="_on_Attack_Down_Ground_hit"]
 [connection signal="hit" from="Attack_Up_Air" to="." method="_on_Attack_Up_Air_hit"]
 [connection signal="hit" from="Attack_Down_Air" to="." method="_on_Attack_Down_Air_hit"]
+[connection signal="hit" from="Charged_Dash" to="." method="_on_Charged_Dash_hit"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="body_shape_exited" from="FallthroughDetection" to="StateMachine/Crouch" method="_on_GroundDetection_body_shape_exited"]
 [connection signal="body_shape_entered" from="GroundDetector" to="StateMachine/Crouch" method="_on_Area2D_body_shape_entered"]

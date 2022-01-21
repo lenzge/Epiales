@@ -29,9 +29,6 @@ func get_player_spawn() -> Vector2:
 
 func spawn_player(player) -> void:
 	player.position = player_spawn
-	var camera = Camera2D.new()
-	camera.current = true			#placeholder, to be determined how to implement
-	player.add_child(camera)
 	player_instance = player
 	add_child(player)
 	emit_signal("player_spawned")
