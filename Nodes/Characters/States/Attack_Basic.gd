@@ -52,6 +52,11 @@ func exit():
 
 # Decide between recover and next attack, depending on input and attack_count
 func _on_timeout():
+	# mitigate error with player.last_input.back()
+	if player.last_input.empty():
+		state_machine.transition_to("Attack_Basic_Recovery")
+		return
+	
 	var input = player.last_input.back()
 	if player.attack_count < player.max_attack_combo and (input == player.PossibleInput.ATTACK_BASIC or input == player.PossibleInput.ATTACK_AIR):
 		player.attack_count += 1

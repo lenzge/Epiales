@@ -36,14 +36,17 @@ func enter(_msg := {}):
 		animationPlayer.play("Dash_Charged")
 		timer.start(animationPlayer.current_animation_length)
 		charged_hitbox.knockback_force = player.charged_dash_damage
-		charged_hitbox.emitter_path = player.get_path() # todo change this to velocity?
+		charged_hitbox.emitter_path = player.get_path()
 		charged_hitbox.direction = _dash_direction
 		# Set Player Speed after initial animaiton
 		charged_timer = Timer.new()
 		charged_timer.set_one_shot(true)
 		charged_timer.connect("timeout", self, "set_velocity")
 		add_child(charged_timer)
-		charged_timer.start(1)
+		charged_timer.start(1.75)
+		
+		player.sound_machine.play_sound("Charged_Dash", false)
+		# hitbox an aus statt schaden am ende
 		
 	# Normal dash
 	else:
@@ -58,10 +61,11 @@ func enter(_msg := {}):
 			player.sprite.set_rotation_degrees(45*_dash_direction.y*player.direction) 
 			charged_hitbox.set_rotation_degrees(45*_dash_direction.y*player.direction)
 			#player.particles.set_rotation_degrees(45*_dash_direction.y*player.direction)
+		
+		player.sound_machine.play_sound("Dash", false)
 	
 	if !player.is_on_floor():
 		player.started_dash_in_air = true
-	player.sound_machine.play_sound("Dash", false)
 	# todo: change player hitbox so player can deal damage while dashing
 	#particleSystemPlayer.play("Dash")
 

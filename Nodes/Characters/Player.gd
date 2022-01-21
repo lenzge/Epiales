@@ -541,6 +541,7 @@ func _on_Charged_Dash_hit(receiver):
 		reduce_nightmare(nightmare_on_hit_reduction)
 
 
-func _on_AnimationPlayer_animation_finished():
-		pass
+func _on_AnimationPlayer_animation_finished(param):
+	pass
+
 
