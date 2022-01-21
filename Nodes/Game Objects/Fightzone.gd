@@ -33,8 +33,10 @@ func _process(delta):
 		is_active = false
 		right_barrier.despawn()
 		right_barrier.get_node("Border/CollisionShape2D").set_deferred("disabled", true)
+		right_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", true)
 		left_barrier.despawn()
 		left_barrier.get_node("Border/CollisionShape2D").set_deferred("disabled", true)
+		left_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", true)
 
 ## Will be notified by Barriers if Player passed
 ## Activates and spwans Barriers
@@ -43,8 +45,11 @@ func _on_Fightzone_exited(body):
 		is_active = true
 		right_barrier.spawn()
 		right_barrier.get_node("Border/CollisionShape2D").set_deferred("disabled", false)
+		right_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)		
 		left_barrier.spawn()
 		left_barrier.get_node("Border/CollisionShape2D").set_deferred("disabled", false)
+		left_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
+		
 
 
 ## Will be notified by Barriers if Player or enemy ran into it
