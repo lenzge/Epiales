@@ -6,7 +6,6 @@ onready var staticbody : StaticBody2D = $Border
 
 func _ready():
 	animationPlayer.animation_set_next("Spawn", "Idle")
-#	collisionShape.disabled = true #but why tho? 
 
 func spawn():
 	animationPlayer.play("Spawn")

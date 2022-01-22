@@ -148,19 +148,17 @@ anims/Idle = SubResource( 3 )
 anims/Spawn = SubResource( 4 )
 
 [node name="Border" type="StaticBody2D" parent="."]
-collision_layer = 4
-collision_mask = 3
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Border"]
 scale = Vector2( 0.513297, 1.04436 )
 shape = SubResource( 1 )
-disabled = true
 
 [node name="DamageEmitter" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 3
 script = ExtResource( 5 )
-damage_amount = 100
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="DamageEmitter"]
 shape = SubResource( 1 )

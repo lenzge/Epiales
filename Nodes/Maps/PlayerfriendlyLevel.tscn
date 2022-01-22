@@ -114,7 +114,7 @@ position = Vector2( 744.067, -112 )
 position = Vector2( 66.9, 18.99 )
 
 [node name="Puppet2" parent="Fightzone" instance=ExtResource( 8 )]
-position = Vector2( 66.9, 18.99 )
+position = Vector2( 621.274, -67.1749 )
 
 [node name="Puppet3" parent="Fightzone" instance=ExtResource( 8 )]
 position = Vector2( -832.903, 38.28 )
