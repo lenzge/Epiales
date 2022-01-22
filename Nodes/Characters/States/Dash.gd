@@ -30,7 +30,7 @@ func enter(_msg := {}):
 	_dash_direction = _dash_direction.normalized()
 	
 	# Charged Dash
-	if Input.is_action_pressed("charge") and player.is_on_floor() and player.charge_controller.has_charge():
+	if Input.is_action_pressed("charge") and player.is_on_floor() and player.has_charge:
 		player.charge()
 		animationPlayer.play("Dash_Charged")
 		timer.start(animationPlayer.current_animation_length)
