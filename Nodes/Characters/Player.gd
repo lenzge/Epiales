@@ -24,6 +24,7 @@ var in_charged_attack := false
 var attack_count := 1 # Needs to be 1 because increment happens after the attack
 var attack_direction := 0 # Set to 1 or -1 when in attack, so the player can't turn
 var in_air_attack
+var has_charge := false
 
 var can_hang_on_wall := true
 var raycasts_enabled := false
@@ -101,7 +102,7 @@ onready var hitbox_attack : Area2D = $Attack
 onready var hitbox : Area2D = $Hitbox
 onready var hitbox_charged_dash: Area2D = $Charged_Dash
 onready var collision_shape : CollisionShape2D = $CollisionShape2D
-onready var charge_controller = $ChargeController
+
 
 
 onready var ray_left : RayCast2D = $RayLeft

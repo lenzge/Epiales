@@ -1,4 +1,4 @@
-[gd_scene load_steps=167 format=2]
+[gd_scene load_steps=164 format=2]
 
 [ext_resource path="res://Assets/Art/Luci/Up Ground Attack Final/luci_pxanimation_upGroundAttack_0.1.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Characters/Player.gd" type="Script" id=2]
@@ -35,9 +35,6 @@
 [ext_resource path="res://Nodes/Util/DamageReceiver.gd" type="Script" id=33]
 [ext_resource path="res://Nodes/Characters/States/Wall_Hang.gd" type="Script" id=34]
 [ext_resource path="res://Nodes/Characters/States/Wall_Jump.gd" type="Script" id=35]
-[ext_resource path="res://Nodes/Characters/ChargeController.gd" type="Script" id=36]
-[ext_resource path="res://Nodes/Experimental/Placeholder/progress_charge.png" type="Texture" id=37]
-[ext_resource path="res://Nodes/Experimental/Placeholder/Over_charge.png" type="Texture" id=38]
 [ext_resource path="res://Assets/Art/Luci/Down Air Attack Final/luci_pxanimation_downAttackFalling_0.1.png" type="Texture" id=39]
 [ext_resource path="res://Nodes/Characters/States/Die.gd" type="Script" id=40]
 [ext_resource path="res://Assets/Art/Luci/Dash Final/luci_dash_1.png" type="Texture" id=41]
@@ -5148,29 +5145,6 @@ anims/Wall_Hang = SubResource( 63 )
 anims/Wall_Jump = SubResource( 64 )
 script = ExtResource( 63 )
 
-[node name="ChargeController" type="Control" parent="."]
-margin_top = 61.0
-margin_bottom = 61.0
-script = ExtResource( 36 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureProgress" type="TextureProgress" parent="ChargeController"]
-margin_left = -29.4279
-margin_top = -111.001
-margin_right = 151.572
-margin_bottom = -62.0007
-rect_scale = Vector2( 0.33535, 0.33535 )
-texture_under = ExtResource( 37 )
-texture_over = ExtResource( 38 )
-texture_progress = ExtResource( 37 )
-tint_under = Color( 0.235294, 0.235294, 0.686275, 0.203922 )
-tint_progress = Color( 0.0980392, 0.0745098, 0.768627, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="FallthroughDetection" type="Area2D" parent="."]
 position = Vector2( 0, -53.106 )
 rotation = 1.5708
@@ -5338,8 +5312,6 @@ current = true
 smoothing_speed = 3.0
 
 [connection signal="blocked" from="." to="StateMachine/Block" method="_on_blocked"]
-[connection signal="blocked" from="." to="ChargeController" method="_on_blocked"]
-[connection signal="charged_action" from="." to="ChargeController" method="_on_charged_action"]
 [connection signal="on_hit_start" from="Hitbox" to="." method="on_hit"]
 [connection signal="hit" from="Attack" to="." method="_on_Attack_hit"]
 [connection signal="hit" from="Attack_Up_Ground" to="." method="_on_Attack_Up_Ground_hit"]
