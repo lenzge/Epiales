@@ -12,5 +12,9 @@ __meta__ = {
 }
 
 [node name="NightmareBar" parent="." instance=ExtResource( 1 )]
+margin_left = -497.917
+margin_top = 35.1357
+margin_right = -245.917
+margin_bottom = 66.1357
 
 [node name="Tween" type="Tween" parent="."]
