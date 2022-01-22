@@ -59,19 +59,19 @@ func _on_Fightzone_exited(body):
 		if _is_within_borders(body.global_position.x):
 			get_tree().paused = true
 			MusicController.stop_everything(["Ambience_Atmosphere"])
-			# body.camera.animate_to(position_right_border)
+			body.camera.animate_to(right_barrier.global_position)
 			right_barrier.spawn()
 			right_barrier.get_node("Border").set_collision_mask_bit(0,true)
 			right_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
 			right_barrier.sound_machine.play_sound("Spawn", false)
 			yield(right_barrier.sound_machine, "sound_finished")
-			# body.camera.animate_to(position_left_border)
+			body.camera.animate_to(left_barrier.global_position)
 			left_barrier.spawn()
 			left_barrier.get_node("Border").set_collision_mask_bit(0,true)
 			left_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
 			left_barrier.sound_machine.play_sound("Spawn", false)
 			yield(left_barrier.sound_machine, "sound_finished")
-			# body.camera.animate_reset()
+			body.camera.reset_animate_position()
 			MusicController.play_music("OST_Hectic")
 		else:
 			is_active = false

@@ -26,6 +26,9 @@ var reset_bool : bool = false
 var animate_to_bool : bool = false
 var animate_to_global_position : Vector2 = Vector2.ZERO
 var animation_raw_value : Vector2 = Vector2.ZERO
+var animation_save_global_camera_position : Vector2
+var animation_x_rate : float = 0.0
+var animation_y_rate : float = 0.0
 
 
 func _ready():
@@ -119,29 +122,30 @@ func _process(delta):
 		
 		# x
 		if animation_raw_value.x < animate_to_global_position.x:
-			animation_raw_value.x += animation_speed
+			animation_raw_value.x += animation_x_rate
 			if animation_raw_value.x > animate_to_global_position.x:
 				animation_raw_value.x = animate_to_global_position.x
 		
 		elif animation_raw_value.x > animate_to_global_position.x:
-			animation_raw_value.x -= animation_speed
+			animation_raw_value.x -= animation_x_rate
 			if animation_raw_value.x < animate_to_global_position.x:
 				animation_raw_value.x = animate_to_global_position.x
 		
 		# y
 		if animation_raw_value.y < animate_to_global_position.y:
-			animation_raw_value.y += animation_speed
+			animation_raw_value.y += animation_y_rate
 			if animation_raw_value.y > animate_to_global_position.y:
 				animation_raw_value.y = animate_to_global_position.y
 		
 		elif animation_raw_value.y > animate_to_global_position.y:
-			animation_raw_value.y -= animation_speed
+			animation_raw_value.y -= animation_y_rate
 			if animation_raw_value.y < animate_to_global_position.y:
 				animation_raw_value.y = animate_to_global_position.y
 		
 		# set actual position with ease_function
-		self.position.x = ease_func_in(abs(animation_raw_value.x / animate_to_global_position.x)) * animate_to_global_position.x * get_sign(animation_raw_value.x)
-		self.position.y = ease_func_in(abs(animation_raw_value.y / animate_to_global_position.y)) * animate_to_global_position.y * get_sign(animation_raw_value.y)
+#		self.global_position.x = ease_func_in(abs(animation_raw_value.x / animate_to_global_position.x)) * animate_to_global_position.x * get_sign(animation_raw_value.x)
+#		self.global_position.y = ease_func_in(abs(animation_raw_value.y / animate_to_global_position.y)) * animate_to_global_position.y * get_sign(animation_raw_value.y)
+		self.global_position = animation_raw_value
 		
 		# test if camera is back on player
 		if reset_bool and animation_raw_value.x == animate_to_global_position.x and animation_raw_value.y == animate_to_global_position.y:
@@ -152,10 +156,16 @@ func _process(delta):
 func animate_to(global_position: Vector2):
 	animate_to_bool = true
 	animate_to_global_position = global_position
+	animation_raw_value = self.global_position
+	animation_save_global_camera_position = self.global_position
+	
+	var diff = Vector2(abs(global_position.x - self.global_position.x), abs(global_position.y - self.global_position.y)).normalized()
+	animation_x_rate = (diff.x / diff.y) * animation_speed
+	animation_y_rate = animation_speed
 
 
 func reset_animate_position():
-	animate_to(self.to_global(Vector2.ZERO))
+	animate_to(animation_save_global_camera_position)
 	reset_bool = true
 	raw_value = Vector2.ZERO
 	drag_x = 0.0
