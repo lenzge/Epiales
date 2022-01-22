@@ -31,18 +31,7 @@ func physics_update(delta):
 
 
 func update_animation(delta):
-	if not is_equal_approx(character.get_move().x, 0.0):
-		if character.is_running:
-			if character.animation.current_animation != "Run":
-				character.animation.play("Run")
-		else:
-			if character.animation.current_animation != "Walk":
-				character.animation.play("Walk")
-		if character.is_facing_right && character.get_move().x < 0.0 || !character.is_facing_right && character.get_move().x  > 0.0:
-			character.flip()
-	else:
-		if character.animation.current_animation != "Idle":
-			character.animation.play("Idle")
+	pass
 
 
 func check_transitions(delta):
