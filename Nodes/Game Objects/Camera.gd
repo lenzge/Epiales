@@ -27,6 +27,7 @@ var animate_to_bool : bool = false
 var animate_to_global_position : Vector2 = Vector2.ZERO # endpoint
 var animation_raw_value : Vector2 = Vector2.ZERO
 var animation_save_global_camera_position : Vector2
+var global_camera_position_saved : bool = false
 var animation_x_rate : float = 0.0
 var animation_y_rate : float = 0.0
 
@@ -183,7 +184,9 @@ func animate_to(global_position: Vector2):
 	animate_to_bool = true
 	animate_to_global_position = global_position
 	animation_raw_value = self.global_position
-	animation_save_global_camera_position = self.global_position
+	if !global_camera_position_saved:
+		animation_save_global_camera_position = self.global_position
+		global_camera_position_saved = true
 	
 	animation_start_point = self.global_position
 	var diff = animate_to_global_position - animation_start_point
@@ -200,6 +203,7 @@ func animate_to(global_position: Vector2):
 
 func reset_animate_position():
 	animate_to(animation_save_global_camera_position)
+	global_camera_position_saved = false
 	reset_bool = true
 	raw_value = Vector2.ZERO
 	drag_x = 0.0

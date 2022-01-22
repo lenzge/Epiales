@@ -1,6 +1,7 @@
 extends Node
 
 export (float) var spawn_delay = 0.5
+export (float) var despawn_delay = 1.0
 export (int) var barrier_dmg = 100
 
 onready var left_barrier = get_node("LeftBarrier")
@@ -10,6 +11,8 @@ var is_active =false
 var left_border_pos
 var right_border_pos
 var enemies = []
+
+var player = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,9 +44,15 @@ func _process(delta):
 		right_barrier.despawn()
 		right_barrier.get_node("Border/CollisionShape2D").set_deferred("disabled", true)
 		right_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", true)
+		player.camera.animate_to(left_barrier.global_position)
+		yield(player.camera, "animation_finished")
 		left_barrier.despawn()
 		left_barrier.get_node("Border/CollisionShape2D").set_deferred("disabled", true)
 		left_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", true)
+		get_tree().paused = true
+		yield(get_tree().create_timer(despawn_delay), "timeout")
+		get_tree().paused = false
+		player.camera.reset_animate_position()
 		MusicController.fade_out_music("OST_Hectic")
 		MusicController.fade_in_at_random("OST_Ominous")
 
@@ -51,6 +60,10 @@ func _process(delta):
 ## Activates and spwans Barriers if player is still inside zone after certain delay
 func _on_Fightzone_exited(body):
 	if not is_active and body.name == "Player" and _is_within_borders(body.global_position.x) and not enemies.empty():
+		
+		if player == null:
+			player = body
+			
 		is_active = true
 		#Delay barrier activation
 		yield(get_tree().create_timer(spawn_delay),"timeout")
@@ -60,14 +73,14 @@ func _on_Fightzone_exited(body):
 			get_tree().paused = true
 			MusicController.stop_everything(["Ambience_Atmosphere"])
 			
-			body.camera.animate_to(right_barrier.global_position)
-			yield(body.camera, "animation_finished")
+			player.camera.animate_to(right_barrier.global_position)
+			yield(player.camera, "animation_finished")
 			right_barrier.spawn()
 			right_barrier.sound_machine.play_sound("Spawn", false)
 			yield(right_barrier.sound_machine, "sound_finished")
 			
-			body.camera.animate_to(left_barrier.global_position)
-			yield(body.camera, "animation_finished")
+			player.camera.animate_to(left_barrier.global_position)
+			yield(player.camera, "animation_finished")
 			left_barrier.spawn()
 			left_barrier.sound_machine.play_sound("Spawn", false)
 			yield(left_barrier.sound_machine, "sound_finished")
@@ -78,15 +91,17 @@ func _on_Fightzone_exited(body):
 			right_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
 			left_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
 			
-			body.camera.reset_animate_position()
-			yield(body.camera, "animation_finished")
+			player.camera.reset_animate_position()
+			yield(player.camera, "animation_finished")
 			MusicController.play_music("OST_Hectic")
+			get_tree().paused = false
 		else:
 			is_active = false
 
 func _on_Animation_finished(anim_name:String):
-	if anim_name == "Idle":
-		get_tree().paused = false
+#	if anim_name == "Idle":
+#		get_tree().paused = false
+	pass
 
 func _is_within_borders(position):
 	var guenther = left_border_pos < position and position < right_border_pos
