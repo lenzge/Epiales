@@ -41,7 +41,7 @@ func _process(_delta):
 			music_fade_in.erase(music)
 	
 	for music in music_fade_in_at_random:
-		if not music in music_playing:
+		if not music in music_playing and not music in music_fade_in:
 			var random = rng.randi_range(0, RANDOM_NUMBER)
 			if random == RANDOM_NUMBER:
 				fade_in_music(music, music_fade_in_at_random[music])
@@ -60,6 +60,15 @@ func stop_music(music_name: String) -> void:
 	if music_name in music_playing:
 		get_node(music_name).stop()
 		music_playing.erase(music_name)
+
+
+func stop_everything(exceptions := []):
+	for music in music_playing:
+		if not music in exceptions:
+			get_node(music).stop()
+	music_playing.clear()
+	music_fade_in.clear()
+	music_fade_in_at_random.clear()
 
 
 func fade_out_music(music_name: String, rate = 1.0):

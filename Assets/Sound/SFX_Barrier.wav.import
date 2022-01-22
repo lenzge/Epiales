@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SFX_Barrier.wav-9cd33c07fd64ae6cc3c4f85010d067fd.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX_Barrier.wav"
+dest_files=[ "res://.import/SFX_Barrier.wav-9cd33c07fd64ae6cc3c4f85010d067fd.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
