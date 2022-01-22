@@ -8,7 +8,6 @@ var charged_timer : Timer
 
 func enter(_msg := {}):
 	.enter(_msg)
-	timer.start(player.dash_time)
 	player.can_dash = false
 	player.can_reset_dash = false
 	
@@ -46,7 +45,7 @@ func enter(_msg := {}):
 		charged_timer.start(1.75)
 		
 		player.sound_machine.play_sound("Charged_Dash", false)
-		# hitbox an aus statt schaden am ende
+		# todo: deal continous damage instead of damage at the end
 		
 	# Normal dash
 	else:
@@ -100,7 +99,8 @@ func physics_update(delta):
 		#return 
 	else:
 		if is_equal_approx(player.velocity.y, 0):
-			player.velocity.y = 0.5
+			# This is needed for player.is_on_floor() to properly work
+			player.velocity.y = 0.5 # Todo: Change this to something better
 		player.dash_move(delta, _dash_direction, player.friction_dash)
 	
 	# Check for exit conditions
