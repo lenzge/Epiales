@@ -83,7 +83,6 @@ func stop():
 # Calls the current state's exit() function, then changes the active state, and calls its enter function
 func transition_to(target_state_name, msg: Dictionary = {}):
 	# Safety check, if the state name is correct
-	print(target_state_name)
 	assert(has_node(target_state_name), "STATEMACHINE WARNING: State not found: " + target_state_name)
 	
 	# Dying can't be cancelled
