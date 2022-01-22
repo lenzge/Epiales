@@ -3,7 +3,7 @@ extends GameState
 
 
 const PLAYER = preload("res://Nodes/Characters/Player.tscn")
-const LEVEL = preload("res://Nodes/Maps/PlayerfriendlyLevel.tscn")
+const LEVEL = preload("res://Nodes/Maps/Level6.tscn")
 const NIGHTMARE_BAR = preload("res://Nodes/GUI/NightmareBar.tscn")
 
 export(float, 0.01, 0.2) var modulation_change : float = 0.01

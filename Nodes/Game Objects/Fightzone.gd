@@ -60,16 +60,21 @@ func _on_Fightzone_exited(body):
 			get_tree().paused = true
 			MusicController.stop_everything(["Ambience_Atmosphere"])
 			# body.camera.animate_to(position_right_border)
-			right_barrier.spawn()
-			right_barrier.get_node("Border").set_collision_mask_bit(0,true)
-			right_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
-			right_barrier.sound_machine.play_sound("Spawn", false)
-			yield(right_barrier.sound_machine, "sound_finished")
 			# body.camera.animate_to(position_left_border)
+			
+			right_barrier.spawn()
 			left_barrier.spawn()
+			
+			right_barrier.get_node("Border").set_collision_mask_bit(0,true)
 			left_barrier.get_node("Border").set_collision_mask_bit(0,true)
+			
+			right_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
 			left_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
+			
+			right_barrier.sound_machine.play_sound("Spawn", false)
 			left_barrier.sound_machine.play_sound("Spawn", false)
+			
+			yield(right_barrier.sound_machine, "sound_finished")
 			yield(left_barrier.sound_machine, "sound_finished")
 			# body.camera.animate_reset()
 			MusicController.play_music("OST_Hectic")
@@ -81,7 +86,8 @@ func _on_Animation_finished(anim_name:String):
 		get_tree().paused = false
 
 func _is_within_borders(position):
-	return position < right_border_pos and left_border_pos < position 
+	var guenther = left_border_pos < position and position < right_border_pos
+	return guenther 
 
 func set_dmg(dmg):
 	left_barrier.get_node("DamageEmitter").damage_amount = dmg
