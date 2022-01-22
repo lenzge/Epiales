@@ -24,12 +24,18 @@ var drag_y : float = 0.0
 
 var reset_bool : bool = false
 var animate_to_bool : bool = false
-var animate_to_global_position : Vector2 = Vector2.ZERO
+var animate_to_global_position : Vector2 = Vector2.ZERO # endpoint
 var animation_raw_value : Vector2 = Vector2.ZERO
 var animation_save_global_camera_position : Vector2
 var animation_x_rate : float = 0.0
 var animation_y_rate : float = 0.0
 
+var animation_start_point : Vector2
+var animation_difference : Vector2
+var animation_position_add_counter : Vector2
+var animation_difference_sign : Vector2
+
+signal animation_finished
 
 func _ready():
 	pass
@@ -123,34 +129,54 @@ func _process(delta):
 		# x
 		if animation_raw_value.x < animate_to_global_position.x:
 			animation_raw_value.x += animation_x_rate
+			animation_position_add_counter.x += animation_x_rate
 			if animation_raw_value.x > animate_to_global_position.x:
 				animation_raw_value.x = animate_to_global_position.x
+				animation_position_add_counter.x = animation_difference.x
 		
 		elif animation_raw_value.x > animate_to_global_position.x:
 			animation_raw_value.x -= animation_x_rate
+			animation_position_add_counter.x += animation_x_rate # Attention: += because animation_position_add_counter is a value from 0 to 100 percent
 			if animation_raw_value.x < animate_to_global_position.x:
 				animation_raw_value.x = animate_to_global_position.x
+				animation_position_add_counter.x = animation_difference.x
 		
 		# y
 		if animation_raw_value.y < animate_to_global_position.y:
 			animation_raw_value.y += animation_y_rate
+			animation_position_add_counter.y += animation_y_rate
 			if animation_raw_value.y > animate_to_global_position.y:
 				animation_raw_value.y = animate_to_global_position.y
+				animation_position_add_counter.y = animation_difference.y
 		
 		elif animation_raw_value.y > animate_to_global_position.y:
 			animation_raw_value.y -= animation_y_rate
+			animation_position_add_counter.y += animation_y_rate
 			if animation_raw_value.y < animate_to_global_position.y:
 				animation_raw_value.y = animate_to_global_position.y
+				animation_position_add_counter.y = animation_difference.y
 		
 		# set actual position with ease_function
-#		self.global_position.x = ease_func_in(abs(animation_raw_value.x / animate_to_global_position.x)) * animate_to_global_position.x * get_sign(animation_raw_value.x)
-#		self.global_position.y = ease_func_in(abs(animation_raw_value.y / animate_to_global_position.y)) * animate_to_global_position.y * get_sign(animation_raw_value.y)
-		self.global_position = animation_raw_value
+		if animation_difference.x != 0:
+			self.global_position.x = (ease_func_out(abs(animation_position_add_counter.x / animation_difference.x)) * animation_difference.x * animation_difference_sign.x) + animation_start_point.x
+		else:
+			self.global_position.x = animation_raw_value.x
 		
-		# test if camera is back on player
-		if reset_bool and animation_raw_value.x == animate_to_global_position.x and animation_raw_value.y == animate_to_global_position.y:
-			reset_bool = false
-			animate_to_bool = false
+		if animation_difference.y != 0:
+			self.global_position.y = (ease_func_out(abs(animation_position_add_counter.y / animation_difference.y)) * animation_difference.y * animation_difference_sign.y) + animation_start_point.y
+		else:
+			self.global_position.y = animation_raw_value.y
+		
+		# linear movement
+#		self.global_position = animation_raw_value
+		
+		# on animation end
+		if animation_raw_value.x == animate_to_global_position.x and animation_raw_value.y == animate_to_global_position.y:
+			emit_signal("animation_finished")
+			# test if camera is back on player
+			if reset_bool:
+				reset_bool = false
+				animate_to_bool = false
 
 
 func animate_to(global_position: Vector2):
@@ -159,8 +185,16 @@ func animate_to(global_position: Vector2):
 	animation_raw_value = self.global_position
 	animation_save_global_camera_position = self.global_position
 	
-	var diff = Vector2(abs(global_position.x - self.global_position.x), abs(global_position.y - self.global_position.y)).normalized()
-	animation_x_rate = (diff.x / diff.y) * animation_speed
+	animation_start_point = self.global_position
+	var diff = animate_to_global_position - animation_start_point
+	animation_difference = Vector2(abs(diff.x), abs(diff.y))
+	animation_position_add_counter = Vector2.ZERO
+	animation_difference_sign = Vector2(get_sign(diff.x), get_sign(diff.y))
+	
+	if diff.y != 0:
+		animation_x_rate = abs((diff.x / diff.y)) * animation_speed
+	else:
+		animation_x_rate = animation_speed
 	animation_y_rate = animation_speed
 
 
