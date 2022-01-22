@@ -14,7 +14,6 @@
 [ext_resource path="res://Assets/Sound/SFX_enemy_alert.wav" type="AudioStream" id=12]
 [ext_resource path="res://Assets/Sound/SFX_Puppet_slide.wav" type="AudioStream" id=13]
 [ext_resource path="res://Assets/Art/Enemies/Puppet/puppet_flinch.png" type="Texture" id=14]
-[ext_resource path="res://Nodes/Experimental/Placeholder/enemy_placeholder_idle.png" type="Texture" id=16]
 [ext_resource path="res://Nodes/Characters/HealthBar.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/PuppetRun.gd" type="Script" id=19]
 [ext_resource path="res://Nodes/Characters/Enemies/Puppet/States/PuppetFocusedRun.gd" type="Script" id=20]
@@ -800,6 +799,82 @@ tracks/6/keys = {
 }
 
 [sub_resource type="Animation" id=11]
+resource_name = "Attack_Run_Run"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 28 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -0.612068, -21.2649 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:hframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 20 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sprite:frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 8, 9, 10, 11, 12, 13, 12, 11, 10, 9, 10, 11, 12, 13, 12, 11, 10, 9, 10, 11, 12, 13 ]
+}
+
+[sub_resource type="Animation" id=30]
 resource_name = "Attack_Run_Run_1"
 length = 2.2
 tracks/0/type = "value"
@@ -1172,7 +1247,31 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 16 ) ]
+"values": [ ExtResource( 28 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 20 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
 }
 
 [sub_resource type="Animation" id=16]
@@ -2246,11 +2345,12 @@ attack_area_path = NodePath("AttackArea")
 flinch_intesity = 100.0
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -0.612068, -19.2649 )
+position = Vector2( -0.612068, -21.2649 )
 scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 23 )
+texture = ExtResource( 28 )
 flip_h = true
-hframes = 10
+hframes = 20
+frame = 2
 
 [node name="HealthBar" parent="." instance=ExtResource( 18 )]
 margin_left = -18.6297
@@ -2382,7 +2482,8 @@ anims/Attack_Run_1 = SubResource( 7 )
 anims/Attack_Run_2 = SubResource( 8 )
 anims/Attack_Run_Recovery_1 = SubResource( 9 )
 anims/Attack_Run_Recovery_2 = SubResource( 10 )
-anims/Attack_Run_Run_1 = SubResource( 11 )
+anims/Attack_Run_Run = SubResource( 11 )
+anims/Attack_Run_Run_1 = SubResource( 30 )
 anims/Attack_Run_Windup_1 = SubResource( 12 )
 anims/Attack_Run_Windup_2 = SubResource( 13 )
 anims/Die = SubResource( 14 )

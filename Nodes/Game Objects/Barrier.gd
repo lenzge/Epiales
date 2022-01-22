@@ -7,7 +7,6 @@ onready var sound_machine : SoundMachine = $SoundMachine
 
 func _ready():
 	animationPlayer.animation_set_next("Spawn", "Idle")
-#	collisionShape.disabled = true #but why tho? 
 
 func spawn():
 	animationPlayer.play("Spawn")

@@ -35,7 +35,7 @@ func _process(delta):
 				enemies.remove(enemies.find(enemy,0))
 			elif enemy.get_health() <= 0:
 				enemies.remove(enemies.find(enemy,0))
-	#If no enemie remains inside fightzone despawn barriers
+	#If no enemy remains inside fightzone despawn barriers
 	elif is_active and enemies.empty():
 		is_active = false
 		right_barrier.despawn()
@@ -50,24 +50,24 @@ func _process(delta):
 ## Will be notified by Barriers if Player passed
 ## Activates and spwans Barriers if player is still inside zone after certain delay
 func _on_Fightzone_exited(body):
-	if not is_active and body.name == "Player" and _is_within_borders(body.global_position.x):
+	if not is_active and body.name == "Player" and _is_within_borders(body.global_position.x) and not enemies.empty():
 		is_active = true
 		#Delay barrier activation
 		yield(get_tree().create_timer(spawn_delay),"timeout")
 		
-		# Activate Fightzone Delay Barrier spawn		
+		# Activate Fightzone Delay Barrier spawn
 		if _is_within_borders(body.global_position.x):
 			get_tree().paused = true
 			MusicController.stop_everything(["Ambience_Atmosphere"])
 			# body.camera.animate_to(position_right_border)
 			right_barrier.spawn()
-			right_barrier.get_node("Border/CollisionShape2D").set_deferred("disabled", false)
+			right_barrier.get_node("Border").set_collision_mask_bit(0,true)
 			right_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
 			right_barrier.sound_machine.play_sound("Spawn", false)
 			yield(right_barrier.sound_machine, "sound_finished")
 			# body.camera.animate_to(position_left_border)
 			left_barrier.spawn()
-			left_barrier.get_node("Border/CollisionShape2D").set_deferred("disabled", false)
+			left_barrier.get_node("Border").set_collision_mask_bit(0,true)
 			left_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
 			left_barrier.sound_machine.play_sound("Spawn", false)
 			yield(left_barrier.sound_machine, "sound_finished")
