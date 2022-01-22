@@ -31,18 +31,19 @@ func physics_update(delta):
 
 
 func update_animation(delta):
-	if not is_equal_approx(character.get_move().x, 0.0):
-		if character.is_running:
-			if character.animation.current_animation != "Run":
-				character.animation.play("Run")
-		else:
-			if character.animation.current_animation != "Walk":
-				character.animation.play("Walk")
-		if character.is_facing_right && character.get_move().x < 0.0 || !character.is_facing_right && character.get_move().x  > 0.0:
-			character.flip()
-	else:
-		if character.animation.current_animation != "Idle":
-			character.animation.play("Idle")
+	pass ## -> behaviourd defined in Puppet
+	#if not is_equal_approx(character.get_move().x, 0.0):
+		#if character.is_running:
+			#if character.animation.current_animation != "Run_Loop":
+				#character.animation.play("Run_Start")
+		#else:
+			#if character.animation.current_animation != "Walk_Loop":
+				#character.animation.play("Walk_Start")
+		#if character.is_facing_right && character.get_move().x < 0.0 || !character.is_facing_right && character.get_move().x  > 0.0:
+			#character.flip()
+	#else:
+		#if character.animation.current_animation != "Idle":
+			#character.animation.play("Idle")
 
 
 func check_transitions(delta):

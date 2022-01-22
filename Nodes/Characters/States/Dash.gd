@@ -112,7 +112,7 @@ func physics_update(delta):
 				 state_machine.transition_to("Attack_Basic_Windup")
 		elif Input.is_action_just_pressed("block") and player.is_on_floor():
 			state_machine.transition_to("Block_Windup")
-		elif Input.is_action_just_pressed("jump") and not _jumped and player.is_on_floor():
+		if Input.is_action_just_pressed("jump") and not _jumped and player.is_on_floor():
 			timer.start(player.leap_jump_time)
 			player.hitbox.get_child(0).disabled = false
 			_jumped = true
