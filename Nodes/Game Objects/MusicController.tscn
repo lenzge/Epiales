@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Nodes/Game Objects/MusicController.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Music/Ambience_Atmosphere.mp3" type="AudioStream" id=2]
 [ext_resource path="res://Assets/Music/OST_Ominous.mp3" type="AudioStream" id=3]
 [ext_resource path="res://Assets/Music/OST_MENU.mp3" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Music/OST_Hectic.mp3" type="AudioStream" id=5]
 
 [node name="MusicController" type="Node"]
 pause_mode = 2
@@ -21,5 +22,10 @@ bus = "Music"
 
 [node name="Ambience_Atmosphere" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
+volume_db = -9.0
+bus = "Music"
+
+[node name="OST_Hectic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
 volume_db = -9.0
 bus = "Music"

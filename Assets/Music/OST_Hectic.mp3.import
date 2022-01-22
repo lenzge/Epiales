@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/OST_Hectic.mp3-53c76fb9f3f97038d82d12d84c31d18c.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/OST_Hectic.mp3"
+dest_files=[ "res://.import/OST_Hectic.mp3-53c76fb9f3f97038d82d12d84c31d18c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

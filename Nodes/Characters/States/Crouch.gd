@@ -9,13 +9,12 @@ func enter(msg :={}):
 	if abs(player.velocity.x) > 100:
 		animationPlayer.play("Slide")
 		player.sound_machine.play_sound("Slide", false)
-	elif state_machine.last_state.name == "Attack_Down_Recovery":
-		animationPlayer.play("Crouch")
-	else:
+	#elif state_machine.last_state.name == "Attack_Down_Recovery":
+		#animationPlayer.play("Crouch")
+	elif not animationPlayer.current_animation == "Crouch":
 		animationPlayer.play("Crouch_Start")
-	
 	# Play sound only when player gets into crouch
-	if state_machine.last_state.name != "Attack_Down_Recovery":
+	if animationPlayer.current_animation == "Crouch_Start":
 		player.sound_machine.play_sound("Crouch Down", false)
 
 

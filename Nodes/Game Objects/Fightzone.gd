@@ -44,6 +44,8 @@ func _process(delta):
 		left_barrier.despawn()
 		left_barrier.get_node("Border/CollisionShape2D").set_deferred("disabled", true)
 		left_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", true)
+		MusicController.fade_out_music("OST_Hectic")
+		MusicController.fade_in_at_random("OST_Ominous")
 
 ## Will be notified by Barriers if Player passed
 ## Activates and spwans Barriers if player is still inside zone after certain delay
@@ -56,14 +58,21 @@ func _on_Fightzone_exited(body):
 		# Activate Fightzone Delay Barrier spawn
 		if _is_within_borders(body.global_position.x):
 			get_tree().paused = true
+			MusicController.stop_everything(["Ambience_Atmosphere"])
+			# body.camera.animate_to(position_right_border)
 			right_barrier.spawn()
-#			right_barrier.get_node("Border/CollisionShape2D").set_deferred("disabled", false)
 			right_barrier.get_node("Border").set_collision_mask_bit(0,true)
 			right_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
+			right_barrier.sound_machine.play_sound("Spawn", false)
+			yield(right_barrier.sound_machine, "sound_finished")
+			# body.camera.animate_to(position_left_border)
 			left_barrier.spawn()
 			left_barrier.get_node("Border").set_collision_mask_bit(0,true)
-#			left_barrier.get_node("Border/CollisionShape2D").set_deferred("disabled", false)
 			left_barrier.get_node("DamageEmitter/CollisionShape2D2").set_deferred("disabled", false)
+			left_barrier.sound_machine.play_sound("Spawn", false)
+			yield(left_barrier.sound_machine, "sound_finished")
+			# body.camera.animate_reset()
+			MusicController.play_music("OST_Hectic")
 		else:
 			is_active = false
 

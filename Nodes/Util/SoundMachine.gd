@@ -4,9 +4,13 @@ extends Node2D
 
 var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
+signal sound_finished
 
 func _ready():
 	rng.randomize()
+	for item in self.get_children():
+		if item is AudioStreamPlayer or item is AudioStreamPlayer2D:
+			item.connect("finished", self, "sound_finished")
 
 
 # Start a sound and loop it if needed
@@ -66,3 +70,7 @@ func is_sound_available(sound: String) -> bool:
 		return true
 	else:
 		return false
+
+
+func sound_finished():
+	emit_signal("sound_finished")
