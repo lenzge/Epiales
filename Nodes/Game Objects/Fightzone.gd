@@ -50,7 +50,7 @@ func _process(delta):
 ## Will be notified by Barriers if Player passed
 ## Activates and spwans Barriers if player is still inside zone after certain delay
 func _on_Fightzone_exited(body):
-	if not is_active and body.name == "Player" and _is_within_borders(body.global_position.x):
+	if not is_active and body.name == "Player" and _is_within_borders(body.global_position.x) and not enemies.empty():
 		is_active = true
 		#Delay barrier activation
 		yield(get_tree().create_timer(spawn_delay),"timeout")
