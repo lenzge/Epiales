@@ -334,7 +334,7 @@ tracks/3/keys = {
 "values": [ Vector2( -0.612068, -0.26487 ), Vector2( -0.612068, -8 ), Vector2( -0.612068, -0.264871 ), Vector2( -0.612068, -8 ), Vector2( -5.96046e-08, -0.264871 ), Vector2( -2.98023e-08, -8 ), Vector2( -0.612068, -0.26487 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 resource_name = "Repatrol"
 length = 3.0
 loop = true
@@ -387,8 +387,7 @@ tracks/3/keys = {
 "values": [ Vector2( -0.612068, -0.26487 ), Vector2( -0.612068, -8 ), Vector2( -0.612068, -0.264871 ), Vector2( -0.612068, -8 ), Vector2( -5.96046e-08, -0.264871 ), Vector2( -2.98023e-08, -8 ), Vector2( -0.612068, -0.26487 ) ]
 }
 
-[sub_resource type="Animation" id=11]
-resource_name = "Stunned"
+[sub_resource type="Animation" id=12]
 length = 0.3
 loop = true
 tracks/0/type = "value"
@@ -435,6 +434,7 @@ collision_mask = 36
 script = ExtResource( 2 )
 gravity = 10
 health_points = 60
+attack_damage = [ 30 ]
 max_attack_combo = 1
 
 [node name="StateMachine" type="Node" parent="."]
@@ -560,8 +560,8 @@ anims/Attack_Windup = SubResource( 7 )
 anims/Chase = SubResource( 8 )
 anims/Die = SubResource( 9 )
 anims/Patrol = SubResource( 10 )
-anims/Repatrol = SubResource( 12 )
-anims/Stunned = SubResource( 11 )
+anims/Repatrol = SubResource( 11 )
+anims/Stunned = SubResource( 12 )
 
 [node name="HealthBar" parent="." instance=ExtResource( 18 )]
 margin_left = -18.5288

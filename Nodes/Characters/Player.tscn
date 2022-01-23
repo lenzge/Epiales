@@ -4881,7 +4881,8 @@ dash_reset_after_wallhang = false
 attack_force = [ 20, 25, 30, 60 ]
 max_nightmare = 1000.0
 nightmare_on_hit_reduction = 25.0
-nightmare_enemy_surronding_increment = 0.15
+nightmare_enemy_surronding_increment = 0.2
+nightmare_spikes_increment = 15.0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
