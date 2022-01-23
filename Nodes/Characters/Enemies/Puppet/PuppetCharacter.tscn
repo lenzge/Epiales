@@ -874,7 +874,7 @@ tracks/5/keys = {
 "values": [ 8, 9, 10, 11, 12, 13, 12, 11, 10, 9, 10, 11, 12, 13, 12, 11, 10, 9, 10, 11, 12, 13 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=30]
 resource_name = "Attack_Run_Run_1"
 length = 2.2
 tracks/0/type = "value"
@@ -950,7 +950,8 @@ tracks/5/keys = {
 "values": [ 8, 9, 10, 11, 12, 13, 12, 11, 10, 9, 10, 11, 12, 13, 12, 11, 10, 9, 10, 11, 12, 13 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=12]
+resource_name = "Attack_Run_Windup_1"
 length = 0.35
 step = 0.05
 tracks/0/type = "value"
@@ -1040,7 +1041,8 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=13]
+resource_name = "Attack_Run_Windup_2"
 length = 0.4
 step = 0.05
 tracks/0/type = "value"
@@ -1130,7 +1132,7 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=14]
 length = 2.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1233,7 +1235,7 @@ tracks/7/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=15]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1272,7 +1274,7 @@ tracks/2/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=16]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1349,7 +1351,8 @@ tracks/5/keys = {
 "values": [ Color( 0.92549, 0.270588, 0.270588, 0.741176 ), Color( 0.92549, 0.270588, 0.270588, 0.741176 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=17]
+resource_name = "FocusedIdle"
 length = 0.9
 loop = true
 tracks/0/type = "value"
@@ -1425,7 +1428,8 @@ tracks/5/keys = {
 "values": [ Vector2( 0.6, 0.6 ) ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=18]
+resource_name = "FocusedRunBackwards"
 length = 0.9
 loop = true
 tracks/0/type = "value"
@@ -1501,7 +1505,8 @@ tracks/5/keys = {
 "values": [ Vector2( 0.6, 0.6 ) ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=19]
+resource_name = "FocusedRunForwards"
 length = 0.9
 loop = true
 tracks/0/type = "value"
@@ -1577,7 +1582,8 @@ tracks/5/keys = {
 "values": [ Vector2( 0.6, 0.6 ) ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=20]
+resource_name = "FocusedWalkBackwards"
 length = 0.9
 loop = true
 tracks/0/type = "value"
@@ -1639,6 +1645,83 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 3, 2, 1, 2, 3, 4 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sprite:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ) ]
+}
+
+[sub_resource type="Animation" id=21]
+resource_name = "FocusedWalkForwards"
+length = 0.9
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 25 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -0.612068, -19.2649 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:hframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 9 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("Sprite:scale")
@@ -1666,82 +1749,6 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 25 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -0.612068, -19.2649 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:hframes")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 9 ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite:frame")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 4 ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite:scale")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0.6, 0.6 ) ]
-}
-
-[sub_resource type="Animation" id=23]
-length = 0.9
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
 "values": [ ExtResource( 23 ) ]
 }
 tracks/1/type = "value"
@@ -1805,7 +1812,7 @@ tracks/5/keys = {
 "values": [ Vector2( 0.6, 0.6 ) ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=23]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -1869,7 +1876,7 @@ tracks/4/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=24]
 length = 0.1
 step = 0.05
 tracks/0/type = "value"
@@ -1933,7 +1940,7 @@ tracks/4/keys = {
 "values": [ 7, 8 ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=25]
 length = 0.6
 loop = true
 step = 0.05
@@ -2010,7 +2017,7 @@ tracks/5/keys = {
 "values": [ 6 ]
 }
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=26]
 length = 0.3
 step = 0.05
 tracks/0/type = "value"
@@ -2086,7 +2093,7 @@ tracks/5/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=27]
 length = 0.1
 step = 0.05
 tracks/0/type = "value"
@@ -2162,7 +2169,7 @@ tracks/5/keys = {
 "values": [ 7, 8 ]
 }
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=28]
 length = 0.6
 loop = true
 step = 0.05
@@ -2239,7 +2246,7 @@ tracks/5/keys = {
 "values": [ 6 ]
 }
 
-[sub_resource type="Animation" id=30]
+[sub_resource type="Animation" id=29]
 length = 0.3
 step = 0.05
 tracks/0/type = "value"
@@ -2476,25 +2483,25 @@ anims/Attack_Run_2 = SubResource( 8 )
 anims/Attack_Run_Recovery_1 = SubResource( 9 )
 anims/Attack_Run_Recovery_2 = SubResource( 10 )
 anims/Attack_Run_Run = SubResource( 11 )
-anims/Attack_Run_Run_1 = SubResource( 12 )
-anims/Attack_Run_Windup_1 = SubResource( 13 )
-anims/Attack_Run_Windup_2 = SubResource( 14 )
-anims/Die = SubResource( 15 )
-anims/Fall = SubResource( 16 )
-anims/Flinch = SubResource( 17 )
-anims/FocusedIdle = SubResource( 18 )
-anims/FocusedRunBackwards = SubResource( 19 )
-anims/FocusedRunForwards = SubResource( 20 )
-anims/FocusedWalkBackwards = SubResource( 21 )
-anims/FocusedWalkForwards = SubResource( 22 )
-anims/Idle = SubResource( 23 )
-anims/Recoil = SubResource( 24 )
-anims/Run_End = SubResource( 25 )
-anims/Run_Loop = SubResource( 26 )
-anims/Run_Start = SubResource( 27 )
-anims/Walk_End = SubResource( 28 )
-anims/Walk_Loop = SubResource( 29 )
-anims/Walk_Start = SubResource( 30 )
+anims/Attack_Run_Run_1 = SubResource( 30 )
+anims/Attack_Run_Windup_1 = SubResource( 12 )
+anims/Attack_Run_Windup_2 = SubResource( 13 )
+anims/Die = SubResource( 14 )
+anims/Fall = SubResource( 15 )
+anims/Flinch = SubResource( 16 )
+anims/FocusedIdle = SubResource( 17 )
+anims/FocusedRunBackwards = SubResource( 18 )
+anims/FocusedRunForwards = SubResource( 19 )
+anims/FocusedWalkBackwards = SubResource( 20 )
+anims/FocusedWalkForwards = SubResource( 21 )
+anims/Idle = SubResource( 22 )
+anims/Recoil = SubResource( 23 )
+anims/Run_End = SubResource( 24 )
+anims/Run_Loop = SubResource( 25 )
+anims/Run_Start = SubResource( 26 )
+anims/Walk_End = SubResource( 27 )
+anims/Walk_Loop = SubResource( 28 )
+anims/Walk_Start = SubResource( 29 )
 script = ExtResource( 24 )
 
 [node name="SoundMachine" type="Node2D" parent="."]
