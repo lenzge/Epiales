@@ -55,7 +55,7 @@ onready var attack_area : Area2D = $AttackArea
 # Whole body of the enemy deals damage (always)
 onready var damage_box : Area2D = $DamageBox
 # Area, where the enemy gets damage (body)
-onready var hitbox : Area2D = $Hitbox
+onready var hitbox : Area2D = $HitBox
 
 var attack_count : int
 var velocity : Vector2
