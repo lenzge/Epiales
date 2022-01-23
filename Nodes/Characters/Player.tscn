@@ -1560,7 +1560,8 @@ tracks/6/keys = {
 }
 
 [sub_resource type="Animation" id=26]
-length = 0.2
+length = 0.25
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -1640,7 +1641,7 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 0.1 ),
+"times": PoolRealArray( 0, 0.15 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 8, 9 ]
@@ -1758,7 +1759,7 @@ tracks/8/keys = {
 }
 
 [sub_resource type="Animation" id=28]
-length = 0.7
+length = 0.9
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -1839,7 +1840,7 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 0.1, 0.15, 0.25, 0.35, 0.45, 0.5, 0.6 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.35, 0.45, 0.55, 0.7, 0.8 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
@@ -4997,7 +4998,7 @@ position = Vector2( 0, -50 )
 texture = ExtResource( 20 )
 hframes = 4
 vframes = 4
-frame = 6
+frame = 8
 region_rect = Rect2( 659.615, 70.2177, 11.6881, 204.542 )
 
 [node name="Label" type="Label" parent="."]
@@ -5100,7 +5101,8 @@ damage_amount = 20
 direction = Vector2( 1, 0 )
 
 [node name="HitboxAttack" type="CollisionShape2D" parent="Attack"]
-position = Vector2( 40.044, -3.27136 )
+position = Vector2( 58.044, -13.271 )
+scale = Vector2( 3.6, 1.32 )
 shape = SubResource( 2 )
 disabled = true
 
