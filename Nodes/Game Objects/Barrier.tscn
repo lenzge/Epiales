@@ -6,7 +6,7 @@
 [ext_resource path="res://Assets/Art/Tiles/barriere_aufbau.png" type="Texture" id=4]
 [ext_resource path="res://Nodes/Util/DamageEmitter.gd" type="Script" id=5]
 [ext_resource path="res://Nodes/Util/SoundMachine.gd" type="Script" id=6]
-[ext_resource path="res://Assets/Sound/SFX_Barrier.wav" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Sound/Barrier_longer.wav" type="AudioStream" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8.61443, 112.175 )
@@ -171,4 +171,5 @@ script = ExtResource( 6 )
 
 [node name="Spawn" type="AudioStreamPlayer2D" parent="SoundMachine"]
 stream = ExtResource( 7 )
+volume_db = -3.0
 bus = "Sounds"

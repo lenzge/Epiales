@@ -4,7 +4,7 @@
 [ext_resource path="res://Assets/Music/Ambience_Atmosphere.mp3" type="AudioStream" id=2]
 [ext_resource path="res://Assets/Music/OST_Ominous.mp3" type="AudioStream" id=3]
 [ext_resource path="res://Assets/Music/OST_MENU.mp3" type="AudioStream" id=4]
-[ext_resource path="res://Assets/Music/OST_Hectic.mp3" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Music/OST_Hectic_Extended.mp3" type="AudioStream" id=5]
 
 [node name="MusicController" type="Node"]
 pause_mode = 2

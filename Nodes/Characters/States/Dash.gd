@@ -34,6 +34,7 @@ func enter(_msg := {}):
 		player.charge()
 		animationPlayer.play("Dash_Charged")
 		timer.start(animationPlayer.current_animation_length)
+		charged_hitbox.get_node("CollisionPolygon2D").disabled = false
 		charged_hitbox.knockback_force = player.charged_dash_damage
 		charged_hitbox.emitter_path = player.get_path()
 		charged_hitbox.direction = _dash_direction
@@ -81,6 +82,7 @@ func exit():
 		player.in_charged_attack = false
 		remove_child(charged_timer)
 		charged_timer.queue_free()
+		charged_hitbox.get_node("CollisionPolygon2D").disabled = true
 	_jumped = false
 	player.hitbox.get_child(0).disabled = false
 	player.start_dash_cooldown()
