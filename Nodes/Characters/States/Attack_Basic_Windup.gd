@@ -7,6 +7,7 @@ func enter(_msg := {}):
 	if Input.is_action_pressed("charge") and player.has_charge and player.is_on_floor():
 		player.charge()
 		player.attack_count = 4
+		player.in_air_attack = false
 		player.sound_machine.play_sound("Charged Attack", false)
 	else:
 		player.in_charged_attack = false
