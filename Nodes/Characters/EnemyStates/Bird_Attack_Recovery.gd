@@ -2,10 +2,7 @@ extends EnemyState
 
 
 func enter(_msg := {}):
-	if state_machine.last_state.name == "Attack":
-		.enter(_msg)
-	else:
-		animationPlayer.play("Freeze")
+	.enter(_msg)
 	timer.set_wait_time(enemy.freeze_time)
 	timer.start()
 	
