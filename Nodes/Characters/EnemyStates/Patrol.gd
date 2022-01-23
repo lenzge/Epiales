@@ -14,11 +14,11 @@ func physics_update(delta):
 			enemy.deal_nightmare = true
 		state_machine.transition_to("Attack_Windup")
 
-	if enemy.enemy_detection_raycast.is_colliding():
-		if enemy.enemy_detection_raycast.get_collider().direction == enemy.direction:
-			state_machine.transition_to("Freeze")
-		else:
-			enemy.flip_direction()
+	#if enemy.enemy_detection_raycast.is_colliding():
+		#if enemy.enemy_detection_raycast.get_collider().direction == enemy.direction:
+			#state_machine.transition_to("Freeze") -> doesnt exist at the moment
+		#else:
+			#enemy.flip_direction()
 
 # Not for Bird ( hasn't Player detection Area )
 func _on_PlayerDetectionArea_body_entered(body):
