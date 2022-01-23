@@ -4871,10 +4871,17 @@ tracks/5/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 44
 script = ExtResource( 2 )
+speed = 400
+attack_step_speed = 250
 gravity = 2000
 jump_impulse = 800
+dash_cooldown_time = 0.5
+wall_jump_additional_y = 0.0
+dash_reset_after_wallhang = false
 attack_force = [ 20, 25, 30, 60 ]
 max_nightmare = 1000.0
+nightmare_on_hit_reduction = 25.0
+nightmare_enemy_surronding_increment = 0.15
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -4885,7 +4892,7 @@ centered = false
 
 [node name="City" type="ParallaxLayer" parent="ParallaxBackground"]
 position = Vector2( 0.219, -450 )
-motion_scale = Vector2( 0.5, 0.1 )
+motion_scale = Vector2( 0.5, 0 )
 
 [node name="City" type="TextureRect" parent="ParallaxBackground/City"]
 margin_left = -4264.0
@@ -4901,7 +4908,7 @@ __meta__ = {
 [node name="Rollecoaster" type="ParallaxLayer" parent="ParallaxBackground"]
 use_parent_material = true
 position = Vector2( 0.219231, -557.931 )
-motion_scale = Vector2( 0.7, 0.3 )
+motion_scale = Vector2( 0.7, 0.05 )
 
 [node name="Rollecoaster" type="TextureRect" parent="ParallaxBackground/Rollecoaster"]
 margin_left = -4265.0
@@ -5308,8 +5315,12 @@ cast_to = Vector2( 30, 0 )
 collision_mask = 4
 
 [node name="Camera" parent="." instance=ExtResource( 99 )]
+offset = Vector2( 0, -40 )
 current = true
 smoothing_speed = 3.0
+max_offset = 120.0
+speed = 0.3
+drag = 0.099
 
 [connection signal="blocked" from="." to="StateMachine/Block" method="_on_blocked"]
 [connection signal="on_hit_start" from="Hitbox" to="." method="on_hit"]

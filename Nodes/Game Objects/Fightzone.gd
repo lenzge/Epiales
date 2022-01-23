@@ -57,7 +57,7 @@ func _process(delta):
 		yield(get_tree().create_timer(despawn_delay), "timeout")
 		get_tree().paused = false
 		player.camera.reset_animate_position()
-		MusicController.fade_out_music("OST_Hectic", 0.2)
+		MusicController.fade_out_music("OST_Hectic", 0.07)
 		MusicController.fade_in_at_random("OST_Ominous")
 
 ## Will be notified by Barriers if Player passed
