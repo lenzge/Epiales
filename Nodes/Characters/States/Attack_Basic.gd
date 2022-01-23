@@ -48,6 +48,7 @@ func exit():
 		player.attack_count = 1
 		player.last_input.clear()
 		player.attack_direction = 0
+		player.in_air_attack = false
 	
 
 # Decide between recover and next attack, depending on input and attack_count

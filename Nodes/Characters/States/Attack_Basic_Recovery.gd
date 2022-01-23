@@ -33,6 +33,7 @@ func exit():
 	player.last_input.clear()
 	player.attack_count = 1
 	player.attack_direction = 0
+	player.in_air_attack = false
 
 
 func _on_timeout():
