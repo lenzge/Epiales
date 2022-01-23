@@ -3355,7 +3355,7 @@ tracks/7/keys = {
 }
 
 [sub_resource type="Animation" id=48]
-loop = true
+length = 0.2
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -4994,11 +4994,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -50 )
-texture = ExtResource( 20 )
-hframes = 4
-vframes = 4
-frame = 8
+texture = ExtResource( 41 )
 region_rect = Rect2( 659.615, 70.2177, 11.6881, 204.542 )
 
 [node name="Label" type="Label" parent="."]
@@ -5012,6 +5008,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 2.56, 1 )
 shape = SubResource( 1 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -5162,7 +5159,6 @@ script = ExtResource( 32 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Charged_Dash"]
 position = Vector2( -45, -23 )
 polygon = PoolVector2Array( 100, 5, 100, 15, 10, 30, 10, -10 )
-disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack_Basic1 = SubResource( 8 )
