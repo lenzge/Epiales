@@ -113,6 +113,7 @@ func _on_Back_Button_pressed():
 
 
 func _on_Exit_Button_pressed():
+	JavaScript.eval("parent.click_back()")
 	get_tree().quit()
 
 

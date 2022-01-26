@@ -1,6 +1,5 @@
-[gd_resource type="TileSet" load_steps=95 format=2]
+[gd_resource type="TileSet" load_steps=94 format=2]
 
-[ext_resource path="res://Nodes/Experimental/Placeholder/brickTileset.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Art/Experimental/Tilesx/tilesx_autotile_groundblock_0.1.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Art/Experimental/Tilesx/tilesx_autotlie_backgroundblock_0.1.png" type="Texture" id=3]
 
@@ -280,7 +279,6 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 [resource]
 resource_local_to_scene = true
 0/name = "brickTileset.png 0"
-0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 128, 96 )

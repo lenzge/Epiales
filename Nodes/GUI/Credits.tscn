@@ -16,7 +16,7 @@ font_data = ExtResource( 2 )
 
 [node name="Credits" type="Control"]
 margin_right = 1100.0
-margin_bottom = 1984.0
+margin_bottom = 2190.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -259,6 +259,57 @@ with Reserved Font Name \"Caesar Dressing\".
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is available with a FAQ at:
 http://scripts.sil.org/OFL"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title_VCD_OSD_MonoFont" type="Label" parent="Node2D"]
+margin_top = 1969.66
+margin_right = 420.0
+margin_bottom = 1987.66
+custom_colors/font_color = Color( 0.611765, 0.45098, 0.65098, 1 )
+text = "VCD OSD Mono Font"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text_VCD_OSD_MonoFont" type="RichTextLabel" parent="Node2D"]
+margin_top = 1992.0
+margin_right = 592.0
+margin_bottom = 2030.0
+text = "Copyright (c) Riciery Leal
+https://www.dafont.com/vcr-osd-mono.font"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title_SFX" type="Label" parent="Node2D"]
+margin_top = 2028.46
+margin_right = 420.0
+margin_bottom = 2046.46
+custom_colors/font_color = Color( 0.611765, 0.45098, 0.65098, 1 )
+text = "SFX"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text_SFX" type="RichTextLabel" parent="Node2D"]
+margin_top = 2042.0
+margin_right = 592.0
+margin_bottom = 2106.0
+text = "Sword Sound - https://www.youtube.com/watch?v=EgRvVq8mStE (0:28 min)
+Electricity Sound: https://www.youtube.com/watch?v=mKVnBV58ddE (0:31 min)
+Several Sounds from GameDev Marketplace - https://www.gamedevmarket.net/
+Impact Sound by GameBurp.com"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text_End" type="RichTextLabel" parent="Node2D"]
+margin_top = 2144.78
+margin_right = 592.0
+margin_bottom = 2179.78
+text = "All licences can be also found in the accompanied \"licence.txt\" (on windows and mac) or \"licence\" sub-site (on web)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
