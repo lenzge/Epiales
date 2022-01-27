@@ -296,9 +296,8 @@ __meta__ = {
 [node name="Text_SFX" type="RichTextLabel" parent="Node2D"]
 margin_top = 2042.0
 margin_right = 592.0
-margin_bottom = 2106.0
-text = "Sword Sound - https://www.youtube.com/watch?v=EgRvVq8mStE (0:28 min)
-Electricity Sound: https://www.youtube.com/watch?v=mKVnBV58ddE (0:31 min)
+margin_bottom = 2093.0
+text = "Electricity Sound: https://www.youtube.com/watch?v=mKVnBV58ddE (0:31 min)
 Several Sounds from GameDev Marketplace - https://www.gamedevmarket.net/
 Impact Sound by GameBurp.com"
 __meta__ = {
