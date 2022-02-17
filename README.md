@@ -18,4 +18,16 @@ Ziel dieser Produktion war es, die Spielmechanik von Luci auf ein stabiles Nivea
 Niels Adam, Theresa Batz, Marco de Jesus António, Simon Marc Geupel, Mario Krupinski, Enji Maaroufi, Larissa Munz, Lena Sophie Musse, Jonas Seidl, Marian Syska, Evgin Talyatov Hyusmenov, Lucie Tischer, Tina Truong, Jeremias Wax, Tomás Zlatovsky, Emre Kabasakal
 
 
+**Controls**
+
+![Alt text](Exe/Controls.png)
+
+
+**Instructions**
+
+![Alt text](Exe/Instructions.png)
+
+
+
+
 
